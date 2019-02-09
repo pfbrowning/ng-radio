@@ -7,3 +7,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .fill-remaining {
     flex: 1 1 auto;
 }
+
+table.mat-table.selectable-rows {
+    .mat-row {
+        cursor: pointer;
+    }
+}
