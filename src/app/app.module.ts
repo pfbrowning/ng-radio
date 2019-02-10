@@ -3,18 +3,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
 import { MatButtonModule } from '@angular/material/button'; 
-import { AppRoutingModule } from './app-routing.module';
 import { MatTableModule } from '@angular/material/table'; 
+import { MatSidenavModule } from '@angular/material/sidenav'; 
+import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { NowPlayingComponent } from './components/now-playing/now-playing.component';
 import { StationsComponent } from './components/stations/stations.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PlayerBarComponent } from './components/player-bar/player-bar.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NowPlayingComponent,
-    StationsComponent
+    StationsComponent,
+    PlayerBarComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

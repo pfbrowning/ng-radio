@@ -13,3 +13,30 @@ table.mat-table.selectable-rows {
         cursor: pointer;
     }
 }
+
+@media (min-width:800px) {
+    .small-screen-only {
+        display: none;
+    }
+}
+
+@media (max-width:800px) {
+    .large-screen-only {
+        display: none;
+    }
+}
+
+.fixed-toolbar.mat-toolbar-single-row {
+    position: fixed;
+    left:0px;
+    z-index:2;
+    height:60px;
+}
+
+.fixed-toolbar-top {
+    top:0px;
+}
+
+.fixed-toolbar-bottom {
+    bottom:0px;
+}

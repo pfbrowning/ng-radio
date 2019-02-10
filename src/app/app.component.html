@@ -1,11 +1,24 @@
-<mat-toolbar color="primary">
+<!-- Show a top toolbar on small screens -->
+<mat-toolbar *ngIf="screenSizeService.smallScreen" color="primary" class="fixed-toolbar fixed-toolbar-top">
   <span class="title">NG Radio</span>
   <span class="fill-remaining"></span>
-
-  <div>
-    <a mat-raised-button color="primary" routerLink="stations">Stations</a>
-    <a mat-raised-button color="primary" routerLink="now-playing">Now Playing</a>
-  </div>
+  <button mat-icon-button (click)="sideNav.toggle()"><mat-icon>menu</mat-icon></button>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<!-- Use the small or large app container class based on screen size so that we know which height to give the app container.  The app container
+should fall neatly in between the top and bottom toolbar. -->
+<div [class.app-container-small]="screenSizeService.smallScreen" [class.app-container-large]="!screenSizeService.smallScreen">
+  <mat-sidenav-container>
+    <mat-sidenav #sideNav [opened]="!screenSizeService.smallScreen" [mode]="screenSizeService.smallScreen ? 'over' : 'side'">
+      <a mat-raised-button color="primary" routerLink="stations">Stations</a>
+      <a mat-raised-button color="primary" routerLink="now-playing">Now Playing</a>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="app-center">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<player-bar></player-bar>

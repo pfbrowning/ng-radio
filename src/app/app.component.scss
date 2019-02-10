@@ -1,3 +1,30 @@
 .mat-toolbar .mat-raised-button {
     margin:0px 6px;
 }
+
+.app-center {
+    max-width:1100px;
+    margin:0px auto;
+}
+
+mat-sidenav-container {
+    height:100%;
+}
+
+.app-container-small,
+.app-container-large {
+    position: absolute;
+    left:0px;
+    bottom:60px;
+    width:100%;
+}
+
+.app-container-small {
+    height:calc(100% - 120px);
+    top:60px;
+}
+
+.app-container-large {
+    height:calc(100% - 60px);
+    top:0px;
+}
