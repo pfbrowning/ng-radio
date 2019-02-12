@@ -32,3 +32,32 @@ mat-sidenav-container {
         top:$toolbarHeight;
     }
 }
+
+mat-sidenav {
+    background-color:darkgrey;
+    padding:0px 10px;
+}
+
+.sidebar-header {
+    font-size:22px;
+    color: white;
+}
+
+.sidebar-nav {
+    padding:0px 10px;
+    font-size:20px;
+
+    ul {
+        padding:0px;
+    }
+
+    li {
+        list-style-type: none;
+        margin:15px 0px;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}

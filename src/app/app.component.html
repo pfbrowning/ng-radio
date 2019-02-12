@@ -1,6 +1,6 @@
 <div class="small-screen-only">
   <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-top">
-    <span class="title">NG Radio</span>
+    <span class="title">Browninglogic Radio</span>
     <span class="fill-remaining"></span>
     <button mat-icon-button (click)="sideNav.toggle()"><mat-icon>menu</mat-icon></button>
   </mat-toolbar>
@@ -9,8 +9,17 @@
 <div class="app-container">
   <mat-sidenav-container>
     <mat-sidenav #sideNav [opened]="!screenSizeService.smallScreen" [mode]="screenSizeService.smallScreen ? 'over' : 'side'">
-      <a mat-raised-button color="primary" routerLink="stations">Stations</a>
-      <a mat-raised-button color="primary" routerLink="now-playing">Now Playing</a>
+      <h1 class="sidebar-header large-screen-only">Browninglogic Radio</h1>
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li>
+            <a routerLink="stations">Stations</a>
+          </li>
+          <li>
+              <a color="primary" routerLink="now-playing">Now Playing</a>
+          </li>
+        </ul>
+      </nav>
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="app-content">
