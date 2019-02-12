@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import './variables';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -14,13 +14,13 @@ table.mat-table.selectable-rows {
     }
 }
 
-@media (min-width:800px) {
+@media (min-width:$smallScreenCutoff) {
     .small-screen-only {
         display: none;
     }
 }
 
-@media (max-width:800px) {
+@media (max-width:$smallScreenCutoff) {
     .large-screen-only {
         display: none;
     }
@@ -30,7 +30,7 @@ table.mat-table.selectable-rows {
     position: fixed;
     left:0px;
     z-index:2;
-    height:60px;
+    height:$toolbarHeight;
 }
 
 .fixed-toolbar-top {
@@ -39,4 +39,8 @@ table.mat-table.selectable-rows {
 
 .fixed-toolbar-bottom {
     bottom:0px;
+}
+
+.mat-toolbar .mat-raised-button {
+    margin:0px 6px;
 }

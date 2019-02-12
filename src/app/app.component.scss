@@ -1,30 +1,34 @@
-.mat-toolbar .mat-raised-button {
-    margin:0px 6px;
-}
+@import '../styles/variables';
 
-.app-center {
+// Center the main app content 
+.app-content {
     max-width:1100px;
     margin:0px auto;
 }
 
+// We want the sidenav container to take up the full height of its container
 mat-sidenav-container {
     height:100%;
 }
 
-.app-container-small,
-.app-container-large {
-    position: absolute;
+// Fix the main app container above the now playing toolbar at the bottom
+.app-container {
+    position: fixed;
     left:0px;
-    bottom:60px;
+    bottom:$toolbarHeight;
     width:100%;
-}
 
-.app-container-small {
-    height:calc(100% - 120px);
-    top:60px;
-}
-
-.app-container-large {
-    height:calc(100% - 60px);
-    top:0px;
+    /* On large screens, start the app container at the top and adjust the height 
+    to account for one toolbar. */
+    @media (min-width:$smallScreenCutoff) {
+        height:calc(100% - $toolbarHeight);
+        top:0px;
+    }
+    
+    /* On small screens, push the app container down to below the top toolbar and 
+    adjust the height to account for two toolbars. */
+    @media (max-width:$smallScreenCutoff) {
+        height:calc(100% - $toolbarHeight * 2);
+        top:$toolbarHeight;
+    }
 }
