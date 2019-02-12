@@ -12,13 +12,17 @@ import { StationsComponent } from './components/stations/stations.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { AppRoutingModule } from './app-routing.module';
+import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NowPlayingComponent,
     StationsComponent,
-    PlayerBarComponent
+    PlayerBarComponent,
+    RadioBrowserComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
