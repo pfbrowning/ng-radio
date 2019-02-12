@@ -1,3 +1,14 @@
 <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
-  Now Playing Toolbar
+  <div class="now-playing">
+    <div class="title">{{nowPlaying.title}}</div>
+    <div class="station">{{nowPlaying.station}}</div>
+  </div>
+  <ng-container *ngIf="stationSelected">
+    <button *ngIf="paused" mat-fab color="accent" (click)="onPlayClicked()">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button *ngIf="!paused" mat-fab color="accent" (click)="onPauseClicked()">
+      <mat-icon>pause</mat-icon>
+    </button>
+  </ng-container>
 </mat-toolbar>

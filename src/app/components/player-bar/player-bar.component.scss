@@ -1,0 +1,15 @@
+@import '../../../styles/variables';
+
+.now-playing {
+    font-size:12px;
+    line-height:18px;
+    margin:0px 15px;
+        
+    @media (min-width:$smallScreenCutoff) {
+        width:400px;
+    }
+}
+
+mat-toolbar {
+    justify-content: center;
+}
