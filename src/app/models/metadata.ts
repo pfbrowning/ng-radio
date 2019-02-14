@@ -1,10 +1,10 @@
 export class Metadata {
     constructor(
-        public title: string,
-        public fetchsource: string,
-        public stationTitle: string = null,
-        public description: string = null,
-        public genre: string = null,
-        public bitrate: number = null,
+        public readonly title: string,
+        public readonly fetchsource: string,
+        public readonly bitrate: string = null,
+        public readonly stationTitle: string = null,
+        public readonly description: string = null,
+        public readonly genre: string = null
     ) {}
 }

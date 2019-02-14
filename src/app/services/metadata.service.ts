@@ -38,12 +38,13 @@ export class MetadataService {
       tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),
       // Map the returned response to a cleaner metadata model
       map(response => {
-        let bitrate : number = null;
-        if(response.headers['icy-br'] != null) {
-          bitrate = parseInt(response.headers['icy-br']);
+        switch(response.fetchsource) {
+          case 'STREAM':
+            return new Metadata(response.title, response.fetchsource, response.headers['icy-bitrate'], 
+              response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
+          default:
+            return new Metadata(response.title, response.fetchsource, response.bitrate);
         }
-        return new Metadata(response.title, response.fetchsource, response.headers['icy-name'], 
-          response.headers['icy-description'], response.headers['icy-genre'], bitrate);
       })
     );
   }

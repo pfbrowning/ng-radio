@@ -5,7 +5,7 @@ export class NowPlaying {
     public title: string;
     public station: string;
     public genre: string;
-    public bitrate: number;
+    public bitrate: string;
 
     public updateStation(station: Station) {
         this.station = station.title;

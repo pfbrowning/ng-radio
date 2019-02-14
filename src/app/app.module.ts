@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table'; 
 import { MatSidenavModule } from '@angular/material/sidenav'; 
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app.component';
 import { NowPlayingComponent } from './components/now-playing/now-playing.component';
 import { StationsComponent } from './components/stations/stations.component';
@@ -19,6 +21,7 @@ import { ConfigService } from './services/config.service';
 import { ErrorWindowComponent } from './components/error-window/error-window.component';
 import { UnhandledErrorCatcher } from './services/unhandled-error-catcher';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
+import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -45,7 +48,10 @@ export function initializeConfig(configService: ConfigService) {
     MatTableModule,
     MatSidenavModule,
     MatIconModule,
-    ModalManagerModule
+    MatFormFieldModule,
+    MatInputModule,
+    ModalManagerModule,
+    NgLoadingIndicatorModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },

@@ -62,6 +62,7 @@ export class PlayerService {
             /* In the case of error, gracefully set the title to 
             "Metadata Unavilable" and log to console */
             this.nowPlaying.title = 'Metadata Unavailable';
+            this.titleService.setTitle(this.nowPlaying.title);
             console.error('Error fetching metadata', error);
           }
         );

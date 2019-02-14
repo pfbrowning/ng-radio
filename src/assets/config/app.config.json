@@ -1,5 +1,6 @@
 {
     "metadataApiUrl": "http://localhost:3000",
+    "radioBrowserApiUrl": "http://www.radio-browser.info/webservice/json",
     "metadataRefreshInterval": 10000,
     "metadataFetchTimeout": 15000
 }
