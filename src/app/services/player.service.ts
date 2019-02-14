@@ -6,12 +6,17 @@ import { interval, Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import isBlank from 'is-blank';
 import { ConfigService } from './config.service';
+import { ErrorHandlingService } from './error-handling.service';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
   constructor(private metadataService: MetadataService,
     private configService: ConfigService,
-    private titleService: Title) {}
+    private titleService: Title,
+    private errorHandlingService: ErrorHandlingService) {
+      // Handle audio errors
+      this.currentAudio.onerror = (error) => this.onAudioError(error);
+    }
 
   private currentAudio: HTMLAudioElement = new Audio();
   public nowPlaying = new NowPlaying();
@@ -24,6 +29,11 @@ export class PlayerService {
 
   public get paused(): boolean {
     return this.currentAudio.paused;
+  }
+
+  private onAudioError(error) : void {
+    // Handle audio errors as non-fatal so that the user gets a toaster notification
+    this.errorHandlingService.handleError(error, 'Failed to play audio', false);
   }
 
   public playStation(station: Station) {
