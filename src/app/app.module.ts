@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
 import { MatButtonModule } from '@angular/material/button'; 
@@ -15,6 +15,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfigService } from './services/config.service';
+import { ErrorWindowComponent } from './components/error-window/error-window.component';
+import { UnhandledErrorCatcher } from './services/unhandled-error-catcher';
+import { ModalManagerModule } from '@browninglogic/ng-modal';
+
+export function initializeConfig(configService: ConfigService) {
+    return () => configService.initialize();
+}
 
 @NgModule({
   declarations: [
@@ -23,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     StationsComponent,
     PlayerBarComponent,
     RadioBrowserComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    ErrorWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +44,13 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatTableModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    ModalManagerModule
   ],
-  providers: [],
+  providers: [
+    { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },
+    { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

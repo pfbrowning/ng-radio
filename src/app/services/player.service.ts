@@ -5,10 +5,13 @@ import { MetadataService } from './metadata.service';
 import { interval, Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import isBlank from 'is-blank';
+import { ConfigService } from './config.service';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
-  constructor(private metadataService: MetadataService, private titleService: Title) {}
+  constructor(private metadataService: MetadataService,
+    private configService: ConfigService,
+    private titleService: Title) {}
 
   private currentAudio: HTMLAudioElement = new Audio();
   public nowPlaying = new NowPlaying();
@@ -74,8 +77,8 @@ export class PlayerService {
     /* Unsubscribe if there's still an active refresh interval 
     subscription from the previously-played station. */
     if(this.refreshSub) this.refreshSub.unsubscribe();
-    // Refresh the "Now Playing" metadata once every 10 seconds.
-    this.refreshSub = interval(10000).subscribe(() => this.loadMetadata());
+    // Refresh the "Now Playing" metadata once every few seconds.
+    this.refreshSub = interval(this.configService.appConfig.metadataRefreshInterval).subscribe(() => this.loadMetadata());
   }
 
   public pause() {

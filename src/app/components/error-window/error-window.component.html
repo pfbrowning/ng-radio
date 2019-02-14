@@ -1,0 +1,12 @@
+<nm-modal-window #errorModal [closeOnOverlayClick]="false">
+  <h1 header class="errorHeader">An Error Has Occurred</h1>
+  <div body class="errorBody">
+    <ng-container *ngIf="appError">
+      <p class="errorComment">{{appError.comment}}</p>
+      <p class="errorMessage">{{appError.error.message}}</p>
+      <button type="button" mat-raised-button color="primary" (click)="restartApplication()">
+          <mat-icon>refresh</mat-icon> Restart
+      </button>
+    </ng-container>
+  </div>
+</nm-modal-window>

@@ -3,10 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
 import { Metadata } from '../models/metadata';
+import { ConfigService } from './config.service';
 
 @Injectable({providedIn: 'root'})
 export class MetadataService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
   /* Keep track of the stream types returned from the metadata API
   so that we can pass them on subsequent calls.
@@ -29,9 +30,9 @@ export class MetadataService {
       params = params.append('method', this.streamTypes.get(encodedUrl));
     }
     // GET now-playing data from the API
-    return this.httpClient.get<any>(`http://localhost:3000/now-playing`, {params: params}).pipe(
+    return this.httpClient.get<any>(`${this.configService.appConfig.metadataApiUrl}/now-playing`, {params: params}).pipe(
       // Time out after 15 seconds
-      timeout(15000),
+      timeout(this.configService.appConfig.metadataFetchTimeout),
       /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
       calls for the same URL. */
       tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),

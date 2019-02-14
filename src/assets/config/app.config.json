@@ -1,0 +1,5 @@
+{
+    "metadataApiUrl": "http://localhost:3000",
+    "metadataRefreshInterval": 10000,
+    "metadataFetchTimeout": 15000
+}
