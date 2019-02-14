@@ -14,6 +14,7 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 import { AppRoutingModule } from './app-routing.module';
 import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FavoritesComponent } from './components/favorites/favorites.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
