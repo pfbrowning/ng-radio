@@ -3,7 +3,8 @@
 // Center the main app content 
 .app-content {
     max-width:1100px;
-    margin:0px auto;
+    margin:10px auto;
+    padding:0px 10px;
 }
 
 // We want the sidenav container to take up the full height of its container
@@ -34,7 +35,8 @@ mat-sidenav-container {
 }
 
 mat-sidenav {
-    background-color:darkgrey;
+    background-color:$secondaryColor;
+    border-right:2px solid $primaryColor;
     padding:0px 10px;
 }
 
@@ -58,6 +60,12 @@ mat-sidenav {
 
     a {
         text-decoration: none;
-        color: white;
+        color: $offWhite;
+        font-weight: bold;
+    }
+
+    a.active-route,
+    a:hover {
+        color:white;
     }
 }
