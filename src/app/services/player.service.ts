@@ -7,13 +7,14 @@ import { Title } from '@angular/platform-browser';
 import isBlank from 'is-blank';
 import { ConfigService } from './config.service';
 import { ErrorHandlingService } from './error-handling.service';
+import { NotificationService, Severities } from './notification.service';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
   constructor(private metadataService: MetadataService,
+    private notificationService: NotificationService,
     private configService: ConfigService,
-    private titleService: Title,
-    private errorHandlingService: ErrorHandlingService) {
+    private titleService: Title) {
       // Handle audio errors
       this.currentAudio.onerror = (error) => this.onAudioError(error);
     }
@@ -32,8 +33,7 @@ export class PlayerService {
   }
 
   private onAudioError(error) : void {
-    // Handle audio errors as non-fatal so that the user gets a toaster notification
-    this.errorHandlingService.handleError(error, 'Failed to play audio', false);
+    this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.currentAudio.src}`);
   }
 
   public playStation(station: Station) {
