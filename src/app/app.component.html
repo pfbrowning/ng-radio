@@ -2,37 +2,17 @@
   <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-top">
     <span class="title">Browninglogic Radio</span>
     <span class="fill-remaining"></span>
-    <button mat-icon-button (click)="sideNav.toggle()"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button (click)="sideNavContainer.toggle()"><mat-icon>menu</mat-icon></button>
   </mat-toolbar>
 </div>
 
 <div class="app-container">
-  <mat-sidenav-container>
-    <mat-sidenav #sideNav [opened]="!screenSizeService.smallScreen" [mode]="screenSizeService.smallScreen ? 'over' : 'side'">
-      <h1 class="sidebar-header large-screen-only">Browninglogic Radio</h1>
-      <nav class="sidebar-nav">
-        <ul class="nav-list">
-          <li>
-              <a routerLink="now-playing" routerLinkActive="active-route">Now Playing</a>
-          </li>
-          <li>
-              <a routerLink="radio-browser" routerLinkActive="active-route">Radio Browser</a>
-          </li>
-          <li>
-              <a routerLink="favorites" routerLinkActive="active-route">Favorites</a>
-          </li>
-          <li>
-            <a routerLink="stations" routerLinkActive="active-route">Stations</a>
-          </li>
-        </ul>
-      </nav>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="app-content">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <responsive-sidenav-container #sideNavContainer>
+    <sidenav sidenav></sidenav>
+    <div content class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </responsive-sidenav-container>
 </div>
 
 <player-bar></player-bar>

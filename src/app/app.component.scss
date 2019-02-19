@@ -7,11 +7,6 @@
     padding:0px 10px;
 }
 
-// We want the sidenav container to take up the full height of its container
-mat-sidenav-container {
-    height:100%;
-}
-
 // Fix the main app container above the now playing toolbar at the bottom
 .app-container {
     position: fixed;
@@ -31,41 +26,5 @@ mat-sidenav-container {
     @media (max-width:$smallScreenCutoff) {
         height:calc(100% - $toolbarHeight * 2);
         top:$toolbarHeight;
-    }
-}
-
-mat-sidenav {
-    background-color:$secondaryColor;
-    border-right:2px solid $primaryColor;
-    padding:0px 10px;
-}
-
-.sidebar-header {
-    font-size:22px;
-    color: white;
-}
-
-.sidebar-nav {
-    padding:0px 10px;
-    font-size:20px;
-
-    ul {
-        padding:0px;
-    }
-
-    li {
-        list-style-type: none;
-        margin:15px 0px;
-    }
-
-    a {
-        text-decoration: none;
-        color: $offWhite;
-        font-weight: bold;
-    }
-
-    a.active-route,
-    a:hover {
-        color:white;
     }
 }

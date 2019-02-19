@@ -24,6 +24,8 @@ import { ErrorWindowComponent } from './components/error-window/error-window.com
 import { UnhandledErrorCatcher } from './services/unhandled-error-catcher';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
+import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -37,7 +39,9 @@ export function initializeConfig(configService: ConfigService) {
     PlayerBarComponent,
     RadioBrowserComponent,
     FavoritesComponent,
-    ErrorWindowComponent
+    ErrorWindowComponent,
+    ResponsiveSidenavComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

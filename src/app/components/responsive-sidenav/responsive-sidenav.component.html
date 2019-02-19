@@ -1,0 +1,8 @@
+<mat-sidenav-container>
+  <mat-sidenav #sideNav [opened]="!smallScreen" [mode]="smallScreen ? 'over' : 'side'">
+    <ng-content select="[sidenav]"></ng-content>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content select="[content]"></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
