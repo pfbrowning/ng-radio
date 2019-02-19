@@ -47,4 +47,9 @@ table.mat-table.selectable-rows {
 
 table.mat-table {
     width:100%;
+    /* Use a fixed layout for mat-tables on small screens 
+    to prevent them from overflowing. */
+    @media (max-width:$smallScreenCutoff - 1) {
+        table-layout: fixed;
+    }
 }

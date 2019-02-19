@@ -11,16 +11,16 @@
   
 <table mat-table [dataSource]="stations" class="selectable-rows">
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef >Name</th>
+    <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let station"> {{station.name}}</td>
-  </ng-container>
-  <ng-container matColumnDef="url">
-    <th mat-header-cell *matHeaderCellDef class="large-screen-only" >URL</th>
-    <td mat-cell *matCellDef="let station" class="large-screen-only"> {{station.url}}</td>
   </ng-container>
   <ng-container matColumnDef="tags">
     <th mat-header-cell *matHeaderCellDef >Tags</th>
-    <td mat-cell *matCellDef="let station"> {{station.tags | json}}</td>
+    <td mat-cell *matCellDef="let station">
+      <ul class="tag-list">
+        <li *ngFor="let tag of station.tags">{{tag}}</li>
+      </ul>
+    </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let station; columns: columns" (click)="onRowClicked(station)"></tr>

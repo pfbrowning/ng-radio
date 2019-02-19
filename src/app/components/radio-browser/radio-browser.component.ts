@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
-import { IRadioBrowserStation } from 'src/app/models/radio-browser-station';
+import { RadioBrowserStation } from 'src/app/models/radio-browser-station';
 import { Station } from 'src/app/models/station';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
@@ -17,8 +17,8 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     private radioBrowserService: RadioBrowserService, 
     private loadingIndicatorService: LoadingIndicatorService) {}
 
-  public columns = ['name', 'url', 'tags'];
-  public stations: Array<IRadioBrowserStation>;
+  public columns = ['name', 'tags'];
+  public stations: Array<RadioBrowserStation>;
 
   public nameSearch: string;
   public nameSearch$ = new Subject<string>();
@@ -56,7 +56,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     if(this.tagSearchSub) this.tagSearchSub.unsubscribe();
   }
 
-  onRowClicked(rbStation: IRadioBrowserStation) {
+  onRowClicked(rbStation: RadioBrowserStation) {
     let station = new Station(rbStation.name, rbStation.url);
     this.playerService.playStation(station);
   }

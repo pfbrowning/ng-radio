@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { IRadioBrowserStation } from '../models/radio-browser-station';
+import { RadioBrowserStation } from '../models/radio-browser-station';
 import isBlank from 'is-blank';
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class RadioBrowserService {
   constructor(private configService: ConfigService, private httpClient: HttpClient) {}
 
-  public searchStations(name: string, tag: string): Observable<Array<IRadioBrowserStation>> {
+  public searchStations(name: string, tag: string): Observable<Array<RadioBrowserStation>> {
     let body = new HttpParams();
     // Add name param if it's not blank
     if(!isBlank(name)) {
@@ -21,7 +22,12 @@ export class RadioBrowserService {
     }
     // Always limit to the first 100 results
     body = body.set('limit', '100');
-    return this.httpClient.post<Array<IRadioBrowserStation>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`, 
-      body.toString(), { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') });
+    return this.httpClient.post<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`, 
+      body.toString(), { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).pipe(
+        map(station => station.map(station => 
+          new RadioBrowserStation(station.id, station.name, station.url, station.homepage, station.favicon, 
+            station.tags.split(','), station.country, station.language, station.bitrate)
+        ))
+      );
   }
 }
