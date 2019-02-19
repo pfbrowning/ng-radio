@@ -3,13 +3,22 @@
 .now-playing {
     font-size:12px;
     line-height:18px;
-    margin:0px 15px;
-        
+    overflow: hidden;
+    
+    @media (max-width:$smallScreenCutoff) {
+        width:calc(100% - 66px);
+    }
     @media (min-width:$smallScreenCutoff) {
-        width:400px;
+        width:50%;
     }
 }
 
-mat-toolbar {
-    justify-content: center;
+.marquee {
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    25%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
 }

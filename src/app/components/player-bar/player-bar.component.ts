@@ -29,4 +29,11 @@ export class PlayerBarComponent {
   public onPauseClicked() {
     this.playerService.pause();
   }
+
+  public isElementOverflowing(element: HTMLElement) : boolean {
+    var overflowX = element.offsetWidth < element.scrollWidth,
+        overflowY = element.offsetHeight < element.scrollHeight;
+
+    return (overflowX || overflowY);
+  }
 }
