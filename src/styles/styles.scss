@@ -20,7 +20,7 @@ table.mat-table.selectable-rows {
     }
 }
 
-@media (max-width:$smallScreenCutoff) {
+@media (max-width:$smallScreenCutoff - 1) {
     .large-screen-only {
         display: none;
     }

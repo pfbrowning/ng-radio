@@ -23,7 +23,7 @@
     
     /* On small screens, push the app container down to below the top toolbar and 
     adjust the height to account for two toolbars. */
-    @media (max-width:$smallScreenCutoff) {
+    @media (max-width:$smallScreenCutoff - 1) {
         height:calc(100% - $toolbarHeight * 2);
         top:$toolbarHeight;
     }

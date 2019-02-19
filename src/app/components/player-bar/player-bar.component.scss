@@ -5,7 +5,7 @@
     line-height:18px;
     overflow: hidden;
     
-    @media (max-width:$smallScreenCutoff) {
+    @media (max-width:$smallScreenCutoff - 1) {
         width:calc(100% - 66px);
     }
     @media (min-width:$smallScreenCutoff) {
