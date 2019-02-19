@@ -57,7 +57,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   }
 
   onRowClicked(rbStation: RadioBrowserStation) {
-    let station = new Station(rbStation.name, rbStation.url);
+    let station = new Station(rbStation.name, rbStation.url, null, rbStation.favicon);
     this.playerService.playStation(station);
   }
 }

@@ -6,10 +6,12 @@ export class NowPlaying {
     public station: string;
     public genre: string;
     public bitrate: string;
+    public iconUrl: string;
 
     public updateStation(station: Station) {
         this.station = station.title;
         this.genre = station.genre;
+        this.iconUrl = station.iconUrl;
     }
 
     public updateMetadata(metadata: Metadata) {

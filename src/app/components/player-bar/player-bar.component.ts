@@ -36,4 +36,14 @@ export class PlayerBarComponent {
 
     return (overflowX || overflowY);
   }
+
+  public onImgError(img: HTMLImageElement) {
+    /* If the image didn't load properly, then use a default
+    alternative image in its place.  However, first check to ensure
+    that it's not the default image itself that's erroring out. */
+    let altImage = '/assets/images/radio.svg';
+    if(img.src != altImage) {
+      img.src = altImage;
+    }
+  }
 }
