@@ -40,7 +40,7 @@ export class MetadataService {
       map(response => {
         switch(response.fetchsource) {
           case 'STREAM':
-            return new Metadata(response.title, response.fetchsource, response.headers['icy-bitrate'], 
+            return new Metadata(response.title, response.fetchsource, response.headers['icy-br'], 
               response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
           default:
             return new Metadata(response.title, response.fetchsource, response.bitrate);
