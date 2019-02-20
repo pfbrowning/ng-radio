@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { MetadataService } from './metadata.service';
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
-import isBlank from 'is-blank';
 import { ConfigService } from './config.service';
-import { ErrorHandlingService } from './error-handling.service';
 import { NotificationService, Severities } from './notification.service';
+import { Metadata } from '../models/metadata';
+import { cloneDeep, isEqual } from 'lodash';
+import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
@@ -17,12 +18,14 @@ export class PlayerService {
     private titleService: Title) {
       // Handle audio errors
       this.currentAudio.onerror = (error) => this.onAudioError(error);
+      this.currentAudio.onpause = (event) => this.onPause(event);
     }
 
   private currentAudio: HTMLAudioElement = new Audio();
-  public nowPlaying = new NowPlaying();
   private refreshSub: Subscription;
-  private metaFetchSub: Subscription
+  private metaFetchSub: Subscription;
+  private nowPlaying = new NowPlaying();
+  public nowPlaying$ = new BehaviorSubject<NowPlaying>(this.nowPlaying);
 
   public get stationSelected(): boolean {
     return this.currentAudio.src.length > 0;
@@ -36,20 +39,34 @@ export class PlayerService {
     this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.currentAudio.src}`);
   }
 
+  private onPause(event): void {
+    console.log('pause', event);
+    this.notificationService.notify(Severities.Info, 'Pause', 'Pause Event');
+  }
+
   public playStation(station: Station) {
     // Pause the current audio in case it's already playing something
     this.currentAudio.pause();
     // Update the current station
-    this.nowPlaying.updateStation(station);
+    this.updateStation(station);
     // Assign the new station URL
     this.currentAudio.src = station.url;
     // Play the audio and fetch the metadata
     this.play();
   }
 
+  private updateStation(station: Station) {
+    this.nowPlaying.station = station.title;
+    this.nowPlaying.genre = station.genre;
+    this.nowPlaying.iconUrl = station.iconUrl;
+    // Notify listeners of the station change
+    this.nowPlaying$.next(this.nowPlaying);
+  }
+
   private loadMetadata(setLoadingTitle: boolean = false) {
     if(setLoadingTitle) {
       this.nowPlaying.title = 'Loading Metadata...';
+      this.nowPlaying$.next(this.nowPlaying);
     }
     // If we're not still waiting on a previous metadata fetch to complete
     if(this.metaFetchSub == null || this.metaFetchSub.closed) {
@@ -58,7 +75,7 @@ export class PlayerService {
         .subscribe(
           meta => {
             // Update the "Now Playing" model with the retrieved metadata
-            this.nowPlaying.updateMetadata(meta);
+            this.updateMetadata(meta);
             // If a title was provided, then assign it as the HTML title
             if(!isBlank(this.nowPlaying.title)) {
               this.titleService.setTitle(this.nowPlaying.title);
@@ -70,10 +87,10 @@ export class PlayerService {
           },
           error => {
             /* In the case of error, gracefully set the title to 
-            "Metadata Unavilable" and log to console */
+            "Metadata Unavilable" */
             this.nowPlaying.title = 'Metadata Unavailable';
             this.titleService.setTitle(this.nowPlaying.title);
-            console.error('Error fetching metadata', error);
+            this.nowPlaying$.next(this.nowPlaying);
           }
         );
     }
@@ -96,5 +113,25 @@ export class PlayerService {
     this.currentAudio.pause();
     if(this.refreshSub) this.refreshSub.unsubscribe();
     if(this.metaFetchSub) this.metaFetchSub.unsubscribe();
+  }
+
+  public updateMetadata(metadata: Metadata) {
+    let beforeChange = cloneDeep(this.nowPlaying);
+    this.nowPlaying.title = metadata.title;
+    this.nowPlaying.bitrate = metadata.bitrate;
+    /* If we don't already have a stored station title and one
+    was provided in the metadata, then use the metadata version. */
+    if(this.nowPlaying.station == null && metadata.stationTitle != null) {
+        this.nowPlaying.station = metadata.stationTitle;
+    }
+    /* Similarly, assign genre if it was returned in
+    the metadata and doesn't already exist. */
+    if(this.nowPlaying.genre == null && metadata.genre != null) {
+        this.nowPlaying.genre = metadata.genre;
+    }
+    /* If anything changed, then notify listeners. */
+    if(!isEqual(beforeChange, this.nowPlaying)) {
+      this.nowPlaying$.next(this.nowPlaying);
+    }
   }
 }

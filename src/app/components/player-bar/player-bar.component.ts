@@ -1,33 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { NowPlaying } from 'src/app/models/now-playing';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'player-bar',
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss']
 })
-export class PlayerBarComponent {
-  constructor(private playerService: PlayerService) {}
+export class PlayerBarComponent implements OnInit, OnDestroy {
+  constructor(public playerService: PlayerService, 
+    private changeDetectorRef: ChangeDetectorRef) {}
 
-  public get nowPlaying(): NowPlaying {
-    return this.playerService.nowPlaying;
+  public nowPlaying: NowPlaying;
+  private nowPlayingSubscription: Subscription;
+
+  ngOnInit() {
+    /* Subscribe to nowPlaying changes and store them in 
+    the component for template binding. */
+    this.nowPlayingSubscription = this.playerService.nowPlaying$
+      .subscribe(nowPlaying => {
+        this.nowPlaying = nowPlaying;
+        /* Explicitly detect changes after assigning nowPlaying
+        so that the 'marquee' class can be properly assigned based
+        on whether the nowPlaying data causes an overflow. */
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
-  public get paused(): boolean {
-    return this.playerService.paused;
-  }
-
-  public get stationSelected(): boolean {
-    return this.playerService.stationSelected
-  }
-
-  public onPlayClicked() {
-    this.playerService.play();
-  }
-
-  public onPauseClicked() {
-    this.playerService.pause();
+  ngOnDestroy() {
+    if(this.nowPlayingSubscription) this.nowPlayingSubscription.unsubscribe();
   }
 
   public isElementOverflowing(element: HTMLElement) : boolean {
