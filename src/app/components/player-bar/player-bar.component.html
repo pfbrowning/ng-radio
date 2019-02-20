@@ -19,20 +19,32 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
-    <mat-icon>open_in_new</mat-icon>
-    <span>Action 1</span>
+  <button mat-menu-item [matMenuTriggerFor]="sleepTimer">
+    <mat-icon>schedule</mat-icon>
+    <span>Sleep Timer</span>
   </button>
   <button mat-menu-item>
-    <mat-icon>favorite</mat-icon>
+    <mat-icon>open_in_new</mat-icon>
     <span>Action 2</span>
   </button>
   <button mat-menu-item>
-    <mat-icon>schedule</mat-icon>
+    <mat-icon>favorite</mat-icon>
     <span>Action 3</span>
   </button>
   <button mat-menu-item>
     <mat-icon>settings_cell</mat-icon>
     <span>Action 4</span>
+  </button>
+</mat-menu>
+
+<mat-menu #sleepTimer="matMenu">
+  <button mat-menu-item>
+    <span>30 Minutes</span>
+  </button>
+  <button mat-menu-item>
+    <span>60 Minutes</span>
+  </button>
+  <button mat-menu-item>
+    <span>120 Minutes</span>
   </button>
 </mat-menu>
