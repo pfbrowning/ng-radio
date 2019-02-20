@@ -6,3 +6,8 @@
 .errorBody p {
     margin:7px;
 }
+
+.errorBody {
+    max-height: 85vh;
+    overflow:auto;
+}
