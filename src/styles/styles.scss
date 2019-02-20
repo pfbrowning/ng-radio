@@ -59,3 +59,31 @@ table.mat-table {
     max-height: 56px;
     margin:4px;
 }
+
+.flex-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex-column-third {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+@media (min-width:$smallScreenCutoff) {
+    .flex-column-third {
+        flex-basis: 33%;
+        max-width: 33%;
+    }
+}
+
+.bulletless-list {
+    list-style-type: none;
+    margin:0;
+    padding:0;
+
+    li {
+        margin:5px;
+    }
+}

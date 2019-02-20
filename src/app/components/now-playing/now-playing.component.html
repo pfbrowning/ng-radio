@@ -1,4 +1,40 @@
 <h1 class="mat-headline">Now Playing</h1>
-<p>
-  Coming soon!
-</p>
+
+<div *ngIf="playerService.stationSelected; then selected else notSelected"></div>
+
+<ng-template #selected>
+  <div class="flex-grid">
+    <div class="flex-column-third">
+      <img [src]="nowPlaying.iconUrl" class="station-icon" (error)="onImgError($event.target, '/assets/images/radio.svg')" >
+    </div>
+    <div class="flex-column-third">
+      <div class="now-playing">
+        <div class="title">{{ nowPlaying.title }}</div>
+        <div class="genre">{{ nowPlaying.station }}</div>
+        <div>{{ nowPlaying.genre }}</div>
+        <div *ngIf="nowPlaying.bitrate">Bitrate: {{ nowPlaying.bitrate }}</div>
+      </div>
+    </div>
+    <div class="flex-column-third">
+      <ul class="bulletless-list action-items">
+        <li>
+          <button mat-raised-button *ngIf="playerService.paused" (click)="playerService.play()" color="primary">Play</button>
+          <button mat-raised-button *ngIf="!playerService.paused" (click)="playerService.pause()" color="primary">Pause</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary">Action 1</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary">Action 2</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary">Action 3</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #notSelected>
+  <p>There's no media selected.  Please go to the <a [routerLink]="['/radio-browser']">Radio Browser Search</a> and find a station to play.</p>
+</ng-template>
