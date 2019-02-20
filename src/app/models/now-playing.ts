@@ -4,4 +4,5 @@ export class NowPlaying {
     public genre: string;
     public bitrate: string;
     public iconUrl: string;
+    public tags: Array<string>;
 }

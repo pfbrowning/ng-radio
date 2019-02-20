@@ -63,6 +63,7 @@ export class PlayerService {
     this.nowPlaying.station = station.title;
     this.nowPlaying.genre = station.genre;
     this.nowPlaying.iconUrl = station.iconUrl;
+    this.nowPlaying.tags = station.tags;
     // Notify listeners of the station change
     this.nowPlaying$.next(this.nowPlaying);
   }
