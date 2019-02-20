@@ -24,10 +24,12 @@ export class RadioBrowserService {
     body = body.set('limit', '100');
     return this.httpClient.post<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`, 
       body.toString(), { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).pipe(
-        map(station => station.map(station => 
-          new RadioBrowserStation(station.id, station.name, station.url, station.homepage, station.favicon, 
-            station.tags.split(','), station.country, station.language, station.bitrate)
-        ))
+        map(station => station.map(station => {
+          // If a non-empty tags string was provided, then split it into an array by the comma delimiter
+          let tags = !isBlank(station.tags) ? station.tags.split(',') : null;
+          return new RadioBrowserStation(station.id, station.name, station.url, station.homepage, station.favicon, 
+            tags, station.country, station.language, station.bitrate);
+        }))
       );
   }
 }
