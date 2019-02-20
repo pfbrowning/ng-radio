@@ -6,7 +6,7 @@
     overflow: hidden;
     
     @media (max-width:$smallScreenCutoff - 1) {
-        width:calc(100% - 66px);
+        width:calc(100% - 125px);
     }
     @media (min-width:$smallScreenCutoff) {
         width:50%;
