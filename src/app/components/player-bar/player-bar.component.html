@@ -1,11 +1,14 @@
 <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
   <ng-container *ngIf="playerService.stationSelected">
-    <img class="station-icon" [src]="nowPlaying.iconUrl" (error)="onImgError($event.target)" >
+    <img class="station-icon-thumb" [src]="nowPlaying.iconUrl" (error)="onImgError($event.target)" >
     <div class="now-playing">
       <div class="title" #title [class.marquee]="isElementOverflowing(title)">{{ nowPlaying.title }}</div>
       <div class="station" #station [class.marquee]="isElementOverflowing(station)">{{ nowPlaying.station }}</div>
     </div>
     <span class="fill-remaining"></span>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>  
     <button *ngIf="playerService.paused" mat-fab color="accent" (click)="playerService.play()">
       <mat-icon>play_arrow</mat-icon>
     </button>
@@ -14,3 +17,22 @@
     </button>
   </ng-container>
 </mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>open_in_new</mat-icon>
+    <span>Action 1</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>favorite</mat-icon>
+    <span>Action 2</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>schedule</mat-icon>
+    <span>Action 3</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>settings_cell</mat-icon>
+    <span>Action 4</span>
+  </button>
+</mat-menu>

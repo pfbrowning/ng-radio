@@ -8,6 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu'; 
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { AppComponent } from './app.component';
@@ -56,6 +57,7 @@ export function initializeConfig(configService: ConfigService) {
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatMenuModule,
     ToastModule,
     ModalManagerModule,
     NgLoadingIndicatorModule
