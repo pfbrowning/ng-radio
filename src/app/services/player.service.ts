@@ -40,8 +40,12 @@ export class PlayerService {
   }
 
   private onPause(event): void {
-    console.log('pause', event);
-    this.notificationService.notify(Severities.Info, 'Pause', 'Pause Event');
+    /* Unsubscribe from the refresh interval and from any concurrent metadata
+    fetch when the media is paused.  We want to do this in the onPause handler
+    so that we catch the "user presses the browser-provided pause button" use-case
+    as well, in addition to our own pause button. */
+    if(this.refreshSub) this.refreshSub.unsubscribe();
+    if(this.metaFetchSub) this.metaFetchSub.unsubscribe();
   }
 
   public playStation(station: Station) {
@@ -111,8 +115,6 @@ export class PlayerService {
 
   public pause() {
     this.currentAudio.pause();
-    if(this.refreshSub) this.refreshSub.unsubscribe();
-    if(this.metaFetchSub) this.metaFetchSub.unsubscribe();
   }
 
   public updateMetadata(metadata: Metadata) {
