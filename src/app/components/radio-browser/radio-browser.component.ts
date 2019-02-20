@@ -17,7 +17,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     private radioBrowserService: RadioBrowserService, 
     private loadingIndicatorService: LoadingIndicatorService) {}
 
-  public columns = ['name', 'tags'];
+  public columns = ['name', 'tags', 'icon'];
   public stations: Array<RadioBrowserStation>;
 
   public nameSearch: string;

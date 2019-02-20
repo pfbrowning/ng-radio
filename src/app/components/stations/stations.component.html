@@ -5,13 +5,13 @@
     <th mat-header-cell *matHeaderCellDef >Title</th>
     <td mat-cell *matCellDef="let station"> {{station.title}}</td>
   </ng-container>
-  <ng-container matColumnDef="url">
-    <th mat-header-cell *matHeaderCellDef >URL</th>
-    <td mat-cell *matCellDef="let station"> {{station.url}}</td>
-  </ng-container>
   <ng-container matColumnDef="genre">
     <th mat-header-cell *matHeaderCellDef >Genre</th>
     <td mat-cell *matCellDef="let station"> {{station.genre}}</td>
+  </ng-container>
+  <ng-container matColumnDef="icon">
+    <th mat-header-cell *matHeaderCellDef>Icon</th>
+    <td mat-cell *matCellDef="let station"><img *ngIf="station.iconUrl" class="station-icon-thumb" [src]="station.iconUrl"></td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let station; columns: columns" (click)="onRowClicked(station)"></tr>

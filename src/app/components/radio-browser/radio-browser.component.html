@@ -22,6 +22,10 @@
       </ul>
     </td>
   </ng-container>
+  <ng-container matColumnDef="icon">
+    <th mat-header-cell *matHeaderCellDef>Icon</th>
+    <td mat-cell *matCellDef="let station"><img *ngIf="station.favicon" class="station-icon-thumb" [src]="station.favicon" onerror="this.style.display='none'"></td>
+  </ng-container>
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let station; columns: columns" (click)="onRowClicked(station)"></tr>
 </table>
