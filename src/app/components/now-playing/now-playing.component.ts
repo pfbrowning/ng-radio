@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { NowPlaying } from 'src/app/models/now-playing';
 import { Utils } from 'src/app/utils/utils';
 import { SleepTimerService } from 'src/app/services/sleep-timer.service';
 import { NoSleepService } from 'src/app/services/no-sleep.service';
-import * as NoSleep from 'nosleep.js';
 
 @Component({
   templateUrl: './now-playing.component.html',
@@ -39,18 +38,5 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
     else {
       this.sleepTimerService.cancelTimer();
     }
-  }
-
-  private noSleep = new NoSleep();
-  public enabled$ = new BehaviorSubject<boolean>(false);
-
-  public enable(): void {
-    this.noSleep.enable();
-    this.enabled$.next(true);
-  }
-
-  public disable(): void {
-    this.noSleep.disable();
-    this.enabled$.next(false);
   }
 }
