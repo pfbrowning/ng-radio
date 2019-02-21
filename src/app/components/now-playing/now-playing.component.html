@@ -28,7 +28,8 @@
           <button mat-raised-button color="primary" [matMenuTriggerFor]="sleepTimerMenu.menu">Sleep Timer</button>
         </li>
         <li>
-          <button mat-raised-button color="primary">Action 2</button>
+          <button *ngIf="(noSleepService.enabled$ | async) == false" (click)="noSleepService.enable()" mat-raised-button color="primary">Enable Nosleep</button>
+          <button *ngIf="(noSleepService.enabled$ | async) == true" (click)="noSleepService.disable()" mat-raised-button color="primary">Disable Nosleep</button>
         </li>
         <li>
           <button mat-raised-button color="primary">Action 3</button>

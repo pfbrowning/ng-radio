@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { MetadataService } from './metadata.service';
@@ -31,6 +31,7 @@ export class PlayerService {
   private nowPlaying = new NowPlaying();
   private sleepSubscription: Subscription;
   public nowPlaying$ = new BehaviorSubject<NowPlaying>(this.nowPlaying);
+  @Output() audioPaused = new EventEmitter<void>();
 
   public get stationSelected(): boolean {
     return this.currentAudio.src.length > 0;
@@ -51,6 +52,7 @@ export class PlayerService {
     as well, in addition to our own pause button. */
     if(this.refreshSub) this.refreshSub.unsubscribe();
     if(this.metaFetchSub) this.metaFetchSub.unsubscribe();
+    this.audioPaused.emit();
   }
 
   public playStation(station: Station) {
