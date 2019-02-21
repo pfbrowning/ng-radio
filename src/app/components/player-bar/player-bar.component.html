@@ -6,8 +6,8 @@
       <div class="station" #station [class.marquee]="isElementOverflowing(station)">{{ nowPlaying.station }}</div>
     </div>
     <span class="fill-remaining"></span>
-    <div *ngIf="minutesUntilSleep != null" class="sleep-indicator large-screen-only" matTooltip="Minutes until going to sleep">
-      <mat-icon>timer</mat-icon> {{minutesUntilSleep}}
+    <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="sleep-indicator large-screen-only" matTooltip="Minutes until going to sleep">
+      <mat-icon>timer</mat-icon> {{sleepTimerService.minutesUntilSleep$ | async}}
     </div>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
@@ -22,7 +22,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="sleepTimer">
+  <button mat-menu-item [matMenuTriggerFor]="sleepTimerMenu.menu">
     <mat-icon>timer</mat-icon>
     <span>Sleep Timer</span>
   </button>
@@ -40,26 +40,4 @@
   </button>
 </mat-menu>
 
-<mat-menu #sleepTimer="matMenu">
-  <button mat-menu-item (click)="sleepTimerService.cancelTimer()">
-    <span>Cancel Timer</span>
-  </button>
-  <button mat-menu-item (click)="sleepTimerService.setTimer(1)" matTooltip="Set sleep timer for 1 minute">
-    <span>1 Minute</span>
-  </button>
-  <button mat-menu-item (click)="sleepTimerService.setTimer(5)">
-    <span>5 Minutes</span>
-  </button>
-  <button mat-menu-item (click)="sleepTimerService.setTimer(15)">
-    <span>15 Minutes</span>
-  </button>
-  <button mat-menu-item (click)="sleepTimerService.setTimer(30)">
-    <span>30 Minutes</span>
-  </button>
-  <button mat-menu-item (click)="sleepTimerService.setTimer(60)">
-    <span>60 Minutes</span>
-  </button>
-  <button mat-menu-item (click)="sleepTimerService.setTimer(120)">
-    <span>120 Minutes</span>
-  </button>
-</mat-menu>
+<sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></sleep-timer-menu>

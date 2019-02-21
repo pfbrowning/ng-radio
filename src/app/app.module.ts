@@ -28,6 +28,7 @@ import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -43,7 +44,8 @@ export function initializeConfig(configService: ConfigService) {
     FavoritesComponent,
     ErrorWindowComponent,
     ResponsiveSidenavComponent,
-    SidenavComponent
+    SidenavComponent,
+    SleepTimerMenuComponent
   ],
   imports: [
     BrowserModule,
