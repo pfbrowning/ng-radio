@@ -3,6 +3,7 @@ import { PlayerService } from 'src/app/services/player.service';
 import { NowPlaying } from 'src/app/models/now-playing';
 import { Subscription, interval, timer } from 'rxjs';
 import { SleepTimerService } from 'src/app/services/sleep-timer.service';
+import { NoSleepService } from 'src/app/services/no-sleep.service';
 
 @Component({
   selector: 'player-bar',
@@ -12,6 +13,7 @@ import { SleepTimerService } from 'src/app/services/sleep-timer.service';
 export class PlayerBarComponent implements OnInit, OnDestroy {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
+    public noSleepService: NoSleepService,
     private changeDetectorRef: ChangeDetectorRef) {}
 
   private nowPlayingSubscription: Subscription;

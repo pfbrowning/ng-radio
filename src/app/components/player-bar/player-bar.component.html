@@ -6,6 +6,7 @@
       <div class="station" #station [class.marquee]="isElementOverflowing(station)">{{ nowPlaying.station }}</div>
     </div>
     <span class="fill-remaining"></span>
+    <mat-icon *ngIf="(noSleepService.enabled$ | async) == true" class="no-sleep-indicator large-screen-only" matTooltip="Nosleep is enabled">settings_cell</mat-icon>
     <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="sleep-indicator large-screen-only" matTooltip="Minutes until going to sleep">
       <mat-icon>timer</mat-icon> {{sleepTimerService.minutesUntilSleep$ | async}}
     </div>
@@ -26,6 +27,14 @@
     <mat-icon>timer</mat-icon>
     <span>Sleep Timer</span>
   </button>
+  <button *ngIf="(noSleepService.enabled$ | async) == false" (click)="noSleepService.enable()" mat-menu-item>
+    <mat-icon>settings_cell</mat-icon>
+    <span>Enable Nosleep</span>
+  </button>
+  <button *ngIf="(noSleepService.enabled$ | async) == true" (click)="noSleepService.disable()" mat-menu-item>
+    <mat-icon>settings_cell</mat-icon>
+    <span>Disable Nosleep</span>
+  </button>
   <button mat-menu-item>
     <mat-icon>open_in_new</mat-icon>
     <span>Action 2</span>
@@ -33,10 +42,6 @@
   <button mat-menu-item>
     <mat-icon>favorite</mat-icon>
     <span>Action 3</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>settings_cell</mat-icon>
-    <span>Action 4</span>
   </button>
 </mat-menu>
 
