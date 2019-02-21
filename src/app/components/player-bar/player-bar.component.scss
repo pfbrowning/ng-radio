@@ -13,6 +13,18 @@
     }
 }
 
+.sleep-indicator {
+    align-items: center;
+    
+    @media (min-width:$smallScreenCutoff) {
+        display: flex;
+    }
+
+    mat-icon {
+        margin-right: 3px;
+    }
+}
+
 .marquee {
     animation: marquee 10s linear infinite;
 }

@@ -9,22 +9,27 @@ import { NotificationService, Severities } from './notification.service';
 import { Metadata } from '../models/metadata';
 import { cloneDeep, isEqual } from 'lodash';
 import isBlank from 'is-blank';
+import { SleepTimerService } from './sleep-timer.service';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
   constructor(private metadataService: MetadataService,
     private notificationService: NotificationService,
+    private sleepTimerService: SleepTimerService,
     private configService: ConfigService,
     private titleService: Title) {
       // Handle audio errors
       this.currentAudio.onerror = (error) => this.onAudioError(error);
       this.currentAudio.onpause = (event) => this.onPause(event);
+      // Pause the playing audio when the sleep timer does its thing
+      this.sleepSubscription = this.sleepTimerService.sleep.subscribe(() => this.pause());
     }
 
   private currentAudio: HTMLAudioElement = new Audio();
   private refreshSub: Subscription;
   private metaFetchSub: Subscription;
   private nowPlaying = new NowPlaying();
+  private sleepSubscription: Subscription;
   public nowPlaying$ = new BehaviorSubject<NowPlaying>(this.nowPlaying);
 
   public get stationSelected(): boolean {

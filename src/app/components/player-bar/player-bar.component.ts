@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { NowPlaying } from 'src/app/models/now-playing';
-import { Subscription } from 'rxjs';
+import { Subscription, interval, timer } from 'rxjs';
+import { SleepTimerService } from 'src/app/services/sleep-timer.service';
 
 @Component({
   selector: 'player-bar',
@@ -9,11 +10,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./player-bar.component.scss']
 })
 export class PlayerBarComponent implements OnInit, OnDestroy {
-  constructor(public playerService: PlayerService, 
+  constructor(public playerService: PlayerService,
+    public sleepTimerService: SleepTimerService,
     private changeDetectorRef: ChangeDetectorRef) {}
 
-  public nowPlaying: NowPlaying;
   private nowPlayingSubscription: Subscription;
+  private minutesToSleepInterval: Subscription;
+  private sleepTimerSet: Subscription;
+  private sleepTimerCancelled: Subscription;
+  private sleepTimerEmitted: Subscription;
+  public nowPlaying: NowPlaying;
+  public minutesUntilSleep: number;
 
   ngOnInit() {
     /* Subscribe to nowPlaying changes and store them in 
@@ -26,10 +33,34 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
         on whether the nowPlaying data causes an overflow. */
         this.changeDetectorRef.detectChanges();
       });
+
+    if(this.sleepTimerService.sleepTime != null) {
+      this.initSleepInterval();
+    }
+
+    // Subscribe to the sleep timer events that we care about
+    this.sleepTimerSet = this.sleepTimerService.timerSet.subscribe(() => this.initSleepInterval());
+    this.sleepTimerCancelled = this.sleepTimerService.timerCancelled.subscribe(() => this.clearSleepInterval());
+    this.sleepTimerEmitted = this.sleepTimerService.sleep.subscribe(() => this.clearSleepInterval());
+  }
+
+  // Bind minutesUntilSleep and then update it once each minute
+  private initSleepInterval(): void {
+      this.minutesUntilSleep = this.sleepTimerService.minutesUntilSleep;
+      this.minutesToSleepInterval = timer(1000, 60000).subscribe(() => this.minutesUntilSleep = this.sleepTimerService.minutesUntilSleep);
+  }
+
+  private clearSleepInterval(): void {
+    this.minutesUntilSleep = null;
+    this.minutesToSleepInterval.unsubscribe();
   }
 
   ngOnDestroy() {
     if(this.nowPlayingSubscription) this.nowPlayingSubscription.unsubscribe();
+    if(this.minutesToSleepInterval) this.minutesToSleepInterval.unsubscribe();
+    if(this.sleepTimerSet) this.sleepTimerSet.unsubscribe();
+    if(this.sleepTimerCancelled) this.sleepTimerCancelled.unsubscribe();
+    if(this.sleepTimerEmitted) this.sleepTimerEmitted.unsubscribe();
   }
 
   public isElementOverflowing(element: HTMLElement) : boolean {
