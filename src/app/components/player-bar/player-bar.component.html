@@ -6,8 +6,10 @@
       <div class="station" #station [class.marquee]="isElementOverflowing(station)">{{ nowPlaying.station }}</div>
     </div>
     <span class="fill-remaining"></span>
-    <mat-icon *ngIf="(noSleepService.enabled$ | async) == true" class="no-sleep-indicator large-screen-only" matTooltip="Nosleep is enabled">settings_cell</mat-icon>
-    <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="sleep-indicator large-screen-only" matTooltip="Minutes until going to sleep">
+    <div *ngIf="(noSleepService.enabled$ | async) == true" class="indicator-icon large-screen-only" matTooltip="Nosleep is enabled">
+      <mat-icon>settings_cell</mat-icon>
+    </div>
+    <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="indicator-icon large-screen-only" matTooltip="Minutes until going to sleep">
       <mat-icon>timer</mat-icon> {{sleepTimerService.minutesUntilSleep$ | async}}
     </div>
     <button mat-icon-button [matMenuTriggerFor]="menu">
