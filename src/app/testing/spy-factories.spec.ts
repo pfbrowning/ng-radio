@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs';
 import { NowPlaying } from '../models/now-playing';
+import { EventEmitter } from '@angular/core';
 
 export class SpyFactories {
   public static CreateConfigServiceSpy(): any {
@@ -21,6 +22,7 @@ export class SpyFactories {
   public static CreatePlayerServiceSpy(): any {
     const spy = jasmine.createSpyObj('playerService', ['playStation']);
     spy['nowPlaying$'] = new Subject<NowPlaying>();
+    spy['audioPaused'] = new EventEmitter<void>();
     return spy;
   }
 
@@ -31,6 +33,11 @@ export class SpyFactories {
 
   public static CreateRadioBrowserServiceSpy(): any {
     const spy = jasmine.createSpyObj('radioBrowser', ['searchStations']);
+    return spy;
+  }
+
+  public static CreateNotificationServiceSpy(): any {
+    const spy = jasmine.createSpyObj('notificationServiceSpy', ['notify']);
     return spy;
   }
 }

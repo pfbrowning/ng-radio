@@ -21,6 +21,7 @@ import { MetadataService } from './services/metadata.service';
 import { RadioBrowserService } from './services/radio-browser.service';
 import { MessageService } from 'primeng/api';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -42,7 +43,8 @@ describe('AppComponent', () => {
         SidenavComponent,
         ResponsiveSidenavComponent,
         PlayerBarComponent,
-        ErrorWindowComponent
+        ErrorWindowComponent,
+        SleepTimerMenuComponent
       ],
       providers: [
         { provide: ConfigService, useValue: SpyFactories.CreateConfigServiceSpy() },

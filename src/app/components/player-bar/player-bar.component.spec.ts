@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { SpyFactories } from 'src/app/testing/spy-factories.spec';
 import { PlayerService } from 'src/app/services/player.service';
+import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
+import { NotificationService } from 'src/app/services/notification.service';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -13,7 +15,10 @@ describe('PlayerBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerBarComponent ],
+      declarations: [
+        PlayerBarComponent,
+        SleepTimerMenuComponent
+      ],
       imports: [
         MatMenuModule,
         MatToolbarModule,
@@ -21,7 +26,8 @@ describe('PlayerBarComponent', () => {
         MatIconModule
       ],
       providers: [
-        { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() }
+        { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
+        { provide: NotificationService, useValue: SpyFactories.CreateNotificationServiceSpy() }
       ]
     })
     .compileComponents();
