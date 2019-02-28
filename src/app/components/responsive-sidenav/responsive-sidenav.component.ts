@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav'; 
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router, Event, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./responsive-sidenav.component.scss']
 })
 export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
-  @Input() screenSizeCutoff: number = 800;
+  @Input() screenSizeCutoff = 800;
   @ViewChild('sideNav') sideNav: MatSidenav;
   private routerEventsSub: Subscription;
 
@@ -20,14 +20,14 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.routerEventsSub) this.routerEventsSub.unsubscribe();
+    if (this.routerEventsSub) { this.routerEventsSub.unsubscribe(); }
   }
 
   private onRouterEvent(routerEvent: Event) {
     /* Hide the sidenav on NavigationStart on small screens because
     it's expected that the user clicked one of the nav links in the
     expanded sidebar menu. */
-    if(routerEvent instanceof NavigationStart && this.smallScreen) {
+    if (routerEvent instanceof NavigationStart && this.smallScreen) {
       this.sideNav.close();
     }
   }

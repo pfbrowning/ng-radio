@@ -13,8 +13,8 @@ import isBlank from 'is-blank';
   styleUrls: ['./radio-browser.component.scss']
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
-  constructor(private playerService: PlayerService, 
-    private radioBrowserService: RadioBrowserService, 
+  constructor(private playerService: PlayerService,
+    private radioBrowserService: RadioBrowserService,
     private loadingIndicatorService: LoadingIndicatorService) {}
 
   public columns = ['name', 'tags', 'icon'];
@@ -39,7 +39,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       switchMap(() => {
         // If no search criteria have been entered, then skip the search and just return an empty array
-        if(isBlank(this.nameSearch) && isBlank(this.tagSearch)) {
+        if (isBlank(this.nameSearch) && isBlank(this.tagSearch)) {
           return of([]);
         }
         // If search criteria were provided, then show the loader and perform the search
@@ -52,12 +52,12 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.nameSearchSub) this.nameSearchSub.unsubscribe();
-    if(this.tagSearchSub) this.tagSearchSub.unsubscribe();
+    if (this.nameSearchSub) { this.nameSearchSub.unsubscribe(); }
+    if (this.tagSearchSub) { this.tagSearchSub.unsubscribe(); }
   }
 
   onRowClicked(rbStation: RadioBrowserStation) {
-    let station = new Station(rbStation.name, rbStation.url, null, rbStation.favicon, rbStation.tags);
+    const station = new Station(rbStation.name, rbStation.url, null, rbStation.favicon, rbStation.tags);
     this.playerService.playStation(station);
   }
 }

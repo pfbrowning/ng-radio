@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // If the root app config failed to load before bootstrap, then show an error message
-    if (this.configService.initialized == false) {
+    if (this.configService.initialized === false) {
       this.errorHandlingService.handleError(this.configService.initializationError, 'Failed to load configuration');
     }
   }

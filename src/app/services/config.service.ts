@@ -7,7 +7,7 @@ import { IAppConfig } from '../models/app-config';
 export class ConfigService {
   constructor(private httpClient: HttpClient) {}
 
-  private _initialized: boolean = false;
+  private _initialized = false;
   private _initializationError: any = null;
   private _appConfig: IAppConfig;
 

@@ -13,21 +13,21 @@ export class SleepTimerService {
   public minutesUntilSleep$ = new BehaviorSubject<number>(null);
   @Output() sleep = new EventEmitter<void>();
 
-  private get minutesUntilSleep() : number {
-    if(this.sleepTime != null) {
+  private get minutesUntilSleep(): number {
+    if (this.sleepTime != null) {
       return this.sleepTime.diff(moment(), 'minutes');
     }
     return null;
   }
 
-  public setTimer(minutes: number) : void {
+  public setTimer(minutes: number): void {
     // Clear the subscription & date from any previous timers
     this.clearTimer();
     // Set the sleepTime to the specified number of minutes from the current date
     this.sleepTime = moment().add(minutes, 'minutes');
     // Call goToSleep in the specified number of minutes
     this.sleepTimerSubscription = timer(minutes * 60000).subscribe(() => this.goToSleep());
-    /* Wait 1 ms so that we're not still at the very start of the interval (we want the first value 
+    /* Wait 1 ms so that we're not still at the very start of the interval (we want the first value
     emitted to be minutes - 1 rather than minutes), then update minutesUntilSleep$ once each minute. */
     this.minuteInterval = timer(1, 60000).subscribe(() => this.minutesUntilSleep$.next(this.minutesUntilSleep));
     // Notify the user that the sleep timer has been set.
@@ -40,15 +40,15 @@ export class SleepTimerService {
     this.notificationService.notify(Severities.Success, 'Sleep Timer Cancelled', `Sleep timer cancelled.`);
   }
 
-  private clearTimer() : void {
+  private clearTimer(): void {
     // Unsubscribe and clear everything without performing any notifications or emitting any events
-    if(this.sleepTimerSubscription) this.sleepTimerSubscription.unsubscribe();
-    if(this.minuteInterval) this.minuteInterval.unsubscribe();
+    if (this.sleepTimerSubscription) { this.sleepTimerSubscription.unsubscribe(); }
+    if (this.minuteInterval) { this.minuteInterval.unsubscribe(); }
     this.sleepTime = null;
     this.minutesUntilSleep$.next(null);
   }
 
-  private goToSleep() : void {
+  private goToSleep(): void {
     // Clear out the timer
     this.clearTimer();
     // Emit the actual sleep event

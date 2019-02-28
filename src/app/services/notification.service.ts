@@ -10,9 +10,9 @@ export class NotificationService {
   }
 }
 
-export enum Severities { 
+export enum Severities {
   Success = 'success',
-  Info = 'info', 
-  Warn = 'warn', 
+  Info = 'info',
+  Warn = 'warn',
   Error = 'error'
 }

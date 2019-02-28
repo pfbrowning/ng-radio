@@ -22,11 +22,11 @@ export class MetadataService {
    */
   public getMetadata(url: string): Observable<Metadata> {
     // Encode the URL before sending it via query param
-    let encodedUrl = encodeURIComponent(url);
+    const encodedUrl = encodeURIComponent(url);
     let params = new HttpParams();
     params = params.append('url', encodedUrl);
     // If we already know the stream type, then add the 'method' querystring param
-    if(this.streamTypes.has(encodedUrl)) {
+    if (this.streamTypes.has(encodedUrl)) {
       params = params.append('method', this.streamTypes.get(encodedUrl));
     }
     // GET now-playing data from the API
@@ -38,9 +38,9 @@ export class MetadataService {
       tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),
       // Map the returned response to a cleaner metadata model
       map(response => {
-        switch(response.fetchsource) {
+        switch (response.fetchsource) {
           case 'STREAM':
-            return new Metadata(response.title, response.fetchsource, response.headers['icy-br'], 
+            return new Metadata(response.title, response.fetchsource, response.headers['icy-br'],
               response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
           default:
             return new Metadata(response.title, response.fetchsource, response.bitrate);

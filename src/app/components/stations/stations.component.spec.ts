@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTableModule } from '@angular/material/table'; 
+import { MatTableModule } from '@angular/material/table';
 import { StationsComponent } from './stations.component';
 import { PlayerService } from 'src/app/services/player.service';
 import { SpyFactories } from 'src/app/testing/spy-factories.spec';

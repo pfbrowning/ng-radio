@@ -20,7 +20,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   public nowPlaying: NowPlaying;
 
   ngOnInit() {
-    /* Subscribe to nowPlaying changes and store them in 
+    /* Subscribe to nowPlaying changes and store them in
     the component for template binding. */
     this.nowPlayingSubscription = this.playerService.nowPlaying$
       .subscribe(nowPlaying => {
@@ -33,11 +33,11 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.nowPlayingSubscription) this.nowPlayingSubscription.unsubscribe();
+    if (this.nowPlayingSubscription) { this.nowPlayingSubscription.unsubscribe(); }
   }
 
-  public isElementOverflowing(element: HTMLElement) : boolean {
-    var overflowX = element.offsetWidth < element.scrollWidth,
+  public isElementOverflowing(element: HTMLElement): boolean {
+    const overflowX = element.offsetWidth < element.scrollWidth,
         overflowY = element.offsetHeight < element.scrollHeight;
 
     return (overflowX || overflowY);
@@ -47,17 +47,16 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     /* If the image didn't load properly, then use a default
     alternative image in its place.  However, first check to ensure
     that it's not the default image itself that's erroring out. */
-    let altImage = '/assets/images/radio.svg';
-    if(img.src != altImage) {
+    const altImage = '/assets/images/radio.svg';
+    if (img.src !== altImage) {
       img.src = altImage;
     }
   }
 
   public onTimerSelected(length: number) {
-    if(length != null) {
+    if (length != null) {
       this.sleepTimerService.setTimer(length);
-    }
-    else {
+    } else {
       this.sleepTimerService.cancelTimer();
     }
   }

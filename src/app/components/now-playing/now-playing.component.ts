@@ -24,7 +24,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.nowPlayingSubscription) this.nowPlayingSubscription.unsubscribe();
+    if (this.nowPlayingSubscription) { this.nowPlayingSubscription.unsubscribe(); }
   }
 
   public onImgError(img: HTMLImageElement, altSrc: string) {
@@ -32,10 +32,9 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   }
 
   public onTimerSelected(length: number) {
-    if(length != null) {
+    if (length != null) {
       this.sleepTimerService.setTimer(length);
-    }
-    else {
+    } else {
       this.sleepTimerService.cancelTimer();
     }
   }

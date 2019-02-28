@@ -41,7 +41,7 @@ export class PlayerService {
     return this.currentAudio.paused;
   }
 
-  private onAudioError(error) : void {
+  private onAudioError(error): void {
     this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.currentAudio.src}`);
   }
 
@@ -50,8 +50,8 @@ export class PlayerService {
     fetch when the media is paused.  We want to do this in the onPause handler
     so that we catch the "user presses the browser-provided pause button" use-case
     as well, in addition to our own pause button. */
-    if(this.refreshSub) this.refreshSub.unsubscribe();
-    if(this.metaFetchSub) this.metaFetchSub.unsubscribe();
+    if (this.refreshSub) { this.refreshSub.unsubscribe(); }
+    if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
     this.audioPaused.emit();
   }
 
@@ -76,12 +76,12 @@ export class PlayerService {
   }
 
   private loadMetadata(setLoadingTitle: boolean = false) {
-    if(setLoadingTitle) {
+    if (setLoadingTitle) {
       this.nowPlaying.title = 'Loading Metadata...';
       this.nowPlaying$.next(this.nowPlaying);
     }
     // If we're not still waiting on a previous metadata fetch to complete
-    if(this.metaFetchSub == null || this.metaFetchSub.closed) {
+    if (this.metaFetchSub == null || this.metaFetchSub.closed) {
       // Fetch updated metadata from the API
       this.metaFetchSub = this.metadataService.getMetadata(this.currentAudio.src)
         .subscribe(
@@ -89,16 +89,14 @@ export class PlayerService {
             // Update the "Now Playing" model with the retrieved metadata
             this.updateMetadata(meta);
             // If a title was provided, then assign it as the HTML title
-            if(!isBlank(this.nowPlaying.title)) {
+            if (!isBlank(this.nowPlaying.title)) {
               this.titleService.setTitle(this.nowPlaying.title);
-            }
-            // If no title was provided, then just use "Browninglogic Radio"
-            else {
+            } else {
               this.titleService.setTitle('Browninglogic Radio');
             }
           },
           error => {
-            /* In the case of error, gracefully set the title to 
+            /* In the case of error, gracefully set the title to
             "Metadata Unavilable" */
             this.nowPlaying.title = 'Metadata Unavailable';
             this.titleService.setTitle(this.nowPlaying.title);
@@ -111,12 +109,12 @@ export class PlayerService {
   public play() {
     // Play the audio
     this.currentAudio.play();
-    /* On the initial load of the station, load the metadata 
+    /* On the initial load of the station, load the metadata
     and set the title to "Loading..." until it gets here. */
     this.loadMetadata(true);
-    /* Unsubscribe if there's still an active refresh interval 
+    /* Unsubscribe if there's still an active refresh interval
     subscription from the previously-played station. */
-    if(this.refreshSub) this.refreshSub.unsubscribe();
+    if (this.refreshSub) { this.refreshSub.unsubscribe(); }
     // Refresh the "Now Playing" metadata once every few seconds.
     this.refreshSub = interval(this.configService.appConfig.metadataRefreshInterval).subscribe(() => this.loadMetadata());
   }
@@ -126,21 +124,21 @@ export class PlayerService {
   }
 
   public updateMetadata(metadata: Metadata) {
-    let beforeChange = cloneDeep(this.nowPlaying);
+    const beforeChange = cloneDeep(this.nowPlaying);
     this.nowPlaying.title = metadata.title;
     this.nowPlaying.bitrate = metadata.bitrate;
     /* If we don't already have a stored station title and one
     was provided in the metadata, then use the metadata version. */
-    if(this.nowPlaying.station == null && metadata.stationTitle != null) {
+    if (this.nowPlaying.station == null && metadata.stationTitle != null) {
         this.nowPlaying.station = metadata.stationTitle;
     }
     /* Similarly, assign genre if it was returned in
     the metadata and doesn't already exist. */
-    if(this.nowPlaying.genre == null && metadata.genre != null) {
+    if (this.nowPlaying.genre == null && metadata.genre != null) {
         this.nowPlaying.genre = metadata.genre;
     }
     /* If anything changed, then notify listeners. */
-    if(!isEqual(beforeChange, this.nowPlaying)) {
+    if (!isEqual(beforeChange, this.nowPlaying)) {
       this.nowPlaying$.next(this.nowPlaying);
     }
   }
