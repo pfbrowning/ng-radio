@@ -5,7 +5,7 @@ import { AppError } from 'src/app/models/app-error';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 
 @Component({
-  selector: 'error-window',
+  selector: 'blr-error-window',
   templateUrl: './error-window.component.html',
   styleUrls: ['./error-window.component.scss']
 })

@@ -7,16 +7,16 @@
 </div>
 
 <div class="app-container">
-  <responsive-sidenav-container #sideNavContainer>
-    <sidenav sidenav></sidenav>
+  <blr-responsive-sidenav-container #sideNavContainer>
+    <blr-side-nav sidenav></blr-side-nav>
     <div content class="app-content">
       <router-outlet></router-outlet>
     </div>
-  </responsive-sidenav-container>
+  </blr-responsive-sidenav-container>
 </div>
 
-<player-bar></player-bar>
+<blr-player-bar></blr-player-bar>
 
-<error-window></error-window>
+<blr-error-window></blr-error-window>
 <nli-loading-indicator></nli-loading-indicator>
 <p-toast></p-toast>

@@ -3,7 +3,7 @@ import { ConfigService } from './services/config.service';
 import { ErrorHandlingService } from './services/error-handling.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'blr-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

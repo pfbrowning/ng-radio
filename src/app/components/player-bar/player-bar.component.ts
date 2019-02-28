@@ -6,7 +6,7 @@ import { SleepTimerService } from 'src/app/services/sleep-timer.service';
 import { NoSleepService } from 'src/app/services/no-sleep.service';
 
 @Component({
-  selector: 'player-bar',
+  selector: 'blr-player-bar',
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss']
 })

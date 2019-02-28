@@ -4,7 +4,7 @@ import { Router, Event, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'responsive-sidenav-container',
+  selector: 'blr-responsive-sidenav-container',
   templateUrl: './responsive-sidenav.component.html',
   styleUrls: ['./responsive-sidenav.component.scss']
 })

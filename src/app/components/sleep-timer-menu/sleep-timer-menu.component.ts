@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/cor
 import { MatMenu } from '@angular/material/menu';
 
 @Component({
-  selector: 'sleep-timer-menu',
+  selector: 'blr-sleep-timer-menu',
   templateUrl: './sleep-timer-menu.component.html',
   styleUrls: ['./sleep-timer-menu.component.scss']
 })
