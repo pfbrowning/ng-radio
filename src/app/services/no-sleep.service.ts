@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlayerService } from './player.service';
 import * as NoSleep from 'nosleep.js';
+import { NoSleepToken } from '../injection-tokens';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
  * video in the background. */
 @Injectable({providedIn: 'root'})
 export class NoSleepService {
-  constructor(private playerService: PlayerService, private noSleep: NoSleep) {
+  constructor(private playerService: PlayerService, @Inject(NoSleepToken) private noSleep: NoSleep) {
     // Disable nosleep when the audio stops, regardless of why
     this.playerService.audioPaused.subscribe(() => this.disable());
   }

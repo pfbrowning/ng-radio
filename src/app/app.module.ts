@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler, InjectionToken } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +30,7 @@ import { ResponsiveSidenavComponent } from './components/responsive-sidenav/resp
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import * as NoSleep from 'nosleep.js';
+import { AudioElementToken, NoSleepToken } from './injection-tokens';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -70,8 +71,8 @@ export function initializeConfig(configService: ConfigService) {
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
-    { provide: NoSleep, useValue: new NoSleep() },
-    { provide: HTMLAudioElement, useValue: new Audio() },
+    { provide: NoSleepToken, useValue: new NoSleep() },
+    { provide: AudioElementToken, useValue: new Audio() },
     MessageService
   ],
   bootstrap: [AppComponent]

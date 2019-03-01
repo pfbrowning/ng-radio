@@ -3,6 +3,7 @@ import { NoSleepService } from './no-sleep.service';
 import { PlayerService } from './player.service';
 import { SpyFactories } from '../testing/spy-factories.spec';
 import * as NoSleep from 'nosleep.js';
+import { NoSleepToken } from '../injection-tokens';
 
 describe('NoSleepService', () => {
   let enabledSpy: jasmine.Spy;
@@ -17,7 +18,7 @@ describe('NoSleepService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: PlayerService, useValue: playerServiceSpy },
-        { provide: NoSleep, useValue: noSleepSpy }
+        { provide: NoSleepToken, useValue: noSleepSpy }
       ]
     });
 
