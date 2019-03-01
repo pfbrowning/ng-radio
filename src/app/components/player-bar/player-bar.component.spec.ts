@@ -8,6 +8,7 @@ import { SpyFactories } from 'src/app/testing/spy-factories.spec';
 import { PlayerService } from 'src/app/services/player.service';
 import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
 import { NotificationService } from 'src/app/services/notification.service';
+import { NoSleepService } from 'src/app/services/no-sleep.service';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -27,7 +28,8 @@ describe('PlayerBarComponent', () => {
       ],
       providers: [
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
-        { provide: NotificationService, useValue: SpyFactories.CreateNotificationServiceSpy() }
+        { provide: NotificationService, useValue: SpyFactories.CreateNotificationServiceSpy() },
+        { provide: NoSleepService, useValue: SpyFactories.CreateNoSleepServiceSpy() }
       ]
     })
     .compileComponents();

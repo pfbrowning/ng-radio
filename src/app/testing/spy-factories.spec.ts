@@ -9,7 +9,7 @@ export class SpyFactories {
       'metadataApiUrl': 'test.com',
       'radioBrowserApiUrl': 'test.com',
       'metadataRefreshInterval': 0,
-      'metadataFetchTimeout': 0
+      'metadataFetchTimeout': 10
     };
     spy['initialized'] = true;
     return spy;
@@ -38,6 +38,23 @@ export class SpyFactories {
 
   public static CreateNotificationServiceSpy(): any {
     const spy = jasmine.createSpyObj('notificationServiceSpy', ['notify']);
+    return spy;
+  }
+
+  public static CreateNoSleepSpy(): any {
+    return jasmine.createSpyObj('noSleep', ['enable', 'disable']);
+  }
+
+  public static CreateNoSleepServiceSpy(): any {
+    return jasmine.createSpyObj('noSleepService', ['enable', 'disable']);
+  }
+
+  public static CreateMessageServiceSpy(): any {
+    return jasmine.createSpyObj('messageServiceSpy', ['add']);
+  }
+
+  public static CreateHTMLAudioElementSpy(): any {
+    const spy = jasmine.createSpyObj('audio', ['play']);
     return spy;
   }
 }

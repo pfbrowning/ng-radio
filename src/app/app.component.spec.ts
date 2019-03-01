@@ -19,9 +19,10 @@ import { ErrorHandlingService } from './services/error-handling.service';
 import { PlayerService } from './services/player.service';
 import { MetadataService } from './services/metadata.service';
 import { RadioBrowserService } from './services/radio-browser.service';
-import { MessageService } from 'primeng/api';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
+import { NoSleepService } from './services/no-sleep.service';
+import { MessageService } from 'primeng/api';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -52,7 +53,8 @@ describe('AppComponent', () => {
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
         { provide: MetadataService, useValue: SpyFactories.CreateMetadataServiceSpy() },
         { provide: RadioBrowserService, useValue: SpyFactories.CreateRadioBrowserServiceSpy() },
-        MessageService
+        { provide: NoSleepService, useValue: SpyFactories.CreateNoSleepServiceSpy() },
+        { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
       ]
     }).compileComponents();
   }));

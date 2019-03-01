@@ -5,6 +5,8 @@ import { tap, map, timeout } from 'rxjs/operators';
 import { Metadata } from '../models/metadata';
 import { ConfigService } from './config.service';
 
+/** Fetches "Now Playing" metadata for the specified radio URL from
+ * the configured radio metadata API */
 @Injectable({providedIn: 'root'})
 export class MetadataService {
   constructor(private httpClient: HttpClient, private configService: ConfigService) {}
@@ -31,7 +33,7 @@ export class MetadataService {
     }
     // GET now-playing data from the API
     return this.httpClient.get<any>(`${this.configService.appConfig.metadataApiUrl}/now-playing`, {params: params}).pipe(
-      // Time out after 15 seconds
+      // Time out after a configured amount of time
       timeout(this.configService.appConfig.metadataFetchTimeout),
       /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
       calls for the same URL. */

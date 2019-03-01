@@ -29,6 +29,7 @@ import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
+import * as NoSleep from 'nosleep.js';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -69,6 +70,8 @@ export function initializeConfig(configService: ConfigService) {
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
+    { provide: NoSleep, useValue: new NoSleep() },
+    { provide: HTMLAudioElement, useValue: new Audio() },
     MessageService
   ],
   bootstrap: [AppComponent]
