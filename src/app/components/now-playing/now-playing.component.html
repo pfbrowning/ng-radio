@@ -24,8 +24,8 @@
     <div class="flex-column-third">
       <ul class="bulletless-list action-items">
         <li>
-          <button mat-raised-button *ngIf="playerService.paused" (click)="playerService.play()" color="primary">Play</button>
-          <button mat-raised-button *ngIf="!playerService.paused" (click)="playerService.pause()" color="primary">Pause</button>
+          <button mat-raised-button *ngIf="playerService.isPaused" (click)="playerService.play()" color="primary">Play</button>
+          <button mat-raised-button *ngIf="!playerService.isPaused" (click)="playerService.pause()" color="primary">Pause</button>
         </li>
         <li>
           <button mat-raised-button color="primary" [matMenuTriggerFor]="sleepTimerMenu.menu">Sleep Timer</button>

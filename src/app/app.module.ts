@@ -30,7 +30,9 @@ import { ResponsiveSidenavComponent } from './components/responsive-sidenav/resp
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import * as NoSleep from 'nosleep.js';
-import { AudioElementToken, NoSleepToken } from './injection-tokens';
+import { NoSleepToken } from './injection-tokens/no-sleep-token';
+import { AudioElementToken } from './injection-tokens/audio-element-token';
+import { AudioElement } from './models/audio-element';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -72,7 +74,7 @@ export function initializeConfig(configService: ConfigService) {
     { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
     { provide: NoSleepToken, useValue: new NoSleep() },
-    { provide: AudioElementToken, useValue: new Audio() },
+    { provide: AudioElementToken, useValue: new AudioElement() },
     MessageService
   ],
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlayerService } from './player.service';
 import * as NoSleep from 'nosleep.js';
-import { NoSleepToken } from '../injection-tokens';
+import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
  * video in the background. */

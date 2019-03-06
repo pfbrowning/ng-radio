@@ -3,7 +3,7 @@ import { NoSleepService } from './no-sleep.service';
 import { PlayerService } from './player.service';
 import { SpyFactories } from '../testing/spy-factories.spec';
 import * as NoSleep from 'nosleep.js';
-import { NoSleepToken } from '../injection-tokens';
+import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 
 describe('NoSleepService', () => {
   let enabledSpy: jasmine.Spy;

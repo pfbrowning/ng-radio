@@ -52,9 +52,4 @@ export class SpyFactories {
   public static CreateMessageServiceSpy(): any {
     return jasmine.createSpyObj('messageServiceSpy', ['add']);
   }
-
-  public static CreateHTMLAudioElementSpy(): any {
-    const spy = jasmine.createSpyObj('audio', ['play']);
-    return spy;
-  }
 }
