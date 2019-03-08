@@ -1,6 +1,7 @@
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { NowPlaying } from '../models/now-playing';
 import { EventEmitter } from '@angular/core';
+import { Metadata } from '../models/metadata';
 
 export class SpyFactories {
   public static CreateConfigServiceSpy(): any {
@@ -8,7 +9,7 @@ export class SpyFactories {
     spy['appConfig'] = {
       'metadataApiUrl': 'test.com',
       'radioBrowserApiUrl': 'test.com',
-      'metadataRefreshInterval': 0,
+      'metadataRefreshInterval': 15000,
       'metadataFetchTimeout': 10
     };
     spy['initialized'] = true;
@@ -28,6 +29,7 @@ export class SpyFactories {
 
   public static CreateMetadataServiceSpy(): any {
     const spy = jasmine.createSpyObj('metadataService', ['getMetadata']);
+    spy.getMetadata.and.returnValue(of(new Metadata('dummy title', 'dummy fetchsource')));
     return spy;
   }
 

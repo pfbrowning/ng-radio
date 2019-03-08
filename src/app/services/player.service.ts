@@ -86,7 +86,7 @@ export class PlayerService {
   }
 
   /** Initiates a new subscription to getMetadata and updates the stored 'now playing'
-   * info accordingly upon succesful metadata retrieval*/
+   * info accordingly upon succesful metadata retrieval. */
   private loadMetadata(setLoadingTitle: boolean = false) {
     if (setLoadingTitle) {
       this.nowPlaying.title = 'Loading Metadata...';
