@@ -23,7 +23,7 @@ export class RadioBrowserService {
     // Always limit to the first 100 results
     body = body.set('limit', '100');
     return this.httpClient.post<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`,
-      body.toString(), { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).pipe(
+      body, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).pipe(
         map(stations => stations.map(station => {
           // If a non-empty tags string was provided, then split it into an array by the comma delimiter
           const tags = !isBlank(station.tags) ? station.tags.split(',') : null;

@@ -136,7 +136,7 @@ export class PlayerService {
     this.audio.pause();
   }
 
-  public updateMetadata(metadata: Metadata) {
+  private updateMetadata(metadata: Metadata) {
     const beforeChange = cloneDeep(this.nowPlaying);
     this.nowPlaying.title = metadata.title;
     this.nowPlaying.bitrate = metadata.bitrate;

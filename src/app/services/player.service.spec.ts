@@ -5,51 +5,49 @@ import { SpyFactories } from '../testing/spy-factories.spec';
 import { MetadataService } from './metadata.service';
 import { NotificationService, Severities } from './notification.service';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
-import { AudioElementStub } from '../testing/stubs/AudioElementStub';
+import { AudioElementStub } from '../testing/stubs/AudioElementStub.spec';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { Subject, timer } from 'rxjs';
 import { Metadata } from '../models/metadata';
 import { Title } from '@angular/platform-browser';
 import isBlank from 'is-blank';
+import { MetadataServiceStub } from '../testing/stubs/MetadataServiceStub.spec';
 
 describe('PlayerService', () => {
   let playerService: PlayerService;
   let titleService: Title;
   let audioPausedSpy: jasmine.Spy;
   let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
-  let metadataServiceSpy: jasmine.SpyObj<MetadataService>;
+  let metadataService: MetadataServiceStub;
   let configServiceSpy: jasmine.SpyObj<ConfigService>;
   let audioElement: AudioElementStub;
   let audioElementPlaySpy: jasmine.Spy;
   let audioElementPauseSpy: jasmine.Spy;
   let nowPlayingSpy: jasmine.Spy;
-  let metadataSubject: Subject<Metadata>;
 
   beforeEach(() => {
-    metadataSubject = new Subject<Metadata>();
     audioElement = new AudioElementStub();
     notificationServiceSpy = SpyFactories.CreateNotificationServiceSpy();
-    metadataServiceSpy = SpyFactories.CreateMetadataServiceSpy();
     configServiceSpy = SpyFactories.CreateConfigServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [
         { provide: ConfigService, useValue: configServiceSpy },
-        { provide: MetadataService, useValue: metadataServiceSpy },
+        { provide: MetadataService, useClass: MetadataServiceStub },
         { provide: NotificationService, useValue: notificationServiceSpy },
         { provide: AudioElementToken, useValue: audioElement }
       ]
     });
     playerService = TestBed.get(PlayerService);
     titleService = TestBed.get(Title);
+    metadataService = TestBed.get(MetadataService);
     audioPausedSpy = jasmine.createSpy('audioPaused');
     nowPlayingSpy = jasmine.createSpy('nowPlaying');
     audioElementPauseSpy = spyOn(audioElement, 'pause').and.callThrough();
     audioElementPlaySpy = spyOn(audioElement, 'play').and.callThrough();
     playerService.audioPaused.subscribe(() => audioPausedSpy());
     playerService.nowPlaying$.subscribe(nowPlaying => nowPlayingSpy(nowPlaying));
-    metadataServiceSpy.getMetadata.and.returnValue(metadataSubject);
   });
 
   it('should be created', () => {
@@ -166,14 +164,14 @@ describe('PlayerService', () => {
     expect(audioElementPlaySpy).toHaveBeenCalledTimes(1);
 
     // Emit dummy metadata
-    metadataSubject.next(new Metadata('Test Song', 'dummy fetchsource'));
+    metadataService.flushMetadata(new Metadata('Test Song', 'dummy fetchsource'));
     // Upon emit of metadata with title of 'Test Song, nowPlaying should have emitted a matching title
     expect(nowPlayingSpy.calls.mostRecent().args[0].title).toBe('Test Song');
     // The document title should have also been set accordingly
     expect(titleService.getTitle()).toBe('Test Song');
   });
 
-  it('should properly handle initial metadata load', () => {
+  it('should properly load metadata for different stations', () => {
     // Arrange
     // Set up dummy data
     const testEntries = [
@@ -202,13 +200,13 @@ describe('PlayerService', () => {
       // Either throw an error or emit the specified metadata
       if (testEntry.throw) {
         // Emit an error from the subject
-        metadataSubject.error('dummy error');
+        metadataService.flushError('dummy error');
         // The 'Now Playing' title and the document title should both be set to 'Metadata Unavailable'
         expect(nowPlayingSpy.calls.mostRecent().args[0].title).toBe('Metadata Unavailable');
         expect(titleService.getTitle()).toBe('Metadata Unavailable');
       } else {
         // Emit the specified dummy metadata
-        metadataSubject.next(new Metadata(testEntry.title, 'dummy fetchsource', null, testEntry.station));
+        metadataService.flushMetadata(new Metadata(testEntry.title, 'dummy fetchsource', null, testEntry.station));
         // Upon emit of metadata, nowPlaying should have emitted a matching title & station
         expect(nowPlayingSpy.calls.mostRecent().args[0].title).toBe(testEntry.title);
         expect(nowPlayingSpy.calls.mostRecent().args[0].station).toBe(testEntry.station);
@@ -226,6 +224,8 @@ describe('PlayerService', () => {
 
     // The audio should have been played once for each test entry
     expect(audioElementPlaySpy).toHaveBeenCalledTimes(testEntries.length);
+    // We should have fetched metadata once for each test entry
+    expect(metadataService.getMetadataSpy).toHaveBeenCalledTimes(testEntries.length);
   });
 
   it('should properly refresh metadata on an interval', fakeAsync(() => {
@@ -234,27 +234,49 @@ describe('PlayerService', () => {
     const testEntries = [
       new Metadata('Title 1', 'Fetchsource 1'),
       new Metadata('another title', 'another fetchsource'),
-      new Metadata('Blind Guardian - Valkyries (Extended)', 'STREAM'),
+      new Metadata('Blind Guardian - Valkyries', 'STREAM'),
       new Metadata('Iced Earth - Night of the Stormrider', 'STREAM')
     ];
 
     // Play a test station and immediately flush a metadata entry for the initial fetch
     playerService.playStation(new Station('Test Station', 'Test url'));
-    metadataSubject.next(testEntries[0]);
+    metadataService.flushMetadata(testEntries[0]);
+    let previousTitle = testEntries[0].title;
 
     // For each test entry
+    let iteration = 1;
     testEntries.forEach(testEntry => {
-      /* Wait for the refresh interval to pass, at which point we expect
-      that the interval on refreshSub will kick off a new call to loadMetadata. */
+      /* Wait for the refresh interval, at which point we expect the service to ask
+      for updated metadata. */
       tick(configServiceSpy.appConfig.metadataRefreshInterval);
+      /* While waiting for a response, the now playing info should still be that of
+      the previous iteration (rather than 'Loading Metadata'). */
+      expect(nowPlayingSpy.calls.mostRecent().args[0].title).toBe(previousTitle);
       // Flush a test metadata entry
-      metadataSubject.next(testEntry);
-
+      metadataService.flushMetadata(testEntry);
       // Ensure that the test title was updated as expected
       expect(nowPlayingSpy.calls.mostRecent().args[0].title).toBe(testEntry.title);
+      // Update previousTitle to check on the next iteration
+      previousTitle = testEntry.title;
+      iteration++;
     });
 
     // Pause the audio in order to unsubscribe from the interval subscription
+    playerService.pause();
+    // We should have fetched metadata once for each test entry, plus once for the initial fetch
+    expect(metadataService.getMetadataSpy).toHaveBeenCalledTimes(testEntries.length + 1);
+  }));
+
+  it('should not initiate a new metadata fetch if the previous one is still in progress', fakeAsync(() => {
+    /* Act: Initiate the station play and wait for 3 times the refresh interval
+    before flushing any metadata. */
+    playerService.playStation(new Station('Station Title', 'station url'));
+    tick(configServiceSpy.appConfig.metadataRefreshInterval * 3);
+    metadataService.flushMetadata(new Metadata('Title 1', 'Fetchsource 1'));
+    expect(nowPlayingSpy.calls.mostRecent().args[0].title).toBe('Title 1');
+    // Assert: Ensure that getMetadata was only actually called once
+    expect(metadataService.getMetadataSpy).toHaveBeenCalledTimes(1);
+    // Pause in order to unsubscribe from the interval subscription
     playerService.pause();
   }));
 });

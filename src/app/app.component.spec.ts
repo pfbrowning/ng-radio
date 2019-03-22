@@ -51,7 +51,6 @@ describe('AppComponent', () => {
         { provide: ConfigService, useValue: SpyFactories.CreateConfigServiceSpy() },
         { provide: ErrorHandlingService, useValue: SpyFactories.CreateErrorHandlingServiceSpy() },
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
-        { provide: MetadataService, useValue: SpyFactories.CreateMetadataServiceSpy() },
         { provide: RadioBrowserService, useValue: SpyFactories.CreateRadioBrowserServiceSpy() },
         { provide: NoSleepService, useValue: SpyFactories.CreateNoSleepServiceSpy() },
         { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }

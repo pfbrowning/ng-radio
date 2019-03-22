@@ -27,12 +27,6 @@ export class SpyFactories {
     return spy;
   }
 
-  public static CreateMetadataServiceSpy(): any {
-    const spy = jasmine.createSpyObj('metadataService', ['getMetadata']);
-    spy.getMetadata.and.returnValue(of(new Metadata('dummy title', 'dummy fetchsource')));
-    return spy;
-  }
-
   public static CreateRadioBrowserServiceSpy(): any {
     const spy = jasmine.createSpyObj('radioBrowser', ['searchStations']);
     return spy;
