@@ -12,12 +12,14 @@ import { SleepTimerService } from './sleep-timer.service';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElement } from '../models/audio-element';
 import isBlank from 'is-blank';
+import { LoggingService } from './logging.service';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
   constructor(private metadataService: MetadataService,
     private notificationService: NotificationService,
     private sleepTimerService: SleepTimerService,
+    private loggingService: LoggingService,
     private configService: ConfigService,
     private titleService: Title,
     @Inject(AudioElementToken) private audio: AudioElement) {
@@ -38,6 +40,7 @@ export class PlayerService {
 
   /** Notifies the user when the audio fails to play */
   private onAudioError(error): void {
+    this.loggingService.logException(error, {'event': 'Failed to play audio', 'source': this.audio.source });
     this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.audio.source}`);
   }
 
@@ -111,6 +114,7 @@ export class PlayerService {
           error => {
             /* In the case of error, gracefully set the title to
             "Metadata Unavilable" */
+            this.loggingService.logException(error, {'event': 'Failed to fetch metadata', 'url': this.audio.source });
             this.nowPlaying.title = 'Metadata Unavailable';
             this.titleService.setTitle(this.nowPlaying.title);
             this.nowPlaying$.next(this.nowPlaying);

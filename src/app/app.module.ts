@@ -29,10 +29,11 @@ import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
-import * as NoSleep from 'nosleep.js';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { AudioElement } from './models/audio-element';
+import { ApplicationInsightsModule, AppInsightsService } from '@markpieszak/ng-application-insights';
+import * as NoSleep from 'nosleep.js';
 
 export function initializeConfig(configService: ConfigService) {
     return () => configService.initialize();
@@ -68,14 +69,18 @@ export function initializeConfig(configService: ConfigService) {
     MatTooltipModule,
     ToastModule,
     ModalManagerModule,
-    NgLoadingIndicatorModule
+    NgLoadingIndicatorModule,
+    ApplicationInsightsModule.forRoot({
+      instrumentationKeySetLater: true
+    })
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
-    MessageService
+    MessageService,
+    AppInsightsService
   ],
   bootstrap: [AppComponent]
 })

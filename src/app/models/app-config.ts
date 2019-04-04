@@ -3,4 +3,5 @@ export interface IAppConfig {
     radioBrowserApiUrl: string;
     metadataRefreshInterval: number;
     metadataFetchTimeout: number;
+    appInsightsInstrumentationKey: string;
 }

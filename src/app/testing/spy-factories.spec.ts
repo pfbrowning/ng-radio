@@ -1,7 +1,8 @@
-import { Subject, of } from 'rxjs';
+import { Subject, ReplaySubject, of } from 'rxjs';
 import { NowPlaying } from '../models/now-playing';
 import { EventEmitter } from '@angular/core';
 import { Metadata } from '../models/metadata';
+import { AppError } from '../models/app-error';
 
 export class SpyFactories {
   public static CreateConfigServiceSpy(): any {
@@ -12,11 +13,13 @@ export class SpyFactories {
       'metadataRefreshInterval': 15000,
       'metadataFetchTimeout': 10
     };
+    spy['loaded$'] = new Subject();
     spy['initialized'] = true;
     return spy;
   }
   public static CreateErrorHandlingServiceSpy(): any {
     const spy = jasmine.createSpyObj('errorHandlingService', ['handleError']);
+    spy['appError'] = new ReplaySubject<AppError>(1);
     return spy;
   }
 
@@ -47,5 +50,13 @@ export class SpyFactories {
 
   public static CreateMessageServiceSpy(): any {
     return jasmine.createSpyObj('messageServiceSpy', ['add']);
+  }
+
+  public static CreateAppInsightsServiceSpy(): any {
+    return jasmine.createSpyObj('appInsightsService', ['trackException', 'trackEvent']);
+  }
+
+  public static CreateLoggingServiceSpy(): any {
+    return jasmine.createSpyObj('loggingService', ['logException', 'logEvent']);
   }
 }

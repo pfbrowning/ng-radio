@@ -8,17 +8,18 @@ import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElementStub } from '../testing/stubs/AudioElementStub.spec';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
-import { Subject, timer } from 'rxjs';
 import { Metadata } from '../models/metadata';
 import { Title } from '@angular/platform-browser';
-import isBlank from 'is-blank';
 import { MetadataServiceStub } from '../testing/stubs/MetadataServiceStub.spec';
+import { LoggingService } from './logging.service';
+import isBlank from 'is-blank';
 
 describe('PlayerService', () => {
   let playerService: PlayerService;
   let titleService: Title;
   let audioPausedSpy: jasmine.Spy;
   let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
+  let loggingServiceSpy: jasmine.SpyObj<LoggingService>;
   let metadataService: MetadataServiceStub;
   let configServiceSpy: jasmine.SpyObj<ConfigService>;
   let audioElement: AudioElementStub;
@@ -30,13 +31,15 @@ describe('PlayerService', () => {
     audioElement = new AudioElementStub();
     notificationServiceSpy = SpyFactories.CreateNotificationServiceSpy();
     configServiceSpy = SpyFactories.CreateConfigServiceSpy();
+    loggingServiceSpy = SpyFactories.CreateLoggingServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [
         { provide: ConfigService, useValue: configServiceSpy },
         { provide: MetadataService, useClass: MetadataServiceStub },
         { provide: NotificationService, useValue: notificationServiceSpy },
-        { provide: AudioElementToken, useValue: audioElement }
+        { provide: AudioElementToken, useValue: audioElement },
+        { provide: LoggingService, useValue: loggingServiceSpy }
       ]
     });
     playerService = TestBed.get(PlayerService);
@@ -60,16 +63,19 @@ describe('PlayerService', () => {
     expect(audioPausedSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should notify the user when the audio fails to play', () => {
-    // Arrange: Ensure that notify hasn't been called and set the source to a dummy url.
+  it('should properly handle audio error', () => {
+    /* Arrange: Ensure that neither notify or logException have been
+    called and set the source to a dummy url. */
     expect(notificationServiceSpy.notify).not.toHaveBeenCalled();
+    expect(loggingServiceSpy.logException).not.toHaveBeenCalled();
     audioElement.source = 'someaudio';
     // Act: Emit an audio error
     audioElement.error.emit('some error');
-    // Assert: Ensure that notify was called as expected
+    // Assert: Ensure that notify was called as expected and that the error was logged
     expect(notificationServiceSpy.notify).toHaveBeenCalledTimes(1);
     expect(notificationServiceSpy.notify.calls.mostRecent().args)
       .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play someaudio']);
+    expect(loggingServiceSpy.logException).toHaveBeenCalledTimes(1);
   });
 
   it('should properly report whether a station is selected', () => {

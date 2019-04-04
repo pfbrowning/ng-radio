@@ -6,6 +6,7 @@ import { IAppConfig } from '../models/app-config';
 describe('ConfigService', () => {
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
+  let loadedSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,6 +17,8 @@ describe('ConfigService', () => {
 
     configService = TestBed.get(ConfigService);
     httpTestingController = TestBed.get(HttpTestingController);
+    loadedSpy = jasmine.createSpy('loaded');
+    configService.loaded$.subscribe(() => loadedSpy());
   });
 
   it('should be created', () => {
@@ -27,8 +30,11 @@ describe('ConfigService', () => {
       'metadataApiUrl': 'testapi',
       'radioBrowserApiUrl': 'testradiobrowserapi',
       'metadataRefreshInterval': 1,
-      'metadataFetchTimeout': 2
+      'metadataFetchTimeout': 2,
+      'appInsightsInstrumentationKey': null
     };
+
+    expect(loadedSpy).not.toHaveBeenCalled();
 
     // Listen on the initialize promise
     configService.initialize().then(initialized => {
@@ -37,6 +43,8 @@ describe('ConfigService', () => {
       expect(initialized).toBe(true);
       expect(configService.initialized).toBe(true);
       expect(configService.initializationError).toBeNull();
+      // loaded$ should have emitted once on successful config load
+      expect(loadedSpy).toHaveBeenCalledTimes(1);
       /* The exposed appConfig should match the one flushed
       by the http testing controller */
       expect(configService.appConfig).toEqual(dummyConfig);
@@ -56,11 +64,12 @@ describe('ConfigService', () => {
       /* On failure, we expect initialize to resolve
       successfully with an 'initialized' value of
       false, appConfig value of undefined, and an exposed
-      error. */
+      error.  loaded$ should not emit anything.*/
       expect(initialized).toBe(false);
       expect(configService.initialized).toBe(false);
       expect(configService.appConfig).toBeUndefined();
       expect(configService.initializationError).not.toBeNull();
+      expect(loadedSpy).not.toHaveBeenCalled();
       // Lastly, verify that there are no outstanding http requests
       httpTestingController.verify();
       done();
