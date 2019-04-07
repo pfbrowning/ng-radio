@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, DoCheck, AfterViewChecked, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewChecked, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { NowPlaying } from 'src/app/models/now-playing';
 import { Subscription, interval, timer } from 'rxjs';
@@ -10,29 +10,16 @@ import { NoSleepService } from 'src/app/services/no-sleep.service';
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss']
 })
-export class PlayerBarComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class PlayerBarComponent implements AfterViewChecked {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
     public noSleepService: NoSleepService,
     private changeDetectorRef: ChangeDetectorRef) {}
 
-  private nowPlayingSubscription: Subscription;
-  public nowPlaying: NowPlaying;
   public titleMarquee = false;
   public stationMarquee = false;
   @ViewChild('title') titleElement: ElementRef;
   @ViewChild('station') stationElement: ElementRef;
-
-  ngOnInit() {
-    /* Subscribe to nowPlaying changes and store them in
-    the component for template binding. */
-    this.nowPlayingSubscription = this.playerService.nowPlaying$
-      .subscribe(nowPlaying => this.nowPlaying = nowPlaying);
-  }
-
-  ngOnDestroy() {
-    if (this.nowPlayingSubscription) { this.nowPlayingSubscription.unsubscribe(); }
-  }
 
   ngAfterViewChecked() {
     // If a station is selected and, by extension, the now-playing section exists in the template
@@ -47,7 +34,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy, AfterViewChecked {
   /** Checks and updates the marquee properties for title and station
    * based on whether the title or content station content is overflowing. */
   private checkApplyMarquees() {
-    console.log('checking marquee');
     // Take note of the marquee values before checking for overflow so that we know later if they changed
     const titleMarqueeBefore = this.titleMarquee;
     const stationMarqueeBefore = this.stationMarquee;
@@ -56,8 +42,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.stationMarquee = this.isElementOverflowing(this.stationElement.nativeElement);
     /* If either marquee value changed, then initiate another round of change detection
     in order to bind the marquee classes to the template. */
-    if (this.titleMarquee !== titleMarqueeBefore || this.titleMarquee !== stationMarqueeBefore) {
-      console.log('marquee changed, detecting changes again');
+    if (this.titleMarquee !== titleMarqueeBefore || this.stationMarquee !== stationMarqueeBefore) {
       this.changeDetectorRef.detectChanges();
     }
   }
