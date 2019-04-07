@@ -2,8 +2,8 @@
   <ng-container *ngIf="playerService.stationSelected">
     <img class="station-icon-thumb" [src]="nowPlaying.iconUrl" (error)="onImgError($event.target)" >
     <div class="now-playing">
-      <div class="title" #title [class.marquee]="isElementOverflowing(title)">{{ nowPlaying.title }}</div>
-      <div class="station" #station [class.marquee]="isElementOverflowing(station)">{{ nowPlaying.station }}</div>
+      <div class="title" #title [class.marquee]="titleMarquee">{{ nowPlaying.title }}</div>
+      <div class="station" #station [class.marquee]="stationMarquee">{{ nowPlaying.station }}</div>
     </div>
     <span class="fill-remaining"></span>
     <div *ngIf="(noSleepService.enabled$ | async) == true" class="indicator-icon large-screen-only" matTooltip="Nosleep is enabled">

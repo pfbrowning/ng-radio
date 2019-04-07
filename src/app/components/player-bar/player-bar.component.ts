@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, DoCheck, AfterViewChecked, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { NowPlaying } from 'src/app/models/now-playing';
 import { Subscription, interval, timer } from 'rxjs';
@@ -10,7 +10,7 @@ import { NoSleepService } from 'src/app/services/no-sleep.service';
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss']
 })
-export class PlayerBarComponent implements OnInit, OnDestroy {
+export class PlayerBarComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
     public noSleepService: NoSleepService,
@@ -18,25 +18,51 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   private nowPlayingSubscription: Subscription;
   public nowPlaying: NowPlaying;
+  public titleMarquee = false;
+  public stationMarquee = false;
+  @ViewChild('title') titleElement: ElementRef;
+  @ViewChild('station') stationElement: ElementRef;
 
   ngOnInit() {
     /* Subscribe to nowPlaying changes and store them in
     the component for template binding. */
     this.nowPlayingSubscription = this.playerService.nowPlaying$
-      .subscribe(nowPlaying => {
-        this.nowPlaying = nowPlaying;
-        /* Explicitly detect changes after assigning nowPlaying
-        so that the 'marquee' class can be properly assigned based
-        on whether the nowPlaying data causes an overflow. */
-        this.changeDetectorRef.detectChanges();
-      });
+      .subscribe(nowPlaying => this.nowPlaying = nowPlaying);
   }
 
   ngOnDestroy() {
     if (this.nowPlayingSubscription) { this.nowPlayingSubscription.unsubscribe(); }
   }
 
-  public isElementOverflowing(element: HTMLElement): boolean {
+  ngAfterViewChecked() {
+    // If a station is selected and, by extension, the now-playing section exists in the template
+    if (this.playerService.stationSelected) {
+      /* Check and apply marquee classes if necessary.  This must happen immediately
+      after change detection because we won't know whether the content is overflowing
+      until it's been bound to the template. */
+      this.checkApplyMarquees();
+    }
+  }
+
+  /** Checks and updates the marquee properties for title and station
+   * based on whether the title or content station content is overflowing. */
+  private checkApplyMarquees() {
+    console.log('checking marquee');
+    // Take note of the marquee values before checking for overflow so that we know later if they changed
+    const titleMarqueeBefore = this.titleMarquee;
+    const stationMarqueeBefore = this.stationMarquee;
+    // Set the marquee values based on whether the corresponding element is overflowing
+    this.titleMarquee = this.isElementOverflowing(this.titleElement.nativeElement);
+    this.stationMarquee = this.isElementOverflowing(this.stationElement.nativeElement);
+    /* If either marquee value changed, then initiate another round of change detection
+    in order to bind the marquee classes to the template. */
+    if (this.titleMarquee !== titleMarqueeBefore || this.titleMarquee !== stationMarqueeBefore) {
+      console.log('marquee changed, detecting changes again');
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
+  private isElementOverflowing(element: HTMLElement): boolean {
     const overflowX = element.offsetWidth < element.scrollWidth,
         overflowY = element.offsetHeight < element.scrollHeight;
 
