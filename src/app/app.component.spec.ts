@@ -23,6 +23,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import { NoSleepService } from './services/no-sleep.service';
 import { MessageService } from 'primeng/api';
+import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -44,6 +45,7 @@ describe('AppComponent', () => {
         SidenavComponent,
         ResponsiveSidenavComponent,
         PlayerBarComponent,
+        PlayerBarStationInfoComponent,
         ErrorWindowComponent,
         SleepTimerMenuComponent
       ],
