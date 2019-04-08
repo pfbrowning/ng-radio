@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, 
 import { NowPlaying } from 'src/app/models/now-playing';
 
 @Component({
-  selector: '[playerBarStationInfo]',
+  selector: 'blr-player-bar-station-info',
   templateUrl: './player-bar-station-info.component.html',
   styleUrls: ['./player-bar-station-info.component.scss']
 })

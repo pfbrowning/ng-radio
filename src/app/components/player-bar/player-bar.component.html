@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
   <ng-container *ngIf="playerService.stationSelected">
     <img class="station-icon-thumb" [src]="(playerService.nowPlaying$ | async).iconUrl" (error)="onImgError($event.target)" >
-    <div playerBarStationInfo [nowPlaying]="playerService.nowPlaying$ | async" class="station-info"></div>
+    <blr-player-bar-station-info [nowPlaying]="playerService.nowPlaying$ | async" class="station-info"></blr-player-bar-station-info>
     <span class="fill-remaining"></span>
     <div *ngIf="(noSleepService.enabled$ | async) == true" class="indicator-icon large-screen-only" matTooltip="Nosleep is enabled">
       <mat-icon>settings_cell</mat-icon>
