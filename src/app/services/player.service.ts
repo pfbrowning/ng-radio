@@ -1,9 +1,8 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, ApplicationRef } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { MetadataService } from './metadata.service';
-import { interval, Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { interval, Subscription, BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from './config.service';
 import { NotificationService, Severities } from './notification.service';
@@ -12,8 +11,8 @@ import { cloneDeep, isEqual } from 'lodash';
 import { SleepTimerService } from './sleep-timer.service';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElement } from '../models/audio-element';
-import isBlank from 'is-blank';
 import { LoggingService } from './logging.service';
+import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
@@ -23,40 +22,66 @@ export class PlayerService {
     private loggingService: LoggingService,
     private configService: ConfigService,
     private titleService: Title,
+    private applicationRef: ApplicationRef,
     @Inject(AudioElementToken) private audio: AudioElement) {
-      this.errorSub = this.audio.error.subscribe(error => this.onAudioError(error));
-      this.pauseSub = this.audio.paused.pipe(filter(paused => paused === true)).subscribe(() => this.onPause());
+      this.audio.error.subscribe(error => this.onAudioError(error));
+      this.audio.playing.subscribe(() => this.onAudioPlaying());
+      this.audio.paused.subscribe(() => this.onAudioPaused());
       // Pause the playing audio when the sleep timer does its thing
-      this.sleepSub = this.sleepTimerService.sleep.subscribe(() => this.pause());
+      this.sleepTimerService.sleep.subscribe(() => this.pause());
     }
 
   private refreshSub: Subscription;
   private metaFetchSub: Subscription;
-  private sleepSub: Subscription;
-  private pauseSub: Subscription;
-  private errorSub: Subscription;
   private nowPlaying = new NowPlaying();
   public nowPlaying$ = new BehaviorSubject<NowPlaying>(this.nowPlaying);
+  private _paused = new BehaviorSubject<boolean>(true);
+  public paused = this._paused.asObservable();
 
-  /** Notifies the user when the audio fails to play */
+  /** Notifies the user and logs the event when the audio fails to play */
   private onAudioError(error): void {
     this.loggingService.logException(error, {'event': 'Failed to play audio', 'source': this.audio.source });
     this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.audio.source}`);
   }
 
+  /** Updates the reactive 'paused' state and triggers change
+  detection when the audio starts to play. */
+  private onAudioPlaying(): void {
+    /* Notify anybody listening to changes on the 'paused'
+    state that the audio is no longer paused. */
+    this._paused.next(false);
+    /* Explicitly trigger application-wide change detection
+    because this is a change that we do want represented in
+    template bindings and change detection won't automatically
+    be triggered because the source DOM event happened outside
+    of Angular's zone. */
+    this.applicationRef.tick();
+  }
+
+  /** Updates the reactive 'paused' state, triggers change detection,
+   * and unsubscribes from any metadata fetch & refresh
+   * subscriptions. */
+  private onAudioPaused(): void {
+    /* Notify anybody listening to changes on the 'paused'
+    state that the audio is now paused. */
+    this._paused.next(true);
+    /* Explicitly trigger application-wide change detection
+    because this is a change that we do want represented in
+    template bindings and change detection won't automatically
+    be triggered because the source DOM event happened outside
+    of Angular's zone. */
+    this.applicationRef.tick();
+    /* Unsubscribe from the refresh interval and from any concurrent metadata
+    fetch when the media is paused.  We want to do this in the onAudioPaused
+    handler so that we catch the "user presses the browser-provided pause button"
+    use-case as well, in addition to our own pause button. */
+    if (this.refreshSub) { this.refreshSub.unsubscribe(); }
+    if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
+  }
+
   /** Reports whether there is a currently selected station */
   public get stationSelected(): boolean {
     return !isBlank(this.audio.source);
-  }
-
-  /** Unsubscribes from the relevant subscriptions and emits the audioPaused event */
-  private onPause(): void {
-    /* Unsubscribe from the refresh interval and from any concurrent metadata
-    fetch when the media is paused.  We want to do this in the onPause handler
-    so that we catch the "user presses the browser-provided pause button" use-case
-    as well, in addition to our own pause button. */
-    if (this.refreshSub) { this.refreshSub.unsubscribe(); }
-    if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
   }
 
   /** Plays the specified Station */
@@ -151,9 +176,5 @@ export class PlayerService {
     if (!isEqual(beforeChange, this.nowPlaying)) {
       this.nowPlaying$.next(this.nowPlaying);
     }
-  }
-
-  public get paused(): Observable<boolean> {
-    return this.audio.paused;
   }
 }

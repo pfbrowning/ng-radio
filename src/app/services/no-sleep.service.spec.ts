@@ -25,7 +25,7 @@ describe('NoSleepService', () => {
     });
 
     noSleepService = TestBed.get(NoSleepService);
-    enabledSpy = jasmine.createSpy();
+    enabledSpy = jasmine.createSpy('enabled');
   });
 
   it('should be created', () => {
@@ -48,10 +48,9 @@ describe('NoSleepService', () => {
     expect(enabledSpy.calls.mostRecent().args).toEqual([true]);
     expect(noSleepSpy.enable).toHaveBeenCalledTimes(1);
 
-    /* Disable should have been called only once - triggered by
-    subscription to the paused behaviorsubject - immediately before
-    we call disable. */
-    expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
+    /* Disable should not have been called yet at all
+    at this point. */
+    expect(noSleepSpy.disable).not.toHaveBeenCalled();
 
     // Disable nosleep again
     noSleepService.disable();
@@ -59,12 +58,14 @@ describe('NoSleepService', () => {
     status again and disabled should be called. */
     expect(enabledSpy).toHaveBeenCalledTimes(3);
     expect(enabledSpy.calls.mostRecent().args).toEqual([false]);
-    expect(noSleepSpy.disable).toHaveBeenCalledTimes(2);
+    expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
   });
 
   it('should disable nosleep on audio pause', () => {
-    // On init disable should have only been called once.
-    expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
+    /* On init neither enable nor disable should have been
+    called at all. */
+    expect(noSleepSpy.disable).not.toHaveBeenCalled();
+    expect(noSleepSpy.enable).not.toHaveBeenCalled();
 
     // Enable nosleep and ensure that it was enabled properly
     noSleepService.enable();
@@ -73,6 +74,6 @@ describe('NoSleepService', () => {
     // Emit audioPaused
     audioElement.pause();
     // Nosleep should be disabled now
-    expect(noSleepSpy.disable).toHaveBeenCalledTimes(2);
+    expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
   });
 });

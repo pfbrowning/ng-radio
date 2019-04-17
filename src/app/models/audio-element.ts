@@ -7,13 +7,13 @@ export class AudioElement {
         private readonly audio: HTMLAudioElement = new Audio()
     ) {
         this.audio.onerror = (error) => this.error.emit(error);
-        this.audio.onpause = () => this._paused.next(true);
-        this.audio.onplaying = () => this._paused.next(false);
+        this.audio.onpause = () => this.paused.emit();
+        this.audio.onplaying = () => this.playing.emit();
     }
 
-    private _paused = new BehaviorSubject<boolean>(this.audio.paused);
     public error = new EventEmitter<any>();
-    public paused = this._paused.asObservable();
+    public playing = new EventEmitter<void>();
+    public paused = new EventEmitter<void>();
 
     public get source(): string {
         return this.audio.src;

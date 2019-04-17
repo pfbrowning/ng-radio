@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElement } from '../models/audio-element';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
@@ -14,7 +13,7 @@ export class NoSleepService {
     @Inject(AudioElementToken) private audio: AudioElement,
     @Inject(NoSleepToken) private noSleep: NoSleep) {
     // Disable nosleep when the audio stops, regardless of why
-    this.audio.paused.pipe(filter(paused => paused === true)).subscribe(() => this.disable());
+    this.audio.paused.subscribe(() => this.disable());
   }
 
   /* Expose the current state at any given time with a
