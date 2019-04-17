@@ -1,8 +1,9 @@
-import { Injectable, Output, EventEmitter, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { MetadataService } from './metadata.service';
-import { interval, Subscription, BehaviorSubject } from 'rxjs';
+import { interval, Subscription, BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from './config.service';
 import { NotificationService, Severities } from './notification.service';
@@ -24,7 +25,7 @@ export class PlayerService {
     private titleService: Title,
     @Inject(AudioElementToken) private audio: AudioElement) {
       this.errorSub = this.audio.error.subscribe(error => this.onAudioError(error));
-      this.pauseSub = this.audio.paused.subscribe(() => this.onPause());
+      this.pauseSub = this.audio.paused.pipe(filter(paused => paused === true)).subscribe(() => this.onPause());
       // Pause the playing audio when the sleep timer does its thing
       this.sleepSub = this.sleepTimerService.sleep.subscribe(() => this.pause());
     }
@@ -36,7 +37,6 @@ export class PlayerService {
   private errorSub: Subscription;
   private nowPlaying = new NowPlaying();
   public nowPlaying$ = new BehaviorSubject<NowPlaying>(this.nowPlaying);
-  public audioPaused = new EventEmitter<void>();
 
   /** Notifies the user when the audio fails to play */
   private onAudioError(error): void {
@@ -49,11 +49,6 @@ export class PlayerService {
     return !isBlank(this.audio.source);
   }
 
-  /** Reports whether the audio is currently paused */
-  public get isPaused(): boolean {
-    return this.audio.isPaused;
-  }
-
   /** Unsubscribes from the relevant subscriptions and emits the audioPaused event */
   private onPause(): void {
     /* Unsubscribe from the refresh interval and from any concurrent metadata
@@ -62,8 +57,6 @@ export class PlayerService {
     as well, in addition to our own pause button. */
     if (this.refreshSub) { this.refreshSub.unsubscribe(); }
     if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
-    // Notify listeners, such as the NoSleepService, that the audio was paused
-    this.audioPaused.emit();
   }
 
   /** Plays the specified Station */
@@ -159,5 +152,8 @@ export class PlayerService {
       this.nowPlaying$.next(this.nowPlaying);
     }
   }
-}
 
+  public get paused(): Observable<boolean> {
+    return this.audio.paused;
+  }
+}

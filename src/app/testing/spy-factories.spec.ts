@@ -1,4 +1,4 @@
-import { Subject, ReplaySubject, of } from 'rxjs';
+import { Subject, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { NowPlaying } from '../models/now-playing';
 import { EventEmitter } from '@angular/core';
 import { Metadata } from '../models/metadata';
@@ -26,7 +26,7 @@ export class SpyFactories {
   public static CreatePlayerServiceSpy(): any {
     const spy = jasmine.createSpyObj('playerService', ['playStation']);
     spy['nowPlaying$'] = new Subject<NowPlaying>();
-    spy['audioPaused'] = new EventEmitter<void>();
+    spy['paused'] = new BehaviorSubject<boolean>(true);
     return spy;
   }
 

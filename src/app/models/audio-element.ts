@@ -1,4 +1,5 @@
 import { EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 /** Wrapper class around HTMLAudioElement for testability */
 export class AudioElement {
@@ -6,11 +7,13 @@ export class AudioElement {
         private readonly audio: HTMLAudioElement = new Audio()
     ) {
         this.audio.onerror = (error) => this.error.emit(error);
-        this.audio.onpause = () => this.paused.emit();
+        this.audio.onpause = () => this._paused.next(true);
+        this.audio.onplaying = () => this._paused.next(false);
     }
 
+    private _paused = new BehaviorSubject<boolean>(this.audio.paused);
     public error = new EventEmitter<any>();
-    public paused = new EventEmitter<void>();
+    public paused = this._paused.asObservable();
 
     public get source(): string {
         return this.audio.src;
@@ -18,10 +21,6 @@ export class AudioElement {
 
     public set source(value: string) {
         this.audio.src = value;
-    }
-
-    public get isPaused(): boolean {
-      return this.audio.paused;
     }
 
     public play(): void {

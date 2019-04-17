@@ -49,18 +49,12 @@ describe('PlayerService', () => {
     nowPlayingSpy = jasmine.createSpy('nowPlaying');
     audioElementPauseSpy = spyOn(audioElement, 'pause').and.callThrough();
     audioElementPlaySpy = spyOn(audioElement, 'play').and.callThrough();
-    playerService.audioPaused.subscribe(() => audioPausedSpy());
+    playerService.paused.subscribe(paused => audioPausedSpy(paused));
     playerService.nowPlaying$.subscribe(nowPlaying => nowPlayingSpy(nowPlaying));
   });
 
   it('should be created', () => {
     expect(playerService).toBeTruthy();
-  });
-
-  it('should emit audioPaused event on audio paused', () => {
-    expect(audioPausedSpy).not.toHaveBeenCalled();
-    audioElement.pause();
-    expect(audioPausedSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should properly handle audio error', () => {
@@ -99,15 +93,15 @@ describe('PlayerService', () => {
 
   it('should properly report paused status', () => {
     // The audioElement is paused on initialization
-    expect(playerService.isPaused).toBe(true);
+    expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(true);
     // Play the audioElement directly
     audioElement.play();
-    // isPaused should be false
-    expect(playerService.isPaused).toBe(false);
+    // Pause state should be false
+    expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(false);
     // Pause the audioElement directly
     audioElement.pause();
-    // isPaused should be true
-    expect(playerService.isPaused).toBe(true);
+    // Pause state should be false
+    expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(true);
   });
 
   it('should properly change stations', () => {
