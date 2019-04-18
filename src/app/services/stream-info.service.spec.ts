@@ -1,12 +1,12 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { MetadataService } from './metadata.service';
+import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from './config.service';
 import { SpyFactories } from '../testing/spy-factories.spec';
-import { Metadata } from '../models/metadata';
+import { StreamInfo } from '../models/stream-info';
 
 describe('MetadataService', () => {
-  let metadataService: MetadataService;
+  let metadataService: StreamInfoService;
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
   let getMetadataSpy: any;
@@ -20,13 +20,13 @@ describe('MetadataService', () => {
         { provide: ConfigService, useValue: SpyFactories.CreateConfigServiceSpy() }
       ]
     });
-    metadataService = TestBed.get(MetadataService);
+    metadataService = TestBed.get(StreamInfoService);
     configService = TestBed.get(ConfigService);
     httpTestingController = TestBed.get(HttpTestingController);
     getMetadataSpy = jasmine.createSpyObj('getMetadata', ['emit', 'error', 'complete']);
   });
 
-  const testEntries: Array<{rawResponse: object, expectedMapping: Metadata }> = [
+  const testEntries: Array<{rawResponse: object, expectedMapping: StreamInfo }> = [
     {
       rawResponse: {
         'title': 'HammerFall - Life Is Now',
@@ -43,7 +43,7 @@ describe('MetadataService', () => {
           'icy-br': '48'
         }
       },
-      expectedMapping: new Metadata('HammerFall - Life Is Now', 'STREAM', '48', 'Radio Caprice - Power Metal', null, 'See Stream Title')
+      expectedMapping: new StreamInfo('HammerFall - Life Is Now', 'STREAM', '48', 'Radio Caprice - Power Metal', null, 'See Stream Title')
     },
     {
       rawResponse: {
@@ -60,7 +60,7 @@ describe('MetadataService', () => {
           'access-control-allow-headers': 'Origin, Accept, X-Requested-With, Content-Type',
           'icy-metaint': '16000'
         }},
-      expectedMapping: new Metadata(
+      expectedMapping: new StreamInfo(
         'Pavarotti: 50 Greatest Tracks - Pavarotti: 50 Greatest Tracks', 'STREAM', '128', 'WQXR', 'WQXR', 'Various'
         )
     },
@@ -71,7 +71,7 @@ describe('MetadataService', () => {
         'title': 'Angra - Perfect Symmetry',
         'fetchsource': 'SHOUTCAST_V1'
       },
-      expectedMapping: new Metadata('Angra - Perfect Symmetry', 'SHOUTCAST_V1', '48')
+      expectedMapping: new StreamInfo('Angra - Perfect Symmetry', 'SHOUTCAST_V1', '48')
     }
   ];
 

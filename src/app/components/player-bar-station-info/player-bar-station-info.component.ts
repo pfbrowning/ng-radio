@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef, Input, OnChanges } from '@angular/core';
 import { NowPlaying } from 'src/app/models/now-playing';
+import { StreamInfoStatus } from 'src/app/models/stream-info-status';
 
 @Component({
   selector: 'blr-player-bar-station-info',
@@ -9,6 +10,7 @@ import { NowPlaying } from 'src/app/models/now-playing';
 export class PlayerBarStationInfoComponent implements AfterViewChecked {
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
+  public streamInfoStatus = StreamInfoStatus;
   public titleMarquee = false;
   public stationMarquee = false;
   @Input() nowPlaying: NowPlaying;

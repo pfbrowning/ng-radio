@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
-import { Metadata } from '../models/metadata';
+import { StreamInfo } from '../models/stream-info';
 import { ConfigService } from './config.service';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
  * the configured radio metadata API */
 @Injectable({providedIn: 'root'})
-export class MetadataService {
+export class StreamInfoService {
   constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
   /* Keep track of the stream types returned from the metadata API
@@ -22,7 +22,7 @@ export class MetadataService {
    * https://github.com/pfbrowning/radio-metadata-api
    * @param url Stream URL to get the metadata for
    */
-  public getMetadata(url: string): Observable<Metadata> {
+  public getMetadata(url: string): Observable<StreamInfo> {
     // Encode the URL before sending it via query param
     const encodedUrl = encodeURIComponent(url);
     let params = new HttpParams();
@@ -42,10 +42,10 @@ export class MetadataService {
       map(response => {
         switch (response.fetchsource) {
           case 'STREAM':
-            return new Metadata(response.title, response.fetchsource, response.headers['icy-br'],
+            return new StreamInfo(response.title, response.fetchsource, response.headers['icy-br'],
               response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
           default:
-            return new Metadata(response.title, response.fetchsource, response.bitrate);
+            return new StreamInfo(response.title, response.fetchsource, response.bitrate);
         }
       })
     );

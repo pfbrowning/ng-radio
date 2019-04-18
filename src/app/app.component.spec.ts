@@ -17,7 +17,7 @@ import { ConfigService } from './services/config.service';
 import { SpyFactories } from './testing/spy-factories.spec';
 import { ErrorHandlingService } from './services/error-handling.service';
 import { PlayerService } from './services/player.service';
-import { MetadataService } from './services/metadata.service';
+import { StreamInfoService } from './services/stream-info.service';
 import { RadioBrowserService } from './services/radio-browser.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';

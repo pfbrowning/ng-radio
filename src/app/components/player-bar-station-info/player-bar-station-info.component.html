@@ -1,4 +1,8 @@
 <ng-container *ngIf="nowPlaying">
-    <div #title [class.marquee]="titleMarquee">{{ nowPlaying.title }}</div>
-    <div #station [class.marquee]="stationMarquee">{{ nowPlaying.station }}</div>
+    <div #title [ngSwitch]="nowPlaying.streamInfoStatus" [class.marquee]="titleMarquee">
+        <ng-container *ngSwitchCase="streamInfoStatus.Error">Metadata Unavailable</ng-container>
+        <ng-container *ngSwitchCase="streamInfoStatus.Loading">Loading Metadata...</ng-container>
+        <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ nowPlaying.streamInfo?.title }}</ng-container>
+    </div>
+    <div #station [class.marquee]="stationMarquee">{{ nowPlaying.station.title }}</div>
 </ng-container>

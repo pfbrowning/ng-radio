@@ -5,14 +5,18 @@
 <ng-template #selected>
   <div class="flex-grid">
     <div class="flex-column-third">
-      <img [src]="nowPlaying.iconUrl" class="station-icon" (error)="onImgError($event.target, '/assets/images/radio.svg')" >
+      <img [src]="(playerService.nowPlaying$ | async).station.iconUrl" class="station-icon" (error)="onImgError($event.target, '/assets/images/radio.svg')" >
     </div>
     <div class="flex-column-third">
       <div class="now-playing">
-        <div class="title">{{ nowPlaying.title }}</div>
-        <div class="genre">{{ nowPlaying.station }}</div>
-        <div>{{ nowPlaying.genre }}</div>
-        <div *ngIf="nowPlaying.bitrate">Bitrate: {{ nowPlaying.bitrate }}</div>
+        <div [ngSwitch]="(playerService.nowPlaying$ | async).streamInfoStatus" class="title">
+          <ng-container *ngSwitchCase="streamInfoStatus.Error">Metadata Unavailable</ng-container>
+          <ng-container *ngSwitchCase="streamInfoStatus.Loading">Loading Metadata...</ng-container>
+          <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (playerService.nowPlaying$ | async).streamInfo?.title }}</ng-container>
+        </div>
+        <div class="stationTitle">{{ (playerService.nowPlaying$ | async).station.title }}</div>
+        <div>{{ (playerService.nowPlaying$ | async).station.title }}</div>
+        <div *ngIf="(playerService.nowPlaying$ | async).streamInfo?.bitrate">Bitrate: {{ (playerService.nowPlaying$ | async).streamInfo?.bitrate }}</div>
         <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null">
           Sleeping in {{sleepTimerService.minutesUntilSleep$ | async}} minutes
         </div>

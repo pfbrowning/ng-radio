@@ -1,4 +1,4 @@
-export class Metadata {
+export class StreamInfo {
     constructor(
         public readonly title: string,
         public readonly fetchsource: string,

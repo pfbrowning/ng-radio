@@ -1,22 +1,23 @@
 import { Injectable, Inject, ApplicationRef } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
-import { MetadataService } from './metadata.service';
+import { StreamInfoService } from './stream-info.service';
 import { interval, Subscription, BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { filter, delay } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { NotificationService, Severities } from './notification.service';
-import { Metadata } from '../models/metadata';
-import { cloneDeep, isEqual } from 'lodash';
 import { SleepTimerService } from './sleep-timer.service';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElement } from '../models/audio-element';
 import { LoggingService } from './logging.service';
+import { StreamInfoStatus } from '../models/stream-info-status';
 import isBlank from 'is-blank';
+import { isEqual } from 'lodash';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
-  constructor(private metadataService: MetadataService,
+  constructor(private streamInfoService: StreamInfoService,
     private notificationService: NotificationService,
     private sleepTimerService: SleepTimerService,
     private loggingService: LoggingService,
@@ -29,14 +30,34 @@ export class PlayerService {
       this.audio.paused.subscribe(() => this.onAudioPaused());
       // Pause the playing audio when the sleep timer does its thing
       this.sleepTimerService.sleep.subscribe(() => this.pause());
+      // Whenever the now playing info changes
+      this.nowPlaying$.pipe(
+        // And there's a station selected
+        filter(nowPlaying => nowPlaying.station != null),
+        /* Delay for 0ms in order to give the async pipe
+        bindings time to catch up. */
+        delay(0)
+      /* Then explicitly run change detection throughout the
+      application because metadata changes need to be bound
+      to the templates and Angular doesn't automatically
+      run change detection on the components that we care
+      about in this case. */
+      ).subscribe(nowPlaying => this.applicationRef.tick());
     }
 
   private refreshSub: Subscription;
   private metaFetchSub: Subscription;
-  private nowPlaying = new NowPlaying();
-  public nowPlaying$ = new BehaviorSubject<NowPlaying>(this.nowPlaying);
+  private nowPlaying = new BehaviorSubject<NowPlaying>(new NowPlaying(null, null, StreamInfoStatus.NotInitialized));
   private _paused = new BehaviorSubject<boolean>(true);
+  public nowPlaying$ = this.nowPlaying.asObservable();
   public paused = this._paused.asObservable();
+
+  /** The current value of nowPlaying.  Use this only for reference
+   * and assignment: don't modify this.  I'll set this to use
+   * immutable.js soon. */
+  private get nowPlayingValue(): NowPlaying {
+    return this.nowPlaying.value;
+  }
 
   /** Notifies the user and logs the event when the audio fails to play */
   private onAudioError(error): void {
@@ -98,44 +119,50 @@ export class PlayerService {
 
   /** Updates the Now Playing metadata with the specified station info */
   private updateStation(station: Station) {
-    this.nowPlaying.station = station.title;
-    this.nowPlaying.genre = station.genre;
-    this.nowPlaying.iconUrl = station.iconUrl;
-    this.nowPlaying.tags = station.tags;
-    // Notify listeners of the station change
-    this.nowPlaying$.next(this.nowPlaying);
+    // If the provided station is any different from the current station
+    if (!isEqual(this.nowPlayingValue.station, station)) {
+      // Update the NowPlaying metadata with a new object (rather than mutating the existing one)
+      this.nowPlaying.next(new NowPlaying(station, null, StreamInfoStatus.NotInitialized));
+    }
   }
 
   /** Initiates a new subscription to getMetadata and updates the stored 'now playing'
    * info accordingly upon succesful metadata retrieval. */
-  private loadMetadata(setLoadingTitle: boolean = false) {
-    if (setLoadingTitle) {
-      this.nowPlaying.title = 'Loading Metadata...';
-      this.nowPlaying$.next(this.nowPlaying);
+  private loadMetadata(setLoading: boolean = false) {
+    // If setLoading is specified and NowPlaying doesn't already indicate loading
+    if (setLoading && this.nowPlayingValue.streamInfoStatus !== StreamInfoStatus.Loading) {
+      // Emit a new NowPlaying object which indicates that we're currently loading
+      this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.Loading));
+      // Temporarily set a generic app title until we get some stream info back
+      this.titleService.setTitle('Browninglogic Radio');
     }
     // If we're not still waiting on a previous metadata fetch to complete
     if (this.metaFetchSub == null || this.metaFetchSub.closed) {
-      // Fetch updated metadata from the API
-      this.metaFetchSub = this.metadataService.getMetadata(this.audio.source)
+      // Fetch updated stream info from the API
+      this.metaFetchSub = this.streamInfoService.getMetadata(this.audio.source)
         .subscribe(
-          meta => {
-            // Update the "Now Playing" model with the retrieved metadata
-            this.updateMetadata(meta);
-            /* Set the HTML document title to the title (or station,
-              if no title was provided). */
-            if (!isBlank(this.nowPlaying.title)) {
-              this.titleService.setTitle(this.nowPlaying.title);
-            } else {
-              this.titleService.setTitle(this.nowPlaying.station);
+          streamInfo => {
+            // If the retrieved stream info differs from that in the current now playing model
+            if (!isEqual(this.nowPlayingValue.streamInfo, streamInfo)) {
+              // Emit a new NowPlaying object with the updated stream info
+              this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, streamInfo, StreamInfoStatus.Valid));
+
+              /* Set the HTML document title to the title (or station,
+                if no title was provided). */
+              if (!isBlank(this.nowPlayingValue.streamInfo.title)) {
+                this.titleService.setTitle(this.nowPlayingValue.streamInfo.title);
+              } else {
+                this.titleService.setTitle(this.nowPlayingValue.station.title);
+              }
             }
           },
           error => {
-            /* In the case of error, gracefully set the title to
-            "Metadata Unavilable" */
+            // Log the error
             this.loggingService.logException(error, {'event': 'Failed to fetch metadata', 'url': this.audio.source });
-            this.nowPlaying.title = 'Metadata Unavailable';
-            this.titleService.setTitle(this.nowPlaying.title);
-            this.nowPlaying$.next(this.nowPlaying);
+            // Emit a new NowPlaying object denoting the error
+            this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.Error));
+            // Set a generic app title
+            this.titleService.setTitle('Browninglogic Radio');
           }
         );
     }
@@ -156,25 +183,5 @@ export class PlayerService {
 
   public pause() {
     this.audio.pause();
-  }
-
-  private updateMetadata(metadata: Metadata) {
-    const beforeChange = cloneDeep(this.nowPlaying);
-    this.nowPlaying.title = metadata.title;
-    this.nowPlaying.bitrate = metadata.bitrate;
-    /* If we don't already have a stored station title and one
-    was provided in the metadata, then use the metadata version. */
-    if (this.nowPlaying.station == null && metadata.stationTitle != null) {
-        this.nowPlaying.station = metadata.stationTitle;
-    }
-    /* Similarly, assign genre if it was returned in
-    the metadata and doesn't already exist. */
-    if (this.nowPlaying.genre == null && metadata.genre != null) {
-        this.nowPlaying.genre = metadata.genre;
-    }
-    /* If anything changed, then notify listeners. */
-    if (!isEqual(beforeChange, this.nowPlaying)) {
-      this.nowPlaying$.next(this.nowPlaying);
-    }
   }
 }

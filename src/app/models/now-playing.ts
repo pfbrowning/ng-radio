@@ -1,8 +1,11 @@
+import { StreamInfo } from './stream-info';
+import { Station } from './station';
+import { StreamInfoStatus } from './stream-info-status';
+
 export class NowPlaying {
-    public title: string;
-    public station: string;
-    public genre: string;
-    public bitrate: string;
-    public iconUrl: string;
-    public tags: Array<string>;
+    constructor(
+        public readonly station: Station,
+        public readonly streamInfo: StreamInfo,
+        public readonly streamInfoStatus: StreamInfoStatus
+    ) {}
 }

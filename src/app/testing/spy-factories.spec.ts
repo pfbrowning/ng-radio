@@ -1,7 +1,7 @@
 import { Subject, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { NowPlaying } from '../models/now-playing';
 import { EventEmitter } from '@angular/core';
-import { Metadata } from '../models/metadata';
+import { StreamInfo } from '../models/stream-info';
 import { AppError } from '../models/app-error';
 
 export class SpyFactories {
