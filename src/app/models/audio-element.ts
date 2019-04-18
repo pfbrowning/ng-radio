@@ -14,14 +14,14 @@ export class AudioElement {
             to prevent the browser from continuing to download
             audio while paused. */
             this.audio.src = '';
-        }
+        };
         this.audio.preload = 'none';
     }
 
     /* Maintain the audio source in a separate property
     so that we can clear it from the audio element on pause
     and then re-assign it on play. */
-    private _source : string;
+    private _source: string;
     public error = new EventEmitter<any>();
     public playing = new EventEmitter<void>();
     public paused = new EventEmitter<void>();

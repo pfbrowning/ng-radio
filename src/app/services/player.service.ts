@@ -73,10 +73,10 @@ export class PlayerService {
     });
   }
 
-  /** Updates the reactive 'paused' state, and unsubscribes 
+  /** Updates the reactive 'paused' state, and unsubscribes
    * from any metadata fetch & refresh subscriptions. */
   private onAudioPaused(): void {
-    /* Run the following in zone.run in order to explicitly trigger 
+    /* Run the following in zone.run in order to explicitly trigger
     application-wide change detection afterwards
     because this is a change that we do want represented in
     template bindings and change detection won't automatically
@@ -102,9 +102,10 @@ export class PlayerService {
     care about in this case. */
     this.ngZone.run(() => {
       // If we have stream info
-      if(nowPlaying.streamInfo != null) {
+      if (nowPlaying.streamInfo != null) {
         // Notify the user of the currently playing stream info
-        let notificationBody = !isBlank(nowPlaying.streamInfo.title) ? `${nowPlaying.streamInfo.title} - ${nowPlaying.station.title}` : nowPlaying.station.title;
+        const notificationBody = !isBlank(nowPlaying.streamInfo.title) ?
+          `${nowPlaying.streamInfo.title} - ${nowPlaying.station.title}` : nowPlaying.station.title;
         this.notificationService.notify(Severities.Info, 'Now Playing', notificationBody);
       }
     });
