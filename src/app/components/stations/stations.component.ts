@@ -23,7 +23,7 @@ export class StationsComponent {
       title: 'NPR Program Stream',
       url: 'https://nprdmp-live01-mp3.akacast.akamaistream.net/7/998/364916/v1/npr.akacast.akamaistream.net/nprdmp_live01_mp3',
       genre: 'Public Radio',
-      iconUrl: 'https://www.npr.org/about/images/press/Logos/NPRLogo_RGB.png',
+      iconUrl: 'https://media.npr.org/chrome_svg/npr-logo.svg',
       tags: null
     },
     {
