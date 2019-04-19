@@ -32,11 +32,14 @@ export class KeepAwakeService {
   }
 
   public disable(): void {
-    // Disable the nosleep object
-    this.noSleep.disable();
-    // Notify any subscribers
-    this.enabled$.next(false);
-    this.notificationService.notify(Severities.Success, 'Keep Awake Disabled',
-      'Keep Awake has been disabled.');
+    // If the nosleep object is currently enabled
+    if (this.enabled$.value === true) {
+      // Disable it
+      this.noSleep.disable();
+      // Notify any subscribers
+      this.enabled$.next(false);
+      this.notificationService.notify(Severities.Success, 'Keep Awake Disabled',
+        'Keep Awake has been disabled.');
+    }
   }
 }

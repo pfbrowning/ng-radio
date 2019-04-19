@@ -59,37 +59,16 @@ describe('PlayerService', () => {
   });
 
   it('should properly handle audio error', () => {
-    /* Arrange: Ensure that neither notify or logException have been
-    called and set the source to a dummy url. */
+    /* Arrange: Ensure that neither notify or logException have been called */
     expect(notificationServiceSpy.notify).not.toHaveBeenCalled();
     expect(loggingServiceSpy.logException).not.toHaveBeenCalled();
-    audioElement.source = 'someaudio';
     // Act: Emit an audio error
     audioElement.error.emit('some error');
     // Assert: Ensure that notify was called as expected and that the error was logged
     expect(notificationServiceSpy.notify).toHaveBeenCalledTimes(1);
     expect(notificationServiceSpy.notify.calls.mostRecent().args)
-      .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play someaudio']);
+      .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play undefined']);
     expect(loggingServiceSpy.logException).toHaveBeenCalledTimes(1);
-  });
-
-  it('should properly report whether a station is selected', () => {
-    // Arrange: Define a few test entries with dummy values
-    const testEntries = [
-      { 'source': 'someurl', shouldBeSelected: true },
-      { 'source': 'http://79.111.119.111:9107/;', shouldBeSelected: true },
-      { 'source': '     ', shouldBeSelected: false },
-      { 'source': null, shouldBeSelected: false },
-      { 'source': undefined, shouldBeSelected: false }
-    ];
-
-    // For each test entry
-    testEntries.forEach(testEntry => {
-      // Arrange: set the audio source
-      audioElement.source = testEntry.source;
-      // Act & Assert: Ensure that stationSelected is as expected
-      expect(playerService.stationSelected).toBe(testEntry.shouldBeSelected);
-    });
   });
 
   it('should properly report paused status', () => {
@@ -126,11 +105,11 @@ describe('PlayerService', () => {
       playerService.playStation(testEntry);
 
       // Assert
-      // Ensure that the audi was paused and played once for this iteration
+      // Ensure that the audio was paused and played once for this iteration
       expect(audioElementPauseSpy).toHaveBeenCalledTimes(iteration + 1);
       expect(audioElementPlaySpy).toHaveBeenCalledTimes(iteration + 1);
       // Ensure that the audio url was updated
-      expect(audioElement.source).toBe(testEntry.url);
+      expect(playerService.source).toBe(testEntry.url);
 
       // Ensure that the appropriate NowPlaying data was emitted by the BehaviorSubject
       expect(nowPlayingSpy.calls.mostRecent().args[0].station).toBe(testEntry);

@@ -8,34 +8,23 @@ export class AudioElement {
     ) {
         this.audio.onerror = (error) => this.error.emit(error);
         this.audio.onplaying = () => this.playing.emit();
-        this.audio.onpause = () => {
-            this.paused.emit();
-            /* Clear the src on the audio element in order
-            to prevent the browser from continuing to download
-            audio while paused. */
-            this.audio.src = '';
-        };
+        this.audio.onpause = () => this.paused.emit();
         this.audio.preload = 'none';
     }
 
-    /* Maintain the audio source in a separate property
-    so that we can clear it from the audio element on pause
-    and then re-assign it on play. */
-    private _source: string;
     public error = new EventEmitter<any>();
     public playing = new EventEmitter<void>();
     public paused = new EventEmitter<void>();
 
-    public get source(): string {
-        return this._source;
+    public get src(): string {
+        return this.audio.src;
     }
 
-    public set source(value: string) {
-        this._source = value;
+    public set src(value: string) {
+        this.audio.src = value;
     }
 
     public play(): void {
-        this.audio.src = this._source;
         this.audio.play();
     }
 

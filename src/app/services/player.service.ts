@@ -1,4 +1,4 @@
-import { Injectable, Inject, ApplicationRef, NgZone } from '@angular/core';
+import { Injectable, Inject, NgZone } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { StreamInfoService } from './stream-info.service';
@@ -12,8 +12,8 @@ import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElement } from '../models/audio-element';
 import { LoggingService } from './logging.service';
 import { StreamInfoStatus } from '../models/stream-info-status';
-import isBlank from 'is-blank';
 import { isEqual } from 'lodash';
+import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
@@ -23,7 +23,6 @@ export class PlayerService {
     private loggingService: LoggingService,
     private configService: ConfigService,
     private titleService: Title,
-    private applicationRef: ApplicationRef,
     private ngZone: NgZone,
     @Inject(AudioElementToken) private audio: AudioElement) {
       this.audio.error.subscribe(error => this.onAudioError(error));
@@ -41,12 +40,18 @@ export class PlayerService {
       ).subscribe(nowPlaying => this.onNowPlayingChanged(nowPlaying));
     }
 
+  private _source: string;
   private refreshSub: Subscription;
   private metaFetchSub: Subscription;
   private nowPlaying = new BehaviorSubject<NowPlaying>(new NowPlaying(null, null, StreamInfoStatus.NotInitialized));
   private _paused = new BehaviorSubject<boolean>(true);
   public nowPlaying$ = this.nowPlaying.asObservable();
   public paused = this._paused.asObservable();
+
+  /** Audio source URL */
+  public get source(): string {
+    return this._source;
+  }
 
   /** The current value of nowPlaying.  Use this only for reference
    * and assignment: don't modify this.  I'll set this to use
@@ -57,8 +62,8 @@ export class PlayerService {
 
   /** Notifies the user and logs the event when the audio fails to play */
   private onAudioError(error): void {
-    this.loggingService.logException(error, {'event': 'Failed to play audio', 'source': this.audio.source });
-    this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.audio.source}`);
+    this.loggingService.logException(error, {'event': 'Failed to play audio', 'source': this.source });
+    this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.source}`);
   }
 
   /** Updates the reactive 'paused' state and triggers change
@@ -83,6 +88,9 @@ export class PlayerService {
     be triggered because the source DOM event happened outside
     of Angular's zone. */
     this.ngZone.run(() => {
+      /* Clear the src in order to prevent the browser from continuing to
+      download audio in the background. */
+      this.audio.src = '';
       /* Notify anybody listening to changes on the 'paused'
       state that the audio is now paused. */
       this._paused.next(true);
@@ -113,7 +121,7 @@ export class PlayerService {
 
   /** Reports whether there is a currently selected station */
   public get stationSelected(): boolean {
-    return !isBlank(this.audio.source);
+    return !isBlank(this.source);
   }
 
   /** Plays the specified Station */
@@ -122,8 +130,8 @@ export class PlayerService {
     this.pause();
     // Update the current station
     this.updateStation(station);
-    // Assign the new station URL
-    this.audio.source = station.url;
+    // Set the source url accordingly in the service
+    this._source = station.url;
     // Play the audio and fetch the metadata
     this.play();
   }
@@ -150,7 +158,7 @@ export class PlayerService {
     // If we're not still waiting on a previous metadata fetch to complete
     if (this.metaFetchSub == null || this.metaFetchSub.closed) {
       // Fetch updated stream info from the API
-      this.metaFetchSub = this.streamInfoService.getMetadata(this.audio.source)
+      this.metaFetchSub = this.streamInfoService.getMetadata(this.source)
         .subscribe(
           streamInfo => {
             // If the retrieved stream info differs from that in the current now playing model
@@ -169,7 +177,7 @@ export class PlayerService {
           },
           error => {
             // Log the error
-            this.loggingService.logException(error, {'event': 'Failed to fetch metadata', 'url': this.audio.source });
+            this.loggingService.logException(error, {'event': 'Failed to fetch metadata', 'url': this.source });
             // Emit a new NowPlaying object denoting the error
             this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.Error));
             // Set a generic app title
@@ -180,6 +188,9 @@ export class PlayerService {
   }
 
   public play() {
+    /* Since we clear the audio src after pause, we need to assing or re-assign
+    it before playing. */
+    this.audio.src = this.source;
     // Play the audio
     this.audio.play();
     /* On the initial load of the station, load the metadata
