@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerBarComponent } from './player-bar.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,6 +24,7 @@ describe('PlayerBarComponent', () => {
         PlayerBarStationInfoComponent
       ],
       imports: [
+        RouterTestingModule,
         MatMenuModule,
         MatToolbarModule,
         MatButtonModule,
