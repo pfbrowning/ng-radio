@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { Utils } from 'src/app/utils/utils';
 import { SleepTimerService } from 'src/app/services/sleep-timer.service';
-import { NoSleepService } from 'src/app/services/no-sleep.service';
+import { KeepAwakeService } from 'src/app/services/keep-awake.service';
 import { StreamInfoStatus } from 'src/app/models/stream-info-status';
 
 @Component({
@@ -12,7 +12,7 @@ import { StreamInfoStatus } from 'src/app/models/stream-info-status';
 export class NowPlayingComponent {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
-    public noSleepService: NoSleepService) {}
+    public keepAwakeService: KeepAwakeService) {}
 
   public streamInfoStatus = StreamInfoStatus;
 

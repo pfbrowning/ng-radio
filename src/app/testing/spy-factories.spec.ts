@@ -44,8 +44,8 @@ export class SpyFactories {
     return jasmine.createSpyObj('noSleep', ['enable', 'disable']);
   }
 
-  public static CreateNoSleepServiceSpy(): any {
-    return jasmine.createSpyObj('noSleepService', ['enable', 'disable']);
+  public static CreateKeepAwakeServiceSpy(): any {
+    return jasmine.createSpyObj('keepAwakeServiceSpy', ['enable', 'disable']);
   }
 
   public static CreateMessageServiceSpy(): any {

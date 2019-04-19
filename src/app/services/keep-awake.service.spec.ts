@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { NoSleepService } from './no-sleep.service';
-import { PlayerService } from './player.service';
+import { KeepAwakeService } from './keep-awake.service';
 import { SpyFactories } from '../testing/spy-factories.spec';
-import * as NoSleep from 'nosleep.js';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElementStub } from '../testing/stubs/AudioElementStub.spec';
+import { MessageService } from 'primeng/api';
+import * as NoSleep from 'nosleep.js';
 
-describe('NoSleepService', () => {
+describe('KeepAwakeService', () => {
   let enabledSpy: jasmine.Spy;
-  let noSleepService: NoSleepService;
+  let keepAwakeService: KeepAwakeService;
   let noSleepSpy: jasmine.SpyObj<NoSleep>;
   let audioElement: AudioElementStub;
 
@@ -20,28 +20,29 @@ describe('NoSleepService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: AudioElementToken, useValue: audioElement },
-        { provide: NoSleepToken, useValue: noSleepSpy }
+        { provide: NoSleepToken, useValue: noSleepSpy },
+        { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
       ]
     });
 
-    noSleepService = TestBed.get(NoSleepService);
+    keepAwakeService = TestBed.get(KeepAwakeService);
     enabledSpy = jasmine.createSpy('enabled');
   });
 
   it('should be created', () => {
-    expect(noSleepService).toBeTruthy();
+    expect(keepAwakeService).toBeTruthy();
   });
 
   it('should properly enable and disable', () => {
     /* Before doing anything enabled$ should be false and
     enable should not have been called on the nosleep object yet. */
-    noSleepService.enabled$.subscribe(enabled => enabledSpy(enabled));
+    keepAwakeService.enabled$.subscribe(enabled => enabledSpy(enabled));
     expect(enabledSpy).toHaveBeenCalledTimes(1);
     expect(enabledSpy.calls.mostRecent().args).toEqual([false]);
     expect(noSleepSpy.enable).not.toHaveBeenCalled();
 
     // Enable nosleep
-    noSleepService.enable();
+    keepAwakeService.enable();
     /* After enabling nosleep enabled$ should emit true and
     enable should have been called on the nosleep object once. */
     expect(enabledSpy).toHaveBeenCalledTimes(2);
@@ -53,7 +54,7 @@ describe('NoSleepService', () => {
     expect(noSleepSpy.disable).not.toHaveBeenCalled();
 
     // Disable nosleep again
-    noSleepService.disable();
+    keepAwakeService.disable();
     /* After turning nosleep back off, enabled$ should emit the
     status again and disabled should be called. */
     expect(enabledSpy).toHaveBeenCalledTimes(3);
@@ -68,7 +69,7 @@ describe('NoSleepService', () => {
     expect(noSleepSpy.enable).not.toHaveBeenCalled();
 
     // Enable nosleep and ensure that it was enabled properly
-    noSleepService.enable();
+    keepAwakeService.enable();
     expect(noSleepSpy.enable).toHaveBeenCalledTimes(1);
 
     // Emit audioPaused

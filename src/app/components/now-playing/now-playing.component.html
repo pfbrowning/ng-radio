@@ -20,8 +20,8 @@
         <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null">
           Sleeping in {{sleepTimerService.minutesUntilSleep$ | async}} minutes
         </div>
-        <div *ngIf="(noSleepService.enabled$ | async) == true">
-          Nosleep is enabled
+        <div *ngIf="(keepAwakeService.enabled$ | async) == true">
+          Keeping Awake
         </div>
       </div>
     </div>
@@ -35,8 +35,8 @@
           <button mat-raised-button color="primary" [matMenuTriggerFor]="sleepTimerMenu.menu">Sleep Timer</button>
         </li>
         <li>
-          <button *ngIf="(noSleepService.enabled$ | async) == false" (click)="noSleepService.enable()" mat-raised-button color="primary">Enable Nosleep</button>
-          <button *ngIf="(noSleepService.enabled$ | async) == true" (click)="noSleepService.disable()" mat-raised-button color="primary">Disable Nosleep</button>
+          <button *ngIf="(keepAwakeService.enabled$ | async) == false" (click)="keepAwakeService.enable()" mat-raised-button color="primary" matTooltip="This will attempt to keep the screen from locking on mobile devices.">Enable Keep Awake</button>
+          <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
         </li>
         <li>
           <button mat-raised-button color="primary">Action 3</button>

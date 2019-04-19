@@ -21,7 +21,7 @@ import { StreamInfoService } from './services/stream-info.service';
 import { RadioBrowserService } from './services/radio-browser.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
-import { NoSleepService } from './services/no-sleep.service';
+import { KeepAwakeService } from './services/keep-awake.service';
 import { MessageService } from 'primeng/api';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 
@@ -54,7 +54,7 @@ describe('AppComponent', () => {
         { provide: ErrorHandlingService, useValue: SpyFactories.CreateErrorHandlingServiceSpy() },
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
         { provide: RadioBrowserService, useValue: SpyFactories.CreateRadioBrowserServiceSpy() },
-        { provide: NoSleepService, useValue: SpyFactories.CreateNoSleepServiceSpy() },
+        { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() },
         { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
       ]
     }).compileComponents();

@@ -6,7 +6,7 @@ import { SpyFactories } from 'src/app/testing/spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
 import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
 import { NotificationService } from 'src/app/services/notification.service';
-import { NoSleepService } from 'src/app/services/no-sleep.service';
+import { KeepAwakeService } from 'src/app/services/keep-awake.service';
 
 describe('NowPlayingComponent', () => {
   let component: NowPlayingComponent;
@@ -25,7 +25,7 @@ describe('NowPlayingComponent', () => {
       providers: [
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
         { provide: NotificationService, useValue: SpyFactories.CreateNotificationServiceSpy() },
-        { provide: NoSleepService, useValue: SpyFactories.CreateNoSleepServiceSpy() }
+        { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() }
       ]
     })
     .compileComponents();
