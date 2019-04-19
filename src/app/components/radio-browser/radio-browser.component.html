@@ -1,10 +1,10 @@
 <h1 class="mat-headline">Radio Browser API Search</h1>
 
-<div class="mat-form-field-row">
-  <mat-form-field>
+<div class="flex-grid">
+  <mat-form-field class="flex-column-third">
     <input matInput [(ngModel)]="nameSearch" (keyup)="nameSearch$.next($event.target.value)" placeholder="Station Name" matTooltip="Search Stations by name">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="flex-column-third">
     <input matInput [(ngModel)]="tagSearch" (keyup)="tagSearch$.next($event.target.value)" placeholder="Tag" matTooltip="Search Stations by tag">
   </mat-form-field>
 </div>

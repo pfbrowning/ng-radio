@@ -66,15 +66,22 @@ table.mat-table {
     flex-wrap: wrap;
 }
 
-.flex-column-third {
+.flex-column-third,
+.flex-column-half {
     flex-basis: 100%;
     max-width: 100%;
+    padding: 10px;
 }
 
 @media (min-width:$smallScreenCutoff) {
     .flex-column-third {
         flex-basis: 33%;
         max-width: 33%;
+    }
+
+    .flex-column-half {
+        flex-basis: 50%;
+        max-width: 50%;
     }
 }
 
