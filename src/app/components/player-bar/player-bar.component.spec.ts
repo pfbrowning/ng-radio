@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerBarComponent } from './player-bar.component';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule, MatIconModule, MatButtonModule, MatToolbarModule,
+  MatMenuModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { SpyFactories } from 'src/app/testing/spy-factories.spec';
 import { PlayerService } from 'src/app/services/player.service';
 import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
@@ -14,8 +12,6 @@ import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player
 import { CustomStationWindowComponent } from '../custom-station-window/custom-station-window.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PlayerBarComponent', () => {
@@ -38,6 +34,7 @@ describe('PlayerBarComponent', () => {
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
+        MatTooltipModule,
         ModalManagerModule,
         FormsModule,
         NoopAnimationsModule

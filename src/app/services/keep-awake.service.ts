@@ -18,28 +18,35 @@ export class KeepAwakeService {
     this.audio.paused.subscribe(() => this.disable());
   }
 
-  /* Expose the current state at any given time with a
-  BehaviorSubject for component template binding. */
-  public enabled$ = new BehaviorSubject<boolean>(false);
+  private enabled = new BehaviorSubject<boolean>(false);
+  public enabled$ = this.enabled.asObservable();
 
   public enable(): void {
     // Enable the nosleep object itself
     this.noSleep.enable();
     // Notify any subscribers
-    this.enabled$.next(true);
+    this.enabled.next(true);
     this.notificationService.notify(Severities.Success, 'Keep Awake Enabled',
       'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
   }
 
   public disable(): void {
     // If the nosleep object is currently enabled
-    if (this.enabled$.value === true) {
+    if (this.enabled.value === true) {
       // Disable it
       this.noSleep.disable();
       // Notify any subscribers
-      this.enabled$.next(false);
+      this.enabled.next(false);
       this.notificationService.notify(Severities.Success, 'Keep Awake Disabled',
         'Keep Awake has been disabled.');
+    }
+  }
+
+  public toggle(): void {
+    if (this.enabled.value) {
+      this.disable();
+    } else {
+      this.enable();
     }
   }
 }

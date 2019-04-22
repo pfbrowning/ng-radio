@@ -15,7 +15,9 @@ table.mat-table.selectable-rows {
 }
 
 @media (min-width:$smallScreenCutoff) {
-    .small-screen-only {
+    .small-screen-only,
+    .mat-icon-button.small-screen-only,
+    .mat-menu-item.small-screen-only {
         display: none;
     }
 }
@@ -103,4 +105,8 @@ div.nm-modal-window.custom-station-modal {
     max-height: 95vh;
     overflow-y:auto;
     padding-bottom:0px;
+}
+
+.off-white {
+    color: $offWhite;
 }

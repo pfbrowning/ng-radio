@@ -4,6 +4,7 @@ import { PlayerService } from 'src/app/services/player.service';
 import { SleepTimerService } from 'src/app/services/sleep-timer.service';
 import { KeepAwakeService } from 'src/app/services/keep-awake.service';
 import { Utils } from 'src/app/utils/utils';
+import { NotificationService, Severities } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'blr-player-bar',
@@ -14,6 +15,7 @@ export class PlayerBarComponent {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
     public keepAwakeService: KeepAwakeService,
+    private notificationService: NotificationService,
     private router: Router) {}
 
   public onImgError(img: HTMLImageElement) {
@@ -36,5 +38,9 @@ export class PlayerBarComponent {
       console.log('navigating');
       this.router.navigate(['/now-playing']);
     }
+  }
+
+  public onAddToFavoritesClicked(): void {
+    this.notificationService.notify(Severities.Info, 'Coming Soon', 'Favorites functionality coming soon!');
   }
 }

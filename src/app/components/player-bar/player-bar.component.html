@@ -3,47 +3,51 @@
     <img class="station-icon-thumb" [src]="(playerService.nowPlaying$ | async).station.iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
     <blr-player-bar-station-info [nowPlaying]="playerService.nowPlaying$ | async" class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
     <span class="fill-remaining"></span>
-    <div *ngIf="(keepAwakeService.enabled$ | async) == true" class="indicator-icon large-screen-only" matTooltip="Keep Awake is enabled.  This will attempt to keep the screen from locking on mobile devices.">
-      <mat-icon>settings_cell</mat-icon>
-    </div>
-    <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="indicator-icon large-screen-only" matTooltip="Minutes until going to sleep">
+    <div [class.off-white]="(sleepTimerService.minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
+      class="indicator-icon large-screen-only" [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'" >
       <mat-icon>timer</mat-icon> {{sleepTimerService.minutesUntilSleep$ | async}}
     </div>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <div (click)="keepAwakeService.toggle()" [class.off-white]="!(keepAwakeService.enabled$ | async)" 
+      [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" class="indicator-icon large-screen-only">
+      <mat-icon>settings_cell</mat-icon>
+    </div>
+    <div class="indicator-icon large-screen-only" matTooltip="Open Custom URL" (click)="customStationWindow.show()" >
+      <mat-icon>open_in_new</mat-icon>
+    </div>
+    <div class="indicator-icon large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >
+      <mat-icon>favorite</mat-icon>
+    </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <button *ngIf="playerService.paused | async" mat-fab color="accent" (click)="playerService.play()" matTooltip="Play the selected station">
+    <button *ngIf="playerService.paused | async" mat-fab color="accent" class="play-pause-button" (click)="playerService.play()" matTooltip="Play the selected station">
       <mat-icon>play_arrow</mat-icon>
     </button>
-    <button *ngIf="!(playerService.paused | async)" mat-fab color="accent" (click)="playerService.pause()" matTooltip="Pause the currently playing station">
+    <button *ngIf="!(playerService.paused | async)" mat-fab color="accent" class="play-pause-button" (click)="playerService.pause()" matTooltip="Pause the currently playing station">
       <mat-icon>pause</mat-icon>
     </button>
   </ng-container>
 </mat-toolbar>
-
-<blr-custom-station-window #customStationWindow></blr-custom-station-window>
 
 <mat-menu #menu="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="sleepTimerMenu.menu">
     <mat-icon>timer</mat-icon>
     <span>Sleep Timer</span>
   </button>
-  <button *ngIf="(keepAwakeService.enabled$ | async) == false" (click)="keepAwakeService.enable()" mat-menu-item matTooltip="Enable Keep Awake.  This will attempt to keep the screen from locking on mobile devices.">
+  <button mat-menu-item (click)="keepAwakeService.toggle()">
     <mat-icon>settings_cell</mat-icon>
-    <span>Enable Keep Awake</span>
-  </button>
-  <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-menu-item>
-    <mat-icon>settings_cell</mat-icon>
-    <span>Disable Keep Awake</span>
+    <span>Toggle Keep Awake</span>
   </button>
   <button mat-menu-item (click)="customStationWindow.show()">
     <mat-icon>open_in_new</mat-icon>
-    <span>Open URL</span>
+    <span>Open Custom URL</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="onAddToFavoritesClicked()">
     <mat-icon>favorite</mat-icon>
-    <span>Action 3</span>
+    <span>Add To Favorites</span>
   </button>
 </mat-menu>
+
+<blr-custom-station-window #customStationWindow></blr-custom-station-window>
 
 <blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>

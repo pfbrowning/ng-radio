@@ -27,6 +27,7 @@ describe('KeepAwakeService', () => {
 
     keepAwakeService = TestBed.get(KeepAwakeService);
     enabledSpy = jasmine.createSpy('enabled');
+    keepAwakeService.enabled$.subscribe(enabled => enabledSpy(enabled));
   });
 
   it('should be created', () => {
@@ -36,7 +37,6 @@ describe('KeepAwakeService', () => {
   it('should properly enable and disable', () => {
     /* Before doing anything enabled$ should be false and
     enable should not have been called on the nosleep object yet. */
-    keepAwakeService.enabled$.subscribe(enabled => enabledSpy(enabled));
     expect(enabledSpy).toHaveBeenCalledTimes(1);
     expect(enabledSpy.calls.mostRecent().args).toEqual([false]);
     expect(noSleepSpy.enable).not.toHaveBeenCalled();
@@ -59,6 +59,34 @@ describe('KeepAwakeService', () => {
     status again and disabled should be called. */
     expect(enabledSpy).toHaveBeenCalledTimes(3);
     expect(enabledSpy.calls.mostRecent().args).toEqual([false]);
+    expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
+  });
+
+  it('should toggle on and off', () => {
+    /* Before doing anything enabled$ should be false and
+    enable should not have been called on the nosleep object yet. */
+    expect(enabledSpy).toHaveBeenCalledTimes(1);
+    expect(enabledSpy.calls.mostRecent().args[0]).toBe(false);
+    expect(noSleepSpy.enable).not.toHaveBeenCalled();
+
+    // Enable nosleep
+    keepAwakeService.toggle();
+    /* After toggling, enabled$ should emit true and
+    enable should have been called on the nosleep object once. */
+    expect(enabledSpy).toHaveBeenCalledTimes(2);
+    expect(enabledSpy.calls.mostRecent().args[0]).toBe(true);
+    expect(noSleepSpy.enable).toHaveBeenCalledTimes(1);
+
+    /* Disable should not have been called yet at all
+    at this point. */
+    expect(noSleepSpy.disable).not.toHaveBeenCalled();
+
+    // Toggle again
+    keepAwakeService.toggle();
+    /* After toggling, enabled$ should emit a status of false
+    and disabled should be called. */
+    expect(enabledSpy).toHaveBeenCalledTimes(3);
+    expect(enabledSpy.calls.mostRecent().args[0]).toBe(false);
     expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
   });
 
