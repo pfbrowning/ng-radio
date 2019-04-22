@@ -39,7 +39,7 @@
           <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
         </li>
         <li>
-          <button mat-raised-button color="primary">Action 3</button>
+          <button mat-raised-button color="primary" (click)="customStationWindow.show()">Open URL</button>
         </li>
       </ul>
     </div>
@@ -47,7 +47,12 @@
 </ng-template>
 
 <ng-template #notSelected>
-  <p>There's no media selected.  Please go to the <a [routerLink]="['/radio-browser']">Radio Browser Search</a> and find a station to play.</p>
+  <p>
+    There's no media selected.  Please go to the <a [routerLink]="['/radio-browser']">Radio Browser Search</a> 
+    and find a station to play or <a href="javascript:void(0);" (click)="customStationWindow.show()">enter a custom URL</a>.
+  </p>
 </ng-template>
 
 <blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>
+
+<blr-custom-station-window #customStationWindow></blr-custom-station-window>

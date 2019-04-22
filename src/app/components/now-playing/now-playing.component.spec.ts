@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerService } from 'src/app/services/player.service';
@@ -7,6 +8,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
 import { NotificationService } from 'src/app/services/notification.service';
 import { KeepAwakeService } from 'src/app/services/keep-awake.service';
+import { CustomStationWindowComponent } from '../custom-station-window/custom-station-window.component';
+import { ModalManagerModule } from '@browninglogic/ng-modal';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 describe('NowPlayingComponent', () => {
   let component: NowPlayingComponent;
@@ -16,11 +23,17 @@ describe('NowPlayingComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         NowPlayingComponent,
-        SleepTimerMenuComponent
+        SleepTimerMenuComponent,
+        CustomStationWindowComponent
       ],
       imports: [
         RouterTestingModule,
-        MatMenuModule
+        MatMenuModule,
+        ModalManagerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        NoopAnimationsModule,
+        FormsModule
       ],
       providers: [
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
