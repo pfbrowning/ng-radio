@@ -15,6 +15,7 @@ export class CustomStationWindowComponent {
 
   @ViewChild('modal') modal: ModalWindowComponent;
   public station: Station = new Station();
+  public urlPattern = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
 
   public show(): void {
     this.modal.show();
