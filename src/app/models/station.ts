@@ -1,9 +1,9 @@
 export class Station {
     constructor(
-        public readonly title: string,
-        public readonly url: string,
-        public readonly genre: string = null,
-        public readonly iconUrl: string = null,
-        public readonly tags: Array<string> = null
+        public title: string = null,
+        public url: string = null,
+        public genre: string = null,
+        public iconUrl: string = null,
+        public tags: Array<string> = null
     ) {}
 }

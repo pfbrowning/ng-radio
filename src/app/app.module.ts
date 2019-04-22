@@ -34,6 +34,7 @@ import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { AudioElement } from './models/audio-element';
 import { ApplicationInsightsModule, AppInsightsService } from '@markpieszak/ng-application-insights';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
+import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
 import * as NoSleep from 'nosleep.js';
 
 export function initializeConfig(configService: ConfigService) {
@@ -52,7 +53,8 @@ export function initializeConfig(configService: ConfigService) {
     ResponsiveSidenavComponent,
     SidenavComponent,
     SleepTimerMenuComponent,
-    PlayerBarStationInfoComponent
+    PlayerBarStationInfoComponent,
+    CustomStationWindowComponent
   ],
   imports: [
     BrowserModule,

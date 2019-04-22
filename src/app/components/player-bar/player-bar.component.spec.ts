@@ -11,6 +11,12 @@ import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.co
 import { NotificationService } from 'src/app/services/notification.service';
 import { KeepAwakeService } from 'src/app/services/keep-awake.service';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
+import { CustomStationWindowComponent } from '../custom-station-window/custom-station-window.component';
+import { ModalManagerModule } from '@browninglogic/ng-modal';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -21,14 +27,20 @@ describe('PlayerBarComponent', () => {
       declarations: [
         PlayerBarComponent,
         SleepTimerMenuComponent,
-        PlayerBarStationInfoComponent
+        PlayerBarStationInfoComponent,
+        CustomStationWindowComponent
       ],
       imports: [
         RouterTestingModule,
         MatMenuModule,
         MatToolbarModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ModalManagerModule,
+        FormsModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },

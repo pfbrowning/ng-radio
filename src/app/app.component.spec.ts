@@ -17,24 +17,28 @@ import { ConfigService } from './services/config.service';
 import { SpyFactories } from './testing/spy-factories.spec';
 import { ErrorHandlingService } from './services/error-handling.service';
 import { PlayerService } from './services/player.service';
-import { StreamInfoService } from './services/stream-info.service';
 import { RadioBrowserService } from './services/radio-browser.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import { KeepAwakeService } from './services/keep-awake.service';
 import { MessageService } from 'primeng/api';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
+import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        FormsModule,
         RouterTestingModule,
         MatToolbarModule,
         MatIconModule,
         MatButtonModule,
         MatSidenavModule,
         MatMenuModule,
+        MatFormFieldModule,
         NgLoadingIndicatorModule,
         ModalManagerModule,
         ToastModule,
@@ -47,7 +51,8 @@ describe('AppComponent', () => {
         PlayerBarComponent,
         PlayerBarStationInfoComponent,
         ErrorWindowComponent,
-        SleepTimerMenuComponent
+        SleepTimerMenuComponent,
+        CustomStationWindowComponent
       ],
       providers: [
         { provide: ConfigService, useValue: SpyFactories.CreateConfigServiceSpy() },

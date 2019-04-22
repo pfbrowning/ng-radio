@@ -1,0 +1,25 @@
+<nm-modal-window #modal modalClass="custom-station-modal" [showCloseButton]="true">
+  <h1 header class="mat-headline">Open Custom Station</h1>
+  <div body class="custom-station-body">
+    <form #form="ngForm" (submit)="onSubmit(form)">
+      <fieldset class="flex-grid">
+        <mat-form-field class="flex-column-half">
+          <input matInput [(ngModel)]="station.title" name="title" placeholder="Station Title">
+        </mat-form-field>
+        <mat-form-field class="flex-column-half">
+          <input matInput required [(ngModel)]="station.url" name="url" placeholder="Stream URL">
+        </mat-form-field>
+        <mat-form-field class="flex-column-half">
+          <input matInput [(ngModel)]="station.genre" name="genre" placeholder="Genre">
+        </mat-form-field>
+        <mat-form-field class="flex-column-half">
+          <input matInput [(ngModel)]="station.iconUrl" name="icon-url" placeholder="Icon URL">
+        </mat-form-field>
+      </fieldset>
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="resetAndHide(form)" type="button">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">Open</button>
+      </div>
+    </form>
+  </div>
+</nm-modal-window>

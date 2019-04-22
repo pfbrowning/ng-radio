@@ -21,6 +21,8 @@
   </ng-container>
 </mat-toolbar>
 
+<blr-custom-station-window #customStationWindow></blr-custom-station-window>
+
 <mat-menu #menu="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="sleepTimerMenu.menu">
     <mat-icon>timer</mat-icon>
@@ -34,9 +36,9 @@
     <mat-icon>settings_cell</mat-icon>
     <span>Disable Keep Awake</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="customStationWindow.show()">
     <mat-icon>open_in_new</mat-icon>
-    <span>Action 2</span>
+    <span>Open URL</span>
   </button>
   <button mat-menu-item>
     <mat-icon>favorite</mat-icon>
