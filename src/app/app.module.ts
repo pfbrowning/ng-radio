@@ -1,15 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, ErrorHandler, InjectionToken } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule, MatButtonModule, MatTableModule, MatSidenavModule, MatIconModule,
+  MatFormFieldModule, MatInputModule, MatMenuModule, MatTooltipModule, MatProgressSpinnerModule, MatCardModule } from '@angular/material';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { AppComponent } from './app.component';
@@ -71,6 +64,8 @@ export function initializeConfig(configService: ConfigService) {
     MatInputModule,
     MatMenuModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
     ToastModule,
     ModalManagerModule,
     NgLoadingIndicatorModule,

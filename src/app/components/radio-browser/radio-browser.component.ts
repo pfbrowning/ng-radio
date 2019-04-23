@@ -5,7 +5,6 @@ import { Station } from 'src/app/models/station';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
 import { RadioBrowserService } from 'src/app/services/radio-browser.service';
-import { LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
 import isBlank from 'is-blank';
 
 @Component({
@@ -14,8 +13,7 @@ import isBlank from 'is-blank';
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(private playerService: PlayerService,
-    private radioBrowserService: RadioBrowserService,
-    private loadingIndicatorService: LoadingIndicatorService) {}
+    private radioBrowserService: RadioBrowserService) {}
 
   public columns = ['name', 'tags', 'icon'];
   public stations: Array<RadioBrowserStation>;
@@ -26,6 +24,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   public tagSearch: string;
   public tagSearch$ = new Subject<string>();
   private tagSearchSub: Subscription;
+  public loading = false;
 
   ngOnInit() {
     // Initialize typeahead search term subscriptions
@@ -42,10 +41,10 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
         if (isBlank(this.nameSearch) && isBlank(this.tagSearch)) {
           return of([]);
         }
-        // If search criteria were provided, then show the loader and perform the search
-        this.loadingIndicatorService.showLoadingIndicator();
+        this.loading = true;
+        this.stations = null;
         return this.radioBrowserService.searchStations(this.nameSearch, this.tagSearch).pipe(
-          finalize(() => this.loadingIndicatorService.hideLoadingIndicator())
+          finalize(() => this.loading = false)
         );
       })
     ).subscribe(stations => this.stations = stations);
