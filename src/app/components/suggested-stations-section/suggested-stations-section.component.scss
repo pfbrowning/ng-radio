@@ -1,0 +1,16 @@
+.thumbnail-container {
+    margin:5px 10px;
+    cursor: pointer;
+    // Normally we want each tile to be 150px wide
+    width:150px;
+    /* But when the screen is narrow enough that only one tile will fit,
+    we want that one tile to take up 90% of the screen width. */
+    @media (max-width:400px) {
+        width:90vw;
+    }
+}
+
+.stations-container {
+    // Center the tiles within the flex container
+    justify-content: center;
+}

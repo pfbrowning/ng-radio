@@ -30,8 +30,8 @@ export class SpyFactories {
     return spy;
   }
 
-  public static CreateRadioBrowserServiceSpy(): any {
-    const spy = jasmine.createSpyObj('radioBrowser', ['searchStations']);
+  public static CreateStationLookupServiceSpy(): any {
+    const spy = jasmine.createSpyObj('stationLookupServiceSpy', ['searchStations']);
     return spy;
   }
 

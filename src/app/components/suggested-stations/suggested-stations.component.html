@@ -1,0 +1,5 @@
+<h1 class="mat-headline">Suggested Stations</h1>
+
+<blr-suggested-stations-section (stationSelected)="onStationSelected($event)" header="Developer Suggested Stations" [stations]="developerSuggested"></blr-suggested-stations-section>
+<blr-suggested-stations-section (stationSelected)="onStationSelected($event)" header="Top Clicked Stations From Radio Browser API" [stations]="radioBrowserTopClicked"></blr-suggested-stations-section>
+<blr-suggested-stations-section (stationSelected)="onStationSelected($event)" header="Top Voted Stations From Radio Browser API" [stations]="radioBrowserTopVoted"></blr-suggested-stations-section>

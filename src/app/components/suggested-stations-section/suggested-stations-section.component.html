@@ -1,0 +1,4 @@
+<h2 class="mat-title">{{ header }}</h2>
+<div class="stations-container flex-grid">
+  <blr-station-thumbnail (click)="onStationClicked(station)" [station]="station" *ngFor="let station of stations" class="thumbnail-container"></blr-station-thumbnail>
+</div>

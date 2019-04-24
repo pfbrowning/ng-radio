@@ -7,7 +7,6 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { AppComponent } from './app.component';
 import { NowPlayingComponent } from './components/now-playing/now-playing.component';
-import { StationsComponent } from './components/stations/stations.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +27,9 @@ import { AudioElement } from './models/audio-element';
 import { ApplicationInsightsModule, AppInsightsService } from '@markpieszak/ng-application-insights';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
+import { SuggestedStationsComponent } from './components/suggested-stations/suggested-stations.component';
+import { StationThumbnailComponent } from './components/station-thumbnail/station-thumbnail.component';
+import { SuggestedStationsSectionComponent } from './components/suggested-stations-section/suggested-stations-section.component';
 import * as NoSleep from 'nosleep.js';
 
 export function initializeConfig(configService: ConfigService) {
@@ -38,7 +40,6 @@ export function initializeConfig(configService: ConfigService) {
   declarations: [
     AppComponent,
     NowPlayingComponent,
-    StationsComponent,
     PlayerBarComponent,
     RadioBrowserComponent,
     FavoritesComponent,
@@ -47,7 +48,10 @@ export function initializeConfig(configService: ConfigService) {
     SidenavComponent,
     SleepTimerMenuComponent,
     PlayerBarStationInfoComponent,
-    CustomStationWindowComponent
+    CustomStationWindowComponent,
+    SuggestedStationsComponent,
+    StationThumbnailComponent,
+    SuggestedStationsSectionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
-import { RadioBrowserStation } from 'src/app/models/radio-browser-station';
 import { Station } from 'src/app/models/station';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
-import { RadioBrowserService } from 'src/app/services/radio-browser.service';
+import { StationLookupService } from 'src/app/services/station-lookup.service';
 import isBlank from 'is-blank';
 
 @Component({
@@ -13,10 +12,10 @@ import isBlank from 'is-blank';
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(private playerService: PlayerService,
-    private radioBrowserService: RadioBrowserService) {}
+    private stationLookupService: StationLookupService) {}
 
   public columns = ['name', 'tags', 'icon'];
-  public stations: Array<RadioBrowserStation>;
+  public stations: Array<Station>;
 
   public nameSearch: string;
   public nameSearch$ = new Subject<string>();
@@ -43,7 +42,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
         }
         this.loading = true;
         this.stations = null;
-        return this.radioBrowserService.searchStations(this.nameSearch, this.tagSearch).pipe(
+        return this.stationLookupService.search(this.nameSearch, this.tagSearch).pipe(
           finalize(() => this.loading = false)
         );
       })
@@ -55,8 +54,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     if (this.tagSearchSub) { this.tagSearchSub.unsubscribe(); }
   }
 
-  onRowClicked(rbStation: RadioBrowserStation) {
-    const station = new Station(rbStation.name, rbStation.url, null, rbStation.favicon, rbStation.tags);
+  onRowClicked(station: Station) {
     this.playerService.playStation(station);
   }
 }

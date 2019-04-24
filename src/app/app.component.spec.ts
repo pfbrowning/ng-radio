@@ -14,7 +14,7 @@ import { ConfigService } from './services/config.service';
 import { SpyFactories } from './testing/spy-factories.spec';
 import { ErrorHandlingService } from './services/error-handling.service';
 import { PlayerService } from './services/player.service';
-import { RadioBrowserService } from './services/radio-browser.service';
+import { StationLookupService } from './services/station-lookup.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import { KeepAwakeService } from './services/keep-awake.service';
@@ -55,7 +55,7 @@ describe('AppComponent', () => {
         { provide: ConfigService, useValue: SpyFactories.CreateConfigServiceSpy() },
         { provide: ErrorHandlingService, useValue: SpyFactories.CreateErrorHandlingServiceSpy() },
         { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
-        { provide: RadioBrowserService, useValue: SpyFactories.CreateRadioBrowserServiceSpy() },
+        { provide: StationLookupService, useValue: SpyFactories.CreateStationLookupServiceSpy() },
         { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() },
         { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
       ]

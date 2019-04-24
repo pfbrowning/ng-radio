@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { RadioBrowserService } from './radio-browser.service';
+import { StationLookupService } from './station-lookup.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from './config.service';
 import { SpyFactories } from '../testing/spy-factories.spec';
-import isBlank from 'is-blank';
 import { HttpParams } from '@angular/common/http';
-import { RadioBrowserStation } from '../models/radio-browser-station';
+import { Station } from '../models/station';
+import isBlank from 'is-blank';
 
 describe('RadioBrowserService', () => {
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
-  let radioBrowserService: RadioBrowserService;
+  let stationLookupService: StationLookupService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,12 +23,12 @@ describe('RadioBrowserService', () => {
     });
 
     configService = TestBed.get(ConfigService);
-    radioBrowserService = TestBed.get(RadioBrowserService);
+    stationLookupService = TestBed.get(StationLookupService);
     httpTestingController = TestBed.get(HttpTestingController);
   });
 
   it('should be created', () => {
-    expect(radioBrowserService).toBeTruthy();
+    expect(stationLookupService).toBeTruthy();
   });
 
   it('should properly form requests', () => {
@@ -54,7 +54,7 @@ describe('RadioBrowserService', () => {
     // For each test entry
     testEntries.forEach(testEntry => {
       // Act: Initiate a station search operation based on the test name & tag
-      radioBrowserService.searchStations(testEntry.name, testEntry.tag).subscribe();
+      stationLookupService.search(testEntry.name, testEntry.tag).subscribe();
       // Assert: Set up expectations for what we expect the generated HTTP request to look like
       const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
       expect(request.request.method).toBe('POST');
@@ -95,9 +95,7 @@ describe('RadioBrowserService', () => {
           'language': 'English',
           'bitrate': '48'
         },
-        expected: new RadioBrowserStation(
-          'test', 'name', 'someplace.com', 'somewhereelse.com', 'icon.com', null, 'US', 'English', '48'
-        )
+        expected: new Station('name', 'someplace.com', null, 'icon.com')
       },
       {
         response: {
@@ -111,9 +109,7 @@ describe('RadioBrowserService', () => {
           'language': 'English',
           'bitrate': '48'
         },
-        expected: new RadioBrowserStation(
-          'id 2', 'name 2', 'url 2', 'homepage 2', 'favicon 2', ['tag1', 'tag2', 'tag3'], 'US', 'English', '48'
-        )
+        expected: new Station('name 2', 'url 2', null, 'favicon 2', ['tag1', 'tag2', 'tag3'])
       },
       {
         response: {
@@ -127,16 +123,14 @@ describe('RadioBrowserService', () => {
           'language': 'English',
           'bitrate': '48'
         },
-        expected: new RadioBrowserStation(
-          'id 3', 'name 3', 'url 3', 'homepage 3', 'favicon 3', null, 'US', 'English', '48'
-        )
+        expected: new Station('name 3', 'url 3', null, 'favicon 3')
       }
     ];
 
     // For each test entry
     testEntries.forEach(testEntry => {
       // Act: Initiate a dummy request.  We don't care about what's passed in or how the request is formed.
-      radioBrowserService.searchStations('name', 'tag').subscribe(stations => {
+      stationLookupService.search('name', 'tag').subscribe(stations => {
         // Assert
         // The expected test entry should have been returned
         expect(stations.length).toBe(1);
