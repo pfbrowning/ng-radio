@@ -15,6 +15,7 @@
 
 .indicator-icon {
     align-items: center;
+    cursor: pointer;
     
     @media (min-width:$smallScreenCutoff) {
         display: flex;

@@ -3,7 +3,7 @@
         "title": "BBC World Service",
         "url": "http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk",
         "genre": "News",
-        "iconUrl": null,
+        "iconUrl": "https://pbs.twimg.com/profile_images/1004638958091894784/JtNS_gjE_400x400.jpg",
         "tags": null
     },
     {
@@ -35,6 +35,13 @@
         "tags": null
     },
     {
+        "title": "Prog Palace Radio",
+        "url": "http://69.162.103.66/proxy/gstaffor?mp=/stream",
+        "genre": "Progressive Metal",
+        "iconUrl": "https://cdn-radiotime-logos.tunein.com/s95477q.png",
+        "tags": null
+    },
+    {
         "title": "Radio Caprice Speed Metal",
         "url": "http://79.111.119.111:9107/;",
         "genre": "Speed Metal",
@@ -45,7 +52,7 @@
         "title": "Radio Caprice Thrash Metal",
         "url": "http://79.120.77.11:9101/;",
         "genre": "Thrash Metal",
-        "iconUrl": "http://radcap.ru/graf2/rclogo.png",
+        "iconUrl": "https://static.radio.net/images/broadcasts/c6/bf/103695/1/c175.png",
         "tags": null
     },
     {
@@ -59,7 +66,35 @@
         "title": "Radio Caprice Power Metal",
         "url": "http://79.120.77.11:9099/;",
         "genre": "Power Metal",
-        "iconUrl": "http://radcap.ru/graf2/rclogo.png",
+        "iconUrl": "https://static.radio.net/images/broadcasts/71/96/103673/1/c175.png",
+        "tags": null
+    },
+    {
+        "title": "Beatles Radio",
+        "url": "http://www.beatlesradio.com:8000/stream/1/",
+        "genre": "Classic Rock",
+        "iconUrl": "https://static.radio.net/images/broadcasts/ea/a3/1436/c300.png",
+        "tags": null
+    },
+    {
+        "title": "Radio Caprice Hard Bop",
+        "url": "http://79.111.14.76:9047/;",
+        "genre": "Jazz",
+        "iconUrl": "https://static.radio.net/images/broadcasts/0e/6a/103740/1/c300.png",
+        "tags": null
+    },
+    {
+        "title": "Abacus Rain",
+        "url": "http://178.33.232.106:8000/stream",
+        "genre": "Ambient",
+        "iconUrl": null,
+        "tags": null
+    },
+    {
+        "title": "Gutter Punk Radio",
+        "url": "http://www.gutter-punk-radio.com:8000/;",
+        "genre": "Punk Rock",
+        "iconUrl": "http://gutterpunkradio.com/images/gutter-punk-radio.jpg",
         "tags": null
     }
 ]
