@@ -51,8 +51,9 @@
 
 <ng-template #notSelected>
   <p>
-    There's no media selected.  Please go to the <a [routerLink]="['/radio-browser']">Radio Browser Search</a> 
-    and find a station to play or <a href="javascript:void(0);" (click)="customStationWindow.show()">enter a custom URL</a>.
+    There's no media selected.  Please go to the <a [routerLink]="['/radio-browser']">Radio Browser Search</a> or 
+    <a [routerLink]="['/suggested-stations']">Suggested Stations</a> to find a station to play or 
+    <a href="javascript:void(0);" (click)="customStationWindow.show()">enter a custom URL</a>.
   </p>
 </ng-template>
 

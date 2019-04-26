@@ -1,10 +1,9 @@
-import { Injectable, Inject, NgZone } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Station } from '../models/station';
 import { NowPlaying } from '../models/now-playing';
 import { StreamInfoService } from './stream-info.service';
 import { interval, Subscription, BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
-import { filter, delay } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { NotificationService, Severities } from './notification.service';
 import { SleepTimerService } from './sleep-timer.service';
@@ -23,7 +22,6 @@ export class PlayerService {
     private loggingService: LoggingService,
     private configService: ConfigService,
     private titleService: Title,
-    private ngZone: NgZone,
     @Inject(AudioElementToken) private audio: AudioElement) {
       this.audio.error.subscribe(error => this.onAudioError(error));
       this.audio.playing.subscribe(() => this.onAudioPlaying());
@@ -31,13 +29,7 @@ export class PlayerService {
       // Pause the playing audio when the sleep timer does its thing
       this.sleepTimerService.sleep.subscribe(() => this.pause());
       // Whenever the now playing info changes
-      this.nowPlaying$.pipe(
-        // And there's a station selected
-        filter(nowPlaying => nowPlaying.station != null),
-        /* Delay for 0ms in order to give the async pipe
-        bindings time to catch up. */
-        delay(0)
-      ).subscribe(nowPlaying => this.onNowPlayingChanged(nowPlaying));
+      this.nowPlaying$.subscribe(nowPlaying => this.onNowPlayingChanged(nowPlaying));
     }
 
   private _source: string;
@@ -69,54 +61,36 @@ export class PlayerService {
   /** Updates the reactive 'paused' state and triggers change
   detection when the audio starts to play. */
   private onAudioPlaying(): void {
-    this.ngZone.run(() => {
-      /* Notify anybody listening to changes on the 'paused'
-      state that the audio is no longer paused.  Do this
-      within an ngZone.run callback in order to ensure that
-      change detection is triggered afterwards*/
-      this._paused.next(false);
-    });
+    /* Notify anybody listening to changes on the 'paused'
+    state that the audio is no longer paused. */
+    this._paused.next(false);
   }
 
   /** Updates the reactive 'paused' state, and unsubscribes
    * from any metadata fetch & refresh subscriptions. */
   private onAudioPaused(): void {
-    /* Run the following in zone.run in order to explicitly trigger
-    application-wide change detection afterwards
-    because this is a change that we do want represented in
-    template bindings and change detection won't automatically
-    be triggered because the source DOM event happened outside
-    of Angular's zone. */
-    this.ngZone.run(() => {
-      /* Clear the src in order to prevent the browser from continuing to
-      download audio in the background. */
-      this.audio.src = '';
-      /* Notify anybody listening to changes on the 'paused'
-      state that the audio is now paused. */
-      this._paused.next(true);
-      /* Unsubscribe from the refresh interval and from any concurrent metadata
-      fetch when the media is paused.  We want to do this in the onAudioPaused
-      handler so that we catch the "user presses the browser-provided pause button"
-      use-case as well, in addition to our own pause button. */
-      if (this.refreshSub) { this.refreshSub.unsubscribe(); }
-      if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
-    });
+    /* Clear the src in order to prevent the browser from continuing to
+    download audio in the background. */
+    this.audio.src = '';
+    /* Notify anybody listening to changes on the 'paused'
+    state that the audio is now paused. */
+    this._paused.next(true);
+    /* Unsubscribe from the refresh interval and from any concurrent metadata
+    fetch when the media is paused.  We want to do this in the onAudioPaused
+    handler so that we catch the "user presses the browser-provided pause button"
+    use-case as well, in addition to our own pause button. */
+    if (this.refreshSub) { this.refreshSub.unsubscribe(); }
+    if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
   }
 
   private onNowPlayingChanged(nowPlaying: NowPlaying) {
-    /* Run this within ngZone.run because we want to explicitly run change detection
-    afterwards in order to bind now playing info to the relevant component templates
-    because Angular doesn't automatically run change detection on the components that we
-    care about in this case. */
-    this.ngZone.run(() => {
-      // If we have stream info
-      if (nowPlaying.streamInfo != null) {
-        // Notify the user of the currently playing stream info
-        const notificationBody = !isBlank(nowPlaying.streamInfo.title) ?
-          `${nowPlaying.streamInfo.title} - ${nowPlaying.station.title}` : nowPlaying.station.title;
-        this.notificationService.notify(Severities.Info, 'Now Playing', notificationBody);
-      }
-    });
+    // If we have stream info
+    if (nowPlaying.streamInfo != null) {
+      // Notify the user of the currently playing stream info
+      const notificationBody = !isBlank(nowPlaying.streamInfo.title) ?
+        `${nowPlaying.streamInfo.title} - ${nowPlaying.station.title}` : nowPlaying.station.title;
+      this.notificationService.notify(Severities.Info, 'Now Playing', notificationBody);
+    }
   }
 
   /** Reports whether there is a currently selected station */
