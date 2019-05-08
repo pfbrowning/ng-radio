@@ -6,14 +6,14 @@ import { MatToolbarModule, MatTooltipModule, MatIconModule, MatButtonModule,
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
-import { ErrorWindowComponent } from './components/error-window/error-window.component';
+import { ErrorWindowComponent, ErrorHandlingService } from '@modules/error-handling/error-handling.module';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { ConfigService } from '@modules/config/config.module';
 import { ConfigSpyFactories } from '@modules/config/testing/config-spy-factories.spec';
 import { SpyFactories } from './testing/spy-factories.spec';
-import { ErrorHandlingService } from './services/error-handling.service';
+import { ErrorHandlingSpyFactories } from '@modules/error-handling/testing/error-handling-spy-factories.spec';
 import { PlayerService, StationLookupService, CoreRadioLogicModule } from '@modules/core-radio-logic/core-radio-logic.module';
 import { CoreRadioLogicSpyFactories } from '@modules/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,7 +55,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() },
-        { provide: ErrorHandlingService, useValue: SpyFactories.CreateErrorHandlingServiceSpy() },
+        { provide: ErrorHandlingService, useValue: ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy() },
         { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
         { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() },
         { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() },

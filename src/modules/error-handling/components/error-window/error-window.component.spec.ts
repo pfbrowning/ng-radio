@@ -3,8 +3,8 @@ import { ErrorWindowComponent } from './error-window.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { SpyFactories } from 'src/app/testing/spy-factories.spec';
+import { ErrorHandlingService } from '../../services/error-handling.service';
+import { ErrorHandlingSpyFactories } from '../../testing/error-handling-spy-factories.spec';
 
 describe('ErrorWindowComponent', () => {
   let component: ErrorWindowComponent;
@@ -19,7 +19,7 @@ describe('ErrorWindowComponent', () => {
         MatButtonModule
       ],
       providers: [
-        { provide: ErrorHandlingService, useValue: SpyFactories.CreateErrorHandlingServiceSpy() },
+        { provide: ErrorHandlingService, useValue: ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy() },
       ]
     })
     .compileComponents();

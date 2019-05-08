@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { AppError } from '../models/app-error';
-import { LoggingService } from './logging.service';
+import { LoggingService } from 'src/app/services/logging.service';
 import { SeverityLevel } from '@markpieszak/ng-application-insights';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class ErrorHandlingService {
   constructor(private loggingService: LoggingService) {}
 

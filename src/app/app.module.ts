@@ -13,8 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ErrorWindowComponent } from './components/error-window/error-window.component';
-import { UnhandledErrorCatcher } from './services/unhandled-error-catcher';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
@@ -26,6 +24,7 @@ import { ApplicationInsightsModule, AppInsightsService } from '@markpieszak/ng-a
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
 import { ConfigModule } from '@modules/config/config.module';
+import { ErrorHandlingModule } from '@modules/error-handling/error-handling.module';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -35,7 +34,6 @@ import * as NoSleep from 'nosleep.js';
     PlayerBarComponent,
     RadioBrowserComponent,
     FavoritesComponent,
-    ErrorWindowComponent,
     ResponsiveSidenavComponent,
     SidenavComponent,
     SleepTimerMenuComponent,
@@ -66,10 +64,10 @@ import * as NoSleep from 'nosleep.js';
     NgLoadingIndicatorModule,
     ApplicationInsightsModule.forRoot({
       instrumentationKeySetLater: true
-    })
+    }),
+    ErrorHandlingModule
   ],
   providers: [
-    { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
     { provide: NoSleepToken, useValue: new NoSleep() },
     MessageService,
     AppInsightsService

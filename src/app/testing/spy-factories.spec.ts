@@ -1,13 +1,4 @@
-import { ReplaySubject } from 'rxjs';
-import { AppError } from '../models/app-error';
-
 export class SpyFactories {
-  public static CreateErrorHandlingServiceSpy(): any {
-    const spy = jasmine.createSpyObj('errorHandlingService', ['handleError']);
-    spy['appError'] = new ReplaySubject<AppError>(1);
-    return spy;
-  }
-
   public static CreateNotificationServiceSpy(): any {
     const spy = jasmine.createSpyObj('notificationServiceSpy', ['notify']);
     return spy;

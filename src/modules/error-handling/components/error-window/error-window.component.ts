@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ModalWindowComponent } from '@browninglogic/ng-modal';
 import { Subscription } from 'rxjs';
-import { AppError } from 'src/app/models/app-error';
-import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { AppError } from '../../models/app-error';
+import { ErrorHandlingService } from '../../services/error-handling.service';
 
 @Component({
   selector: 'blr-error-window',

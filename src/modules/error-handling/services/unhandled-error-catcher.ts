@@ -1,7 +1,7 @@
 import { Injectable, ErrorHandler, Injector } from '@angular/core';
 import { ErrorHandlingService } from './error-handling.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class UnhandledErrorCatcher implements ErrorHandler {
   constructor(private injector: Injector) {}
 
