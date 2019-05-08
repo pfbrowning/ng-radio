@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PlayerService } from 'src/app/services/player.service';
+import { PlayerService, CoreRadioLogicModule } from '@modules/core-radio-logic/core-radio-logic.module';
+import { CoreRadioLogicSpyFactories } from '@modules/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { SpyFactories } from 'src/app/testing/spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
 import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
@@ -33,10 +34,11 @@ describe('NowPlayingComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         NoopAnimationsModule,
-        FormsModule
+        FormsModule,
+        CoreRadioLogicModule
       ],
       providers: [
-        { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
+        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
         { provide: NotificationService, useValue: SpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() }
       ]

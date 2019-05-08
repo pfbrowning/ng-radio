@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PlayerService } from 'src/app/services/player.service';
-import { Station } from 'src/app/models/station';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
-import { StationLookupService } from 'src/app/services/station-lookup.service';
+import { PlayerService, StationLookupService, Station } from '@modules/core-radio-logic/core-radio-logic.module';
 import isBlank from 'is-blank';
 
 @Component({

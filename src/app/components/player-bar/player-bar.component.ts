@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerService } from 'src/app/services/player.service';
-import { SleepTimerService } from 'src/app/services/sleep-timer.service';
+import { SleepTimerService, PlayerService } from '@modules/core-radio-logic/core-radio-logic.module';
 import { KeepAwakeService } from 'src/app/services/keep-awake.service';
 import { Utils } from 'src/app/utils/utils';
 import { NotificationService, Severities } from 'src/app/services/notification.service';

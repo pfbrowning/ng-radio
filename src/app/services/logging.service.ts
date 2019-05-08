@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from './config.service';
-import isBlank from 'is-blank';
+import { ConfigService } from '@modules/config/config.module';
 import { AppInsightsService, SeverityLevel } from '@markpieszak/ng-application-insights';
+import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class LoggingService {

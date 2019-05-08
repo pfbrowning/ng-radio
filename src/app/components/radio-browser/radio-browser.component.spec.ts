@@ -2,9 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RadioBrowserComponent } from './radio-browser.component';
 import { MatFormFieldModule, MatTableModule, MatInputModule, MatProgressSpinnerModule, MatCardModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { SpyFactories } from 'src/app/testing/spy-factories.spec';
-import { StationLookupService } from 'src/app/services/station-lookup.service';
-import { PlayerService } from 'src/app/services/player.service';
+import { PlayerService, StationLookupService } from '@modules/core-radio-logic/core-radio-logic.module';
+import { CoreRadioLogicSpyFactories } from '@modules/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RadioBrowserComponent', () => {
@@ -25,8 +24,8 @@ describe('RadioBrowserComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
-        { provide: StationLookupService, useValue: SpyFactories.CreateStationLookupServiceSpy() }
+        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
+        { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() }
       ]
     })
     .compileComponents();

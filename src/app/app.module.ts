@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, ErrorHandler, InjectionToken } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule, MatButtonModule, MatTableModule, MatSidenavModule, MatIconModule,
   MatFormFieldModule, MatInputModule, MatMenuModule, MatTooltipModule, MatProgressSpinnerModule, MatCardModule } from '@angular/material';
@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ConfigService } from './services/config.service';
 import { ErrorWindowComponent } from './components/error-window/error-window.component';
 import { UnhandledErrorCatcher } from './services/unhandled-error-catcher';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
@@ -22,19 +21,12 @@ import { ResponsiveSidenavComponent } from './components/responsive-sidenav/resp
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
-import { AudioElementToken } from './injection-tokens/audio-element-token';
-import { AudioElement } from './models/audio-element';
+import { CoreRadioLogicModule } from '@modules/core-radio-logic/core-radio-logic.module';
 import { ApplicationInsightsModule, AppInsightsService } from '@markpieszak/ng-application-insights';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
-import { SuggestedStationsComponent } from './components/suggested-stations/suggested-stations.component';
-import { StationThumbnailComponent } from './components/station-thumbnail/station-thumbnail.component';
-import { SuggestedStationsSectionComponent } from './components/suggested-stations-section/suggested-stations-section.component';
+import { ConfigModule } from '@modules/config/config.module';
 import * as NoSleep from 'nosleep.js';
-
-export function initializeConfig(configService: ConfigService) {
-    return () => configService.initialize();
-}
 
 @NgModule({
   declarations: [
@@ -48,12 +40,11 @@ export function initializeConfig(configService: ConfigService) {
     SidenavComponent,
     SleepTimerMenuComponent,
     PlayerBarStationInfoComponent,
-    CustomStationWindowComponent,
-    SuggestedStationsComponent,
-    StationThumbnailComponent,
-    SuggestedStationsSectionComponent
+    CustomStationWindowComponent
   ],
   imports: [
+    ConfigModule,
+    CoreRadioLogicModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -78,10 +69,8 @@ export function initializeConfig(configService: ConfigService) {
     })
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorCatcher },
     { provide: NoSleepToken, useValue: new NoSleep() },
-    { provide: AudioElementToken, useValue: new AudioElement() },
     MessageService,
     AppInsightsService
   ],

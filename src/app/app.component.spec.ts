@@ -10,11 +10,12 @@ import { ErrorWindowComponent } from './components/error-window/error-window.com
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
-import { ConfigService } from './services/config.service';
+import { ConfigService } from '@modules/config/config.module';
+import { ConfigSpyFactories } from '@modules/config/testing/config-spy-factories.spec';
 import { SpyFactories } from './testing/spy-factories.spec';
 import { ErrorHandlingService } from './services/error-handling.service';
-import { PlayerService } from './services/player.service';
-import { StationLookupService } from './services/station-lookup.service';
+import { PlayerService, StationLookupService, CoreRadioLogicModule } from '@modules/core-radio-logic/core-radio-logic.module';
+import { CoreRadioLogicSpyFactories } from '@modules/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import { KeepAwakeService } from './services/keep-awake.service';
@@ -39,7 +40,8 @@ describe('AppComponent', () => {
         NgLoadingIndicatorModule,
         ModalManagerModule,
         ToastModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        CoreRadioLogicModule
       ],
       declarations: [
         AppComponent,
@@ -52,10 +54,10 @@ describe('AppComponent', () => {
         CustomStationWindowComponent
       ],
       providers: [
-        { provide: ConfigService, useValue: SpyFactories.CreateConfigServiceSpy() },
+        { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() },
         { provide: ErrorHandlingService, useValue: SpyFactories.CreateErrorHandlingServiceSpy() },
-        { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() },
-        { provide: StationLookupService, useValue: SpyFactories.CreateStationLookupServiceSpy() },
+        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
+        { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() },
         { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() },
         { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
       ]

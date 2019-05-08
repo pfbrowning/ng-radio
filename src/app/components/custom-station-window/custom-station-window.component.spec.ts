@@ -3,8 +3,8 @@ import { CustomStationWindowComponent } from './custom-station-window.component'
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { PlayerService } from 'src/app/services/player.service';
-import { SpyFactories } from 'src/app/testing/spy-factories.spec';
+import { PlayerService } from '@modules/core-radio-logic/core-radio-logic.module';
+import { CoreRadioLogicSpyFactories } from '@modules/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,7 +23,7 @@ describe('CustomStationWindowComponent', () => {
       ],
       declarations: [ CustomStationWindowComponent ],
       providers: [
-        { provide: PlayerService, useValue: SpyFactories.CreatePlayerServiceSpy() }
+        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() }
       ]
     })
     .compileComponents();
