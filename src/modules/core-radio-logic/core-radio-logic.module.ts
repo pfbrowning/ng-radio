@@ -22,8 +22,8 @@ import { AudioElementToken } from './injection-tokens/audio-element-token';
 })
 export class CoreRadioLogicModule {}
 
-export { PlayerService, SleepTimerService, StationLookupService, 
-  StreamInfoService, AudioElement, AudioElementToken }
+export { PlayerService, SleepTimerService, StationLookupService,
+  StreamInfoService, AudioElement, AudioElementToken };
 
 export { NowPlaying } from './models/now-playing';
 export { Station } from './models/station';

@@ -27,4 +27,4 @@ import { MatIconModule, MatButtonModule } from '@angular/material';
 })
 export class ErrorHandlingModule {}
 
-export { ErrorHandlingService, ErrorWindowComponent }
+export { ErrorHandlingService, ErrorWindowComponent };
