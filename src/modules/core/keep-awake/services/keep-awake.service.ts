@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { AudioElement, AudioElementToken } from '@modules/core-radio-logic/core-radio-logic.module';
+import { AudioElement, AudioElementToken } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import * as NoSleep from 'nosleep.js';
 

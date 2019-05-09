@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
 import { StreamInfo } from '../models/stream-info';
-import { ConfigService } from '@modules/config/config.module';
+import { ConfigService } from '@modules/core/config/config.module';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
  * the configured radio metadata API */

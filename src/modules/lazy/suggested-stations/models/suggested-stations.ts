@@ -1,4 +1,4 @@
-import { Station } from '@modules/core-radio-logic/core-radio-logic.module';
+import { Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 
 export class SuggestedStations {
     constructor(

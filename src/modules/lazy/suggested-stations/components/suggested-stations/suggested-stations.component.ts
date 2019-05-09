@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PlayerService, Station } from '@modules/core-radio-logic/core-radio-logic.module';
+import { PlayerService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { SuggestedStations } from '../../models/suggested-stations';
 
 @Component({

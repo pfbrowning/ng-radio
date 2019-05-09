@@ -1,5 +1,5 @@
 import { Subject, BehaviorSubject } from 'rxjs';
-import { NowPlaying } from '@modules/core-radio-logic/core-radio-logic.module';
+import { NowPlaying } from '@modules/core/core-radio-logic/core-radio-logic.module';
 
 export class CoreRadioLogicSpyFactories {
   public static CreatePlayerServiceSpy(): any {

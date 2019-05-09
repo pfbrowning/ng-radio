@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ConfigService } from '@modules/config/config.module';
-import { ErrorHandlingService } from '@modules/error-handling/error-handling.module';
+import { ConfigService } from '@modules/core/config/config.module';
+import { ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
 
 @Component({

@@ -1,13 +1,13 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PlayerService } from './player.service';
-import { ConfigService } from '@modules/config/config.module';
-import { ConfigSpyFactories } from '@modules/config/testing/config-spy-factories.spec';
+import { ConfigService } from '@modules/core/config/config.module';
+import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { StreamInfoService } from './stream-info.service';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
-import { AudioElementToken, Station, CoreRadioLogicModule } from '@modules/core-radio-logic/core-radio-logic.module';
-import { AudioElementStub } from '@modules/core-radio-logic/testing/AudioElementStub.spec';
-import { StreamInfoServiceStub } from '@modules/core-radio-logic/testing/StreamInfoServiceStub.spec';
+import { AudioElementToken, Station, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { AudioElementStub } from '@modules/core/core-radio-logic/testing/AudioElementStub.spec';
+import { StreamInfoServiceStub } from '@modules/core/core-radio-logic/testing/StreamInfoServiceStub.spec';
 import { NowPlaying } from '../models/now-playing';
 import { StreamInfo } from '../models/stream-info';
 import { Title } from '@angular/platform-browser';

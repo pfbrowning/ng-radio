@@ -5,7 +5,7 @@ import { FavoritesComponent } from './components/favorites/favorites.component';
 import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
 
 const routes: Routes = [
-  { path: 'suggested-stations', loadChildren: '../modules/suggested-stations/suggested-stations.module#SuggestedStationsModule' },
+  { path: 'suggested-stations', loadChildren: '../modules/lazy/suggested-stations/suggested-stations.module#SuggestedStationsModule' },
   { path: 'now-playing', component: NowPlayingComponent },
   { path: 'radio-browser', component: RadioBrowserComponent },
   { path: 'favorites', component: FavoritesComponent },

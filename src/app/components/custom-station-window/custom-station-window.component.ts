@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalWindowComponent } from '@browninglogic/ng-modal';
-import { PlayerService, Station } from '@modules/core-radio-logic/core-radio-logic.module';
+import { PlayerService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { clone } from 'lodash';
 
 @Component({

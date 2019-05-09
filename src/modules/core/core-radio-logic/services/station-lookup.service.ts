@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { ConfigService } from '@modules/config/config.module';
+import { ConfigService } from '@modules/core/config/config.module';
 import { Station } from '../models/station';
 import isBlank from 'is-blank';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StationLookupService } from '@modules/core-radio-logic/core-radio-logic.module';
+import { StationLookupService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { SuggestedStations } from '../models/suggested-stations';
 
 @Injectable()

@@ -4,7 +4,7 @@ import { NowPlaying } from '../models/now-playing';
 import { StreamInfoService } from './stream-info.service';
 import { interval, Subscription, BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '@modules/config/config.module';
+import { ConfigService } from '@modules/core/config/config.module';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { SleepTimerService } from './sleep-timer.service';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';

@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef,
   Input, OnChanges, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
-import { NowPlaying, StreamInfoStatus } from '@modules/core-radio-logic/core-radio-logic.module';
+import { NowPlaying, StreamInfoStatus } from '@modules/core/core-radio-logic/core-radio-logic.module';
 
 @Component({
   selector: 'blr-player-bar-station-info',

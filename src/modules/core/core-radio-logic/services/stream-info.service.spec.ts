@@ -1,8 +1,8 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ConfigService } from '@modules/config/config.module';
-import { ConfigSpyFactories } from '@modules/config/testing/config-spy-factories.spec';
+import { ConfigService } from '@modules/core/config/config.module';
+import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
 import { StreamInfo } from '../models/stream-info';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
 
