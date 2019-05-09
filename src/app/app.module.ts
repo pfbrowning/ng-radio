@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { AppRoutingModule } from './app-routing.module';
-import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
@@ -29,7 +28,6 @@ import { SharedComponentsModule } from '@modules/shared/shared-components/shared
   declarations: [
     AppComponent,
     PlayerBarComponent,
-    RadioBrowserComponent,
     FavoritesComponent,
     ResponsiveSidenavComponent,
     SidenavComponent,
