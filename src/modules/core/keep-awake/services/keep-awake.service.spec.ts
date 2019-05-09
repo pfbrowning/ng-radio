@@ -1,9 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
-import { SpyFactories } from '../testing/spy-factories.spec';
+import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElementToken } from '@modules/core-radio-logic/core-radio-logic.module';
 import { AudioElementStub } from '@modules/core-radio-logic/testing/AudioElementStub.spec';
+import { KeepAwakeSpyFactories } from '../testing/keep-awake-spy-factories.spec';
+import { KeepAwakeModule } from '@modules/core/keep-awake/keep-awake.module';
 import { MessageService } from 'primeng/api';
 import * as NoSleep from 'nosleep.js';
 
@@ -15,13 +17,16 @@ describe('KeepAwakeService', () => {
 
   beforeEach(() => {
     audioElement = new AudioElementStub();
-    noSleepSpy = SpyFactories.CreateKeepAwakeServiceSpy();
+    noSleepSpy = KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
+      imports: [
+        KeepAwakeModule
+      ],
       providers: [
         { provide: AudioElementToken, useValue: audioElement },
         { provide: NoSleepToken, useValue: noSleepSpy },
-        { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
+        { provide: MessageService, useValue: NotificationsSpyFactories.CreateMessageServiceSpy() }
       ]
     });
 

@@ -12,13 +12,14 @@ import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { ConfigService } from '@modules/config/config.module';
 import { ConfigSpyFactories } from '@modules/config/testing/config-spy-factories.spec';
-import { SpyFactories } from './testing/spy-factories.spec';
+import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { ErrorHandlingSpyFactories } from '@modules/error-handling/testing/error-handling-spy-factories.spec';
 import { PlayerService, StationLookupService, CoreRadioLogicModule } from '@modules/core-radio-logic/core-radio-logic.module';
 import { CoreRadioLogicSpyFactories } from '@modules/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
-import { KeepAwakeService } from './services/keep-awake.service';
+import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
+import { KeepAwakeSpyFactories } from '../modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { MessageService } from 'primeng/api';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
@@ -58,8 +59,8 @@ describe('AppComponent', () => {
         { provide: ErrorHandlingService, useValue: ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy() },
         { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
         { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() },
-        { provide: KeepAwakeService, useValue: SpyFactories.CreateKeepAwakeServiceSpy() },
-        { provide: MessageService, useValue: SpyFactories.CreateMessageServiceSpy() }
+        { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() },
+        { provide: MessageService, useValue: NotificationsSpyFactories.CreateMessageServiceSpy() }
       ]
     }).compileComponents();
   }));

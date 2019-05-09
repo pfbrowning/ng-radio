@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { AppError } from '../models/app-error';
-import { LoggingService } from 'src/app/services/logging.service';
+import { LoggingService } from '@modules/core/logging/logging.module';
 import { SeverityLevel } from '@markpieszak/ng-application-insights';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Subscription, timer, BehaviorSubject } from 'rxjs';
-import { NotificationService, Severities } from 'src/app/services/notification.service';
+import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import * as moment from 'moment';
 
 @Injectable()

@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
 import { ErrorHandlingService } from './error-handling.service';
 import { AppError } from '../models/app-error';
-import { LoggingService } from '../../../app/services/logging.service';
-import { SpyFactories } from '../../../app/testing/spy-factories.spec';
+import { LoggingService } from '@modules/core/logging/logging.module';
 import { ErrorHandlingModule } from '@modules/error-handling/error-handling.module';
+import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
 
 describe('ErrorHandlingService', () => {
   let errorHandlingService: ErrorHandlingService;
@@ -12,7 +11,7 @@ describe('ErrorHandlingService', () => {
   let appErrorSubSpy: any;
 
   beforeEach(() => {
-    loggingServiceSpy = SpyFactories.CreateLoggingServiceSpy();
+    loggingServiceSpy = LoggingSpyFactories.CreateLoggingServiceSpy();
 
     TestBed.configureTestingModule({
       imports: [

@@ -2,12 +2,12 @@ import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElement, AudioElementToken } from '@modules/core-radio-logic/core-radio-logic.module';
-import { NotificationService, Severities } from './notification.service';
+import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import * as NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
  * video in the background. */
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class KeepAwakeService {
   constructor(
     private notificationService: NotificationService,

@@ -1,7 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SleepTimerService } from './sleep-timer.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { SpyFactories } from 'src/app/testing/spy-factories.spec';
+import { NotificationService } from '@modules/core/notifications/notifications.module';
+import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
 
 describe('SleepTimerService', () => {
@@ -11,7 +11,7 @@ describe('SleepTimerService', () => {
   let minutesUntilSleepSpy: jasmine.Spy;
 
   beforeEach(() => {
-    notificationServiceSpy = SpyFactories.CreateNotificationServiceSpy();
+    notificationServiceSpy = NotificationsSpyFactories.CreateNotificationServiceSpy();
 
     TestBed.configureTestingModule({
       imports: [

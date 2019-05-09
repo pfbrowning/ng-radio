@@ -1,18 +1,21 @@
 import { TestBed } from '@angular/core/testing';
-import { LoggingService } from './logging.service';
 import { ConfigService } from '@modules/config/config.module';
-import { SpyFactories } from '../testing/spy-factories.spec';
 import { AppInsightsService } from '@markpieszak/ng-application-insights';
 import { ConfigSpyFactories } from '@modules/config/testing/config-spy-factories.spec';
+import { LoggingSpyFactories } from '../testing/logging-spy-factories.spec';
+import { LoggingModule, LoggingService } from '@modules/core/logging/logging.module';
 
 describe('LoggingService', () => {
   let loggingService: LoggingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        LoggingModule
+      ],
       providers: [
         { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() },
-        { provide: AppInsightsService, useValue: SpyFactories.CreateAppInsightsServiceSpy() }
+        { provide: AppInsightsService, useValue: LoggingSpyFactories.CreateAppInsightsServiceSpy() }
       ]
     });
 
