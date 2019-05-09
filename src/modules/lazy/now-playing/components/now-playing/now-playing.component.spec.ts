@@ -6,10 +6,9 @@ import { PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-lo
 import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
-import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
+import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { NotificationService } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
-import { CustomStationWindowComponent } from '../custom-station-window/custom-station-window.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,9 +23,7 @@ describe('NowPlayingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        NowPlayingComponent,
-        SleepTimerMenuComponent,
-        CustomStationWindowComponent
+        NowPlayingComponent
       ],
       imports: [
         RouterTestingModule,
@@ -36,7 +33,8 @@ describe('NowPlayingComponent', () => {
         MatInputModule,
         NoopAnimationsModule,
         FormsModule,
-        CoreRadioLogicModule
+        CoreRadioLogicModule,
+        SharedComponentsModule
       ],
       providers: [
         { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },

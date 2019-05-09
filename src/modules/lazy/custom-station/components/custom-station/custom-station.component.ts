@@ -1,29 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalWindowComponent } from '@browninglogic/ng-modal';
+import { Router } from '@angular/router';
 import { PlayerService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { clone } from 'lodash';
 
 @Component({
-  selector: 'blr-custom-station-window',
-  templateUrl: './custom-station-window.component.html',
-  styleUrls: ['./custom-station-window.component.scss']
+  selector: 'blr-custom-station',
+  templateUrl: './custom-station.component.html',
+  styleUrls: ['./custom-station.component.scss']
 })
-export class CustomStationWindowComponent {
-  constructor(private playerService: PlayerService) {}
+export class CustomStationComponent {
+  constructor(private playerService: PlayerService,
+    private router: Router) {}
 
-  @ViewChild('modal') modal: ModalWindowComponent;
   public station: Station = new Station();
   public urlPattern = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
-
-  public show(): void {
-    this.modal.show();
-  }
-
-  resetAndHide(form: NgForm) {
-    form.resetForm();
-    this.modal.hide();
-  }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
@@ -31,7 +22,7 @@ export class CustomStationWindowComponent {
       the player service because the object reference will
       be cleared once we reset the form. */
       this.playerService.playStation(clone(this.station));
-      this.resetAndHide(form);
+      this.router.navigate(['/now-playing']);
     }
   }
 }

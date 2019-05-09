@@ -39,9 +39,6 @@
           <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
         </li>
         <li>
-          <button mat-raised-button color="primary" (click)="customStationWindow.show()">Open URL</button>
-        </li>
-        <li>
           <button mat-raised-button color="primary" (click)="onAddToFavoritesClicked()">Add To Favorites</button>
         </li>
       </ul>
@@ -58,5 +55,3 @@
 </ng-template>
 
 <blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>
-
-<blr-custom-station-window #customStationWindow></blr-custom-station-window>

@@ -6,15 +6,14 @@ import { MatTooltipModule, MatIconModule, MatButtonModule, MatToolbarModule,
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { SleepTimerMenuComponent } from '../sleep-timer-menu/sleep-timer-menu.component';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
-import { CustomStationWindowComponent } from '../custom-station-window/custom-station-window.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { KeepAwakeSpyFactories } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
+import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -24,9 +23,7 @@ describe('PlayerBarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         PlayerBarComponent,
-        SleepTimerMenuComponent,
-        PlayerBarStationInfoComponent,
-        CustomStationWindowComponent
+        PlayerBarStationInfoComponent
       ],
       imports: [
         RouterTestingModule,
@@ -40,7 +37,8 @@ describe('PlayerBarComponent', () => {
         ModalManagerModule,
         FormsModule,
         NoopAnimationsModule,
-        CoreRadioLogicModule
+        CoreRadioLogicModule,
+        SharedComponentsModule
       ],
       providers: [
         { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },

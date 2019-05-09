@@ -11,9 +11,6 @@
       [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" class="indicator-icon large-screen-only">
       <mat-icon>settings_cell</mat-icon>
     </div>
-    <div class="indicator-icon large-screen-only" matTooltip="Open Custom URL" (click)="customStationWindow.show()" >
-      <mat-icon>open_in_new</mat-icon>
-    </div>
     <div class="indicator-icon large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >
       <mat-icon>favorite</mat-icon>
     </div>
@@ -38,16 +35,10 @@
     <mat-icon>settings_cell</mat-icon>
     <span>Toggle Keep Awake</span>
   </button>
-  <button mat-menu-item (click)="customStationWindow.show()">
-    <mat-icon>open_in_new</mat-icon>
-    <span>Open Custom URL</span>
-  </button>
   <button mat-menu-item (click)="onAddToFavoritesClicked()">
     <mat-icon>favorite</mat-icon>
     <span>Add To Favorites</span>
   </button>
 </mat-menu>
-
-<blr-custom-station-window #customStationWindow></blr-custom-station-window>
 
 <blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>

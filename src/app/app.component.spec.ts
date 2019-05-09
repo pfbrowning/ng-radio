@@ -17,13 +17,12 @@ import { ErrorHandlingSpyFactories } from '@modules/core/error-handling/testing/
 import { PlayerService, StationLookupService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-timer-menu.component';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { KeepAwakeSpyFactories } from '../modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { MessageService } from 'primeng/api';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
-import { CustomStationWindowComponent } from './components/custom-station-window/custom-station-window.component';
 import { FormsModule } from '@angular/forms';
+import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -42,7 +41,8 @@ describe('AppComponent', () => {
         ModalManagerModule,
         ToastModule,
         NoopAnimationsModule,
-        CoreRadioLogicModule
+        CoreRadioLogicModule,
+        SharedComponentsModule
       ],
       declarations: [
         AppComponent,
@@ -50,9 +50,7 @@ describe('AppComponent', () => {
         ResponsiveSidenavComponent,
         PlayerBarComponent,
         PlayerBarStationInfoComponent,
-        ErrorWindowComponent,
-        SleepTimerMenuComponent,
-        CustomStationWindowComponent
+        ErrorWindowComponent
       ],
       providers: [
         { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() },

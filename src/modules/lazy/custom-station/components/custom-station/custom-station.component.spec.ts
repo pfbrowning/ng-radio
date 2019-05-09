@@ -1,36 +1,35 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CustomStationWindowComponent } from './custom-station-window.component';
-import { ModalManagerModule } from '@browninglogic/ng-modal';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CustomStationComponent } from './custom-station.component';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('CustomStationWindowComponent', () => {
-  let component: CustomStationWindowComponent;
-  let fixture: ComponentFixture<CustomStationWindowComponent>;
+describe('CustomStationComponent', () => {
+  let component: CustomStationComponent;
+  let fixture: ComponentFixture<CustomStationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        ModalManagerModule,
+        RouterTestingModule,
+        NoopAnimationsModule,
         MatFormFieldModule,
-        MatInputModule,
-        NoopAnimationsModule
+        MatInputModule
       ],
-      declarations: [ CustomStationWindowComponent ],
+      declarations: [ CustomStationComponent ],
       providers: [
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() }
+        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomStationWindowComponent);
+    fixture = TestBed.createComponent(CustomStationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
