@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
-import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
@@ -22,12 +21,12 @@ import { LoggingModule } from '@modules/core/logging/logging.module';
 import { KeepAwakeModule } from '@modules/core/keep-awake/keep-awake.module';
 import { NotificationsModule } from '@modules/core/notifications/notifications.module';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
+import { ResponsiveSidenavModule } from '@modules/core/responsive-sidenav/responsive-sidenav.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerBarComponent,
-    ResponsiveSidenavComponent,
     SidenavComponent,
     PlayerBarStationInfoComponent
   ],
@@ -57,7 +56,8 @@ import { SharedComponentsModule } from '@modules/shared/shared-components/shared
     LoggingModule,
     KeepAwakeModule,
     NotificationsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    ResponsiveSidenavModule
   ],
   bootstrap: [AppComponent]
 })

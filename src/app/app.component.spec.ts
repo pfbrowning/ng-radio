@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { MatToolbarModule, MatTooltipModule, MatIconModule, MatButtonModule,
   MatSidenavModule, MatMenuModule, MatFormFieldModule } from '@angular/material';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { ResponsiveSidenavComponent } from './components/responsive-sidenav/responsive-sidenav.component';
+import { ResponsiveSidenavComponent } from '../modules/core/responsive-sidenav/components/responsive-sidenav/responsive-sidenav.component';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { ErrorWindowComponent, ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
