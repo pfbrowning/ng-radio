@@ -4,4 +4,4 @@ export enum Severities {
     Warn = 'warn',
     Error = 'error'
 }
-  
+

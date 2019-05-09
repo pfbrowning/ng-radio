@@ -18,4 +18,4 @@ import { LoggingService } from './services/logging.service';
 })
 export class LoggingModule { }
 
-export { LoggingService }
+export { LoggingService };

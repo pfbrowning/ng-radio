@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule, MatButtonModule, MatTableModule, MatSidenavModule,
-  MatIconModule,MatFormFieldModule, MatInputModule, MatMenuModule, MatTooltipModule, 
+  MatIconModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatTooltipModule,
   MatProgressSpinnerModule, MatCardModule } from '@angular/material';
 import { ToastModule } from 'primeng/toast';
 import { AppComponent } from './app.component';

@@ -1,4 +1,4 @@
-export class LoggingSpyFactories {  
+export class LoggingSpyFactories {
     public static CreateLoggingServiceSpy(): any {
       return jasmine.createSpyObj('loggingService', ['logException', 'logEvent']);
     }
@@ -7,4 +7,4 @@ export class LoggingSpyFactories {
       return jasmine.createSpyObj('appInsightsService', ['trackException', 'trackEvent', 'init']);
     }
 }
-  
+

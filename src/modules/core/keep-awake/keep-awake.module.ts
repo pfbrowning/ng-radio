@@ -16,4 +16,4 @@ import * as NoSleep from 'nosleep.js';
 })
 export class KeepAwakeModule { }
 
-export { KeepAwakeService }
+export { KeepAwakeService };
