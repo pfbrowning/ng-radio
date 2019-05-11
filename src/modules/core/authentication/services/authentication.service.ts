@@ -27,7 +27,7 @@ export class AuthenticationService {
       this.oauthService.redirectUri = location;
       this.oauthService.silentRefreshRedirectUri = `${location}/silent-refresh.html`;
       this.oauthService.logoutUrl = `https://browninglogic.auth0.com/v2/logout?returnTo=${encodeURIComponent(location)}`;
-      
+
       this.loggingService.logInformation('OAuthService Configured', {
         'logoutUrl': this.oauthService.logoutUrl
       });
