@@ -28,10 +28,6 @@ export class AuthenticationService {
       this.oauthService.silentRefreshRedirectUri = `${location}/silent-refresh.html`;
       this.oauthService.logoutUrl = `https://browninglogic.auth0.com/v2/logout?returnTo=${encodeURIComponent(location)}`;
 
-      this.loggingService.logInformation('OAuthService Configured', {
-        'logoutUrl': this.oauthService.logoutUrl
-      });
-
       /* Load the configuration from the discovery document and process the provided
       ID token if present.  Afterwards, emit to tokenProcessed so that subscribers
       know that the token has been processed.*/
@@ -39,6 +35,14 @@ export class AuthenticationService {
         .then(() => {
           this.oauthService.setupAutomaticSilentRefresh();
           this.tokenProcessed.next();
+
+          // Log the loaded token info for diagnostics & troubleshooting
+          this.loggingService.logInformation('OIDC Tokens Processed', {
+            'ID Token Claims': this.idTokenClaims,
+            'ID Token Expires In': this.idTokenExpiresIn,
+            'Access Token': this.oauthService.getAccessToken(),
+            'Access Token Expires In': this.accessTokenExpiresIn
+          });
         })
         .catch(error => this.errorHandlingService.handleError(error, 'Failed to load discovery document'));
 
