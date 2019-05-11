@@ -1,0 +1,18 @@
+<div class="small-screen-only">
+  <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-top">
+    <span class="title">Browninglogic Radio</span>
+    <span class="fill-remaining"></span>
+    <button mat-icon-button (click)="sideNavContainer.toggle()"><mat-icon>menu</mat-icon></button>
+  </mat-toolbar>
+</div>
+
+<div class="app-container">
+  <blr-responsive-sidenav-container #sideNavContainer>
+    <blr-side-nav sidenav></blr-side-nav>
+    <div content class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </blr-responsive-sidenav-container>
+</div>
+
+<blr-player-bar></blr-player-bar>

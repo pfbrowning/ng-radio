@@ -40,9 +40,9 @@ describe('ErrorHandlingService', () => {
     );
 
     /* At first the appError ReplaySubject should not have emitted
-    anything and logException should not have been called. */
+    anything and logError should not have been called. */
     expect(appErrorSubSpy.emit).not.toHaveBeenCalled();
-    expect(loggingServiceSpy.logException).not.toHaveBeenCalled();
+    expect(loggingServiceSpy.logError).not.toHaveBeenCalled();
 
     // Pass an error to handleError
     errorHandlingService.handleError(dummyError, 'Error Comment');
@@ -56,6 +56,6 @@ describe('ErrorHandlingService', () => {
     expect(appErrorSubSpy.error).not.toHaveBeenCalled();
     expect(appErrorSubSpy.complete).not.toHaveBeenCalled();
 
-    expect(loggingServiceSpy.logException).toHaveBeenCalledTimes(1);
+    expect(loggingServiceSpy.logError).toHaveBeenCalledTimes(1);
   });
 });

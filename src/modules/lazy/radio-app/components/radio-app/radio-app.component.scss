@@ -1,0 +1,31 @@
+@import '../../../../../styles/variables';
+
+// Center the main app content 
+.app-content {
+    margin:10px auto;
+    padding:0px 10px;
+    width:1250px;
+    max-width: 90%;
+}
+
+// Fix the main app container above the now playing toolbar at the bottom
+.app-container {
+    position: fixed;
+    left:0px;
+    bottom:$toolbarHeight;
+    width:100%;
+
+    /* On large screens, start the app container at the top and adjust the height 
+    to account for one toolbar. */
+    @media (min-width:$smallScreenCutoff) {
+        height:calc(100% - $toolbarHeight);
+        top:0px;
+    }
+    
+    /* On small screens, push the app container down to below the top toolbar and 
+    adjust the height to account for two toolbars. */
+    @media (max-width:$smallScreenCutoff - 1) {
+        height:calc(100% - $toolbarHeight * 2);
+        top:$toolbarHeight;
+    }
+}

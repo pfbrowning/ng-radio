@@ -3,5 +3,11 @@
     "radioBrowserApiUrl": "http://www.radio-browser.info/webservice/json",
     "metadataRefreshInterval": 10000,
     "metadataFetchTimeout": 15000,
-    "appInsightsInstrumentationKey": null
+    "appInsightsInstrumentationKey": null,
+    "authConfig": {
+        "issuer": null,
+        "clientId": null,
+        "scope": "openid profile email",
+        "postLogoutRedirectUri": "http://localhost:4200"
+    }
 }

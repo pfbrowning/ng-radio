@@ -35,7 +35,8 @@ describe('ConfigService', () => {
       'radioBrowserApiUrl': 'testradiobrowserapi',
       'metadataRefreshInterval': 1,
       'metadataFetchTimeout': 2,
-      'appInsightsInstrumentationKey': null
+      'appInsightsInstrumentationKey': null,
+      'authConfig': {}
     };
 
     expect(loadedSpy).not.toHaveBeenCalled();

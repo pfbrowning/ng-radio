@@ -26,6 +26,7 @@
     "@browninglogic/ng-modal": "^4.0.2",
     "@markpieszak/ng-application-insights": "^7.0.2",
     "@types/lodash": "^4.14.121",
+    "angular-oauth2-oidc": "^5.0.2",
     "core-js": "^2.6.4",
     "hammerjs": "^2.0.8",
     "is-blank": "^2.1.0",

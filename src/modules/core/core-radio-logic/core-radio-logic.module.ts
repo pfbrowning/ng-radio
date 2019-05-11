@@ -6,11 +6,13 @@ import { StationLookupService } from './services/station-lookup.service';
 import { StreamInfoService } from './services/stream-info.service';
 import { AudioElement } from './models/audio-element';
 import { AudioElementToken } from './injection-tokens/audio-element-token';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   providers: [
     StationLookupService,

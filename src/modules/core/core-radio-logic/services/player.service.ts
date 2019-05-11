@@ -54,7 +54,7 @@ export class PlayerService {
 
   /** Notifies the user and logs the event when the audio fails to play */
   private onAudioError(error): void {
-    this.loggingService.logException(error, {'event': 'Failed to play audio', 'source': this.source });
+    this.loggingService.logError(error, {'event': 'Failed to play audio', 'source': this.source });
     this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.source}`);
   }
 
@@ -151,7 +151,7 @@ export class PlayerService {
           },
           error => {
             // Log the error
-            this.loggingService.logException(error, {'event': 'Failed to fetch metadata', 'url': this.source });
+            this.loggingService.logError(error, {'event': 'Failed to fetch metadata', 'url': this.source });
             // Emit a new NowPlaying object denoting the error
             this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.Error));
             // Set a generic app title

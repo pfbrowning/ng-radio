@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { AppError } from '../models/app-error';
 import { LoggingService } from '@modules/core/logging/logging.module';
-import { SeverityLevel } from '@markpieszak/ng-application-insights';
 
 @Injectable()
 export class ErrorHandlingService {
@@ -17,7 +16,7 @@ export class ErrorHandlingService {
   handleError(error: any, comment: string = null) {
     // Next up the error so that the error window component can show it
     this.appError.next(new AppError(error, comment));
-    // Log the error to App Insights
-    this.loggingService.logException(error, {'comment': comment}, SeverityLevel.Error);
+    // Log the error to a destination-agnostic logging service
+    this.loggingService.logError(error, comment != null ? {'comment': comment} : null);
   }
 }

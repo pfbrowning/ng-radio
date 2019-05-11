@@ -3,9 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatTooltipModule, MatIconModule, MatButtonModule,
   MatSidenavModule, MatMenuModule, MatFormFieldModule } from '@angular/material';
-import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ResponsiveSidenavComponent } from '../modules/core/responsive-sidenav/components/responsive-sidenav/responsive-sidenav.component';
-import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { ErrorWindowComponent, ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ToastModule } from 'primeng/toast';
@@ -20,9 +18,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { KeepAwakeSpyFactories } from '../modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { MessageService } from 'primeng/api';
-import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
+import { PlayerBarComponent, PlayerBarStationInfoComponent, SidenavComponent } from '@modules/lazy/radio-app/radio-app.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

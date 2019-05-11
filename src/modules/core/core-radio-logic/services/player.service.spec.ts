@@ -63,16 +63,16 @@ describe('PlayerService', () => {
   });
 
   it('should properly handle audio error', () => {
-    /* Arrange: Ensure that neither notify or logException have been called */
+    /* Arrange: Ensure that neither notify or logError have been called */
     expect(notificationServiceSpy.notify).not.toHaveBeenCalled();
-    expect(loggingServiceSpy.logException).not.toHaveBeenCalled();
+    expect(loggingServiceSpy.logError).not.toHaveBeenCalled();
     // Act: Emit an audio error
     audioElement.error.emit('some error');
     // Assert: Ensure that notify was called as expected and that the error was logged
     expect(notificationServiceSpy.notify).toHaveBeenCalledTimes(1);
     expect(notificationServiceSpy.notify.calls.mostRecent().args)
       .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play undefined']);
-    expect(loggingServiceSpy.logException).toHaveBeenCalledTimes(1);
+    expect(loggingServiceSpy.logError).toHaveBeenCalledTimes(1);
   });
 
   it('should properly report paused status', () => {

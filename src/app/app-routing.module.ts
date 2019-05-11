@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '@modules/core/authentication/authentication.module';
 
 const routes: Routes = [
-  { path: 'suggested-stations', loadChildren: '../modules/lazy/suggested-stations/suggested-stations.module#SuggestedStationsModule' },
-  { path: 'now-playing', loadChildren: '../modules/lazy/now-playing/now-playing.module#NowPlayingModule' },
-  { path: 'custom-station', loadChildren: '../modules/lazy/custom-station/custom-station.module#CustomStationModule' },
-  { path: 'radio-browser', loadChildren: '../modules/lazy/radio-browser/radio-browser.module#RadioBrowserModule' },
-  { path: 'favorites', loadChildren: '../modules/lazy/favorites/favorites.module#FavoritesModule' },
-  { path: '', redirectTo: 'suggested-stations', pathMatch: 'full'}
+  // Check to ensure that the user is authenticated before loading the radio app module
+  { path: '', canActivate: [ AuthGuard ], loadChildren: '../modules/lazy/radio-app/radio-app.module#RadioAppModule' }
 ];
 
 @NgModule({
