@@ -22,12 +22,6 @@ export class AuthenticationService {
       // Initialize the oauth service with our loaded auth config settings
       this.oauthService.configure(this.configService.appConfig.authConfig);
 
-      // Set the redirect URIs dynamically based on the window location
-      const location = window.location.origin;
-      this.oauthService.redirectUri = location;
-      this.oauthService.silentRefreshRedirectUri = `${location}/silent-refresh.html`;
-      this.oauthService.logoutUrl = `https://browninglogic.auth0.com/v2/logout?returnTo=${encodeURIComponent(location)}`;
-
       /* Load the configuration from the discovery document and process the provided
       ID token if present.  Afterwards, emit to tokenProcessed so that subscribers
       know that the token has been processed.*/
@@ -41,11 +35,10 @@ export class AuthenticationService {
             'ID Token Claims': this.idTokenClaims,
             'ID Token Expires In': this.idTokenExpiresIn,
             'Access Token': this.oauthService.getAccessToken(),
-            'Access Token Expires In': this.accessTokenExpiresIn,
-            'Logout URL': this.oauthService.logoutUrl
+            'Access Token Expires In': this.accessTokenExpiresIn
           });
         })
-        .catch(error => this.errorHandlingService.handleError(error, 'Failed to load discovery document'));
+        .catch(error => this.errorHandlingService.handleError(error, 'Failed to process login'));
 
       this.oauthService.events.subscribe(event => this.onOauthEvent(event));
   }
@@ -69,11 +62,14 @@ export class AuthenticationService {
       // When the silent refresh fails
       case 'silent_refresh_timeout':
       case 'silent_refresh_error':
-        // Notify the user
+        /* Notify the user, give them a few seconds to read the notification, then
+        redirect for login.  I don't expect this to happen regularly, but if it does
+        become an issue then it would be better to show the user a modal which
+        informs them of what happened and gives them 'log in again' button to click
+        in order to ensure that the user saw the message. */
         this.notificationService.notify(Severities.Error, 'Silent Refresh Failed',
           `Logged out due to silent refresh failure.  This should not happen regularly.
           Redirecting you back to the identity provider for login.`);
-        // Give the user a few seconds to read the message, then redirect for login
         timer(6000).subscribe(() => this.initImplicitFlow());
         break;
     }
