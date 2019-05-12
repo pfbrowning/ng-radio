@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Subscribe to router events so that we can show & hide the loading indicator accordingly
     this.routerEventsSubscription = this.router.events.subscribe(event => this.onRouterEvent(event));
-    // If the root app config failed to load before bootstrap, then show an error message
+    // If the root app config failed to load before bootstrap, then log the error and inform the user
     if (this.configService.initialized === false) {
       this.errorHandlingService.handleError(this.configService.initializationError, 'Failed to load configuration');
     }

@@ -90,7 +90,7 @@ describe('AuthenticationService', () => {
     // When handleError gets called, test that the params are what we expect
     errorHandlingServiceSpy.handleError.and.callFake((caughtError, errorComment) => {
       expect(caughtError).toBe('Test Promise Rejection');
-      expect(errorComment).toBe('Failed to load discovery document');
+      expect(errorComment).toBe('Failed to process login');
       // require handleError to be called before completing the test
       done();
     });
