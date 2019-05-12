@@ -41,7 +41,8 @@ export class AuthenticationService {
             'ID Token Claims': this.idTokenClaims,
             'ID Token Expires In': this.idTokenExpiresIn,
             'Access Token': this.oauthService.getAccessToken(),
-            'Access Token Expires In': this.accessTokenExpiresIn
+            'Access Token Expires In': this.accessTokenExpiresIn,
+            'Logout URL': this.oauthService.logoutUrl
           });
         })
         .catch(error => this.errorHandlingService.handleError(error, 'Failed to load discovery document'));
