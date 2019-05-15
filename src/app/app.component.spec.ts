@@ -1,69 +1,73 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatToolbarModule, MatTooltipModule, MatIconModule, MatButtonModule,
-  MatSidenavModule, MatMenuModule, MatFormFieldModule } from '@angular/material';
-import { ResponsiveSidenavComponent } from '../modules/core/responsive-sidenav/components/responsive-sidenav/responsive-sidenav.component';
+import { MatIconModule } from '@angular/material';
 import { ErrorWindowComponent, ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { ConfigService } from '@modules/core/config/config.module';
 import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
+import { ConfigServiceStub } from '@modules/core/config/testing/config.service.stub';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { ErrorHandlingSpyFactories } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
-import { PlayerService, StationLookupService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
-import { KeepAwakeSpyFactories } from '../modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { MessageService } from 'primeng/api';
-import { FormsModule } from '@angular/forms';
-import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
-import { PlayerBarComponent, PlayerBarStationInfoComponent, SidenavComponent } from '@modules/lazy/radio-app/radio-app.module';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let errorHandlingServiceSpy: jasmine.SpyObj<ErrorHandlingService>;
+  let configServiceStub: ConfigServiceStub;
+
   beforeEach(async(() => {
+    errorHandlingServiceSpy = ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy();
+    configServiceStub = new ConfigServiceStub();
+
     TestBed.configureTestingModule({
       imports: [
-        FormsModule,
         RouterTestingModule,
-        MatToolbarModule,
         MatIconModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatMenuModule,
-        MatFormFieldModule,
-        MatTooltipModule,
         NgLoadingIndicatorModule,
         ModalManagerModule,
-        ToastModule,
-        NoopAnimationsModule,
-        CoreRadioLogicModule,
-        SharedComponentsModule
+        ToastModule
       ],
       declarations: [
         AppComponent,
-        SidenavComponent,
-        ResponsiveSidenavComponent,
-        PlayerBarComponent,
-        PlayerBarStationInfoComponent,
         ErrorWindowComponent
       ],
       providers: [
-        { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() },
-        { provide: ErrorHandlingService, useValue: ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy() },
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
-        { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() },
-        { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() },
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ErrorHandlingService, useValue: errorHandlingServiceSpy },
         { provide: MessageService, useValue: NotificationsSpyFactories.CreateMessageServiceSpy() }
       ]
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    // Act: Init change detection to trigger ngOnInit
+    fixture.detectChanges();
+    expect(configServiceStub.initialized).toBe(true);
+
+    // Assert: Ensure that the component was created and that nothing was passed to handleError
+    expect(component).toBeTruthy();
+    expect(errorHandlingServiceSpy.handleError).not.toHaveBeenCalled();
+  });
+
+  it('should properly handle config init failure', () => {
+    // Arrange: Set the config service to a failed state
+    configServiceStub.initialized = false;
+    expect(errorHandlingServiceSpy.handleError).not.toHaveBeenCalled();
+
+    // Act: Init change detection to trigger ngOnInit
+    fixture.detectChanges();
+
+    // Assert: Ensure that handleError was called with the appropriate comment
+    expect(errorHandlingServiceSpy.handleError).toHaveBeenCalledTimes(1);
+    expect(errorHandlingServiceSpy.handleError.calls.mostRecent().args[1]).toBe('Failed to load configuration');
   });
 });

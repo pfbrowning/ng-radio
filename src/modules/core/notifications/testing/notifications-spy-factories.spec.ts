@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 export class NotificationsSpyFactories {
     public static CreateNotificationServiceSpy(): any {
       const spy = jasmine.createSpyObj('notificationServiceSpy', ['notify']);
@@ -5,7 +7,10 @@ export class NotificationsSpyFactories {
     }
 
     public static CreateMessageServiceSpy(): any {
-      return jasmine.createSpyObj('messageServiceSpy', ['add']);
+      const spy = jasmine.createSpyObj('messageServiceSpy', ['add']);
+      spy['messageObserver'] = new Subject();
+      spy['clearObserver'] = new Subject();
+      return spy;
     }
   }
 
