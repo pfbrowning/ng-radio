@@ -1,10 +1,10 @@
 import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
-import { Utils } from 'src/app/utils/utils';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { SleepTimerService, StreamInfoStatus, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { Subscription, merge } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { setAltSrc } from '@utilities';
 
 @Component({
   templateUrl: './now-playing.component.html',
@@ -37,7 +37,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   }
 
   public onImgError(img: HTMLImageElement, altSrc: string) {
-    Utils.SetAltImage(img, altSrc);
+    setAltSrc(img, altSrc);
   }
 
   public onTimerSelected(length: number) {

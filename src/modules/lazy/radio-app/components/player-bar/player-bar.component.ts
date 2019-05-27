@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { SleepTimerService, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
-import { Utils } from 'src/app/utils/utils';
+import { setAltSrc } from '@utilities';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { Subscription, merge } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -39,7 +39,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   public onImgError(img: HTMLImageElement) {
-    Utils.SetAltImage(img, '/assets/images/radio.svg');
+    setAltSrc(img, '/assets/images/radio.svg');
   }
 
   public onTimerSelected(length: number) {

@@ -19,7 +19,8 @@
       "dom"
     ],
     "paths": {
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@utilities": ["src/utilities"]
     }
   }
 }

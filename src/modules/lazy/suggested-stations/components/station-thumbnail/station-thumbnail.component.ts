@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { Utils } from 'src/app/utils/utils';
+import { setAltSrc } from '@utilities';
 
 @Component({
   selector: 'blr-station-thumbnail',
@@ -15,13 +15,13 @@ export class StationThumbnailComponent {
 
   /** Use the alt image if the station icon doesn't exist or fails to load */
   public onImgError(img: HTMLImageElement) {
-    Utils.SetAltImage(img, this.altImage);
+    setAltSrc(img, this.altImage);
   }
 
-  /** Use the alt image if the loaded image is smaller thana the specified min width or height */
+  /** Use the alt image if the loaded image is smaller than the specified min width or height */
   public onImgLoad(img: HTMLImageElement) {
     if (img.width < this.minImgWidth || img.height < this.minImgHeight) {
-      Utils.SetAltImage(img, this.altImage);
+      setAltSrc(img, this.altImage);
     }
   }
 }
