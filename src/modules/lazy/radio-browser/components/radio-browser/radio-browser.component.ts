@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
 import { PlayerService, StationLookupService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import isBlank from 'is-blank';
+import { MatInput } from '@angular/material';
 
 @Component({
   templateUrl: './radio-browser.component.html',
@@ -11,6 +12,8 @@ import isBlank from 'is-blank';
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(private playerService: PlayerService,
     private stationLookupService: StationLookupService) {}
+
+  @ViewChild('nameSearchInput') nameSearchInput: MatInput;
 
   public columns = ['name', 'tags', 'icon'];
   public stations: Array<Station>;
@@ -27,6 +30,8 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     // Initialize typeahead search term subscriptions
     this.subscribeToTerm(this.nameSearchSub, this.nameSearch$);
     this.subscribeToTerm(this.tagSearchSub, this.tagSearch$);
+    // Focus on the name input
+    this.nameSearchInput.focus();
   }
 
   private subscribeToTerm(subscription: Subscription, term: Subject<string>) {

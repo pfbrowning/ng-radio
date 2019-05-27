@@ -3,7 +3,7 @@
   <form #form="ngForm" (submit)="onSubmit(form)">
     <fieldset class="flex-grid">
       <mat-form-field class="flex-column-half">
-        <input matInput [(ngModel)]="station.title" name="title" placeholder="Station Title">
+        <input matInput #titleInput="matInput" [(ngModel)]="station.title" name="title" placeholder="Station Title">
       </mat-form-field>
       <mat-form-field class="flex-column-half">
         <input matInput required [(ngModel)]="station.url" name="url" placeholder="Stream URL" [pattern]="urlPattern">

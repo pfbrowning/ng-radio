@@ -2,7 +2,7 @@
 
 <div class="flex-grid">
   <mat-form-field class="flex-column-third">
-    <input matInput [(ngModel)]="nameSearch" (keyup)="nameSearch$.next($event.target.value)" placeholder="Station Name" matTooltip="Search Stations by name">
+    <input matInput #nameSearchInput="matInput" [(ngModel)]="nameSearch" (keyup)="nameSearch$.next($event.target.value)" placeholder="Station Name" matTooltip="Search Stations by name">
   </mat-form-field>
   <mat-form-field class="flex-column-third">
     <input matInput [(ngModel)]="tagSearch" (keyup)="tagSearch$.next($event.target.value)" placeholder="Tag" matTooltip="Search Stations by tag">
