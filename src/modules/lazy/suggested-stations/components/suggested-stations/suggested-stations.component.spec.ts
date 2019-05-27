@@ -5,7 +5,7 @@ import { StationThumbnailComponent } from '../station-thumbnail/station-thumbnai
 import { PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from 'src/app/testing/stubs/ActivatedRouteStub.spec';
+import { ActivatedRouteStub } from '@testing-stubs';
 import { SuggestedStations } from '../../models/suggested-stations';
 
 describe('SuggestedStationsComponent', () => {

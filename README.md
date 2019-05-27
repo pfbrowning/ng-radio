@@ -29,4 +29,6 @@ My priorities for continuing development are as follows, in order:
   * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
   * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
 * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
-* Package up the SetAltSrc function and publish it to npm
+* Package up generic, reusable things individually and publish them to npm
+    * setAltSrc function
+    * ActivatedRouteStub class
