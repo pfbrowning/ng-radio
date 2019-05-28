@@ -20,8 +20,8 @@
     ],
     "paths": {
       "@modules/*": ["src/modules/*"],
-      "@utilities": ["src/utilities"],
-      "@testing-stubs": ["src/testing-stubs"]
+      "@testing-stubs": ["src/testing-stubs"],
+      "@utilities": ["src/utilities"]
     }
   }
 }

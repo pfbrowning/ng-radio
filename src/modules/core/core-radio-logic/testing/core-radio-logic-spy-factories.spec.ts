@@ -10,7 +10,12 @@ export class CoreRadioLogicSpyFactories {
   }
 
   public static CreateStationLookupServiceSpy(): any {
-    const spy = jasmine.createSpyObj('stationLookupServiceSpy', ['searchStations']);
+    const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
+      'searchStations',
+      'getDeveloperSuggestions',
+      'getTopClicked',
+      'getTopVoted'
+    ]);
     return spy;
   }
 }

@@ -22,7 +22,7 @@
     "@angular/platform-browser": "~7.2.4",
     "@angular/platform-browser-dynamic": "~7.2.4",
     "@angular/router": "~7.2.4",
-    "@browninglogic/ng-loading-indicator": "^2.0.2",
+    "@browninglogic/ng-loading-indicator": "2.0.4",
     "@browninglogic/ng-modal": "^4.0.2",
     "@markpieszak/ng-application-insights": "^7.0.2",
     "@types/lodash": "^4.14.121",

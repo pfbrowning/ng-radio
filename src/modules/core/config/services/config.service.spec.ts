@@ -29,7 +29,6 @@ describe('ConfigService', () => {
   });
 
   it('should properly handle successful config fetch', (done: DoneFn) => {
-    console.log('config fetch test start');
     const dummyConfig: IAppConfig = {
       'metadataApiUrl': 'testapi',
       'radioBrowserApiUrl': 'testradiobrowserapi',
@@ -61,7 +60,6 @@ describe('ConfigService', () => {
     // Expect one app.config.json request & flush our dummy config object
     const configRequest = httpTestingController.expectOne('/assets/config/app.config.json');
     configRequest.flush(dummyConfig);
-    console.log('config fetch test end');
   });
 
   it('should properly handle failed config fetch', (done: DoneFn) => {
