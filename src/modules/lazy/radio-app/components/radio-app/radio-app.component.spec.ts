@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ResponsiveSidenavModule } from '@modules/core/responsive-sidenav/responsive-sidenav.module';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { AuthenticationService } from '@modules/core/authentication/authentication.module';
-import { AuthenticationSpyFactories } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
+import { createAuthenticationServiceSpy } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
 import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { StationLookupService, PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
@@ -40,7 +40,7 @@ describe('RadioAppComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: AuthenticationService, useValue: AuthenticationSpyFactories.CreateAuthenticationServiceSpy() },
+        { provide: AuthenticationService, useValue: createAuthenticationServiceSpy() },
         { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
         { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
