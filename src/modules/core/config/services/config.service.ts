@@ -5,8 +5,8 @@ import { ReplaySubject } from 'rxjs';
 import { IAppConfig } from '../models/app-config';
 
 /** Abstraction layer for configuration.  Fetches any necessary configuration files
- * before app bootstrap and then stores the corresponding config info to be injected
- * by anybody who needs it. */
+ * before the app bootstraps and then stores the corresponding config info to be
+ * injected by anybody who needs it. */
 @Injectable()
 export class ConfigService {
   constructor(private httpClient: HttpClient) {}
@@ -14,8 +14,8 @@ export class ConfigService {
   private _initialized = false;
   private _initializationError: any = null;
   private _appConfig: IAppConfig;
-  private _loaded = new ReplaySubject<IAppConfig>(1);
-  public loaded$ = this._loaded.asObservable();
+  private loaded = new ReplaySubject<IAppConfig>(1);
+  public loaded$ = this.loaded.asObservable();
 
   /** Public accessor for app config */
   public get appConfig(): IAppConfig {
@@ -39,9 +39,7 @@ export class ConfigService {
   public initialize(): Promise<boolean> {
     // Fetch and store the config
     return this.httpClient.get<IAppConfig>('/assets/config/app.config.json').pipe(
-      tap(appConfig => {
-        this._appConfig = appConfig;
-      })
+      tap(appConfig => this._appConfig = appConfig)
     )
     /* Convert to promise simply because APP_INITIALIZER
     requires a promise. */
@@ -50,7 +48,7 @@ export class ConfigService {
       /* On success mark initialized as true so that app.component knows
       config intialization was successful. */
       this._initialized = true;
-      this._loaded.next(this._appConfig);
+      this.loaded.next(this._appConfig);
       return true;
     })
     .catch(error => {

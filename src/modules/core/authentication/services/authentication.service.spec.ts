@@ -2,7 +2,7 @@ import { AuthenticationService } from './authentication.service';
 import { Subscription } from 'rxjs';
 import { OAuthInfoEvent } from 'angular-oauth2-oidc';
 import { ConfigService } from '@modules/core/config/config.module';
-import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
+import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
 import { ErrorHandlingSpyFactories } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
 import { ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
@@ -26,7 +26,7 @@ describe('AuthenticationService', () => {
   beforeEach(() => {
     oAuthEventCatcher = jasmine.createSpyObj('OAuthEventCatcher', ['emit', 'error', 'complete']);
     errorHandlingServiceSpy = ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy();
-    configServiceSpy = ConfigSpyFactories.CreateConfigServiceSpy();
+    configServiceSpy = createConfigServiceSpy();
     loggingServiceSpy = LoggingSpyFactories.CreateLoggingServiceSpy();
     notificationServiceSpy = NotificationsSpyFactories.CreateNotificationServiceSpy();
     oAuthServiceSpy = createOAuthServiceSpy();

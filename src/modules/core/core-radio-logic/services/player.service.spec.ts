@@ -1,7 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PlayerService } from './player.service';
 import { ConfigService } from '@modules/core/config/config.module';
-import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
+import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { StreamInfoService } from './stream-info.service';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
@@ -32,7 +32,7 @@ describe('PlayerService', () => {
   beforeEach(() => {
     audioElement = new AudioElementStub();
     notificationServiceSpy = NotificationsSpyFactories.CreateNotificationServiceSpy();
-    configServiceSpy = ConfigSpyFactories.CreateConfigServiceSpy();
+    configServiceSpy = createConfigServiceSpy();
     loggingServiceSpy = LoggingSpyFactories.CreateLoggingServiceSpy();
 
     TestBed.configureTestingModule({

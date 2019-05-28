@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from '@modules/core/config/config.module';
 import { AppInsightsService } from '@markpieszak/ng-application-insights';
-import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
+import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
 import { LoggingSpyFactories } from '../testing/logging-spy-factories.spec';
 import { LoggingModule, LoggingService } from '@modules/core/logging/logging.module';
 
@@ -14,7 +14,7 @@ describe('LoggingService', () => {
         LoggingModule
       ],
       providers: [
-        { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() },
+        { provide: ConfigService, useValue: createConfigServiceSpy() },
         { provide: AppInsightsService, useValue: LoggingSpyFactories.CreateAppInsightsServiceSpy() }
       ]
     });

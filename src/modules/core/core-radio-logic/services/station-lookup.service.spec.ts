@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { StationLookupService } from './station-lookup.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from '@modules/core/config/config.module';
-import { ConfigSpyFactories } from '@modules/core/config/testing/config-spy-factories.spec';
+import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
 import { HttpParams } from '@angular/common/http';
 import { Station } from '../models/station';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
@@ -20,7 +20,7 @@ describe('RadioBrowserService', () => {
         CoreRadioLogicModule
       ],
       providers: [
-        { provide: ConfigService, useValue: ConfigSpyFactories.CreateConfigServiceSpy() }
+        { provide: ConfigService, useValue: createConfigServiceSpy() }
       ]
     });
 
