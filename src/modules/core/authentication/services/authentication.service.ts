@@ -40,6 +40,7 @@ export class AuthenticationService {
         })
         .catch(error => this.errorHandlingService.handleError(error, 'Failed to process login'));
 
+      // Pass oauth events to the onOauthEvent handler
       this.oauthService.events.subscribe(event => this.onOauthEvent(event));
   }
 
@@ -48,12 +49,14 @@ export class AuthenticationService {
     this.oauthService.initImplicitFlow();
   }
 
+  /** Initiates logout as implemented by angular-oauth2-oidc */
   public logOut(): void {
     this.oauthService.logOut();
   }
 
+  /** Handler for OAuth Events emitted by angular-oauth2-oidc */
   private onOauthEvent(oAuthEvent: OAuthEvent) {
-    // Forward OAuth events to a ReplaySubject so that late subscribers don't miss out on all the fun
+    // Forward OAuth events to a ReplaySubject for late subscribers
     this.oAuthEvents.next(oAuthEvent);
     // Log all events for diagnostics and troubleshooting
     this.loggingService.logInformation('OAuth Event', oAuthEvent);
@@ -65,7 +68,7 @@ export class AuthenticationService {
         /* Notify the user, give them a few seconds to read the notification, then
         redirect for login.  I don't expect this to happen regularly, but if it does
         become an issue then it would be better to show the user a modal which
-        informs them of what happened and gives them 'log in again' button to click
+        informs them of what happened and gives them a 'log in again' button to click
         in order to ensure that the user saw the message. */
         this.notificationService.notify(Severities.Error, 'Silent Refresh Failed',
           `Logged out due to silent refresh failure.  This should not happen regularly.
