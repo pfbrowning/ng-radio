@@ -12,8 +12,8 @@ import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { KeepAwakeSpyFactories } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
+import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -43,7 +43,7 @@ describe('PlayerBarComponent', () => {
       providers: [
         { provide: PlayerService, useValue: createPlayerServiceSpy() },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
-        { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() }
+        { provide: KeepAwakeService, useValue: createKeepAwakeServiceSpy() }
       ]
     })
     .compileComponents();

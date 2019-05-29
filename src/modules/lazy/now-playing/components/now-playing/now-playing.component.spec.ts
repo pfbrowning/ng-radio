@@ -13,7 +13,7 @@ import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { KeepAwakeSpyFactories } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
+import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 
 
 describe('NowPlayingComponent', () => {
@@ -39,7 +39,7 @@ describe('NowPlayingComponent', () => {
       providers: [
         { provide: PlayerService, useValue: createPlayerServiceSpy() },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
-        { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() }
+        { provide: KeepAwakeService, useValue: createKeepAwakeServiceSpy() }
       ]
     })
     .compileComponents();

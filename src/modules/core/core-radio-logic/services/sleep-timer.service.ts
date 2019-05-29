@@ -30,7 +30,7 @@ export class SleepTimerService {
   }
 
   /**
-   * Clears any previous timers and initiates a new sleep timer which 
+   * Clears any previous timers and initiates a new sleep timer which
    * will go off in the specified number of minutes
    * @param minutes Number of minutes until going to sleep
    */

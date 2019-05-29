@@ -7,6 +7,9 @@ export class AudioElementStub {
     public paused = new EventEmitter<void>();
     public source: string;
 
+    public playSpy = spyOn(this, 'play').and.callThrough();
+    public pauseSpy = spyOn(this, 'pause').and.callThrough();
+
     public play(): void {
         this.playing.emit();
     }
@@ -14,7 +17,4 @@ export class AudioElementStub {
     public pause(): void {
         this.paused.emit();
     }
-
-    public playSpy = spyOn(this, 'play').and.callThrough();
-    public pauseSpy = spyOn(this, 'pause').and.callThrough();
 }
