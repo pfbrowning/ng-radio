@@ -24,7 +24,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
     // When the play / pause state or the now playing info canged
     this.changeDetectionSubscription = merge(
       this.playerService.nowPlaying$,
-      this.playerService.paused
+      this.playerService.paused$
     )
     /* Delay for 0ms to wait for the async
     pipe bindings to catch up. */

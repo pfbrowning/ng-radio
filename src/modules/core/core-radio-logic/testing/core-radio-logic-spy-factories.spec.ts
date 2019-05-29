@@ -5,7 +5,7 @@ export class CoreRadioLogicSpyFactories {
   public static CreatePlayerServiceSpy(): any {
     const spy = jasmine.createSpyObj('playerService', ['playStation']);
     spy['nowPlaying$'] = new Subject<NowPlaying>();
-    spy['paused'] = new BehaviorSubject<boolean>(true);
+    spy['paused$'] = new BehaviorSubject<boolean>(true);
     return spy;
   }
 

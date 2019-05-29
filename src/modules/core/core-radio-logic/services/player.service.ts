@@ -23,6 +23,8 @@ export class PlayerService {
     private configService: ConfigService,
     private titleService: Title,
     @Inject(AudioElementToken) private audio: AudioElement) {
+      /* Subscribe to the events that we care about from the AudioElement
+      and pass them on to the appropriate handler. */
       this.audio.error.subscribe(error => this.onAudioError(error));
       this.audio.playing.subscribe(() => this.onAudioPlaying());
       this.audio.paused.subscribe(() => this.onAudioPaused());
@@ -32,13 +34,20 @@ export class PlayerService {
       this.nowPlaying$.subscribe(nowPlaying => this.onNowPlayingChanged(nowPlaying));
     }
 
+  /** The current audio source URL */
   private _source: string;
+  /** Subscription used to refresh the now-playing stream info on a scheduled interval */
   private refreshSub: Subscription;
+  /** Subscription which manages any currently running now-playing stream info fetch operation */
   private metaFetchSub: Subscription;
+  /** The current state of nowPlaying represented as a private BehaviorSubject */
   private nowPlaying = new BehaviorSubject<NowPlaying>(new NowPlaying(null, null, StreamInfoStatus.NotInitialized));
-  private _paused = new BehaviorSubject<boolean>(true);
+  /** The current paused state represented as a private BehaviorSubject */
+  private paused = new BehaviorSubject<boolean>(true);
+  /** nowPlaying publicly exposed as an obserable */
   public nowPlaying$ = this.nowPlaying.asObservable();
-  public paused = this._paused.asObservable();
+  /** paused state publicly exposed as an observable */
+  public paused$ = this.paused.asObservable();
 
   /** Audio source URL */
   public get source(): string {
@@ -52,29 +61,24 @@ export class PlayerService {
     return this.nowPlaying.value;
   }
 
-  /** Notifies the user and logs the event when the audio fails to play */
+  /** Notifies the user when the audio fails to play */
   private onAudioError(error): void {
-    this.loggingService.logError(error, {'event': 'Failed to play audio', 'source': this.source });
     this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.source}`);
   }
 
-  /** Updates the reactive 'paused' state and triggers change
-  detection when the audio starts to play. */
+  /** Notifies listeners when the audio starts to play. */
   private onAudioPlaying(): void {
-    /* Notify anybody listening to changes on the 'paused'
-    state that the audio is no longer paused. */
-    this._paused.next(false);
+    this.paused.next(false);
   }
 
-  /** Updates the reactive 'paused' state, and unsubscribes
+  /** Updates the reactive 'paused' state and unsubscribes
    * from any metadata fetch & refresh subscriptions. */
   private onAudioPaused(): void {
     /* Clear the src in order to prevent the browser from continuing to
     download audio in the background. */
     this.audio.src = '';
-    /* Notify anybody listening to changes on the 'paused'
-    state that the audio is now paused. */
-    this._paused.next(true);
+    /* Notify listeners that the audio is now paused. */
+    this.paused.next(true);
     /* Unsubscribe from the refresh interval and from any concurrent metadata
     fetch when the media is paused.  We want to do this in the onAudioPaused
     handler so that we catch the "user presses the browser-provided pause button"
@@ -83,6 +87,7 @@ export class PlayerService {
     if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
   }
 
+  /** Notifies the user of nowPlaying changes */
   private onNowPlayingChanged(nowPlaying: NowPlaying) {
     // If we have stream info
     if (nowPlaying.streamInfo != null) {
@@ -161,6 +166,7 @@ export class PlayerService {
     }
   }
 
+  /** Play the selected audio and handle the relevant side-effects */
   public play() {
     /* Since we clear the audio src after pause, we need to assing or re-assign
     it before playing. */
@@ -168,7 +174,8 @@ export class PlayerService {
     // Play the audio
     this.audio.play();
     /* On the initial load of the station, load the metadata
-    and set the title to "Loading..." until it gets here. */
+    and set the StreamInfoStatus to denote that we're in
+    a 'loading' state. */
     this.loadMetadata(true);
     /* Unsubscribe if there's still an active refresh interval
     subscription from the previously-played station. */
@@ -177,6 +184,7 @@ export class PlayerService {
     this.refreshSub = interval(this.configService.appConfig.metadataRefreshInterval).subscribe(() => this.loadMetadata());
   }
 
+  /** Pause the selected audio */
   public pause() {
     this.audio.pause();
   }

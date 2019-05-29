@@ -25,8 +25,6 @@ describe('PlayerService', () => {
   let streamInfoService: StreamInfoServiceStub;
   let configServiceSpy: jasmine.SpyObj<ConfigService>;
   let audioElement: AudioElementStub;
-  let audioElementPlaySpy: jasmine.Spy;
-  let audioElementPauseSpy: jasmine.Spy;
   let nowPlayingSpy: jasmine.Spy;
 
   beforeEach(() => {
@@ -52,9 +50,7 @@ describe('PlayerService', () => {
     streamInfoService = TestBed.get(StreamInfoService);
     audioPausedSpy = jasmine.createSpy('audioPaused');
     nowPlayingSpy = jasmine.createSpy('nowPlaying');
-    audioElementPauseSpy = spyOn(audioElement, 'pause').and.callThrough();
-    audioElementPlaySpy = spyOn(audioElement, 'play').and.callThrough();
-    playerService.paused.subscribe(paused => audioPausedSpy(paused));
+    playerService.paused$.subscribe(paused => audioPausedSpy(paused));
     playerService.nowPlaying$.subscribe(nowPlaying => nowPlayingSpy(nowPlaying));
   });
 
@@ -63,16 +59,14 @@ describe('PlayerService', () => {
   });
 
   it('should properly handle audio error', () => {
-    /* Arrange: Ensure that neither notify or logError have been called */
+    /* Arrange: Ensure that notify hasn't been called yet. */
     expect(notificationServiceSpy.notify).not.toHaveBeenCalled();
-    expect(loggingServiceSpy.logError).not.toHaveBeenCalled();
     // Act: Emit an audio error
     audioElement.error.emit('some error');
-    // Assert: Ensure that notify was called as expected and that the error was logged
+    // Assert: Ensure that notify was called as expected
     expect(notificationServiceSpy.notify).toHaveBeenCalledTimes(1);
     expect(notificationServiceSpy.notify.calls.mostRecent().args)
       .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play undefined']);
-    expect(loggingServiceSpy.logError).toHaveBeenCalledTimes(1);
   });
 
   it('should properly report paused status', () => {
@@ -84,7 +78,7 @@ describe('PlayerService', () => {
     expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(false);
     // Pause the audioElement directly
     audioElement.pause();
-    // Pause state should be false
+    // Pause state should be true
     expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(true);
   });
 
@@ -102,16 +96,16 @@ describe('PlayerService', () => {
     // For each test entry
     testEntries.forEach(testEntry => {
       // Arrange: Ensure that the audio hasn't been paused or played yet for this iteration
-      expect(audioElementPauseSpy).toHaveBeenCalledTimes(iteration);
-      expect(audioElementPlaySpy).toHaveBeenCalledTimes(iteration);
+      expect(audioElement.pauseSpy).toHaveBeenCalledTimes(iteration);
+      expect(audioElement.playSpy).toHaveBeenCalledTimes(iteration);
 
       // Act: call playStation with the new station
       playerService.playStation(testEntry);
 
       // Assert
       // Ensure that the audio was paused and played once for this iteration
-      expect(audioElementPauseSpy).toHaveBeenCalledTimes(iteration + 1);
-      expect(audioElementPlaySpy).toHaveBeenCalledTimes(iteration + 1);
+      expect(audioElement.pauseSpy).toHaveBeenCalledTimes(iteration + 1);
+      expect(audioElement.playSpy).toHaveBeenCalledTimes(iteration + 1);
       // Ensure that the audio url was updated
       expect(playerService.source).toBe(testEntry.url);
 
@@ -122,7 +116,7 @@ describe('PlayerService', () => {
     });
 
     // Assert: The audio should have been played once for each test entry
-    expect(audioElementPlaySpy).toHaveBeenCalledTimes(testEntries.length);
+    expect(audioElement.playSpy).toHaveBeenCalledTimes(testEntries.length);
   });
 
   it('should properly load initial metadata', () => {
@@ -130,8 +124,8 @@ describe('PlayerService', () => {
     // Set up our dummy station
     const testStation = new Station('Station Title', 'station url');
     // The audio element should not have been played or paused yet
-    expect(audioElementPauseSpy).not.toHaveBeenCalled();
-    expect(audioElementPlaySpy).not.toHaveBeenCalled();
+    expect(audioElement.pauseSpy).not.toHaveBeenCalled();
+    expect(audioElement.playSpy).not.toHaveBeenCalled();
 
     // Act: Play our test station
     playerService.playStation(testStation);
@@ -141,8 +135,8 @@ describe('PlayerService', () => {
     expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo).toBeNull();
     expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfoStatus).toBe(StreamInfoStatus.Loading);
     // pause and play should have been called on the audio element once by this point
-    expect(audioElementPauseSpy).toHaveBeenCalledTimes(1);
-    expect(audioElementPlaySpy).toHaveBeenCalledTimes(1);
+    expect(audioElement.pauseSpy).toHaveBeenCalledTimes(1);
+    expect(audioElement.playSpy).toHaveBeenCalledTimes(1);
 
     // Emit dummy metadata
     streamInfoService.flushMetadata(new StreamInfo('Test Song', 'dummy fetchsource'));
@@ -161,8 +155,8 @@ describe('PlayerService', () => {
       { title: 'error', station: 'error', throw: true }
     ];
     // The audio element should not have been played or paused yet
-    expect(audioElementPauseSpy).not.toHaveBeenCalled();
-    expect(audioElementPlaySpy).not.toHaveBeenCalled();
+    expect(audioElement.pauseSpy).not.toHaveBeenCalled();
+    expect(audioElement.playSpy).not.toHaveBeenCalled();
 
     let iteration = 1;
     testEntries.forEach(testEntry => {
@@ -177,8 +171,8 @@ describe('PlayerService', () => {
       expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo).toBeNull();
       expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfoStatus).toBe(StreamInfoStatus.Loading);
       // pause and play should have been called on the audio element once for each iteration by this point
-      expect(audioElementPauseSpy).toHaveBeenCalledTimes(iteration);
-      expect(audioElementPlaySpy).toHaveBeenCalledTimes(iteration);
+      expect(audioElement.pauseSpy).toHaveBeenCalledTimes(iteration);
+      expect(audioElement.playSpy).toHaveBeenCalledTimes(iteration);
 
       // Either throw an error or emit the specified metadata
       if (testEntry.throw) {
@@ -207,7 +201,7 @@ describe('PlayerService', () => {
     });
 
     // The audio should have been played once for each test entry
-    expect(audioElementPlaySpy).toHaveBeenCalledTimes(testEntries.length);
+    expect(audioElement.playSpy).toHaveBeenCalledTimes(testEntries.length);
     // We should have fetched metadata once for each test entry
     expect(streamInfoService.getMetadataSpy).toHaveBeenCalledTimes(testEntries.length);
   });

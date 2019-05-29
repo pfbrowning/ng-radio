@@ -8,7 +8,7 @@ import { Station } from '../models/station';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
 import isBlank from 'is-blank';
 
-describe('RadioBrowserService', () => {
+describe('StationLookupService', () => {
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
   let stationLookupService: StationLookupService;
