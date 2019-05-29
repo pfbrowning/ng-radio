@@ -14,6 +14,8 @@ import { StreamInfoStatus } from '../models/stream-info-status';
 import { isEqual } from 'lodash';
 import isBlank from 'is-blank';
 
+/** Service which handles the underlying core logic of playing radio
+ * stations and maintains the nowPlaying state */
 @Injectable()
 export class PlayerService {
   constructor(private streamInfoService: StreamInfoService,

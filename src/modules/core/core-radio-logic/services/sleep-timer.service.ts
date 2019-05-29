@@ -3,14 +3,23 @@ import { Subscription, timer, BehaviorSubject } from 'rxjs';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import * as moment from 'moment';
 
+/** Service which maintains the sleep timer functionality & state */
 @Injectable()
 export class SleepTimerService {
   constructor(private notificationService: NotificationService) {}
 
+  /** Subscription which maintains the sleep timer countdown */
   private sleepTimerSubscription: Subscription;
+  /** Subscription which maintains the minute interval for the purpose
+   * of keeping subscribers notified of how many minutes remain until
+   * going to sleep. */
   private minuteInterval: Subscription;
+  /** Moment representing the time at which we're going to sleep. */
   private sleepTime: moment.Moment;
+  /** BehaviorSubject which maintains and broadcasts the state of how
+   * many minutes remain until we go to sleep. */
   public minutesUntilSleep$ = new BehaviorSubject<number>(null);
+  /** The actual sleep event */
   @Output() sleep = new EventEmitter<void>();
 
   private get minutesUntilSleep(): number {
@@ -20,6 +29,11 @@ export class SleepTimerService {
     return null;
   }
 
+  /**
+   * Clears any previous timers and initiates a new sleep timer which 
+   * will go off in the specified number of minutes
+   * @param minutes Number of minutes until going to sleep
+   */
   public setTimer(minutes: number): void {
     // Clear the subscription & date from any previous timers
     this.clearTimer();
@@ -34,12 +48,14 @@ export class SleepTimerService {
     this.notificationService.notify(Severities.Success, 'Sleep Timer Set', `Sleep timer set for ${this.sleepTime.format('h:mm:ss a')}.`);
   }
 
+  /** Cancels any current sleep timers and notifies the user accordingly */
   public cancelTimer(): void {
     // Clear the subscription & date, then notify the user that the timer has been cancelled.
     this.clearTimer();
     this.notificationService.notify(Severities.Success, 'Sleep Timer Cancelled', `Sleep timer cancelled.`);
   }
 
+  /** Silently clears any current sleep timers */
   private clearTimer(): void {
     // Unsubscribe and clear everything without performing any notifications or emitting any events
     if (this.sleepTimerSubscription) { this.sleepTimerSubscription.unsubscribe(); }
