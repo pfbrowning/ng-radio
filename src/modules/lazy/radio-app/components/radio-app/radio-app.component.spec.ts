@@ -7,7 +7,7 @@ import { ResponsiveSidenavModule } from '@modules/core/responsive-sidenav/respon
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { AuthenticationService } from '@modules/core/authentication/authentication.module';
 import { createAuthenticationServiceSpy } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
-import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { createPlayerServiceSpy, createStationLookupServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { StationLookupService, PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { NotificationService } from '@modules/core/notifications/notifications.module';
@@ -41,8 +41,8 @@ describe('RadioAppComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: createAuthenticationServiceSpy() },
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
-        { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() },
+        { provide: PlayerService, useValue: createPlayerServiceSpy() },
+        { provide: StationLookupService, useValue: createStationLookupServiceSpy() },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() }
       ]

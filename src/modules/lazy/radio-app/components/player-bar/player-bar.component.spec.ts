@@ -5,7 +5,7 @@ import { MatTooltipModule, MatIconModule, MatButtonModule, MatToolbarModule,
   MatMenuModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { createPlayerServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
@@ -41,7 +41,7 @@ describe('PlayerBarComponent', () => {
         SharedComponentsModule
       ],
       providers: [
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
+        { provide: PlayerService, useValue: createPlayerServiceSpy() },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() }
       ]

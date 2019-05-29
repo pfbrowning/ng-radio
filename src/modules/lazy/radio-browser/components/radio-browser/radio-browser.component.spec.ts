@@ -3,7 +3,7 @@ import { RadioBrowserComponent } from './radio-browser.component';
 import { MatFormFieldModule, MatTableModule, MatInputModule, MatProgressSpinnerModule, MatCardModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { PlayerService, StationLookupService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { createPlayerServiceSpy, createStationLookupServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RadioBrowserComponent', () => {
@@ -24,8 +24,8 @@ describe('RadioBrowserComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
-        { provide: StationLookupService, useValue: CoreRadioLogicSpyFactories.CreateStationLookupServiceSpy() }
+        { provide: PlayerService, useValue: createPlayerServiceSpy() },
+        { provide: StationLookupService, useValue: createStationLookupServiceSpy() }
       ]
     })
     .compileComponents();

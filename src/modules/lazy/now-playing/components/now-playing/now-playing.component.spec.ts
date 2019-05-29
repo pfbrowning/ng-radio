@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { createPlayerServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
@@ -37,7 +37,7 @@ describe('NowPlayingComponent', () => {
         SharedComponentsModule
       ],
       providers: [
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
+        { provide: PlayerService, useValue: createPlayerServiceSpy() },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: KeepAwakeSpyFactories.CreateKeepAwakeServiceSpy() }
       ]

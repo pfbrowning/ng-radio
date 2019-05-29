@@ -4,7 +4,7 @@ import { CustomStationComponent } from './custom-station.component';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { CoreRadioLogicSpyFactories } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { createPlayerServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CustomStationComponent', () => {
@@ -22,7 +22,7 @@ describe('CustomStationComponent', () => {
       ],
       declarations: [ CustomStationComponent ],
       providers: [
-        { provide: PlayerService, useValue: CoreRadioLogicSpyFactories.CreatePlayerServiceSpy() },
+        { provide: PlayerService, useValue: createPlayerServiceSpy() },
       ]
     })
     .compileComponents();
