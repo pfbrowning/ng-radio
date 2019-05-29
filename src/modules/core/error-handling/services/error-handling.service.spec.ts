@@ -1,61 +1,81 @@
 import { TestBed } from '@angular/core/testing';
 import { ErrorHandlingService } from './error-handling.service';
+import { Subscription } from 'rxjs';
 import { AppError } from '../models/app-error';
-import { LoggingService } from '@modules/core/logging/logging.module';
-import { ErrorHandlingModule } from '@modules/core/error-handling/error-handling.module';
 import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
+import { LoggingService } from '@modules/core/logging/logging.module';
 
 describe('ErrorHandlingService', () => {
   let errorHandlingService: ErrorHandlingService;
-  let loggingServiceSpy: jasmine.SpyObj<LoggingService>;
-  let appErrorSubSpy: any;
+  let appErrorSpy: any;
+  let appErrorSub: Subscription;
 
   beforeEach(() => {
-    loggingServiceSpy = LoggingSpyFactories.CreateLoggingServiceSpy();
-
     TestBed.configureTestingModule({
-      imports: [
-        ErrorHandlingModule
-      ],
       providers: [
-        { provide: LoggingService, useValue: loggingServiceSpy }
+        ErrorHandlingService,
+        { provide: LoggingService, useValue: LoggingSpyFactories.CreateLoggingServiceSpy() }
       ]
     });
 
     errorHandlingService = TestBed.get(ErrorHandlingService);
-    appErrorSubSpy = jasmine.createSpyObj('appError', ['emit', 'error', 'complete']);
+
+    appErrorSpy = jasmine.createSpyObj('appError', ['emit', 'error', 'complete']);
   });
 
   it('should be created', () => {
     expect(errorHandlingService).toBeTruthy();
   });
 
-  it('should properly handle handleError', () => {
-    const dummyError = new Error('Test Error');
-    // Spy on the subscription itself so that we know exactly what it emits
-    const appErrorSub = errorHandlingService.appError.subscribe(
-      next => appErrorSubSpy.emit(next),
-      error => appErrorSubSpy.error(error),
-      () => appErrorSubSpy.complete()
+  it('should properly emit a new error on each call to handleError', () => {
+    // Subscribe to appError and pass next / error / complete to spies
+    appErrorSub = errorHandlingService.appError.subscribe(
+      appError => appErrorSpy.emit(appError),
+      error => appErrorSpy.error(error),
+      () => appErrorSpy.complete()
     );
 
-    /* At first the appError ReplaySubject should not have emitted
-    anything and logError should not have been called. */
-    expect(appErrorSubSpy.emit).not.toHaveBeenCalled();
-    expect(loggingServiceSpy.logError).not.toHaveBeenCalled();
+    // After initial subscription check that nothing has been emitted yet
+    expect(appErrorSpy.emit).not.toHaveBeenCalled();
 
-    // Pass an error to handleError
-    errorHandlingService.handleError(dummyError, 'Error Comment');
+    // handle an error and check that it was emitted properly
+    errorHandlingService.handleError('test error message', 'test error comment');
+    expect(appErrorSpy.emit).toHaveBeenCalledTimes(1);
+    expect(appErrorSpy.emit.calls.mostRecent().args).toEqual([new AppError('test error message', 'test error comment')]);
 
-    /* Expect that a single corresponding AppError object was
-    emitted from the appError ReplaySubject. */
-    expect(appErrorSubSpy.emit).toHaveBeenCalledTimes(1);
-    expect(appErrorSubSpy.emit.calls.mostRecent().args).toEqual([new AppError(dummyError, 'Error Comment')]);
+    // handle a second error and check that it was emitted properly
+    errorHandlingService.handleError('error 2', 'comment 2');
+    expect(appErrorSpy.emit).toHaveBeenCalledTimes(2);
+    expect(appErrorSpy.emit.calls.mostRecent().args).toEqual([new AppError('error 2', 'comment 2')]);
 
-    // The appError ReplaySubject should not error out or complete at any point in the process
-    expect(appErrorSubSpy.error).not.toHaveBeenCalled();
-    expect(appErrorSubSpy.complete).not.toHaveBeenCalled();
+    // Unsubscribe and use our spies to check that the emissions of the subscription match our expectations.
+    appErrorSub.unsubscribe();
+    expect(appErrorSub.closed).toBe(true);
+    expect(appErrorSpy.emit).toHaveBeenCalledTimes(2);
+    expect(appErrorSpy.complete).not.toHaveBeenCalled();
+    expect(appErrorSpy.error).not.toHaveBeenCalled();
+  });
 
-    expect(loggingServiceSpy.logError).toHaveBeenCalledTimes(1);
+  it('should emit the previous error to a late subscriber', () => {
+    // handle an error before anybody has subscribed to the appError
+    errorHandlingService.handleError('test error', 'test comment');
+
+    // Subscribe to appError
+    appErrorSub = errorHandlingService.appError.subscribe(
+      appError => appErrorSpy.emit(appError),
+      error => appErrorSpy.error(error),
+      () => appErrorSpy.complete()
+    );
+
+    // Expect that the error was emitted immediately upon subscription
+    expect(appErrorSpy.emit).toHaveBeenCalledTimes(1);
+    expect(appErrorSpy.emit.calls.mostRecent().args).toEqual([new AppError('test error', 'test comment')]);
+
+    // Unsubscribe and check that nothing unsuspected happened.
+    appErrorSub.unsubscribe();
+    expect(appErrorSub.closed).toBe(true);
+    expect(appErrorSpy.emit).toHaveBeenCalledTimes(1);
+    expect(appErrorSpy.complete).not.toHaveBeenCalled();
+    expect(appErrorSpy.error).not.toHaveBeenCalled();
   });
 });

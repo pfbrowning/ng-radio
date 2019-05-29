@@ -9,10 +9,10 @@ import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { ConfigService } from '@modules/core/config/config.module';
 import { ConfigServiceStub } from '@modules/core/config/testing/config.service.stub';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
-import { ErrorHandlingSpyFactories } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
+import { createErrorHandlingServiceSpy } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
 import { MessageService } from 'primeng/api';
 import { Router, Route } from '@angular/router';
-import { RouteResolverStub } from '@testing-stubs';
+import { RouteResolverStub } from '@test-helpers';
 import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
 
 describe('AppComponent', () => {
@@ -25,7 +25,7 @@ describe('AppComponent', () => {
   let router: Router;
 
   beforeEach(async(() => {
-    errorHandlingServiceSpy = ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy();
+    errorHandlingServiceSpy = createErrorHandlingServiceSpy();
     loadingIndicatorServiceSpy = CreateLoadingIndicatorServiceSpy();
     configServiceStub = new ConfigServiceStub();
     routeResolver = new RouteResolverStub();

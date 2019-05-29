@@ -1,14 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ErrorWindowComponent } from './error-window.component';
-import { ModalManagerModule } from '@browninglogic/ng-modal';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { ModalManagerModule, ModalWindowComponent } from '@browninglogic/ng-modal';
 import { ErrorHandlingService } from '../../services/error-handling.service';
-import { ErrorHandlingSpyFactories } from '../../testing/error-handling-spy-factories.spec';
+import { MatIconModule, MatButtonModule } from '@angular/material';
+import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
+import { LoggingService } from '@modules/core/logging/logging.module';
 
 describe('ErrorWindowComponent', () => {
   let component: ErrorWindowComponent;
   let fixture: ComponentFixture<ErrorWindowComponent>;
+  let errorHandlingService: ErrorHandlingService;
+  let errorModal: ModalWindowComponent;
+  let showModalSpy: jasmine.Spy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,7 +23,8 @@ describe('ErrorWindowComponent', () => {
         MatButtonModule
       ],
       providers: [
-        { provide: ErrorHandlingService, useValue: ErrorHandlingSpyFactories.CreateErrorHandlingServiceSpy() },
+        ErrorHandlingService,
+        { provide: LoggingService, useValue: LoggingSpyFactories.CreateLoggingServiceSpy() }
       ]
     })
     .compileComponents();
@@ -27,11 +32,49 @@ describe('ErrorWindowComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorWindowComponent);
+    errorHandlingService = fixture.debugElement.injector.get(ErrorHandlingService);
     component = fixture.componentInstance;
+    errorModal = component.errorModal;
+    showModalSpy = spyOn(errorModal, 'show').and.callThrough();
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should not show anything on init', () => {
     expect(component).toBeTruthy();
+    expect(component.appError).toBeUndefined();
+    expect(showModalSpy).not.toHaveBeenCalled();
   });
+
+  it('should show modal on error and bind messages to template', () => {
+    /* Expect that upon initialization the modal is not visible and that
+    no error message has been bound to the template. */
+    expect(errorModal.visible).toBe(false);
+    expect(getElementBySelector<ErrorWindowComponent>(fixture, '.errorMessage')).toBeNull();
+
+    simulateCheckError('Test Error', 'Test Comment');
+  });
+
+  it('should continue to update the template for subsequent errors', () => {
+    const errorSequence = [
+      {'message': 'first error', 'comment': 'uh-oh'},
+      {'message': 'second error', 'comment': 'oh no'},
+      {'message': 'third error', 'comment': 'lots of errors!'}
+    ];
+
+    errorSequence.forEach(errorParam => simulateCheckError(errorParam.message, errorParam.comment));
+  });
+
+  function simulateCheckError(errorMessage: string, errorComment: string) {
+    // Simulate the occurrence of an error
+    errorHandlingService.handleError(new Error(errorMessage), errorComment);
+    fixture.detectChanges();
+
+    /* Expect that the modal is visible and the message and comment have been assigned
+    to the appError model and bound to the template. */
+    expect(errorModal.visible).toBe(true);
+    expect(component.appError.error['message']).toBe(errorMessage);
+    expect(component.appError.comment).toBe(errorComment);
+    expect(getElementTextBySelector<ErrorWindowComponent>(fixture, '.errorMessage')).toBe(errorMessage);
+    expect(getElementTextBySelector<ErrorWindowComponent>(fixture, '.errorComment')).toBe(errorComment);
+  }
 });

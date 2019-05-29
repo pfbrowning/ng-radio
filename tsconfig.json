@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@modules/*": ["src/modules/*"],
-      "@testing-stubs": ["src/testing-stubs"],
+      "@test-helpers": ["src/test-helpers"],
       "@utilities": ["src/utilities"]
     }
   }

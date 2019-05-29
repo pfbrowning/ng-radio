@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { AppError } from '../../models/app-error';
 import { ErrorHandlingService } from '../../services/error-handling.service';
 
+/** Component which listens for Errors and shows an error modal when
+ * an error is reported. */
 @Component({
   selector: 'blr-error-window',
   templateUrl: './error-window.component.html',
