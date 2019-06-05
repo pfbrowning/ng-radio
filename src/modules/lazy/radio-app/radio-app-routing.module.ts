@@ -5,11 +5,11 @@ import { RadioAppComponent } from './components/radio-app/radio-app.component';
 const routes: Routes = [
   { path: '', component: RadioAppComponent,
     children: [
-      { path: 'suggested-stations', loadChildren: '../suggested-stations/suggested-stations.module#SuggestedStationsModule' },
-      { path: 'now-playing', loadChildren: '../now-playing/now-playing.module#NowPlayingModule' },
-      { path: 'custom-station', loadChildren: '../custom-station/custom-station.module#CustomStationModule' },
-      { path: 'radio-browser', loadChildren: '../radio-browser/radio-browser.module#RadioBrowserModule' },
-      { path: 'favorites', loadChildren: '../favorites/favorites.module#FavoritesModule' },
+      { path: 'suggested-stations', loadChildren: () => import('../suggested-stations/suggested-stations.module').then(m => m.SuggestedStationsModule) },
+      { path: 'now-playing', loadChildren: () => import('../now-playing/now-playing.module').then(m => m.NowPlayingModule) },
+      { path: 'custom-station', loadChildren: () => import('../custom-station/custom-station.module').then(m => m.CustomStationModule) },
+      { path: 'radio-browser', loadChildren: () => import('../radio-browser/radio-browser.module').then(m => m.RadioBrowserModule) },
+      { path: 'favorites', loadChildren: () => import('../favorites/favorites.module').then(m => m.FavoritesModule) },
       { path: '', redirectTo: 'suggested-stations', pathMatch: 'full'}
     ]
   }

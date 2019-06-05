@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   @Input() screenSizeCutoff = 800;
-  @ViewChild('sideNav') sideNav: MatSidenav;
+  @ViewChild('sideNav', { static: true }) sideNav: MatSidenav;
   private routerEventsSub: Subscription;
 
   constructor(private router: Router) {}

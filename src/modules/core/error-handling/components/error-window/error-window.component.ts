@@ -14,7 +14,7 @@ import { ErrorHandlingService } from '../../services/error-handling.service';
 export class ErrorWindowComponent implements OnInit, OnDestroy {
   constructor(private errorHandlingService: ErrorHandlingService) {}
 
-  @ViewChild('errorModal') errorModal: ModalWindowComponent;
+  @ViewChild('errorModal', { static: true }) errorModal: ModalWindowComponent;
   private subErrorCaught: Subscription;
   public appError: AppError;
 

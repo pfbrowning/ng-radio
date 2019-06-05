@@ -8,5 +8,5 @@ import { MatMenu } from '@angular/material/menu';
 })
 export class SleepTimerMenuComponent {
   @Output() timerSelected = new EventEmitter<number>();
-  @ViewChild('menu') menu: MatMenu;
+  @ViewChild('menu', { static: true }) menu: MatMenu;
 }

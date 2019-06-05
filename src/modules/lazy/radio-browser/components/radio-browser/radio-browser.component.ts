@@ -13,7 +13,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(private playerService: PlayerService,
     private stationLookupService: StationLookupService) {}
 
-  @ViewChild('nameSearchInput') nameSearchInput: MatInput;
+  @ViewChild('nameSearchInput', { static: true }) nameSearchInput: MatInput;
 
   public columns = ['name', 'tags', 'icon'];
   public stations: Array<Station>;
