@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -19,7 +20,7 @@ describe('ConfigService', () => {
     });
 
     configService = TestBed.get(ConfigService);
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.get(HttpTestingController as Type<HttpTestingController>);
     loadedSpy = jasmine.createSpy('loaded');
     configService.loaded$.subscribe(() => loadedSpy());
   });

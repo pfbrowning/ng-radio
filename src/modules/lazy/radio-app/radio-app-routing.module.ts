@@ -5,7 +5,10 @@ import { RadioAppComponent } from './components/radio-app/radio-app.component';
 const routes: Routes = [
   { path: '', component: RadioAppComponent,
     children: [
-      { path: 'suggested-stations', loadChildren: () => import('../suggested-stations/suggested-stations.module').then(m => m.SuggestedStationsModule) },
+      {
+        path: 'suggested-stations',
+        loadChildren: () => import('../suggested-stations/suggested-stations.module').then(m => m.SuggestedStationsModule)
+      },
       { path: 'now-playing', loadChildren: () => import('../now-playing/now-playing.module').then(m => m.NowPlayingModule) },
       { path: 'custom-station', loadChildren: () => import('../custom-station/custom-station.module').then(m => m.CustomStationModule) },
       { path: 'radio-browser', loadChildren: () => import('../radio-browser/radio-browser.module').then(m => m.RadioBrowserModule) },

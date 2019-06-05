@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { StationLookupService } from './station-lookup.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -26,7 +27,7 @@ describe('StationLookupService', () => {
 
     configService = TestBed.get(ConfigService);
     stationLookupService = TestBed.get(StationLookupService);
-    httpTestingController = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.get(HttpTestingController as Type<HttpTestingController>);
   });
 
   it('should be created', () => {
