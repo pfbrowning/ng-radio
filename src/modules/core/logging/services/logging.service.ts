@@ -4,9 +4,8 @@ import { AppInsightsService, SeverityLevel } from '@markpieszak/ng-application-i
 import isBlank from 'is-blank';
 
 /**
- * This is a logging service which is intended to be destination-agnostic.  Currently
- * we're logging to Azure AppInsights and to the console, but this could be changed without
- * affecting the application logic which uses the service.
+ * This service handles the responsibility of logging errors, events, and
+ * information to Azure Application Insights.
  */
 @Injectable()
 export class LoggingService {
@@ -67,5 +66,16 @@ export class LoggingService {
     const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
     this.appInsightsService.trackTrace(message, convertedProperties);
     console.log(message, convertedProperties);
+  }
+
+  /**
+   * Logs an event to Azure Application Insights
+   * @param eventName Name of the event to log
+   * @param properties Extra informational properties to log in AppInsights
+   */
+  public logEvent(eventName: string, properties: object = null) {
+    const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
+    this.appInsightsService.trackEvent(eventName, convertedProperties);
+    console.log('Event', eventName, convertedProperties);
   }
 }

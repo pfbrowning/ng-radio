@@ -157,8 +157,10 @@ export class PlayerService {
             }
           },
           error => {
-            // Log the error
-            this.loggingService.logError(error, {'event': 'Failed to fetch metadata', 'url': this.source });
+            /* In the case of a metadata fetch error, log it as an event.  This is expected
+            to happen commonly and it's more likely to be the stream's fault than ours, so we
+            don't consider it to be an application bug.  It is worth noting for diagnostics, however. */
+            this.loggingService.logEvent('Failed to fetch metadata', { 'url': this.source, 'message': error.error });
             // Emit a new NowPlaying object denoting the error
             this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.Error));
             // Set a generic app title
