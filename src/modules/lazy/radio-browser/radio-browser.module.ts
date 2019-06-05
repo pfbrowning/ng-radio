@@ -3,8 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RadioBrowserRoutingModule } from './radio-browser-routing.module';
 import { RadioBrowserComponent } from './components/radio-browser/radio-browser.component';
-import { MatTableModule, MatFormFieldModule, MatInputModule, MatTooltipModule,
-  MatProgressSpinnerModule, MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [

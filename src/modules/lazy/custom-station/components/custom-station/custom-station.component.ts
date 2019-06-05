@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PlayerService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { clone } from 'lodash';
-import { MatInput } from '@angular/material';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'blr-custom-station',

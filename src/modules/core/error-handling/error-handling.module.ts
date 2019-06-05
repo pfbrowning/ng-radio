@@ -4,7 +4,8 @@ import { ErrorHandlingService } from './services/error-handling.service';
 import { UnhandledErrorCatcher } from './services/unhandled-error-catcher';
 import { ErrorWindowComponent } from './components/error-window/error-window.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
-import { MatIconModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [

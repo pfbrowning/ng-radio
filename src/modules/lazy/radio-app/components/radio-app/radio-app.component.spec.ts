@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RadioAppComponent } from './radio-app.component';
-import { MatIconModule, MatToolbarModule, MatButtonModule, MatMenuModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SidenavComponent, PlayerBarComponent, PlayerBarStationInfoComponent } from '../../radio-app.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ResponsiveSidenavModule } from '@modules/core/responsive-sidenav/responsive-sidenav.module';

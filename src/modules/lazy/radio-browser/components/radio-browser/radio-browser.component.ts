@@ -3,7 +3,7 @@ import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
 import { PlayerService, StationLookupService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import isBlank from 'is-blank';
-import { MatInput } from '@angular/material';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   templateUrl: './radio-browser.component.html',
