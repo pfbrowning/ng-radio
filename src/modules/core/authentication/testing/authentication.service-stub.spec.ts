@@ -17,7 +17,7 @@ export class AuthenticationServiceStub {
     public accessTokenExpiresIn: number = null;
     public idTokenClaims: Object = null;
     public accessTokenClaims: Object = null;
-    public initImplicitFlowSpy = spyOn(this, 'initImplicitFlow');
+    public initImplicitFlowSpy = spyOn(AuthenticationServiceStub.prototype, 'initImplicitFlow');
     public silentRefresh(): Promise<OAuthEvent> {
         return Promise.resolve(new OAuthInfoEvent('user_profile_loaded'));
     }

@@ -4,7 +4,7 @@ import { StreamInfo } from '@modules/core/core-radio-logic/core-radio-logic.modu
 
 export class StreamInfoServiceStub {
     private metaSubject = new Subject<StreamInfo>();
-    public getMetadataSpy = spyOn(this, 'getMetadata').and.callThrough();
+    public getMetadataSpy = spyOn(StreamInfoServiceStub.prototype, 'getMetadata').and.callThrough();
     public flushMetadata(meta: StreamInfo) {
         this.metaSubject.next(meta);
     }
