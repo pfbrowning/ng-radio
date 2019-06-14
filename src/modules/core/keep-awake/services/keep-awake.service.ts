@@ -18,8 +18,12 @@ export class KeepAwakeService {
   }
 
   private enabled = new BehaviorSubject<boolean>(false);
+  /** Reports to subscribers the state of whether noSleep.js is
+   * enabled or not at any given time. */
   public enabled$ = this.enabled.asObservable();
 
+  /** Enables NoSleep.js in order to keep the mobile screen
+   * from going to sleep. */
   public enable(): void {
     // Enable the nosleep object itself
     this.noSleep.enable();
@@ -29,6 +33,8 @@ export class KeepAwakeService {
       'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
   }
 
+  /** Disables NoSleep.js in order to allow the mobile screen
+   * to go to sleep regularly. */
   public disable(): void {
     // If the nosleep object is currently enabled
     if (this.enabled.value === true) {
@@ -41,6 +47,7 @@ export class KeepAwakeService {
     }
   }
 
+  /** Toggles the state of whether NoSleep.js is enabled */
   public toggle(): void {
     if (this.enabled.value) {
       this.disable();
