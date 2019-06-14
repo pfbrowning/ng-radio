@@ -52,7 +52,7 @@ describe('ResponsiveSidenavComponent', () => {
     // Act: Init the component
     fixture.detectChanges();
 
-    //Assert that the sidenav is as expected for a small screen
+    // Assert that the sidenav is as expected for a small screen
     expect(component.smallScreen).toBe(true);
     expect(component.sideNav.opened).toBe(false);
     expect(component.sideNav.mode).toBe('over');
@@ -118,7 +118,7 @@ describe('ResponsiveSidenavComponent', () => {
     fixture.detectChanges();
     expect(component.sideNav.opened).toBe(false);
 
-    /* Act & Assert: Toggle the screen a few times and check 
+    /* Act & Assert: Toggle the screen a few times and check
     that the sideNav toggled appropriately. */
     component.toggle();
     expect(component.sideNav.opened).toBe(true);

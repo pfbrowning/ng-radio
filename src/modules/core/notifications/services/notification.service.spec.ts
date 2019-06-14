@@ -7,7 +7,7 @@ import { NotificationsSpyFactories } from '../testing/notifications-spy-factorie
 describe('NotificationService', () => {
   let notificationService: NotificationService;
   let messageServiceSpy: any;
-  
+
   beforeEach(() => {
     messageServiceSpy = NotificationsSpyFactories.CreateMessageServiceSpy();
 
