@@ -15,7 +15,6 @@
           <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (playerService.nowPlaying$ | async).streamInfo?.title }}</ng-container>
         </div>
         <div class="stationTitle">{{ (playerService.nowPlaying$ | async).station.title }}</div>
-        <div>{{ (playerService.nowPlaying$ | async).station.title }}</div>
         <div *ngIf="(playerService.nowPlaying$ | async).streamInfo?.bitrate">Bitrate: {{ (playerService.nowPlaying$ | async).streamInfo?.bitrate }}</div>
         <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null">
           Sleeping in {{sleepTimerService.minutesUntilSleep$ | async}} minutes

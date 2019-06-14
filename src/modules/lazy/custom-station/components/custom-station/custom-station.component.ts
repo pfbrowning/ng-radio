@@ -19,6 +19,8 @@ export class CustomStationComponent implements OnInit {
   public urlPattern = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
 
   ngOnInit() {
+    /* Focus the title input on init so that the user can start typing
+    right away without having to explicitly click or select the input. */
     this.titleInput.focus();
   }
 

@@ -54,4 +54,7 @@ describe('NowPlayingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO Write tests for async pipe bindings
+  // TODO write a test for sleep timer selected
 });
