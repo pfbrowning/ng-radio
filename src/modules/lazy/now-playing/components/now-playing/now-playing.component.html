@@ -1,6 +1,6 @@
 <h1 class="mat-headline">Now Playing</h1>
 
-<div *ngIf="playerService.stationSelected; then selected else notSelected"></div>
+<div *ngIf="(playerService.nowPlaying$ | async).station; then selected else notSelected"></div>
 
 <ng-template #selected>
   <div class="flex-grid">

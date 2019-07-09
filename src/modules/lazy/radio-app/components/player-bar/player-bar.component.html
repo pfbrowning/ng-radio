@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
-  <ng-container *ngIf="playerService.stationSelected">
+  <ng-container *ngIf="(playerService.nowPlaying$ | async).station">
     <img class="station-icon-thumb" [src]="(playerService.nowPlaying$ | async).station.iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
     <blr-player-bar-station-info [nowPlaying]="playerService.nowPlaying$ | async" class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
     <span class="fill-remaining"></span>

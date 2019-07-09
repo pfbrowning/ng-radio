@@ -100,11 +100,6 @@ export class PlayerService {
     }
   }
 
-  /** Reports whether there is a currently selected station */
-  public get stationSelected(): boolean {
-    return !isBlank(this.source);
-  }
-
   /** Plays the specified Station */
   public playStation(station: Station) {
     // Pause the current audio in case it's already playing something
