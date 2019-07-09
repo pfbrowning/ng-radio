@@ -1,9 +1,10 @@
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { NowPlaying } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { StreamInfoStatus } from '../models/stream-info-status';
 
 export function createPlayerServiceSpy(): any {
   const spy = jasmine.createSpyObj('playerService', ['playStation']);
-  spy['nowPlaying$'] = new Subject<NowPlaying>();
+  spy['nowPlaying$'] = new BehaviorSubject<NowPlaying>(new NowPlaying(null, null, StreamInfoStatus.NotInitialized));
   spy['paused$'] = new BehaviorSubject<boolean>(true);
   return spy;
 }

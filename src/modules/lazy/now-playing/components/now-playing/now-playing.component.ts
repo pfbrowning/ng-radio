@@ -2,8 +2,8 @@ import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { SleepTimerService, StreamInfoStatus, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
-import { Subscription, merge } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Subscription, merge, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { setAltSrc } from '@utilities';
 
 @Component({
@@ -26,9 +26,10 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
       this.playerService.nowPlaying$,
       this.playerService.paused$
     )
-    /* Delay for 0ms to wait for the async
-    pipe bindings to catch up. */
-    .pipe(delay(0))
+    /* Wait 0ms for the async pipe bindings to catch up.  
+    Use timer in place of delay because of
+    https://github.com/angular/angular/issues/10127 */
+    .pipe(switchMap(() => timer(0)))
     .subscribe(() => this.changeDetectorRef.detectChanges());
   }
 
