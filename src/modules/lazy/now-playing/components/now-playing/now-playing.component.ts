@@ -26,7 +26,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
       this.playerService.nowPlaying$,
       this.playerService.paused$
     )
-    /* Wait 0ms for the async pipe bindings to catch up.  
+    /* Wait 0ms for the async pipe bindings to catch up.
     Use timer in place of delay because of
     https://github.com/angular/angular/issues/10127 */
     .pipe(switchMap(() => timer(0)))

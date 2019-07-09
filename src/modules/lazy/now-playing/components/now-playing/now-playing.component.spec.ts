@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core
 import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PlayerService, CoreRadioLogicModule, NowPlaying, Station, StreamInfo, StreamInfoStatus } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { PlayerService, CoreRadioLogicModule, NowPlaying,
+  Station, StreamInfo, StreamInfoStatus } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { createPlayerServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
@@ -63,23 +64,23 @@ describe('NowPlayingComponent', () => {
     // Arrange: Define a few dummy NowPlaying entries
     const testEntries = [
       new NowPlaying(
-        new Station('station title', 'http://url.com', 'station genre', 'http://icon.com/'), 
-        new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'), 
+        new Station('station title', 'http://url.com', 'station genre', 'http://icon.com/'),
+        new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'), 
-        new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'), 
+        new Station('station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
+        new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'), 
-        new StreamInfo('another stream title', 'another stream source', '64', 'another station title from stream', 'another stream description', 'another stream genre'), 
+        new Station('another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
+        new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'), 
-        new StreamInfo('Radio Caprice Stream', 'radio caprice source', '48', 'stream station title', 'Awesome, obscure speed metal station', 'Speed Metal Stream'), 
+        new Station('Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
+        new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
         StreamInfoStatus.Valid
       )
     ];
@@ -102,7 +103,7 @@ describe('NowPlayingComponent', () => {
 
   it('should only display bitrate when a non-empty value is present for bitrate', () => {
     // TODO write this test
-  })
+  });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
     // TODO write this test
@@ -114,7 +115,7 @@ describe('NowPlayingComponent', () => {
 
   it('should update the pause button on global play & pause', () => {
     // TODO write this test
-  })
+  });
 
   it('should set and cancel the sleep timer accordingly when a value is selected', () => {
     // TODO write this test
