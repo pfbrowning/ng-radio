@@ -10,6 +10,7 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 My priorities for continuing development are as follows, in order:
 * Perform a full code review of the app, refactoring, commenting, and doing general cleanup for overall code quality and readability.
 * Catch up on writing missing relevant unit tests in parallel with the above code review.
+* Rename all camelCase CSS classes to kebab-case.
 * Write a proper readme.
 * Initial favorites functionality.
     * Write a RESTful favorites API in the latest .NET Core following best practices.
