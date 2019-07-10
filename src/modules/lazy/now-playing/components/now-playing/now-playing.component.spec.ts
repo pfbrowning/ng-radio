@@ -97,7 +97,7 @@ describe('NowPlayingComponent', () => {
       tick(0);
       // Assert: Ensure that the important NowPlaying properties were properly bound to the template
       expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(nowPlaying.station.iconUrl);
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.stationTitle')).toBe(nowPlaying.station.title);
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(nowPlaying.station.title);
       expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(nowPlaying.streamInfo.title);
       expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${nowPlaying.streamInfo.bitrate}`);
     });

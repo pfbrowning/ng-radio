@@ -50,7 +50,7 @@ describe('ErrorWindowComponent', () => {
     /* Expect that upon initialization the modal is not visible and that
     no error message has been bound to the template. */
     expect(errorModal.visible).toBe(false);
-    expect(getElementBySelector<ErrorWindowComponent>(fixture, '.errorMessage')).toBeNull();
+    expect(getElementBySelector<ErrorWindowComponent>(fixture, '.error-message')).toBeNull();
 
     simulateCheckError('Test Error', 'Test Comment');
   });
@@ -75,7 +75,7 @@ describe('ErrorWindowComponent', () => {
     expect(errorModal.visible).toBe(true);
     expect(component.appError.error['message']).toBe(errorMessage);
     expect(component.appError.comment).toBe(errorComment);
-    expect(getElementTextBySelector<ErrorWindowComponent>(fixture, '.errorMessage')).toBe(errorMessage);
-    expect(getElementTextBySelector<ErrorWindowComponent>(fixture, '.errorComment')).toBe(errorComment);
+    expect(getElementTextBySelector<ErrorWindowComponent>(fixture, '.error-message')).toBe(errorMessage);
+    expect(getElementTextBySelector<ErrorWindowComponent>(fixture, '.error-comment')).toBe(errorComment);
   }
 });
