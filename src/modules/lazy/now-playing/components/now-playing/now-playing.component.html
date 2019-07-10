@@ -16,24 +16,24 @@
         </div>
         <div class="stationTitle">{{ (playerService.nowPlaying$ | async).station.title }}</div>
         <div *ngIf="(playerService.nowPlaying$ | async).streamInfo?.bitrate" class="bitrate">Bitrate: {{ (playerService.nowPlaying$ | async).streamInfo.bitrate }}</div>
-        <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null">
+        <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="minutes-until-sleep">
           Sleeping in {{sleepTimerService.minutesUntilSleep$ | async}} minutes
         </div>
-        <div *ngIf="(keepAwakeService.enabled$ | async) == true">
+        <div class="keep-awake" *ngIf="(keepAwakeService.enabled$ | async) == true">
           Keeping Awake
         </div>
       </div>
     </div>
     <div class="flex-column-third">
       <ul class="bulletless-list action-items">
-        <li>
+        <li class="play-pause">
           <button mat-raised-button *ngIf="playerService.paused$ | async" (click)="playerService.play()" color="primary">Play</button>
           <button mat-raised-button *ngIf="!(playerService.paused$ | async)" (click)="playerService.pause()" color="primary">Pause</button>
         </li>
         <li>
           <button mat-raised-button color="primary" [matMenuTriggerFor]="sleepTimerMenu.menu">Sleep Timer</button>
         </li>
-        <li>
+        <li class="keep-awake">
           <button *ngIf="(keepAwakeService.enabled$ | async) == false" (click)="keepAwakeService.enable()" mat-raised-button color="primary" matTooltip="This will attempt to keep the screen from locking on mobile devices.">Enable Keep Awake</button>
           <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
         </li>

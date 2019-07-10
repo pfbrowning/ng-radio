@@ -18,3 +18,12 @@ export function createStationLookupServiceSpy(): any {
   ]);
   return spy;
 }
+
+export function createSleepTimerServiceSpy(): any {
+  const spy = jasmine.createSpyObj('sleepTimerServiceSpy', [
+    'setTimer',
+    'cancelTimer'
+  ]);
+  spy['minutesUntilSleep$'] = new BehaviorSubject<number>(null);
+  return spy;
+}

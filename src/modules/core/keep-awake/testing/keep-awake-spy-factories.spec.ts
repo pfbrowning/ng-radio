@@ -1,3 +1,7 @@
+import { BehaviorSubject } from 'rxjs';
+
 export function createKeepAwakeServiceSpy(): any {
-  return jasmine.createSpyObj('keepAwakeServiceSpy', ['enable', 'disable']);
+  const spy = jasmine.createSpyObj('keepAwakeServiceSpy', ['enable', 'disable']);
+  spy['enabled$'] = new BehaviorSubject<boolean>(false);
+  return spy;
 }
