@@ -16,13 +16,13 @@ export class SleepTimerService {
   private minuteInterval: Subscription;
   /** Moment representing the time at which we're going to sleep. */
   private sleepTime: moment.Moment;
-  /** BehaviorSubject which maintains and broadcasts the state of how
-   * many minutes remain until we go to sleep. */
-  public minutesUntilSleep$ = new BehaviorSubject<number>(null);
+  private minutesUntilSleep = new BehaviorSubject<number>(null);
+  /* How many minutes remain until we go to sleep. */
+  public minutesUntilSleep$ = this.minutesUntilSleep.asObservable();
   /** The actual sleep event */
   @Output() sleep = new EventEmitter<void>();
 
-  private get minutesUntilSleep(): number {
+  private calculateMinutesUntilSleep(): number {
     if (this.sleepTime != null) {
       return this.sleepTime.diff(moment(), 'minutes');
     }
@@ -42,8 +42,8 @@ export class SleepTimerService {
     // Call goToSleep in the specified number of minutes
     this.sleepTimerSubscription = timer(minutes * 60000).subscribe(() => this.goToSleep());
     /* Wait 1 ms so that we're not still at the very start of the interval (we want the first value
-    emitted to be minutes - 1 rather than minutes), then update minutesUntilSleep$ once each minute. */
-    this.minuteInterval = timer(1, 60000).subscribe(() => this.minutesUntilSleep$.next(this.minutesUntilSleep));
+    emitted to be minutes - 1 rather than minutes), then update minutesUntilSleep once each minute. */
+    this.minuteInterval = timer(1, 60000).subscribe(() => this.minutesUntilSleep.next(this.calculateMinutesUntilSleep()));
     // Notify the user that the sleep timer has been set.
     this.notificationService.notify(Severities.Success, 'Sleep Timer Set', `Sleep timer set for ${this.sleepTime.format('h:mm:ss a')}.`);
   }
@@ -61,7 +61,7 @@ export class SleepTimerService {
     if (this.sleepTimerSubscription) { this.sleepTimerSubscription.unsubscribe(); }
     if (this.minuteInterval) { this.minuteInterval.unsubscribe(); }
     this.sleepTime = null;
-    this.minutesUntilSleep$.next(null);
+    this.minutesUntilSleep.next(null);
   }
 
   private goToSleep(): void {
