@@ -103,7 +103,7 @@ describe('NowPlayingComponent', () => {
     });
   }));
 
-  it('should properly reflect the various streamInfoStatus states properly in the template', fakeAsync(() => {
+  it('should reflect the various streamInfoStatus states properly in the template', fakeAsync(() => {
     // Arrange: Define a dummy NowPlaying entry for each StreamInfoStatus
     const testEntries = [
       new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.NotInitialized),
