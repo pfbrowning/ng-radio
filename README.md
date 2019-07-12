@@ -8,8 +8,6 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Perform a full code review of the app, refactoring, commenting, and doing general cleanup for overall code quality and readability.
-* Catch up on writing missing relevant unit tests in parallel with the above code review.
 * Write a proper readme.
 * Initial favorites functionality.
     * Write a RESTful favorites API in the latest .NET Core following best practices.
@@ -20,6 +18,7 @@ My priorities for continuing development are as follows, in order:
     * Write some basic unit tests.
   
 ## "Down the Road" Items
+* Implement 'Tags' functionality in the favorites API
 * Implement Immutable.js for the NowPlaying object and anything else throughout the app that would benefit from being immutable.
 * Tune change detection.
 * Implement NGRX for state management throughout the app.

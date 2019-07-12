@@ -59,8 +59,4 @@ describe('PlayerBarStationInfoComponent', () => {
       }
     });
   });
-
-  it('should apply and remove the marquee classes as necessary without ExpressionChangedAfterItHasBeenCheckedError', () => {
-
-  });
 });
