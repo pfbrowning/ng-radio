@@ -4,7 +4,8 @@ import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerService, CoreRadioLogicModule, NowPlaying,
   Station, StreamInfo, StreamInfoStatus, SleepTimerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { createPlayerServiceSpy, createSleepTimerServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { createPlayerServiceSpy, createSleepTimerServiceSpy
+  } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
@@ -118,7 +119,7 @@ describe('NowPlayingComponent', () => {
       tick(0);
       // Assert: Ensure that the text of the title element conveys the current stream status
       const titleText = getElementTextBySelector<NowPlayingComponent>(fixture, '.title');
-      switch(nowPlaying.streamInfoStatus) {
+      switch (nowPlaying.streamInfoStatus) {
         case StreamInfoStatus.NotInitialized:
           expect(titleText).toBe('');
           break;
@@ -149,10 +150,9 @@ describe('NowPlayingComponent', () => {
       tick(0);
 
       // Assert: Ensure that the bitrate is displayed if not blank and not shown at all if it is blank
-      if(!isBlank(nowPlaying.streamInfo.bitrate)) {
+      if (!isBlank(nowPlaying.streamInfo.bitrate)) {
         expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${nowPlaying.streamInfo.bitrate}`);
-      }
-      else {
+      } else {
         expect(getElementBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBeNull();
       }
     });
@@ -161,8 +161,8 @@ describe('NowPlayingComponent', () => {
   it('should update the template to reflect changes in minutes until sleep', () => {
     // Arrange: Emit an empty nowPlaying so that the 'selected' template is rendered
     playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
-    
-    for(let i = 300; i >= 0; i--) {
+
+    for (let i = 300; i >= 0; i--) {
       // Act: Emit a new minutesUntilSleep value and detect changes
       sleepTimerService.minutesUntilSleep$.next(i);
       fixture.detectChanges();
@@ -170,7 +170,7 @@ describe('NowPlayingComponent', () => {
       expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.minutes-until-sleep')).toBe(`Sleeping in ${i} minutes`);
     }
 
-    /* Clear the sleep timer and ensure that 'minutes until sleep' is 
+    /* Clear the sleep timer and ensure that 'minutes until sleep' is
     removed from the template accordingly. */
     sleepTimerService.minutesUntilSleep$.next(null);
     fixture.detectChanges();
@@ -190,15 +190,14 @@ describe('NowPlayingComponent', () => {
       fixture.detectChanges();
       const keepAwakeButtonText = getElementTextBySelector<NowPlayingComponent>(fixture, 'li.keep-awake button');
       // If we turned on keepAwake
-      if(enabled) {
-        /* The keepawake div should be rendered with the text 'Keeping Awake' 
+      if (enabled) {
+        /* The keepawake div should be rendered with the text 'Keeping Awake'
         and the disable button should be shown. */
         const keepAwakeDiv = getElementBySelector<NowPlayingComponent>(fixture, 'div.keep-awake');
         expect(keepAwakeDiv).not.toBeNull();
         expect(keepAwakeDiv.innerText).toBe('Keeping Awake');
         expect(keepAwakeButtonText).toBe('Disable Keep Awake');
-      }
-      else {
+      } else {
         // The keepAwake div should *not* be shown and the enable button *should* be shown
         expect(getElementBySelector<NowPlayingComponent>(fixture, 'div.keep-awake')).toBeNull();
         expect(keepAwakeButtonText).toBe('Enable Keep Awake');

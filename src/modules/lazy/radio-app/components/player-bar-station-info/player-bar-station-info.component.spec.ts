@@ -43,7 +43,7 @@ describe('PlayerBarStationInfoComponent', () => {
       fixture.detectChanges();
       // Assert: Ensure that the text of the title element conveys the current stream status
       const titleText = getElementTextBySelector<PlayerBarStationInfoComponent>(fixture, '.title');
-      switch(nowPlaying.streamInfoStatus) {
+      switch (nowPlaying.streamInfoStatus) {
         case StreamInfoStatus.NotInitialized:
           expect(titleText).toBe('');
           break;

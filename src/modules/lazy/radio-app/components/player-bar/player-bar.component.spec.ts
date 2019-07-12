@@ -9,8 +9,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
-import { PlayerService, CoreRadioLogicModule, NowPlaying, Station, StreamInfo, StreamInfoStatus, SleepTimerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { createPlayerServiceSpy, createSleepTimerServiceSpy } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { PlayerService, CoreRadioLogicModule, NowPlaying, Station, StreamInfo,
+  StreamInfoStatus, SleepTimerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { createPlayerServiceSpy, createSleepTimerServiceSpy
+  } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
@@ -111,8 +113,8 @@ describe('PlayerBarComponent', () => {
   it('should update the template to reflect changes in minutes until sleep', () => {
     // Arrange: Emit an empty nowPlaying so that the player controls are rendered
     playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
-    
-    for(let i = 300; i >= 0; i--) {
+
+    for (let i = 300; i >= 0; i--) {
       // Act: Emit a new minutesUntilSleep value and detect changes
       sleepTimerService.minutesUntilSleep$.next(i);
       fixture.detectChanges();
