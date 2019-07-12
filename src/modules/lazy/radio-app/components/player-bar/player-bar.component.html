@@ -1,14 +1,16 @@
 <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
   <ng-container *ngIf="(playerService.nowPlaying$ | async).station">
     <img class="station-icon-thumb" [src]="(playerService.nowPlaying$ | async).station.iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
-    <blr-player-bar-station-info [nowPlaying]="playerService.nowPlaying$ | async" class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
+    <blr-player-bar-station-info #stationInfo [nowPlaying]="playerService.nowPlaying$ | async" class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
     <span class="fill-remaining"></span>
     <div [class.off-white]="(sleepTimerService.minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
-      class="indicator-icon large-screen-only" [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'" >
-      <mat-icon>timer</mat-icon> {{sleepTimerService.minutesUntilSleep$ | async}}
+      [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
+      class="indicator-icon large-screen-only" >
+      <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{sleepTimerService.minutesUntilSleep$ | async}}</span>
     </div>
-    <div (click)="keepAwakeService.toggle()" [class.off-white]="!(keepAwakeService.enabled$ | async)" 
-      [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" class="indicator-icon large-screen-only">
+    <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
+      [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
+      class="indicator-icon large-screen-only keep-awake">
       <mat-icon>settings_cell</mat-icon>
     </div>
     <div class="indicator-icon large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >

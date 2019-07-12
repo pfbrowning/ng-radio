@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SleepTimerService, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { setAltSrc } from '@utilities';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
-import { Subscription, merge } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Subscription, merge, timer } from 'rxjs';
+import { delay, switchMap } from 'rxjs/operators';
+import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 
 @Component({
   selector: 'blr-player-bar',
@@ -21,6 +22,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     private router: Router) {}
 
   private changeDetectionSubscription: Subscription;
+  @ViewChild('stationInfo', { static: false }) stationInfo: PlayerBarStationInfoComponent;
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged
@@ -28,9 +30,10 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       this.playerService.nowPlaying$,
       this.playerService.paused$
     )
-    /* Delay for 0ms to wait for the async
-    pipe bindings to catch up. */
-    .pipe(delay(0))
+    /* Wait 0ms for the async pipe bindings to catch up.
+    Use timer in place of delay because of
+    https://github.com/angular/angular/issues/10127 */
+    .pipe(switchMap(() => timer(0)))
     .subscribe(() => this.changeDetectorRef.detectChanges());
   }
 
