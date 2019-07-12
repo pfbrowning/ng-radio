@@ -44,7 +44,7 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked, OnChange
   }
 
   /** Checks and updates the marquee properties for title and station
-   * based on whether the title or content station content is overflowing. */
+   * based on whether the title or station content is overflowing. */
   private checkApplyMarquees() {
     if (this.nowPlaying != null) {
       // Take note of the marquee values before checking for overflow so that we know later if they changed
