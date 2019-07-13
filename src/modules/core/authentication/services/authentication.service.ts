@@ -29,14 +29,6 @@ export class AuthenticationService {
         .then(() => {
           this.oauthService.setupAutomaticSilentRefresh();
           this.tokenProcessed.next();
-
-          // Log the loaded token info for diagnostics & troubleshooting
-          this.loggingService.logInformation('OIDC Tokens Processed', {
-            'ID Token Claims': this.idTokenClaims,
-            'ID Token Expires In': this.idTokenExpiresIn,
-            'Access Token': this.oauthService.getAccessToken(),
-            'Access Token Expires In': this.accessTokenExpiresIn
-          });
         })
         .catch(error => this.errorHandlingService.handleError(error, 'Failed to process login'));
 
