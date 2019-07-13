@@ -10,8 +10,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
  * the configured radio metadata API */
 @Injectable()
 export class StreamInfoService {
-  constructor(private httpClient: HttpClient, 
-    private configService: ConfigService, 
+  constructor(private httpClient: HttpClient,
+    private configService: ConfigService,
     private oauthService: OAuthService) {}
 
   /* Keep track of the stream types returned from the metadata API
@@ -36,22 +36,24 @@ export class StreamInfoService {
       params = params.append('method', this.streamTypes.get(encodedUrl));
     }
     // GET now-playing data from the API
-    return this.httpClient.get<any>(`${this.configService.appConfig.metadataApiUrl}/now-playing`, { headers: headers, params: params }).pipe(
-      // Time out after a configured amount of time
-      timeout(this.configService.appConfig.metadataFetchTimeout),
-      /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
-      calls for the same URL. */
-      tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),
-      // Map the returned response to a cleaner metadata model
-      map(response => {
-        switch (response.fetchsource) {
-          case 'STREAM':
-            return new StreamInfo(response.title, response.fetchsource, response.headers['icy-br'],
-              response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
-          default:
-            return new StreamInfo(response.title, response.fetchsource, response.bitrate);
-        }
-      })
+    return this.httpClient.get<any>(
+      `${this.configService.appConfig.metadataApiUrl}/now-playing`,
+      { headers: headers, params: params }).pipe(
+        // Time out after a configured amount of time
+        timeout(this.configService.appConfig.metadataFetchTimeout),
+        /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
+        calls for the same URL. */
+        tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),
+        // Map the returned response to a cleaner metadata model
+        map(response => {
+          switch (response.fetchsource) {
+            case 'STREAM':
+              return new StreamInfo(response.title, response.fetchsource, response.headers['icy-br'],
+                response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
+            default:
+              return new StreamInfo(response.title, response.fetchsource, response.bitrate);
+          }
+        })
     );
   }
 }
