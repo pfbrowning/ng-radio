@@ -6,6 +6,8 @@ import { ConfigService } from '@modules/core/config/config.module';
 import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
 import { StreamInfo } from '../models/stream-info';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { createOAuthServiceSpy } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;
@@ -20,7 +22,8 @@ describe('StreamInfoService', () => {
         CoreRadioLogicModule
       ],
       providers: [
-        { provide: ConfigService, useValue: createConfigServiceSpy() }
+        { provide: ConfigService, useValue: createConfigServiceSpy() },
+        { provide: OAuthService, useValue: createOAuthServiceSpy() }
       ]
     });
     metadataService = TestBed.get(StreamInfoService);

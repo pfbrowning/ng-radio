@@ -28,6 +28,7 @@ export function createOAuthServiceSpy(): any {
         'hasValidIdToken',
         'hasValidAccessToken',
         'getIdentityClaims',
+        'getAccessToken',
         'getAccessTokenExpiration',
         'getIdTokenExpiration'
     ]);
