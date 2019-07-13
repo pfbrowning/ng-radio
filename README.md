@@ -41,7 +41,7 @@ You'll need to configure your own instance of the [radio-metadata-api](https://g
 If you want to log stuff to Azure Application Insights, then provide your instrumentation key in `app.config.json`.  Otherwise leave it as null: this is completely optional.
 
 ### Authentication
-You'll need to configure your own Oauth 2.0 + OpenID Connect identity provider.  This is necessary due to the upcoming "Favorites" functionality.  The quickest, easiest, and cheapest route would probably be to use an [Auth0](https://auth0.com/) free account.  A basic level of knowledge regarding authentication in Single Page Applications via OpenID Connect Implicit Flow is required.  I won't cover that here because it's outside of the scope of this readme, well-documented on the internet, and fairly easy to figure out.
+You'll need to configure your own Oauth 2.0 + OpenID Connect identity provider.  In addition, you'll need to use an Oauth 2.0 provider which issues a JWT-based access token (this is not mandated by the Oauth 2.0 spec, but it's a common implementation).  This is a requirement due to the upcoming "Favorites" functionality.  The quickest, easiest, and cheapest route would probably be to use an [Auth0](https://auth0.com/) free account.  A basic level of knowledge regarding authentication in Single Page Applications via OpenID Connect Implicit Flow is required.  I won't cover that here because it's outside of the scope of this readme, well-documented on the internet, and fairly easy to figure out.
 
 Browninglogic Radio uses [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc) for authentication.  The `authConfig` section within `app.config.json` stores the `AuthConfig` object which is defined and documented by `angular-oauth2-oidc`.  For a standard simple OpenID Connect configuration it should be sufficient to specify your `issuer`, `redirectUri`, `clientId`, and `scope` within `authConfig` without having to make any modifications to `src\modules\core\authentication\services\authentication.service.ts`.
 
@@ -54,14 +54,12 @@ ng serve --open
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
 * Finish the [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api).
-  * Lock down the API with bearer token authentication
-  * Implement some basic logging
 * Initial favorites functionality.
     * Write a RESTful favorites API in the latest .NET Core following best practices.
     * Implement favorites functionality in the UI.
   
 ## Subsequent Planned Features And Effort
-* Implement 'Tags' functionality in the favorites API
+* Implement 'Tags' functionality for Favorites
 * Implement Immutable.js for the NowPlaying object and anything else throughout the app that would benefit from being immutable.
 * Tune change detection.
 * Implement NGRX for state management throughout the app.
