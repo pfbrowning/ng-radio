@@ -61,9 +61,9 @@ My priorities for continuing development are as follows, in order:
   
 ## Backlog
 * Code coverage badge
-* Implement 'Tags' functionality for Favorites
 * Fall back gracefully when Radio Browser API is down
 * Log Page Views & Initial App load
+* Implement 'Tags' functionality for Favorites
 * Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
 * Use HTML5 notifications to consenting users, and fall back to PrimeNG toast for those who haven't
 * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
@@ -72,6 +72,7 @@ My priorities for continuing development are as follows, in order:
 * Tune change detection.
 * Implement NGRX for state management throughout the app.
 * Minimize redundant API fetches by caching retrieved data which isn't expected to change frequently.
+* Investigate feasibility of replacing calls to [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api) with direct use of [icecast.js](https://www.npmjs.com/package/icecast.js) in the browser
 * Long-polling-based stream info change logic
 * Package up generic, reusable things individually and publish them to npm
     * setAltSrc function
