@@ -21,6 +21,7 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 ## Planned Features
 * Persistent "Favorites" functionality
 * Tagging of "Favorite" stations
+* [HTML5 Notifications](https://developer.mozilla.org/en-US/docs/Web/API/notification)
 * [Installable Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs)
 
 ## Supported URL Format
@@ -53,23 +54,28 @@ ng serve --open
 ```
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Finish the [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api).
+* Coordinate metadata fetch & play failure message with audio.play promise
 * Initial favorites functionality.
     * Write a RESTful favorites API in the latest .NET Core following best practices.
     * Implement favorites functionality in the UI.
   
-## Subsequent Planned Features And Effort
+## Backlog
+* Code coverage badge
 * Implement 'Tags' functionality for Favorites
+* Fall back gracefully when Radio Browser API is down
+* Log Page Views & Initial App load
+* Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
+* Use HTML5 notifications to consenting users, and fall back to PrimeNG toast for those who haven't
+* Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
+* Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
 * Implement Immutable.js for the NowPlaying object and anything else throughout the app that would benefit from being immutable.
 * Tune change detection.
 * Implement NGRX for state management throughout the app.
 * Minimize redundant API fetches by caching retrieved data which isn't expected to change frequently.
-* Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
-* Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
-* Switch to and enforce HTTPS.
-  * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
-  * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
-* Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
+* Long-polling-based stream info change logic
 * Package up generic, reusable things individually and publish them to npm
     * setAltSrc function
     * ActivatedRouteStub class
+* Switch to and enforce HTTPS.
+  * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
+  * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
