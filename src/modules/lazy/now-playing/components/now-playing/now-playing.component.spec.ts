@@ -108,7 +108,8 @@ describe('NowPlayingComponent', () => {
     // Arrange: Define a dummy NowPlaying entry for each StreamInfoStatus
     const testEntries = [
       new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.NotInitialized),
-      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Loading),
+      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.LoadingAudio),
+      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.LoadingStreamInfo),
       new NowPlaying(new Station(), new StreamInfo('Valid Title', null), StreamInfoStatus.Valid),
       new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Error),
     ];
@@ -123,8 +124,11 @@ describe('NowPlayingComponent', () => {
         case StreamInfoStatus.NotInitialized:
           expect(titleText).toBe('');
           break;
-        case StreamInfoStatus.Loading:
-          expect(titleText).toBe('Loading Metadata...');
+        case StreamInfoStatus.LoadingAudio:
+          expect(titleText).toBe('Loading Audio...');
+          break;
+        case StreamInfoStatus.LoadingStreamInfo:
+          expect(titleText).toBe('Loading Stream Info...');
           break;
         case StreamInfoStatus.Valid:
           expect(titleText).toBe(nowPlaying.streamInfo.title);

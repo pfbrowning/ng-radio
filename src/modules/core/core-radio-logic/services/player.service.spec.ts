@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 import { PlayerService } from './player.service';
 import { ConfigService } from '@modules/core/config/config.module';
 import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
@@ -58,22 +58,25 @@ describe('PlayerService', () => {
     expect(playerService).toBeTruthy();
   });
 
-  it('should properly handle audio error', () => {
-    /* Arrange: Ensure that notify hasn't been called yet. */
+  it('should properly handle audio error', fakeAsync(() => {
+    // Arrange: Ensure that notify hasn't been called yet.
     expect(notificationServiceSpy.notify).not.toHaveBeenCalled();
-    // Act: Emit an audio error
-    audioElement.error.emit('some error');
+    // Act: Play the audio and reject the play promise
+    playerService.play();
+    audioElement.playReject('Test Error');
+    tick();
     // Assert: Ensure that notify was called as expected
     expect(notificationServiceSpy.notify).toHaveBeenCalledTimes(1);
     expect(notificationServiceSpy.notify.calls.mostRecent().args)
-      .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play undefined']);
-  });
+      .toEqual([Severities.Error, 'Failed to play audio', 'Failed to play undefined due to error Test Error']);
+  }));
 
   it('should properly report paused status', () => {
     // The audioElement is paused on initialization
     expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(true);
     // Play the audioElement directly
     audioElement.play();
+    audioElement.playResolve();
     // Pause state should be false
     expect(audioPausedSpy.calls.mostRecent().args[0]).toBe(false);
     // Pause the audioElement directly
@@ -119,7 +122,7 @@ describe('PlayerService', () => {
     expect(audioElement.playSpy).toHaveBeenCalledTimes(testEntries.length);
   });
 
-  it('should properly load initial metadata', () => {
+  it('should properly load initial metadata', fakeAsync(() => {
     // Arrange
     // Set up our dummy station
     const testStation = new Station('Station Title', 'station url');
@@ -129,11 +132,13 @@ describe('PlayerService', () => {
 
     // Act: Play our test station
     playerService.playStation(testStation);
+    audioElement.playResolve();
+    tick();
     // Assert
     /* Between the init of loadMetadata and the return of metadata,
     the emitted NowPlaying should be in a Loading state */
     expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo).toBeNull();
-    expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfoStatus).toBe(StreamInfoStatus.Loading);
+    expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfoStatus).toBe(StreamInfoStatus.LoadingStreamInfo);
     // pause and play should have been called on the audio element once by this point
     expect(audioElement.pauseSpy).toHaveBeenCalledTimes(1);
     expect(audioElement.playSpy).toHaveBeenCalledTimes(1);
@@ -144,9 +149,11 @@ describe('PlayerService', () => {
     expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo.title).toBe('Test Song');
     // The document title should have also been set accordingly
     expect(titleService.getTitle()).toBe('Test Song');
-  });
 
-  it('should properly load metadata for different stations', () => {
+    discardPeriodicTasks();
+  }));
+
+  it('should properly load metadata for different stations', fakeAsync(() => {
     // Arrange
     // Set up dummy data
     const testEntries = [
@@ -164,12 +171,14 @@ describe('PlayerService', () => {
       // Play our test station
       const testStation = new Station(testEntry.station, null);
       playerService.playStation(testStation);
+      audioElement.playResolve();
+      tick();
 
       // Assert
       /* Between the init of loadMetadata and the return of metadata,
       the emitted NowPlaying should be in a Loading state */
       expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo).toBeNull();
-      expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfoStatus).toBe(StreamInfoStatus.Loading);
+      expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfoStatus).toBe(StreamInfoStatus.LoadingStreamInfo);
       // pause and play should have been called on the audio element once for each iteration by this point
       expect(audioElement.pauseSpy).toHaveBeenCalledTimes(iteration);
       expect(audioElement.playSpy).toHaveBeenCalledTimes(iteration);
@@ -204,7 +213,9 @@ describe('PlayerService', () => {
     expect(audioElement.playSpy).toHaveBeenCalledTimes(testEntries.length);
     // We should have fetched metadata once for each test entry
     expect(streamInfoService.getMetadataSpy).toHaveBeenCalledTimes(testEntries.length);
-  });
+
+    discardPeriodicTasks();
+  }));
 
   it('should properly refresh metadata on an interval', fakeAsync(() => {
     // Arrange
@@ -218,17 +229,18 @@ describe('PlayerService', () => {
 
     // Play a test station and immediately flush a metadata entry for the initial fetch
     playerService.playStation(new Station('Test Station', 'Test url'));
+    audioElement.playResolve();
+    tick();
     streamInfoService.flushMetadata(testEntries[0]);
     let previousTitle = testEntries[0].title;
 
     // For each test entry
-    let iteration = 1;
     testEntries.forEach(testEntry => {
       /* Wait for the refresh interval, at which point we expect the service to ask
       for updated metadata. */
       tick(configServiceSpy.appConfig.metadataRefreshInterval);
       /* While waiting for a response, the now playing info should still be that of
-      the previous iteration (rather than 'Loading Metadata'). */
+      the previous iteration (rather than 'Loading Stream Info...'). */
       expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo.title).toBe(previousTitle);
       // Flush a test metadata entry
       streamInfoService.flushMetadata(testEntry);
@@ -236,7 +248,6 @@ describe('PlayerService', () => {
       expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo.title).toBe(testEntry.title);
       // Update previousTitle to check on the next iteration
       previousTitle = testEntry.title;
-      iteration++;
     });
 
     /* Wait for the delay(0) caused by changing nowPlaying in order to prevent the
@@ -252,6 +263,7 @@ describe('PlayerService', () => {
     /* Act: Initiate the station play and wait for 3 times the refresh interval
     before flushing any metadata. */
     playerService.playStation(new Station('Station Title', 'station url'));
+    audioElement.playResolve();
     tick(configServiceSpy.appConfig.metadataRefreshInterval * 3);
     streamInfoService.flushMetadata(new StreamInfo('Title 1', 'Fetchsource 1'));
     expect(nowPlayingSpy.calls.mostRecent().args[0].streamInfo.title).toBe('Title 1');
@@ -280,6 +292,8 @@ describe('PlayerService', () => {
     testEntries.forEach(testEntry => {
       // Play a station and flush the test metadata entry
       playerService.playStation(new Station('Test Station', 'Test url'));
+      audioElement.playResolve();
+      tick();
       streamInfoService.flushMetadata(testEntry);
 
       // For all iterations after the first
@@ -324,10 +338,11 @@ describe('PlayerService', () => {
 
     // Play a test station and immediately flush a metadata entry for the initial fetch
     playerService.playStation(new Station('Test Station', 'Test url'));
+    audioElement.playResolve();
+    tick();
     streamInfoService.flushMetadata(testEntries[0]);
 
     // For each test entry
-    let iteration = 1;
     testEntries.forEach(testEntry => {
       /* Wait for the refresh interval, at which point we expect the service to ask
       for updated metadata. */
@@ -335,24 +350,21 @@ describe('PlayerService', () => {
       /* Flush a new test metadata entry, each of which should be different
       objects which equal each other. */
       streamInfoService.flushMetadata(testEntry);
-      iteration++;
     });
 
-    /* Wait for the delay(0) caused by changing nowPlaying in order to prevent the
-    '1 periodic timer(s) still in the queue' error. */
-    tick(0);
     // Pause the audio in order to unsubscribe from the interval subscription
     playerService.pause();
     // We should have fetched metadata once for each test entry, plus once for the initial fetch
     expect(streamInfoService.getMetadataSpy).toHaveBeenCalledTimes(testEntries.length + 1);
-    /* Because the same stream info was emitted over and over, NowPlaying should have only
-    emitted four times:
+    /* Because the same stream info was emitted over and over, NowPlaying should have emitted
+    exactly five times:
     1) Once for the initial subscription to BehaviorSubject
     2) Once within the call to UpdateStation
-    3) Once when setting the status to Loading
-    4) Once when resolving the initial stream info
+    3) Once when setting the status to LoadingAudio
+    4) Once when setting the status to LoadingStreamInfo
+    5) Once when resolving the initial stream info
     Importantly, the same stream info was emitted over and over again, but NowPlaying
     didn't emit any more because the subsequent values were all equal. */
-    expect(nowPlayingSpy).toHaveBeenCalledTimes(4);
+    expect(nowPlayingSpy).toHaveBeenCalledTimes(5);
   }));
 });

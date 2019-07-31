@@ -23,8 +23,8 @@ export class AudioElement {
         this.audio.src = value;
     }
 
-    public play(): void {
-        this.audio.play();
+    public play(): Promise<void> {
+        return this.audio.play();
     }
 
     public pause(): void {

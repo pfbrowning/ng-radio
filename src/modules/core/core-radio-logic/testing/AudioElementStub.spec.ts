@@ -7,14 +7,32 @@ export class AudioElementStub {
     public paused = new EventEmitter<void>();
     public source: string;
 
-    public playSpy = spyOn(AudioElementStub.prototype, 'play').and.callThrough();
-    public pauseSpy = spyOn(AudioElementStub.prototype, 'pause').and.callThrough();
+    private playResolver: Function;
+    private playRejector: Function;
 
-    public play(): void {
+    public pauseSpy = spyOn(AudioElementStub.prototype, 'pause').and.callThrough();
+    public playSpy = spyOn(AudioElementStub.prototype, 'play').and.callThrough();
+
+
+    public playResolve(): void {
+        this.playResolver();
         this.playing.emit();
     }
 
+    public playReject(error: any): void {
+        this.playRejector(error);
+    }
+
+    public play(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.playResolver = resolve;
+            this.playRejector = reject;
+        });
+    }
+
     public pause(): void {
+        this.playResolver = null;
+        this.playRejector = null;
         this.paused.emit();
     }
 }

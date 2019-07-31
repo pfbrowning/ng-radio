@@ -1,6 +1,7 @@
 export enum StreamInfoStatus {
     Valid,
     NotInitialized,
-    Loading,
+    LoadingAudio,
+    LoadingStreamInfo,
     Error
 }

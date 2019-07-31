@@ -54,26 +54,32 @@ ng serve --open
 ```
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Coordinate metadata fetch & play failure message with audio.play promise
+* Code coverage badge
+* Fix Metadata API logging
 * Initial favorites functionality.
     * Write a RESTful favorites API in the latest .NET Core following best practices.
     * Implement favorites functionality in the UI.
   
 ## Backlog
-* Code coverage badge
 * Fall back gracefully when Radio Browser API is down
 * Log Page Views & Initial App load
+* Increase polling interval
 * Implement 'Tags' functionality for Favorites
 * Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
 * Use HTML5 notifications to consenting users, and fall back to PrimeNG toast for those who haven't
 * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
-* Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
+* Refactor `loadMetadata` such that it always sets the status as "LoadingStreamInfo" and the template determines what to display based on the presence of stream info.
 * Implement Immutable.js for the NowPlaying object and anything else throughout the app that would benefit from being immutable.
 * Tune change detection.
 * Implement NGRX for state management throughout the app.
 * Minimize redundant API fetches by caching retrieved data which isn't expected to change frequently.
-* Investigate feasibility of replacing calls to [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api) with direct use of [icecast.js](https://www.npmjs.com/package/icecast.js) in the browser
-* Long-polling-based stream info change logic
+* Investigate alternatives to interval-based polling for "Now Playing" stream info
+  * [icecast.js](https://www.npmjs.com/package/icecast.js)
+  * [Socket.IO](https://www.npmjs.com/package/socket.io)
+  * Long-polling based streamInfoChange API logic
+* Show "Now Playing" stream info for "Suggested", "Favorites", and search results
+* Search by country and any other Radio Browser API criteria which makes sense
+* Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
 * Package up generic, reusable things individually and publish them to npm
     * setAltSrc function
     * ActivatedRouteStub class

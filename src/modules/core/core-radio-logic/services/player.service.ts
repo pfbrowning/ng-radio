@@ -27,7 +27,6 @@ export class PlayerService {
     @Inject(AudioElementToken) private audio: AudioElement) {
       /* Subscribe to the events that we care about from the AudioElement
       and pass them on to the appropriate handler. */
-      this.audio.error.subscribe(error => this.onAudioError(error));
       this.audio.playing.subscribe(() => this.onAudioPlaying());
       this.audio.paused.subscribe(() => this.onAudioPaused());
       // Pause the playing audio when the sleep timer does its thing
@@ -61,11 +60,6 @@ export class PlayerService {
    * immutable.js soon. */
   private get nowPlayingValue(): NowPlaying {
     return this.nowPlaying.value;
-  }
-
-  /** Notifies the user when the audio fails to play */
-  private onAudioError(error): void {
-    this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.source}`);
   }
 
   /** Notifies listeners when the audio starts to play. */
@@ -105,29 +99,20 @@ export class PlayerService {
     // Pause the current audio in case it's already playing something
     this.pause();
     // Update the current station
-    this.updateStation(station);
+    this.nowPlaying.next(new NowPlaying(station, null, StreamInfoStatus.NotInitialized));
     // Set the source url accordingly in the service
     this._source = station.url;
     // Play the audio and fetch the metadata
     this.play();
   }
 
-  /** Updates the Now Playing metadata with the specified station info */
-  private updateStation(station: Station) {
-    // If the provided station is any different from the current station
-    if (!isEqual(this.nowPlayingValue.station, station)) {
-      // Update the NowPlaying metadata with a new object (rather than mutating the existing one)
-      this.nowPlaying.next(new NowPlaying(station, null, StreamInfoStatus.NotInitialized));
-    }
-  }
-
   /** Initiates a new subscription to getMetadata and updates the stored 'now playing'
    * info accordingly upon succesful metadata retrieval. */
   private loadMetadata(setLoading: boolean = false) {
     // If setLoading is specified and NowPlaying doesn't already indicate loading
-    if (setLoading && this.nowPlayingValue.streamInfoStatus !== StreamInfoStatus.Loading) {
+    if (setLoading && this.nowPlayingValue.streamInfoStatus !== StreamInfoStatus.LoadingStreamInfo) {
       // Emit a new NowPlaying object which indicates that we're currently loading
-      this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.Loading));
+      this.nowPlaying.next(new NowPlaying(this.nowPlayingValue.station, null, StreamInfoStatus.LoadingStreamInfo));
       // Temporarily set a generic app title until we get some stream info back
       this.titleService.setTitle('Browninglogic Radio');
     }
@@ -170,17 +155,30 @@ export class PlayerService {
     /* Since we clear the audio src after pause, we need to assing or re-assign
     it before playing. */
     this.audio.src = this.source;
-    // Play the audio
-    this.audio.play();
-    /* On the initial load of the station, load the metadata
-    and set the StreamInfoStatus to denote that we're in
-    a 'loading' state. */
-    this.loadMetadata(true);
     /* Unsubscribe if there's still an active refresh interval
-    subscription from the previously-played station. */
+    or metadata fetch subscription from the previously-played
+    station. */
     if (this.refreshSub) { this.refreshSub.unsubscribe(); }
-    // Refresh the "Now Playing" metadata once every few seconds.
-    this.refreshSub = interval(this.configService.appConfig.metadataRefreshInterval).subscribe(() => this.loadMetadata());
+    if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
+    // Update the StreamInfoStatus to reflect that we're attempting to play the station
+    this.nowPlaying.next(new NowPlaying(this.nowPlaying.value.station, null, StreamInfoStatus.LoadingAudio));
+    // Play the audio
+    this.audio.play()
+      // On successful load of the stream
+      .then(() => {
+        // Update the 'paused' state
+        this.paused.next(false);
+        /* On the initial load of the station, load the metadata
+        and set the StreamInfoStatus to denote that we're in
+        a 'loading' state. */
+        this.loadMetadata(true);
+        // Refresh the "Now Playing" metadata once every few seconds.
+        this.refreshSub = interval(this.configService.appConfig.metadataRefreshInterval).subscribe(() => this.loadMetadata());
+      })
+      .catch(error => {
+        this.paused.next(true);
+        this.notificationService.notify(Severities.Error, 'Failed to play audio', `Failed to play ${this.source} due to error ${error}`);
+      });
   }
 
   /** Pause the selected audio */
