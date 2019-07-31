@@ -8,8 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "tslint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
     "test-single-headless": "ng test --watch=false --code-coverage --browsers=ChromeHeadless --reporters=progress,junit",
-    "test-chrome": "ng test --browsers=Chrome"
+    "test-chrome": "ng test --browsers=Chrome",
+    "test:coveralls": "node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info",
+    "test:generate-publish-coverage": "npm run test-single-headless && npm run test:coveralls"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +53,7 @@
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "~12.6.1",
     "codelyzer": "^5.1.0",
+    "coveralls": "^3.0.5",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
