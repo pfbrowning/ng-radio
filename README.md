@@ -1,6 +1,7 @@
 # Browninglogic Radio
 
 [![Build Status](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_apis/build/status/Browninglogic%20Radio%20UI?branchName=master)](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_build/latest?definitionId=2&branchName=master)
+[![Coverage Status](https://coveralls.io/repos/github/pfbrowning/ng-radio/badge.svg?branch=master)](https://coveralls.io/github/pfbrowning/ng-radio?branch=master)
 
 ## Introduction
 Browninglogic Radio is an internet radio app written as a Single-Page Application in Angular.  This is a hobby project that I work on in what little free time I have.  My motivation for this is primarily because I enjoy working with Angular and secondarily because I enjoy internet radio.
@@ -54,7 +55,6 @@ ng serve --open
 ```
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Code coverage badge
 * Fix Metadata API logging
 * Initial favorites functionality.
     * Write a RESTful favorites API in the latest .NET Core following best practices.
