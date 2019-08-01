@@ -55,16 +55,13 @@ ng serve --open
 ```
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Fix Metadata API logging
-* Initial favorites functionality.
-    * Write a RESTful favorites API in the latest .NET Core following best practices.
-    * Implement favorites functionality in the UI.
+* Write a RESTful favorites API in the latest .NET Core following best practices.
+* Wire up the favorites functionality in the UI
   
 ## Backlog
 * Fall back gracefully when Radio Browser API is down
 * Log Page Views & Initial App load
 * Increase polling interval
-* Implement 'Tags' functionality for Favorites
 * Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
 * Use HTML5 notifications to consenting users, and fall back to PrimeNG toast for those who haven't
 * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
