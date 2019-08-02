@@ -55,7 +55,7 @@ ng serve --open
 ```
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Write a RESTful favorites API in the latest .NET Core following best practices.
+* Finish the [Favorite Stations API](https://github.com/pfbrowning/favorite-stations-api)
 * Wire up the favorites functionality in the UI
   
 ## Backlog
@@ -66,6 +66,7 @@ My priorities for continuing development are as follows, in order:
 * Use HTML5 notifications to consenting users, and fall back to PrimeNG toast for those who haven't
 * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
 * Refactor `loadMetadata` such that it always sets the status as "LoadingStreamInfo" and the template determines what to display based on the presence of stream info.
+* Refactor ConfigService
 * Implement Immutable.js for the NowPlaying object and anything else throughout the app that would benefit from being immutable.
 * Tune change detection.
 * Implement NGRX for state management throughout the app.
