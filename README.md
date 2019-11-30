@@ -64,7 +64,12 @@ My priorities for continuing development are as follows, in order:
 * Increase polling interval
 * Refactor ConfigService such that we're exposing `getConfig$` as an observable piped through `shareReplay(1)` and then converting it to a promise within `APP_INITIALIZER`
 * Refactor `loadMetadata` such that it always sets the status as "LoadingStreamInfo" and the template determines what to display based on the presence of stream info.
+* Refactor AuthenticationService & SleepTimerService to use something less bloated than Moment.js
+* Refactor AuthenticationService to expose the current user & authenticated state as observables 
 * Implement NGRX for state management throughout the app.
+* Replace Angular Material with PrimeNG
+* Optimize bundle size
+* Migrate build from classic Azure DevOps to YAML build
 * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
 * Package up generic, reusable things individually and publish them to npm
     * setAltSrc function
@@ -75,6 +80,7 @@ My priorities for continuing development are as follows, in order:
   * [icecast.js](https://www.npmjs.com/package/icecast.js)
   * [Socket.IO](https://www.npmjs.com/package/socket.io)
   * Long-polling based streamInfoChange API logic
+* Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
 * Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
 * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
 * Better handling of mobile input on search
