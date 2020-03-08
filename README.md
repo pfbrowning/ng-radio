@@ -55,18 +55,19 @@ ng serve --open
 ```
 ## Roadmap For 1.0.0
 My priorities for continuing development are as follows, in order:
-* Finish the [Favorite Stations API](https://github.com/pfbrowning/favorite-stations-api)
+* Finish 1.0.0 of the [Favorite Stations API](https://github.com/pfbrowning/favorite-stations-api)
+* Upgrade to Angular 9
 * Wire up the favorites functionality in the UI
   
 ## Backlog
+* Implement NGRX for state management throughout the app.
 * Fall back gracefully when Radio Browser API is down
 * Log Page Views & Initial App load
 * Increase polling interval
 * Refactor ConfigService such that we're exposing `getConfig$` as an observable piped through `shareReplay(1)` and then converting it to a promise within `APP_INITIALIZER`
 * Refactor `loadMetadata` such that it always sets the status as "LoadingStreamInfo" and the template determines what to display based on the presence of stream info.
 * Refactor AuthenticationService & SleepTimerService to use something less bloated than Moment.js
-* Refactor AuthenticationService to expose the current user & authenticated state as observables 
-* Implement NGRX for state management throughout the app.
+* Refactor AuthenticationService to expose the current user & authenticated state as observables
 * Replace Angular Material with PrimeNG
 * Optimize bundle size
 * Migrate build from classic Azure DevOps to YAML build
@@ -82,6 +83,7 @@ My priorities for continuing development are as follows, in order:
   * Long-polling based streamInfoChange API logic
 * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
 * Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
+* Favorite station tags
 * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
 * Better handling of mobile input on search
 * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
