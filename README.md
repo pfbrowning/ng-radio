@@ -57,6 +57,7 @@ ng serve --open
 My priorities for continuing development are as follows, in order:
 * Finish 1.0.0 of the [Favorite Stations API](https://github.com/pfbrowning/favorite-stations-api)
 * Upgrade to Angular 9
+* app.local.config
 * Wire up the favorites functionality in the UI
   
 ## Backlog
