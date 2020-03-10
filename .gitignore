@@ -43,3 +43,4 @@ testem.log
 Thumbs.db
 
 src/assets/config/local.config.json
+TESTS-HeadlessChrome_*
