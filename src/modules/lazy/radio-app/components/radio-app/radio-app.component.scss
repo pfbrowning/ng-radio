@@ -18,14 +18,14 @@
     /* On large screens, start the app container at the top and adjust the height 
     to account for one toolbar. */
     @media (min-width:$smallScreenCutoff) {
-        height:calc(100% - $toolbarHeight);
+        height:calc(100% - #{$toolbarHeight});
         top:0px;
     }
     
     /* On small screens, push the app container down to below the top toolbar and 
     adjust the height to account for two toolbars. */
     @media (max-width:$smallScreenCutoff - 1) {
-        height:calc(100% - $toolbarHeight * 2);
+        height:calc(100% - #{$toolbarHeight} * 2);
         top:$toolbarHeight;
     }
 }
