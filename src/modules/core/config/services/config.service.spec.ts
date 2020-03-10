@@ -41,7 +41,7 @@ describe('ConfigService', () => {
 
     expect(loadedSpy).not.toHaveBeenCalled();
 
-    // Listen on the initialize promise
+    // Listen to the initialize observable
     configService.initialize().subscribe(config => {
       /* On successful resolve, we expect the initialize accessors
       to indicate a successful config fetch with no error. */
@@ -52,6 +52,7 @@ describe('ConfigService', () => {
       /* The exposed appConfig should match the one flushed
       by the http testing controller */
       expect(configService.appConfig).toEqual(dummyConfig);
+      expect(config).toEqual(dummyConfig);
       // Lastly, verify that there are no outstanding http requests
       httpTestingController.verify();
       done();
@@ -85,5 +86,81 @@ describe('ConfigService', () => {
     const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
     localConfigRequest.flush({});
     appConfigRequest.error(new ErrorEvent('test error'));
+  });
+
+  it('should merge local config with app config', (done: DoneFn) => {
+    // Arrange
+    const appConfig = {
+      'metadataApiUrl': 'testapi',
+      'radioBrowserApiUrl': 'testradiobrowserapi',
+      'metadataRefreshInterval': 1,
+      'metadataFetchTimeout': 2,
+      'authConfig': {
+        "issuer": "app issuer",
+        "clientId": "app client",
+        "logoutUrl": null
+      }
+    };
+    const localConfig = {
+      "appInsightsInstrumentationKey": "app insights key value",
+      "authConfig": {
+        "logoutUrl": "some place",
+        "clientId": "local client"
+      }
+    };
+    const mergedConfig = {
+      'metadataApiUrl': 'testapi',
+      'radioBrowserApiUrl': 'testradiobrowserapi',
+      'metadataRefreshInterval': 1,
+      'metadataFetchTimeout': 2,
+      "appInsightsInstrumentationKey": "app insights key value",
+      'authConfig': {
+        "issuer": "app issuer",
+        "clientId": "local client",
+        "logoutUrl": "some place",
+      }
+    }
+
+    configService.initialize().subscribe(config => {
+      // Assert
+      expect(config).toEqual(mergedConfig);
+
+      // Lastly, verify that there are no outstanding http requests
+      httpTestingController.verify();
+      done();
+    });
+
+    // Act
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
+    appConfigRequest.flush(appConfig);
+    localConfigRequest.flush(localConfig);
+  });
+
+  it('should resolve app config if no local config is found', (done: DoneFn) => {
+    // Arrange
+    const appConfig = {
+      'metadataApiUrl': 'testapi',
+      "appInsightsInstrumentationKey": "app insights key value",
+      'radioBrowserApiUrl': 'testradiobrowserapi',
+      'metadataRefreshInterval': 1,
+      'metadataFetchTimeout': 2,
+      'authConfig': {}
+    };
+
+    configService.initialize().subscribe(config => {
+      // Assert
+      expect(config).toEqual(appConfig);
+
+      // Lastly, verify that there are no outstanding http requests
+      httpTestingController.verify();
+      done();
+    });
+
+    // Act
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
+    appConfigRequest.flush(appConfig);
+    localConfigRequest.flush(null, { status: 404, statusText: 'Not Found' })
   });
 });
