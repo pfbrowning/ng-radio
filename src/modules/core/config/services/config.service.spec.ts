@@ -42,10 +42,9 @@ describe('ConfigService', () => {
     expect(loadedSpy).not.toHaveBeenCalled();
 
     // Listen on the initialize promise
-    configService.initialize().then(initialized => {
+    configService.initialize().subscribe(config => {
       /* On successful resolve, we expect the initialize accessors
       to indicate a successful config fetch with no error. */
-      expect(initialized).toBe(true);
       expect(configService.initialized).toBe(true);
       expect(configService.initializationError).toBeNull();
       // loaded$ should have emitted once on successful config load
@@ -59,18 +58,19 @@ describe('ConfigService', () => {
     });
 
     // Expect one app.config.json request & flush our dummy config object
-    const configRequest = httpTestingController.expectOne('/assets/config/app.config.json');
-    configRequest.flush(dummyConfig);
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
+    appConfigRequest.flush(dummyConfig);
+    localConfigRequest.flush({});
   });
 
   it('should properly handle failed config fetch', (done: DoneFn) => {
     // Listen for initialize resolve
-    configService.initialize().then(initialized => {
+    configService.initialize().subscribe(config => {
       /* On failure, we expect initialize to resolve
       successfully with an 'initialized' value of
       false, appConfig value of undefined, and an exposed
       error.  loaded$ should not emit anything.*/
-      expect(initialized).toBe(false);
       expect(configService.initialized).toBe(false);
       expect(configService.appConfig).toBeUndefined();
       expect(configService.initializationError).not.toBeNull();
@@ -81,7 +81,9 @@ describe('ConfigService', () => {
     });
 
     // Expect one app.config.json request & throw our dummy error
-    const configRequest = httpTestingController.expectOne('/assets/config/app.config.json');
-    configRequest.error(new ErrorEvent('test error'));
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
+    localConfigRequest.flush({});
+    appConfigRequest.error(new ErrorEvent('test error'));
   });
 });

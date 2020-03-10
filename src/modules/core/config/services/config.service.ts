@@ -65,7 +65,7 @@ export class ConfigService {
       catchError(error => {
         this._initializationError = error;
         this._initialized = false;
-        return EMPTY;
+        return of(null);
       })
     )
   }
