@@ -96,16 +96,16 @@ describe('ConfigService', () => {
       'metadataRefreshInterval': 1,
       'metadataFetchTimeout': 2,
       'authConfig': {
-        "issuer": "app issuer",
-        "clientId": "app client",
-        "logoutUrl": null
+        'issuer': 'app issuer',
+        'clientId': 'app client',
+        'logoutUrl': null
       }
     };
     const localConfig = {
-      "appInsightsInstrumentationKey": "app insights key value",
-      "authConfig": {
-        "logoutUrl": "some place",
-        "clientId": "local client"
+      'appInsightsInstrumentationKey': 'app insights key value',
+      'authConfig': {
+        'logoutUrl': 'some place',
+        'clientId': 'local client'
       }
     };
     const mergedConfig = {
@@ -113,13 +113,13 @@ describe('ConfigService', () => {
       'radioBrowserApiUrl': 'testradiobrowserapi',
       'metadataRefreshInterval': 1,
       'metadataFetchTimeout': 2,
-      "appInsightsInstrumentationKey": "app insights key value",
+      'appInsightsInstrumentationKey': 'app insights key value',
       'authConfig': {
-        "issuer": "app issuer",
-        "clientId": "local client",
-        "logoutUrl": "some place",
+        'issuer': 'app issuer',
+        'clientId': 'local client',
+        'logoutUrl': 'some place',
       }
-    }
+    };
 
     configService.initialize().subscribe(config => {
       // Assert
@@ -141,7 +141,7 @@ describe('ConfigService', () => {
     // Arrange
     const appConfig = {
       'metadataApiUrl': 'testapi',
-      "appInsightsInstrumentationKey": "app insights key value",
+      'appInsightsInstrumentationKey': 'app insights key value',
       'radioBrowserApiUrl': 'testradiobrowserapi',
       'metadataRefreshInterval': 1,
       'metadataFetchTimeout': 2,
@@ -161,6 +161,6 @@ describe('ConfigService', () => {
     const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
     const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
     appConfigRequest.flush(appConfig);
-    localConfigRequest.flush(null, { status: 404, statusText: 'Not Found' })
+    localConfigRequest.flush(null, { status: 404, statusText: 'Not Found' });
   });
 });
