@@ -19,8 +19,8 @@ describe('ConfigService', () => {
       ]
     });
 
-    configService = TestBed.get(ConfigService);
-    httpTestingController = TestBed.get(HttpTestingController as Type<HttpTestingController>);
+    configService = TestBed.inject(ConfigService);
+    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     loadedSpy = jasmine.createSpy('loaded');
     configService.loaded$.subscribe(() => loadedSpy());
   });

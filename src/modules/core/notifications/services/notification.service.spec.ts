@@ -17,7 +17,7 @@ describe('NotificationService', () => {
       ]
     });
 
-    notificationService = TestBed.get(NotificationService);
+    notificationService = TestBed.inject(NotificationService);
   });
 
   const testEntries = [

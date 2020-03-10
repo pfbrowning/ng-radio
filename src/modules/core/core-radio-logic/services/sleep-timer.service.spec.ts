@@ -21,7 +21,7 @@ describe('SleepTimerService', () => {
         { provide: NotificationService, useValue: notificationServiceSpy }
       ]
     });
-    sleepTimerService = TestBed.get(SleepTimerService);
+    sleepTimerService = TestBed.inject(SleepTimerService);
     sleepEmitSpy = jasmine.createSpy('sleepEmit');
     minutesUntilSleepSpy = jasmine.createSpy('minutesUntilSleep');
     sleepTimerService.sleep.subscribe(() => sleepEmitSpy());

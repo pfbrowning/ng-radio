@@ -19,7 +19,7 @@ describe('AuthGuard', () => {
       ]
     });
 
-    authGuard = TestBed.get(AuthGuard);
+    authGuard = TestBed.inject(AuthGuard);
 
     authGuard.canActivate().subscribe(
       value => canActivateSpy.emit(value),

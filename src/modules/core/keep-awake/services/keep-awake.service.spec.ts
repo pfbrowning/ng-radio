@@ -30,7 +30,7 @@ describe('KeepAwakeService', () => {
       ]
     });
 
-    keepAwakeService = TestBed.get(KeepAwakeService);
+    keepAwakeService = TestBed.inject(KeepAwakeService);
     enabledSpy = jasmine.createSpy('enabled');
     keepAwakeService.enabled$.subscribe(enabled => enabledSpy(enabled));
   });

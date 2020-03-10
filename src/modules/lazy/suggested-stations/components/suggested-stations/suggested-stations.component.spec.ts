@@ -31,7 +31,7 @@ describe('SuggestedStationsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SuggestedStationsComponent);
     component = fixture.componentInstance;
-    activatedRoute = TestBed.get(ActivatedRoute);
+    activatedRoute = TestBed.inject(ActivatedRoute);
     activatedRoute.setData({'suggestedStations': new SuggestedStations([], [], [])});
     fixture.detectChanges();
   });

@@ -25,9 +25,9 @@ describe('StationLookupService', () => {
       ]
     });
 
-    configService = TestBed.get(ConfigService);
-    stationLookupService = TestBed.get(StationLookupService);
-    httpTestingController = TestBed.get(HttpTestingController as Type<HttpTestingController>);
+    configService = TestBed.inject(ConfigService);
+    stationLookupService = TestBed.inject(StationLookupService);
+    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   });
 
   it('should be created', () => {

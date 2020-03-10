@@ -26,9 +26,9 @@ describe('StreamInfoService', () => {
         { provide: OAuthService, useValue: createOAuthServiceSpy() }
       ]
     });
-    metadataService = TestBed.get(StreamInfoService);
-    configService = TestBed.get(ConfigService);
-    httpTestingController = TestBed.get(HttpTestingController as Type<HttpTestingController>);
+    metadataService = TestBed.inject(StreamInfoService);
+    configService = TestBed.inject(ConfigService);
+    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     getMetadataSpy = jasmine.createSpyObj('getMetadata', ['emit', 'error', 'complete']);
   });
 

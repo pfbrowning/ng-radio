@@ -38,7 +38,7 @@ export class ConfigService {
 
   /** Initializer function used by APP_INITIALIZER to
    * retrieve app config before app bootstrap */
-  public initialize(): Observable<IAppConfig>{
+  public initialize(): Observable<IAppConfig> {
     // Fetch and store the config
     return forkJoin([
       // Always load the regular app.config.json
@@ -46,13 +46,13 @@ export class ConfigService {
       // If we're not in prod mode, attempt to load a local configuration
       environment.production ? of(null) : this.httpClient.get<IAppConfig>('/assets/config/local.config.json').pipe(
         catchError(error => {
-          // If local config doesn't exist, then continue silently.  This isn't an error condition. 
-          if(error.status === 404) {
+          // If local config doesn't exist, then continue silently.  This isn't an error condition.
+          if (error.status === 404) {
             return of(null);
           }
           // If localconfig fails for some reason other than 404, then that is an error.
           return throwError(error);
-        })        
+        })
       )
     ]).pipe(
       // Use lodash to deep merge local config into app config
@@ -67,6 +67,6 @@ export class ConfigService {
         this._initialized = false;
         return of(null);
       })
-    )
+    );
   }
 }

@@ -19,7 +19,7 @@ describe('LoggingService', () => {
       ]
     });
 
-    loggingService = TestBed.get(LoggingService);
+    loggingService = TestBed.inject(LoggingService);
   });
 
   it('should be created', () => {

@@ -18,7 +18,7 @@ describe('ErrorHandlingService', () => {
       ]
     });
 
-    errorHandlingService = TestBed.get(ErrorHandlingService);
+    errorHandlingService = TestBed.inject(ErrorHandlingService);
 
     appErrorSpy = jasmine.createSpyObj('appError', ['emit', 'error', 'complete']);
   });

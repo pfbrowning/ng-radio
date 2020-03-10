@@ -45,9 +45,9 @@ describe('PlayerService', () => {
         { provide: LoggingService, useValue: loggingServiceSpy }
       ]
     });
-    playerService = TestBed.get(PlayerService);
-    titleService = TestBed.get(Title);
-    streamInfoService = TestBed.get(StreamInfoService);
+    playerService = TestBed.inject(PlayerService);
+    titleService = TestBed.inject(Title);
+    streamInfoService = TestBed.inject(StreamInfoService);
     audioPausedSpy = jasmine.createSpy('audioPaused');
     nowPlayingSpy = jasmine.createSpy('nowPlaying');
     playerService.paused$.subscribe(paused => audioPausedSpy(paused));

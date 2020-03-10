@@ -35,9 +35,9 @@ describe('ResponsiveSidenavComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveSidenavComponent);
-    window = TestBed.get(WindowToken);
+    window = TestBed.inject(WindowToken);
     component = fixture.componentInstance;
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
