@@ -11,7 +11,7 @@ import { SuggestedStations } from '../../models/suggested-stations';
 describe('SuggestedStationsComponent', () => {
   let component: SuggestedStationsComponent;
   let fixture: ComponentFixture<SuggestedStationsComponent>;
-  let activatedRoute: ActivatedRouteStub;
+  let activatedRoute: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

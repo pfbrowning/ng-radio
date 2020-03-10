@@ -10,7 +10,7 @@ import { Route, Router } from '@angular/router';
 describe('ResponsiveSidenavComponent', () => {
   let component: ResponsiveSidenavComponent;
   let fixture: ComponentFixture<ResponsiveSidenavComponent>;
-  let window: WindowStub;
+  let window: any;
   let router: Router;
 
   const dummyTestingRoutes: Array<Route> = [

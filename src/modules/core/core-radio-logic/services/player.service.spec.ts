@@ -22,7 +22,7 @@ describe('PlayerService', () => {
   let audioPausedSpy: jasmine.Spy;
   let notificationServiceSpy: jasmine.SpyObj<NotificationService>;
   let loggingServiceSpy: jasmine.SpyObj<LoggingService>;
-  let streamInfoService: StreamInfoServiceStub;
+  let streamInfoService: any;
   let configServiceSpy: jasmine.SpyObj<ConfigService>;
   let audioElement: AudioElementStub;
   let nowPlayingSpy: jasmine.Spy;
