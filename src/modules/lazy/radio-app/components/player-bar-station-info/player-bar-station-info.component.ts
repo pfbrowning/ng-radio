@@ -15,8 +15,8 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked, OnChange
   public stationMarquee = false;
   private checkMarquee = false;
   @Input() nowPlaying: NowPlaying;
-  @ViewChild('title', { static: false }) titleElement: ElementRef;
-  @ViewChild('station', { static: false }) stationElement: ElementRef;
+  @ViewChild('title') titleElement: ElementRef;
+  @ViewChild('station') stationElement: ElementRef;
 
   ngOnInit() {
     /* Set checkmarquee on all window resize events because the marquee

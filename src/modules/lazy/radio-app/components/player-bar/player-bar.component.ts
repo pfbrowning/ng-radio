@@ -22,7 +22,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     private router: Router) {}
 
   private changeDetectionSubscription: Subscription;
-  @ViewChild('stationInfo', { static: false }) stationInfo: PlayerBarStationInfoComponent;
+  @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged
