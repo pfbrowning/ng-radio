@@ -11,6 +11,7 @@
     "tslint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
     "test-single-headless": "ng test --watch=false --code-coverage --browsers=ChromeHeadless --reporters=progress,junit",
     "test-chrome": "ng test --browsers=Chrome",
+    "test-firefox": "ng test --browsers=Firefox",
     "test:coveralls": "node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info",
     "test:generate-publish-coverage": "npm run test-single-headless && npm run test:coveralls"
   },
@@ -58,6 +59,7 @@
     "karma": "^4.4.1",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~2.1.1",
+    "karma-firefox-launcher": "^1.3.0",
     "karma-jasmine": "~3.1.1",
     "karma-jasmine-html-reporter": "^1.5.2",
     "karma-junit-reporter": "^2.0.1",
