@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
-import { ReplaySubject } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
+import { ReplaySubject, forkJoin, EMPTY, throwError, of, Observable } from 'rxjs';
 import { IAppConfig } from '../models/app-config';
+import { merge } from 'lodash';
+import { environment } from '../../../../environments/environment';
 
 /** Abstraction layer for configuration.  Fetches any necessary configuration files
  * before the app bootstraps and then stores the corresponding config info to be
@@ -36,27 +38,35 @@ export class ConfigService {
 
   /** Initializer function used by APP_INITIALIZER to
    * retrieve app config before app bootstrap */
-  public initialize(): Promise<boolean> {
+  public initialize(): Observable<IAppConfig>{
     // Fetch and store the config
-    return this.httpClient.get<IAppConfig>('/assets/config/app.config.json').pipe(
-      tap(appConfig => this._appConfig = appConfig)
+    return forkJoin([
+      // Always load the regular app.config.json
+      this.httpClient.get<IAppConfig>('/assets/config/app.config.json'),
+      // If we're not in prod mode, attempt to load a local configuration
+      environment.production ? of(null) : this.httpClient.get<IAppConfig>('/assets/config/local.config.json').pipe(
+        catchError(error => {
+          // If local config doesn't exist, then continue silently.  This isn't an error condition. 
+          if(error.status === 404) {
+            return of(null);
+          }
+          // If localconfig fails for some reason other than 404, then that is an error.
+          return throwError(error);
+        })        
+      )
+    ]).pipe(
+      // Use lodash to deep merge local config into app config
+      map(forkData => merge({}, forkData[0], forkData[1])),
+      tap(config => {
+        this._appConfig = config;
+        this._initialized = true;
+        this.loaded.next(config);
+      }),
+      catchError(error => {
+        this._initializationError = error;
+        this._initialized = false;
+        return EMPTY;
+      })
     )
-    /* Convert to promise simply because APP_INITIALIZER
-    requires a promise. */
-    .toPromise()
-    .then(configs => {
-      /* On success mark initialized as true so that app.component knows
-      config intialization was successful. */
-      this._initialized = true;
-      this.loaded.next(this._appConfig);
-      return true;
-    })
-    .catch(error => {
-      /* On failure mark initialized as false and store the error
-      so that it can be logged and shown by app.component in ngOnInit. */
-      this._initializationError = error;
-      this._initialized = false;
-      return false;
-    });
   }
 }
