@@ -7,10 +7,17 @@
         "tags": null
     },
     {
-        "title": "NPR Program Stream",
-        "url": "https://nprdmp-live01-mp3.akacast.akamaistream.net/7/998/364916/v1/npr.akacast.akamaistream.net/nprdmp_live01_mp3",
+        "title": "NPR 24 Hour Program Stream",
+        "url": "http://npr-ice.streamguys1.com/live.mp3",
         "genre": "Public Radio",
         "iconUrl": "https://media.npr.org/chrome_svg/npr-logo.svg",
+        "tags": null
+    },
+    {
+        "title": "NPR News Summary",
+        "url": "http://pd.npr.org/anon.npr-mp3/npr/news/newscast.mp3",
+        "genre": "Public Radio",
+        "iconUrl": "https://lh4.ggpht.com/AnC8LtJK3CzWLuMrVee3FMgNrGcKXDPjtygeNfkLmV078Tu5C9L_bxcR0tEnnluu_e8=w300",
         "tags": null
     },
     {
