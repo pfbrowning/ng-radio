@@ -13,6 +13,7 @@ import { LoggingService } from '@modules/core/logging/logging.module';
 import { StreamInfoStatus } from '../models/stream-info-status';
 import { isEqual } from 'lodash';
 import isBlank from 'is-blank';
+import { FavoriteStation } from '../models/favorite-station';
 
 /** Service which handles the underlying core logic of playing radio
  * stations and maintains the nowPlaying state */
@@ -92,6 +93,11 @@ export class PlayerService {
         `${nowPlaying.streamInfo.title} - ${nowPlaying.station.title}` : nowPlaying.station.title;
       this.notificationService.notify(Severities.Info, 'Now Playing', notificationBody);
     }
+  }
+
+  public playFavoriteStation(favorite: FavoriteStation) {
+    const station = new Station(favorite.title, favorite.url, null, favorite.iconUrl);
+    this.playStation(station);
   }
 
   /** Plays the specified Station */
