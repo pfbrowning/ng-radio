@@ -59,11 +59,12 @@ My priorities for continuing development are as follows, in order:
 * Wire up the favorites functionality in the UI
   
 ## Backlog
+* Refactor module structure
 * Implement NGRX for state management throughout the app.
 * Fall back gracefully when Radio Browser API is down
 * Log Page Views & Initial App load
 * Increase polling interval
-* Refactor ConfigService such that we're exposing `getConfig$` as an observable piped through `shareReplay(1)` and then converting it to a promise within `APP_INITIALIZER`
+* Pass bearer token via HTTP_INTERCEPTOR
 * Refactor `loadMetadata` such that it always sets the status as "LoadingStreamInfo" and the template determines what to display based on the presence of stream info.
 * Refactor AuthenticationService & SleepTimerService to use something less bloated than Moment.js
 * Refactor AuthenticationService to expose the current user & authenticated state as observables
