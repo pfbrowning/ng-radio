@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { FavoriteStation } from '@core-radio-logic';
+import { Station } from '@core-radio-logic';
 
 export enum FavoriteStationsActions {
     FetchStationsStart = '[Favorite Stations] Fetch Stations Start',
@@ -13,7 +13,7 @@ export const fetchStationsStart = createAction(
 
 export const fetchStationsSucceeded = createAction(
     FavoriteStationsActions.FetchStationsSucceeded,
-    props<{ stations: Array<FavoriteStation> }>()
+    props<{ stations: Array<Station> }>()
 );
 
 export const fetchStationsFailed = createAction(

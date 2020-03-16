@@ -1,6 +1,6 @@
-import { FavoriteStation } from '@core-radio-logic';
+import { Station } from '@core-radio-logic';
 
 export interface FavoriteStationsState {
-    favoriteStations: Array<FavoriteStation>;
+    favoriteStations: Array<Station>;
     fetchInProgress: boolean;
 }

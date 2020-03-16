@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
 import { selectFavoriteStations } from '@root-state/favorite-stations';
-import { PlayerService, FavoriteStation } from '@core-radio-logic';
+import { PlayerService, Station } from '@core-radio-logic';
 
 @Component({
   templateUrl: './favorites.component.html',
@@ -16,8 +16,8 @@ export class FavoritesComponent {
 
   public stations$ = this.store.pipe(select(selectFavoriteStations));
 
-  public onRowClicked(station: FavoriteStation): void {
-    this.playerService.playFavoriteStation(station);
+  public onRowClicked(station: Station): void {
+    this.playerService.playStation(station);
   }
 
 }

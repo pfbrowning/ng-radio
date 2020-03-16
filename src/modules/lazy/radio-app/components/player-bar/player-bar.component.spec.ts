@@ -79,22 +79,22 @@ describe('PlayerBarComponent', () => {
     // Arrange: Define a few dummy NowPlaying entries
     const testEntries = [
       new NowPlaying(
-        new Station('station title', 'http://url.com', 'station genre', 'http://icon.com/'),
+        new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
         new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
+        new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
         new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
+        new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
         new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
+        new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
         new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
         StreamInfoStatus.Valid
       )
