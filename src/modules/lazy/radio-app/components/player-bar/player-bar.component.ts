@@ -7,6 +7,9 @@ import { NotificationService, Severities } from '@modules/core/notifications/not
 import { Subscription, merge, timer } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
+import { Store, select } from '@ngrx/store';
+import { RootState } from '@root-state';
+import { selectIsFavoriteStationFetchInProgress } from '@root-state/favorite-stations';
 
 @Component({
   selector: 'blr-player-bar',
@@ -19,10 +22,12 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     public keepAwakeService: KeepAwakeService,
     private notificationService: NotificationService,
     private changeDetectorRef: ChangeDetectorRef,
-    private router: Router) {}
+    private router: Router,
+    private store: Store<RootState>) {}
 
-  private changeDetectionSubscription: Subscription;
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
+  private changeDetectionSubscription: Subscription;
+  public loadingFavorites$ = this.store.pipe(select(selectIsFavoriteStationFetchInProgress));
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged

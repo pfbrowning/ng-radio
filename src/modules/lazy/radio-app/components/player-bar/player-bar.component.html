@@ -5,17 +5,24 @@
     <span class="fill-remaining"></span>
     <div [class.off-white]="(sleepTimerService.minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
       [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
-      class="indicator-icon large-screen-only" >
+      class="indicator-icon selectable large-screen-only" >
       <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{sleepTimerService.minutesUntilSleep$ | async}}</span>
     </div>
     <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
       [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
-      class="indicator-icon large-screen-only keep-awake">
+      class="indicator-icon selectable large-screen-only keep-awake">
       <mat-icon>settings_cell</mat-icon>
     </div>
-    <div class="indicator-icon large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >
-      <mat-icon>favorite</mat-icon>
-    </div>
+    <ng-container *ngIf="(loadingFavorites$ | async); else favoritesLoaded">
+      <div class="indicator-icon large-screen-only" matTooltip="Loading Favorites">
+        <mat-spinner diameter="25"></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-template #favoritesLoaded>
+      <div class="indicator-icon selectable large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >
+        <mat-icon>favorite</mat-icon>
+      </div>
+    </ng-template>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
       <mat-icon>more_vert</mat-icon>
     </button>
