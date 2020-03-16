@@ -1,6 +1,6 @@
 <h1 class="mat-headline">Favorite Stations</h1>
   
-<table mat-table [dataSource]="stations" class="selectable-rows mat-elevation-z2">
+<table mat-table [dataSource]="stations$ | async" class="selectable-rows mat-elevation-z2">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let station"> {{station.title}}</td>

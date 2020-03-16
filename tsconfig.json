@@ -19,9 +19,12 @@
       "dom"
     ],
     "paths": {
-      "@modules/*": ["src/modules/*"],
+      "@core-radio-logic": ["src/modules/core/core-radio-logic/index"],
+      "@root-state": ["src/modules/core/root-state/index"],
+      "@root-state/favorite-stations": ["src/modules/core/root-state/sections/favorite-stations/index"],
       "@test-helpers": ["src/test-helpers"],
-      "@utilities": ["src/utilities"]
+      "@utilities": ["src/utilities"],
+      "@modules/*": ["src/modules/*"],
     }
   }
 }

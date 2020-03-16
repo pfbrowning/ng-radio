@@ -14,6 +14,7 @@ import { KeepAwakeModule } from '@modules/core/keep-awake/keep-awake.module';
 import { NotificationsModule } from '@modules/core/notifications/notifications.module';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { AuthenticationModule } from '@modules/core/authentication/authentication.module';
+import { RootStateModule } from '@root-state';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthenticationModule } from '@modules/core/authentication/authenticatio
     LoggingModule,
     KeepAwakeModule,
     NotificationsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    RootStateModule
   ],
   bootstrap: [AppComponent]
 })
