@@ -1,3 +1,3 @@
 export { fetchStationsStart } from './store/favorite-stations.actions';
 
-export { selectFavoriteStationsResolverInput, selectFavoriteStations } from './store/favorite-stations.selectors';
+export { selectFavoriteStationsLoadingStatus, selectFavoriteStations } from './store/favorite-stations.selectors';

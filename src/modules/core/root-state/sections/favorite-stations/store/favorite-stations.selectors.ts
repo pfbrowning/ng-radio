@@ -8,13 +8,18 @@ export const selectFavoriteStations = createSelector(
     (state) => state.favoriteStations
 );
 
+export const selectAreFavoriteStationsLoaded = createSelector(
+    selectFavoriteStations,
+    (favoriteStations) => favoriteStations != null
+);
+
 export const selectIsFavoriteStationFetchInProgress = createSelector(
     selectFavoriteStationsState,
     (state) => state.fetchInProgress
 );
 
-export const selectFavoriteStationsResolverInput = createSelector(
-    selectFavoriteStations,
+export const selectFavoriteStationsLoadingStatus = createSelector(
+    selectAreFavoriteStationsLoaded,
     selectIsFavoriteStationFetchInProgress,
-    (favoriteStations, isFetchInProgress) => ({favoriteStations, isFetchInProgress})
+    (loaded, inProgress) => ({loaded, inProgress})
 )
