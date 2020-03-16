@@ -20,6 +20,9 @@
     ],
     "paths": {
       "@core-radio-logic": ["src/modules/core/core-radio-logic/index"],
+      "@core-radio-logic/testing": ["src/modules/core/core-radio-logic/index.spec"],
+      "@authentication/testing": ["src/modules/core/authentication/index.spec"],
+      "@config/testing": ["src/modules/core/config/index.spec"],
       "@root-state": ["src/modules/core/root-state/index"],
       "@root-state/favorite-stations": ["src/modules/core/root-state/sections/favorite-stations/index"],
       "@test-helpers": ["src/test-helpers"],

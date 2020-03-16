@@ -27,3 +27,7 @@ export function createSleepTimerServiceSpy(): any {
   spy['minutesUntilSleep$'] = new BehaviorSubject<number>(null);
   return spy;
 }
+
+export function createFavoriteStationsServiceSpy(): any {
+  return jasmine.createSpyObj('favoriteStationsService', ['fetchAll']);
+}

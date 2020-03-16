@@ -1,11 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { FavoriteStationsResolver } from './favorite-stations.resolver';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 
 describe('FavoriteStationsResolver', () => {
   let resolver: FavoriteStationsResolver;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({ initialState: initialRootState })
+      ]
+    });
     resolver = TestBed.inject(FavoriteStationsResolver);
   });
 
