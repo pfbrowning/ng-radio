@@ -17,4 +17,14 @@ export class FavoriteStationsService {
     const headers = new HttpHeaders({'Authorization': `Bearer ${this.oauthService.getAccessToken()}`});
     return this.httpClient.get<Array<Station>>(this.stationsResource, { headers: headers });
   }
+
+  public addFavorite(station: Station): Observable<Station> {
+    const headers = new HttpHeaders({'Authorization': `Bearer ${this.oauthService.getAccessToken()}`});
+    return this.httpClient.post<Station>(this.stationsResource, station, { headers: headers });
+  }
+
+  public removeFavorite(stationId: number): Observable<void> {
+    const headers = new HttpHeaders({'Authorization': `Bearer ${this.oauthService.getAccessToken()}`});
+    return this.httpClient.delete<void>(`${this.stationsResource}/${stationId}`, { headers: headers });
+  }
 }

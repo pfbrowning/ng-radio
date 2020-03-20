@@ -3,13 +3,17 @@ import { Router } from '@angular/router';
 import { SleepTimerService, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { setAltSrc } from '@utilities';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { Subscription, merge, timer } from 'rxjs';
-import { delay, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
-import { selectIsFavoriteStationFetchInProgress } from '@root-state/favorite-stations';
+import {
+  selectIsFavoriteStationFetchInProgress,
+  addCurrentStationToFavoritesRequested,
+  removeCurrentStationFromFavoritesRequested
+} from '@root-state/favorite-stations';
+import { selectIsCurrentStationInFavorites } from '@root-state/player';
 
 @Component({
   selector: 'blr-player-bar',
@@ -20,7 +24,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
     public keepAwakeService: KeepAwakeService,
-    private notificationService: NotificationService,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private store: Store<RootState>) {}
@@ -28,6 +31,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
   private changeDetectionSubscription: Subscription;
   public loadingFavorites$ = this.store.pipe(select(selectIsFavoriteStationFetchInProgress));
+  public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged
@@ -69,6 +73,10 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   public onAddToFavoritesClicked(): void {
-    this.notificationService.notify(Severities.Info, 'Coming Soon', 'Favorites functionality coming soon!');
+    this.store.dispatch(addCurrentStationToFavoritesRequested());
+  }
+
+  public onRemoveFromFavoritesClicked(): void {
+    this.store.dispatch(removeCurrentStationFromFavoritesRequested());    
   }
 }

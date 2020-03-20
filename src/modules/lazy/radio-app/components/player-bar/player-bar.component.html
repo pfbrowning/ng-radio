@@ -19,9 +19,14 @@
       </div>
     </ng-container>
     <ng-template #favoritesLoaded>
-      <div class="indicator-icon selectable large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >
+      <div *ngIf="isCurrentStationInFavorites$ | async; else isFavorite" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
         <mat-icon>favorite</mat-icon>
       </div>
+      <ng-template #isFavorite>
+        <div (click)="onAddToFavoritesClicked()" class="indicator-icon selectable large-screen-only off-white" matTooltip="Add To Favorites">
+          <mat-icon>favorite</mat-icon>
+        </div>
+      </ng-template>
     </ng-template>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
       <mat-icon>more_vert</mat-icon>

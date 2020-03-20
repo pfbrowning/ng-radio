@@ -1,4 +1,8 @@
-export { fetchStationsStart } from './store/favorite-stations.actions';
+export {
+    fetchStationsStart,
+    addCurrentStationToFavoritesRequested,
+    removeCurrentStationFromFavoritesRequested
+} from './store/favorite-stations.actions';
 
 export {
     selectFavoriteStationsLoadingStatus,
