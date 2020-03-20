@@ -1,7 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { SleepTimerService, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { setAltSrc } from '@utilities';
 import { Subscription, merge, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -14,6 +12,8 @@ import {
   removeCurrentStationFromFavoritesRequested
 } from '@root-state/favorite-stations';
 import { selectIsCurrentStationInFavorites } from '@root-state/player';
+import { PlayerService, SleepTimerService } from '@core-radio-logic';
+import { KeepAwakeService } from '@keep-awake';
 
 @Component({
   selector: 'blr-player-bar',

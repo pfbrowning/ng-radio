@@ -23,6 +23,7 @@
       "@logging": [ "src/modules/core/logging/index" ],
       "@core-radio-logic": ["src/modules/core/core-radio-logic/index"],
       "@core-radio-logic/testing": ["src/modules/core/core-radio-logic/index.spec"],
+      "@keep-awake": ["src/modules/core/keep-awake/index"],
       "@authentication/testing": ["src/modules/core/authentication/index.spec"],
       "@config": ["src/modules/core/config/index"],
       "@config/testing": ["src/modules/core/config/index.spec"],
