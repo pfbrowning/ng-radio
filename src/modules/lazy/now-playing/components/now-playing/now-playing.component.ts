@@ -69,17 +69,4 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   public onRemoveFromFavoritesClicked(): void {
     this.store.dispatch(removeCurrentStationFromFavoritesRequested());    
   }
-
-  public decideFavoritesProcessingButtonText(state: CurrentStationFavoritesProcessingState) {
-    switch(state) {
-      case CurrentStationFavoritesProcessingState.Fetching:
-        return "Loading...";
-      case CurrentStationFavoritesProcessingState.Adding:
-        return "Adding...";
-      case CurrentStationFavoritesProcessingState.Removing:
-        return "Removing...";
-      default:
-        return null;
-    }
-  }
 }

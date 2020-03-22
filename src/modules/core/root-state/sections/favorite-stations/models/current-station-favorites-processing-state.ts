@@ -1,3 +1,5 @@
 export enum CurrentStationFavoritesProcessingState {
-    Fetching, Adding, Removing
+    Loading = 'Loading',
+    Adding = 'Adding',
+    Removing = 'Removing'
 }

@@ -33,7 +33,7 @@ export const selectIsFavoriteStationFetchInProgress = createSelector(
 export const selectIsAddCurrentStationToFavoritesInProgress = createSelector(
     selectAddInProgressUrls,
     selectCurrentStation,
-    (inProgress, current) => inProgress.includes(current.url)
+    (inProgress, current) => current != null ? inProgress.includes(current.url) : false
 )
 
 export const selectCurrentFavoriteStation = createSelector(
@@ -68,7 +68,7 @@ export const selectCurrentStationFavoritesProcessingState = createSelector(
     selectIsRemoveCurrentStationFromFavoritesInProgress,
     (fetching, adding, removing) => {
         if(fetching) {
-            return CurrentStationFavoritesProcessingState.Fetching;
+            return CurrentStationFavoritesProcessingState.Loading;
         }
         if(adding) {
             return CurrentStationFavoritesProcessingState.Adding;

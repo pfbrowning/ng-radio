@@ -36,3 +36,9 @@
 :host ::ng-deep .mat-spinner circle {
     stroke:$offWhite;
 }
+
+.spinner-container {
+    display: inline-block;
+    margin-right: 16px;
+    vertical-align: middle;
+}

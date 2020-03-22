@@ -49,10 +49,24 @@
     <mat-icon>settings_cell</mat-icon>
     <span>Toggle Keep Awake</span>
   </button>
-  <button mat-menu-item (click)="onAddToFavoritesClicked()">
-    <mat-icon>favorite</mat-icon>
-    <span>Add To Favorites</span>
+  <button *ngIf="processingFavorites$ | async; else favoritesProcessed" mat-menu-item>
+    <span class="spinner-container">
+      <mat-spinner diameter="25"></mat-spinner>
+    </span>
+    <span>{{ favoritesProcessingState$ | async }}</span>
   </button>
+  <ng-template #favoritesProcessed>
+    <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
+      <mat-icon>favorite</mat-icon>
+      <span>Remove From Favorites</span>
+    </button>
+    <ng-template #notInFavorites>
+      <button mat-menu-item (click)="onAddToFavoritesClicked()">
+        <mat-icon>favorite</mat-icon>
+        <span>Add To Favorites</span>
+      </button>
+    </ng-template>
+  </ng-template>
 </mat-menu>
 
 <blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>

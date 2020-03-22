@@ -85,7 +85,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   public decideFavoritesProcessingTooltipText(state: CurrentStationFavoritesProcessingState) {
     switch(state) {
-      case CurrentStationFavoritesProcessingState.Fetching:
+      case CurrentStationFavoritesProcessingState.Loading:
         return "Loading Favorites";
       case CurrentStationFavoritesProcessingState.Adding:
         return "Adding Current Station To Favorites";
