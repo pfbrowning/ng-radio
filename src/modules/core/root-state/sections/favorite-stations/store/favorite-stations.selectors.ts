@@ -1,6 +1,7 @@
 import { RootState } from '../../../models/root-state';
 import { createSelector } from '@ngrx/store';
 import { selectCurrentStation } from '../../player/store/player.selectors';
+import { CurrentStationFavoritesProcessingState } from '../models/current-station-favorites-processing-state';
 
 export const selectFavoriteStationsState = (state: RootState) => state.favoriteStations;
 
@@ -61,21 +62,21 @@ export const selectIsProcessingFavoritesForCurrentStation = createSelector(
     (fetching, adding, removing) => fetching || adding || removing
 );
 
-export const selectCurrentStationFavoritesProcessingLabel = createSelector(
+export const selectCurrentStationFavoritesProcessingState = createSelector(
     selectIsFavoriteStationFetchInProgress,
     selectIsAddCurrentStationToFavoritesInProgress,
     selectIsRemoveCurrentStationFromFavoritesInProgress,
     (fetching, adding, removing) => {
         if(fetching) {
-            return "Loading Favorites";
+            return CurrentStationFavoritesProcessingState.Fetching;
         }
         if(adding) {
-            return "Adding Current Station To Favorites";
+            return CurrentStationFavoritesProcessingState.Adding;
         }
         if(removing) {
-            return "Removing Current Station From Favorites";
+            return CurrentStationFavoritesProcessingState.Removing;
         }
-        return "";
+        return null;
     }
 )
 

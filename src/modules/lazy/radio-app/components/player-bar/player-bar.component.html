@@ -14,7 +14,7 @@
       <mat-icon>settings_cell</mat-icon>
     </div>
     <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessed">
-      <div class="indicator-icon large-screen-only" [matTooltip]="favoritesProcessingLabel$ | async">
+      <div class="indicator-icon large-screen-only" [matTooltip]="decideFavoritesProcessingTooltipText(favoritesProcessingState$ | async)">
         <mat-spinner diameter="25"></mat-spinner>
       </div>
     </ng-container>

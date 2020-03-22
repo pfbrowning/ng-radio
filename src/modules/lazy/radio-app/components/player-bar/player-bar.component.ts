@@ -10,8 +10,9 @@ import {
   addCurrentStationToFavoritesRequested,
   removeCurrentStationFromFavoritesRequested,
   selectIsProcessingFavoritesForCurrentStation,
-  selectCurrentStationFavoritesProcessingLabel,
-  selectIsCurrentStationInFavorites
+  selectCurrentStationFavoritesProcessingState,
+  selectIsCurrentStationInFavorites,
+  CurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
 import { PlayerService, SleepTimerService } from '@core-radio-logic';
 import { KeepAwakeService } from '@keep-awake';
@@ -32,7 +33,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
   private changeDetectionSubscription: Subscription;
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
-  public favoritesProcessingLabel$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingLabel));
+  public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
 
   public ngOnInit() {
@@ -80,5 +81,18 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   public onRemoveFromFavoritesClicked(): void {
     this.store.dispatch(removeCurrentStationFromFavoritesRequested());    
+  }
+
+  public decideFavoritesProcessingTooltipText(state: CurrentStationFavoritesProcessingState) {
+    switch(state) {
+      case CurrentStationFavoritesProcessingState.Fetching:
+        return "Loading Favorites";
+      case CurrentStationFavoritesProcessingState.Adding:
+        return "Adding Current Station To Favorites";
+      case CurrentStationFavoritesProcessingState.Removing:
+        return "Removing Current Station From Favorites";
+      default:
+        return null;
+    }
   }
 }

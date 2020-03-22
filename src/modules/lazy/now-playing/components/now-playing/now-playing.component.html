@@ -39,7 +39,19 @@
           <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
         </li>
         <li>
-          <button mat-raised-button color="primary" (click)="onAddToFavoritesClicked()">Add To Favorites</button>
+          <button *ngIf="processingFavorites$ | async; else favoritesProcessed" disabled mat-raised-button type="button" color="primary">
+            {{ decideFavoritesProcessingButtonText(favoritesProcessingState$ | async) }}
+          </button>
+          <ng-template #favoritesProcessed>
+            <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" mat-raised-button type="button" color="primary">
+              Remove From Favorites
+            </button>
+            <ng-template #notInFavorites>
+              <button (click)="onAddToFavoritesClicked()" mat-raised-button type="button" color="primary">
+                Add To Favorites
+              </button>
+            </ng-template>
+          </ng-template>
         </li>
       </ul>
     </div>

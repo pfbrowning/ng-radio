@@ -1,4 +1,8 @@
 export {
+    CurrentStationFavoritesProcessingState
+} from './models/current-station-favorites-processing-state';
+
+export {
     fetchStationsStart,
     addCurrentStationToFavoritesRequested,
     removeCurrentStationFromFavoritesRequested
@@ -9,7 +13,7 @@ export {
     selectFavoriteStations,
     selectIsFavoriteStationFetchInProgress,
     selectIsProcessingFavoritesForCurrentStation,
-    selectCurrentStationFavoritesProcessingLabel,
+    selectCurrentStationFavoritesProcessingState,
     selectIsCurrentStationInFavorites,
     selectCurrentFavoriteStationId
 } from './store/favorite-stations.selectors';
