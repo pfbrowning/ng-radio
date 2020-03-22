@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
-import { selectFavoriteStations } from '@root-state/favorite-stations';
 import { PlayerService, Station } from '@core-radio-logic';
+import { selectFavoriteStationRows, removeFromFavoritesStart } from '@root-state/favorite-stations';
 
 @Component({
   templateUrl: './favorites.component.html',
@@ -11,13 +11,17 @@ import { PlayerService, Station } from '@core-radio-logic';
 export class FavoritesComponent {
   constructor(private store: Store<RootState>, private playerService: PlayerService) { }
 
-  public columns = ['name', 'icon'];
+  public columns = ['spinner', 'name', 'icon', 'actions'];
   public loading = false;
 
-  public stations$ = this.store.pipe(select(selectFavoriteStations));
+  public stationRows$ = this.store.pipe(select(selectFavoriteStationRows));
 
   public onRowClicked(station: Station): void {
     this.playerService.playStation(station);
+  }
+  
+  public onDeleteClicked(stationId: number): void {
+    this.store.dispatch(removeFromFavoritesStart({stationId}));
   }
 
 }

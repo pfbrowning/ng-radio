@@ -8,10 +8,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex: 1 1 auto;
 }
 
-table.mat-table.selectable-rows {
-    .mat-row {
-        cursor: pointer;
-    }
+table.mat-table.selectable-rows .mat-row,
+table.mat-table .mat-row.selectable-row {
+    cursor: pointer;
 }
 
 @media (min-width:$smallScreenCutoff) {

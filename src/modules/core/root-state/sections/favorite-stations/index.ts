@@ -5,7 +5,8 @@ export {
 export {
     fetchStationsStart,
     addCurrentStationToFavoritesRequested,
-    removeCurrentStationFromFavoritesRequested
+    removeCurrentStationFromFavoritesRequested,
+    removeFromFavoritesStart
 } from './store/favorite-stations.actions';
 
 export {
@@ -15,5 +16,6 @@ export {
     selectIsProcessingFavoritesForCurrentStation,
     selectCurrentStationFavoritesProcessingState,
     selectIsCurrentStationInFavorites,
-    selectCurrentFavoriteStationId
+    selectCurrentFavoriteStationId,
+    selectFavoriteStationRows
 } from './store/favorite-stations.selectors';

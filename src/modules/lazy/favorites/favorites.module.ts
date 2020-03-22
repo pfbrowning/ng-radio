@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FavoritesRoutingModule } from './favorites-routing.module';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -11,7 +13,9 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     CommonModule,
     FavoritesRoutingModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ]
 })
 export class FavoritesModule {}

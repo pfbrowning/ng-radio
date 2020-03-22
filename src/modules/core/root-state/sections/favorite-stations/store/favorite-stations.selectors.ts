@@ -2,6 +2,7 @@ import { RootState } from '../../../models/root-state';
 import { createSelector } from '@ngrx/store';
 import { selectCurrentStation } from '../../player/store/player.selectors';
 import { CurrentStationFavoritesProcessingState } from '../models/current-station-favorites-processing-state';
+import { FavoriteStationRow } from '../models/favorite-station-row';
 
 export const selectFavoriteStationsState = (state: RootState) => state.favoriteStations;
 
@@ -23,6 +24,14 @@ export const selectAddInProgressUrls = createSelector(
 export const selectRemoveInProgressIds = createSelector(
     selectFavoriteStationsState,
     (state) => state.removeInProgressIds
+)
+
+export const selectFavoriteStationRows = createSelector(
+    selectFavoriteStations,
+    selectRemoveInProgressIds,
+    (stations, removing) => stations != null
+        ? stations.map(s => new FavoriteStationRow(s, removing.includes(s.stationId)))
+        : []
 )
 
 export const selectIsFavoriteStationFetchInProgress = createSelector(
