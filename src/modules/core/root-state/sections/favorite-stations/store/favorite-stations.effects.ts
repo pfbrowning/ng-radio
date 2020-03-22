@@ -18,9 +18,9 @@ import { of } from 'rxjs';
 import { FavoriteStationsService } from '@core-radio-logic';
 import { selectStation } from '../../player/store/player-actions';
 import { Store, select } from '@ngrx/store';
-import { selectFavoriteStationsLoadingStatus } from './favorite-stations.selectors';
+import { selectFavoriteStationsLoadingStatus, selectIsCurrentStationInFavorites, selectCurrentFavoriteStationId } from './favorite-stations.selectors';
 import { RootState } from '@root-state';
-import { selectIsCurrentStationInFavorites, selectCurrentStation, selectCurrentFavoriteStationId } from '../../player/store/player.selectors';
+import { selectCurrentStation } from '../../player/store/player.selectors';
 
 @Injectable()
 export class FavoriteStationsEffects {

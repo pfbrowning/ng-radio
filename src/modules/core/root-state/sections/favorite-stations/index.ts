@@ -7,5 +7,9 @@ export {
 export {
     selectFavoriteStationsLoadingStatus,
     selectFavoriteStations,
-    selectIsFavoriteStationFetchInProgress
+    selectIsFavoriteStationFetchInProgress,
+    selectIsProcessingFavoritesForCurrentStation,
+    selectCurrentStationFavoritesProcessingLabel,
+    selectIsCurrentStationInFavorites,
+    selectCurrentFavoriteStationId
 } from './store/favorite-stations.selectors';

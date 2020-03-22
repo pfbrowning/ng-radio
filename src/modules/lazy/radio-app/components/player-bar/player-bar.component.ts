@@ -7,11 +7,12 @@ import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
 import {
-  selectIsFavoriteStationFetchInProgress,
   addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested
+  removeCurrentStationFromFavoritesRequested,
+  selectIsProcessingFavoritesForCurrentStation,
+  selectCurrentStationFavoritesProcessingLabel,
+  selectIsCurrentStationInFavorites
 } from '@root-state/favorite-stations';
-import { selectIsCurrentStationInFavorites } from '@root-state/player';
 import { PlayerService, SleepTimerService } from '@core-radio-logic';
 import { KeepAwakeService } from '@keep-awake';
 
@@ -30,7 +31,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
   private changeDetectionSubscription: Subscription;
-  public loadingFavorites$ = this.store.pipe(select(selectIsFavoriteStationFetchInProgress));
+  public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
+  public favoritesProcessingLabel$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingLabel));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
 
   public ngOnInit() {

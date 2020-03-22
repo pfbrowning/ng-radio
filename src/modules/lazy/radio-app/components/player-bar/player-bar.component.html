@@ -13,12 +13,12 @@
       class="indicator-icon selectable large-screen-only keep-awake">
       <mat-icon>settings_cell</mat-icon>
     </div>
-    <ng-container *ngIf="(loadingFavorites$ | async); else favoritesLoaded">
-      <div class="indicator-icon large-screen-only" matTooltip="Loading Favorites">
+    <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessed">
+      <div class="indicator-icon large-screen-only" [matTooltip]="favoritesProcessingLabel$ | async">
         <mat-spinner diameter="25"></mat-spinner>
       </div>
     </ng-container>
-    <ng-template #favoritesLoaded>
+    <ng-template #favoritesProcessed>
       <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
         <mat-icon>favorite</mat-icon>
       </div>
