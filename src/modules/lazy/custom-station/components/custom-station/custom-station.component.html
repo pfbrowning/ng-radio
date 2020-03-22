@@ -6,16 +6,14 @@
         <input matInput #titleInput="matInput" [(ngModel)]="station.title" name="title" placeholder="Station Title">
       </mat-form-field>
       <mat-form-field class="flex-column-half">
-        <input matInput required [(ngModel)]="station.url" name="url" placeholder="Stream URL" [pattern]="urlPattern">
-        <mat-error *ngIf="form.form.controls['url']?.hasError('pattern')">Station URL must be a valid URL.</mat-error>
+        <input matInput required [(ngModel)]="station.url" name="url" placeholder="Stream URL">
         <mat-error *ngIf="form.form.controls['url']?.hasError('required')">Station URL is required.</mat-error>
       </mat-form-field>
       <mat-form-field class="flex-column-half">
         <input matInput [(ngModel)]="station.genre" name="genre" placeholder="Genre">
       </mat-form-field>
       <mat-form-field class="flex-column-half">
-        <input matInput [(ngModel)]="station.iconUrl" name="icon-url" placeholder="Icon URL" [pattern]="urlPattern">
-        <mat-error *ngIf="form.form.controls['icon-url']?.hasError('pattern')">Icon URL must be a valid URL.</mat-error>
+        <input matInput [(ngModel)]="station.iconUrl" name="icon-url" placeholder="Icon URL">
       </mat-form-field>
     </fieldset>
     <div style="text-align: center;">
