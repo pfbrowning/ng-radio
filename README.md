@@ -78,6 +78,7 @@ ng serve --open
     * [Socket.IO](https://www.npmjs.com/package/socket.io)
     * Long-polling based streamInfoChange API logic
   * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
+  * Favorite station edits
   * Favorite station tags
   * Browser-based audio recording
   * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
