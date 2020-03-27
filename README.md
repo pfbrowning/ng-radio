@@ -59,7 +59,6 @@ ng serve --open
   * Refactor module structure
   * Pass bearer token via HTTP_INTERCEPTOR
   * Implement NGRX for state management throughout the app.
-  * Increase polling interval
   * Log Page Views & Initial App load
   * Remove moment.js entirely.  Replace with day.js if a third party lib is needed.
   * Migrate build from classic Azure DevOps to YAML build
