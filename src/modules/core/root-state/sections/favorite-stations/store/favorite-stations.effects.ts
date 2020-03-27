@@ -13,7 +13,7 @@ import {
   addCurrentStationToFavoritesRequested,
   removeCurrentStationFromFavoritesRequested
 } from './favorite-stations.actions';
-import { switchMap, catchError, map, withLatestFrom, filter, mergeMap } from 'rxjs/operators';
+import { switchMap, catchError, map, withLatestFrom, filter, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { FavoriteStationsService } from '@core-radio-logic';
 import { selectStation } from '../../player/store/player-actions';
@@ -21,13 +21,15 @@ import { Store, select } from '@ngrx/store';
 import { selectFavoriteStationsLoadingStatus, selectIsCurrentStationInFavorites, selectCurrentFavoriteStationId } from './favorite-stations.selectors';
 import { RootState } from '@root-state';
 import { selectCurrentStation } from '../../player/store/player.selectors';
+import { NotificationService, Severities } from '@notifications';
 
 @Injectable()
 export class FavoriteStationsEffects {
   constructor(
     private actions$: Actions,
     private store: Store<RootState>,
-    private favoriteStationsService: FavoriteStationsService
+    private favoriteStationsService: FavoriteStationsService,
+    private notificationService: NotificationService
   ) {}
 
   fetchStations$ = createEffect(() => this.actions$.pipe(
@@ -82,4 +84,9 @@ export class FavoriteStationsEffects {
     filter(([action, selected]) => !selected.loaded && !selected.inProgress),
     map(() => fetchStationsStart())
   ));
+
+  notifyAddSucceeded$ = createEffect(() => this.actions$.pipe(
+    ofType(addToFavoritesSucceeded),
+    tap(action => this.notificationService.notify(Severities.Success, 'Added To Favorites', `${action.station.title} has been added to favorites.`))
+  ), { dispatch: false });
 }
