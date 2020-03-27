@@ -53,46 +53,37 @@ Once you've got the aforementioned dependencies configured, running, and in a ha
 npm install
 ng serve --open
 ```
-## Roadmap For 1.0.0
-My priorities for continuing development are as follows, in order:
-* Finish 1.0.0 of the [Favorite Stations API](https://github.com/pfbrowning/favorite-stations-api)
-* Wire up the favorites functionality in the UI
   
 ## Backlog
-* Refactor module structure
-* Implement NGRX for state management throughout the app.
-* Fall back gracefully when Radio Browser API is down
-* Log Page Views & Initial App load
-* Increase polling interval
-* Pass bearer token via HTTP_INTERCEPTOR
-* Refactor `loadMetadata` such that it always sets the status as "LoadingStreamInfo" and the template determines what to display based on the presence of stream info.
-* Refactor AuthenticationService & SleepTimerService to use something less bloated than Moment.js
-* Refactor AuthenticationService to expose the current user & authenticated state as observables
-* Replace Angular Material with PrimeNG
-* Optimize bundle size
-* Migrate build from classic Azure DevOps to YAML build
-* Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
-* Package up generic, reusable things individually and publish them to npm
-    * setAltSrc function
-    * ActivatedRouteStub class
-    * ConfigModule
-    * AuthenticationModule
-* Investigate alternatives to interval-based polling for "Now Playing" stream info
-  * [icecast.js](https://www.npmjs.com/package/icecast.js)
-  * [Socket.IO](https://www.npmjs.com/package/socket.io)
-  * Long-polling based streamInfoChange API logic
-* Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
-* Write a [Custom PrimeNG Theme](https://browninglogic.com/2018/11/30/92/) based on the default one, but with rounded borders for the toaster notification.
-* Favorite station tags
-* Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
-* Better handling of mobile input on search
-* Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
-* Minimize redundant API fetches by caching retrieved data which isn't expected to change frequently.
-* Show "Now Playing" stream info for "Suggested", "Favorites", and search results
-* Search by country and any other Radio Browser API criteria which makes sense
-* Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
-* LocalStorage-based "Recently Listened"
-* Browser-based audio recording
-* Switch to and enforce HTTPS.
-  * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
-  * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
+* Chores
+  * Refactor module structure
+  * Pass bearer token via HTTP_INTERCEPTOR
+  * Implement NGRX for state management throughout the app.
+  * Increase polling interval
+  * Log Page Views & Initial App load
+  * Remove moment.js entirely.  Replace with day.js if a third party lib is needed.
+  * Migrate build from classic Azure DevOps to YAML build
+  * Optimize bundle size
+  * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
+  * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
+  * Package up reusable things and deploy to npm
+  * Switch to and enforce HTTPS.
+    * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
+    * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
+* Bugs
+  * Fall back gracefully when Radio Browser API is down
+  * Improve handling of mobile input on search
+* Features
+  * Investigate alternatives to interval-based polling for "Now Playing" stream info
+    * [icecast.js](https://www.npmjs.com/package/icecast.js)
+    * [Socket.IO](https://www.npmjs.com/package/socket.io)
+    * Long-polling based streamInfoChange API logic
+  * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
+  * Favorite station tags
+  * Browser-based audio recording
+  * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
+  * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
+  * Support pls & similar files by fetching and reading the file itself to find a valid URL
+  * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
+  * Search by country and any other Radio Browser API criteria which makes sense
+  * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
