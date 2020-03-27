@@ -5,4 +5,4 @@ import { initialPlayerState } from '../sections/player/models/initial-player-sta
 export const initialRootState: RootState = {
     favoriteStations: initialFavoriteStationsState,
     player: initialPlayerState
-}
+};

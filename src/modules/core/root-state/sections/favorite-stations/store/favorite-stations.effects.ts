@@ -10,7 +10,7 @@ import {
   addToFavoritesFailed,
   removeFromFavoritesSucceeded,
   removeFromFavoritesFailed,
-  addCurrentStationToFavoritesRequested, 
+  addCurrentStationToFavoritesRequested,
   removeCurrentStationFromFavoritesRequested
 } from './favorite-stations.actions';
 import { switchMap, catchError, map, withLatestFrom, filter, mergeMap } from 'rxjs/operators';

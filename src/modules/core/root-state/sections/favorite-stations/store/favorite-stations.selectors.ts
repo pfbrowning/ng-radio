@@ -24,7 +24,7 @@ export const selectAddInProgressUrls = createSelector(
 export const selectRemoveInProgressIds = createSelector(
     selectFavoriteStationsState,
     (state) => state.removeInProgressIds
-)
+);
 
 export const selectFavoriteStationRows = createSelector(
     selectFavoriteStations,
@@ -32,7 +32,7 @@ export const selectFavoriteStationRows = createSelector(
     (stations, removing) => stations != null
         ? stations.map(s => new FavoriteStationRow(s, removing.includes(s.stationId)))
         : []
-)
+);
 
 export const selectIsFavoriteStationFetchInProgress = createSelector(
     selectFavoriteStationsState,
@@ -43,7 +43,7 @@ export const selectIsAddCurrentStationToFavoritesInProgress = createSelector(
     selectAddInProgressUrls,
     selectCurrentStation,
     (inProgress, current) => current != null ? inProgress.includes(current.url) : false
-)
+);
 
 export const selectCurrentFavoriteStation = createSelector(
     selectFavoriteStations,
@@ -51,12 +51,12 @@ export const selectCurrentFavoriteStation = createSelector(
     (favorites, current) => favorites != null && current != null
         ? favorites.find(f => f.stationId === current.stationId || f.url === current.url)
         : null
-)
+);
 
 export const selectCurrentFavoriteStationId = createSelector(
     selectCurrentFavoriteStation,
     favorite => favorite != null ? favorite.stationId : null
-)
+);
 
 export const selectIsRemoveCurrentStationFromFavoritesInProgress = createSelector(
     selectRemoveInProgressIds,
@@ -76,26 +76,26 @@ export const selectCurrentStationFavoritesProcessingState = createSelector(
     selectIsAddCurrentStationToFavoritesInProgress,
     selectIsRemoveCurrentStationFromFavoritesInProgress,
     (fetching, adding, removing) => {
-        if(fetching) {
+        if (fetching) {
             return CurrentStationFavoritesProcessingState.Loading;
         }
-        if(adding) {
+        if (adding) {
             return CurrentStationFavoritesProcessingState.Adding;
         }
-        if(removing) {
+        if (removing) {
             return CurrentStationFavoritesProcessingState.Removing;
         }
         return null;
     }
-)
+);
 
 export const selectFavoriteStationsLoadingStatus = createSelector(
     selectAreFavoriteStationsLoaded,
     selectIsFavoriteStationFetchInProgress,
     (loaded, inProgress) => ({loaded, inProgress})
-)
+);
 
 export const selectIsCurrentStationInFavorites = createSelector(
     selectCurrentFavoriteStation,
     favorite => favorite != null
-)
+);

@@ -1,4 +1,4 @@
-import { playerReducer } from "./player.reducer";
+import { playerReducer } from './player.reducer';
 import { initialPlayerState } from '../models/initial-player-state';
 
 describe('Player Reducer', () => {

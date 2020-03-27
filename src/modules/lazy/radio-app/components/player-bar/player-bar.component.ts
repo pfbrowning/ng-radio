@@ -80,17 +80,17 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   public onRemoveFromFavoritesClicked(): void {
-    this.store.dispatch(removeCurrentStationFromFavoritesRequested());    
+    this.store.dispatch(removeCurrentStationFromFavoritesRequested());
   }
 
   public decideFavoritesProcessingTooltipText(state: CurrentStationFavoritesProcessingState) {
-    switch(state) {
+    switch (state) {
       case CurrentStationFavoritesProcessingState.Loading:
-        return "Loading Favorites";
+        return 'Loading Favorites';
       case CurrentStationFavoritesProcessingState.Adding:
-        return "Adding Current Station To Favorites";
+        return 'Adding Current Station To Favorites';
       case CurrentStationFavoritesProcessingState.Removing:
-        return "Removing Current Station From Favorites";
+        return 'Removing Current Station From Favorites';
       default:
         return null;
     }

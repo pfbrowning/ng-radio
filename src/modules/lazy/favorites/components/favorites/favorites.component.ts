@@ -19,14 +19,14 @@ export class FavoritesComponent {
   public onRowClicked(station: Station): void {
     this.playerService.playStation(station);
   }
-  
+
   public onDeleteClicked(station: Station, event): void {
     // Don't propagate up to row click
     event.stopPropagation();
     this.confirmationService.confirm({
       message: `Are you sure you want to delete ${station.title}?`,
       accept: () => this.store.dispatch(removeFromFavoritesStart({stationId: station.stationId}))
-    })    
+    });
   }
 
 }

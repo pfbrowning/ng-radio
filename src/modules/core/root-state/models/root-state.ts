@@ -2,6 +2,6 @@ import { FavoriteStationsState } from '../sections/favorite-stations/models/favo
 import { PlayerState } from '../sections/player/models/player-state';
 
 export interface RootState {
-    favoriteStations: FavoriteStationsState,
-    player: PlayerState
+    favoriteStations: FavoriteStationsState;
+    player: PlayerState;
 }

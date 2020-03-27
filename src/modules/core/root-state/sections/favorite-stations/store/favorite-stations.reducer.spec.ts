@@ -1,4 +1,4 @@
-import { favoriteStationsReducer } from "./favorite-stations.reducer";
+import { favoriteStationsReducer } from './favorite-stations.reducer';
 import { initialFavoriteStationsState } from '../models/initial-favorite-stations-state';
 
 

@@ -15,7 +15,7 @@ export class FavoriteStationsResolver implements Resolve<void> {
       filter(selected => !selected.inProgress),
       map(selected => selected.loaded),
       tap(loaded => {
-        if(!loaded) {
+        if (!loaded) {
           this.store.dispatch(fetchStationsStart());
         }
       }),

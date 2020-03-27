@@ -8,7 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
 import {
   addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested, 
+  removeCurrentStationFromFavoritesRequested,
   selectIsProcessingFavoritesForCurrentStation,
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState,
@@ -67,6 +67,6 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   }
 
   public onRemoveFromFavoritesClicked(): void {
-    this.store.dispatch(removeCurrentStationFromFavoritesRequested());    
+    this.store.dispatch(removeCurrentStationFromFavoritesRequested());
   }
 }
