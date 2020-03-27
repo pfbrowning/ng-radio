@@ -98,7 +98,7 @@ describe('StationLookupService', () => {
           'language': 'English',
           'bitrate': '48'
         },
-        expected: new Station('name', 'someplace.com', null, 'icon.com')
+        expected: new Station(null, 'name', 'someplace.com', null, 'icon.com')
       },
       {
         response: {
@@ -112,7 +112,7 @@ describe('StationLookupService', () => {
           'language': 'English',
           'bitrate': '48'
         },
-        expected: new Station('name 2', 'url 2', null, 'favicon 2', ['tag1', 'tag2', 'tag3'])
+        expected: new Station(null, 'name 2', 'url 2', null, 'favicon 2', ['tag1', 'tag2', 'tag3'])
       },
       {
         response: {
@@ -126,7 +126,7 @@ describe('StationLookupService', () => {
           'language': 'English',
           'bitrate': '48'
         },
-        expected: new Station('name 3', 'url 3', null, 'favicon 3')
+        expected: new Station(null, 'name 3', 'url 3', null, 'favicon 3')
       }
     ];
 

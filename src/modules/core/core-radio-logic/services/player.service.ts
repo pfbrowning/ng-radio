@@ -4,15 +4,18 @@ import { NowPlaying } from '../models/now-playing';
 import { StreamInfoService } from './stream-info.service';
 import { interval, Subscription, BehaviorSubject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
-import { ConfigService } from '@modules/core/config/config.module';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { SleepTimerService } from './sleep-timer.service';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElement } from '../models/audio-element';
-import { LoggingService } from '@modules/core/logging/logging.module';
 import { StreamInfoStatus } from '../models/stream-info-status';
 import { isEqual } from 'lodash';
 import isBlank from 'is-blank';
+import { RootState } from '@root-state';
+import { Store } from '@ngrx/store';
+import { NotificationService, Severities } from '@notifications';
+import { LoggingService } from '@logging';
+import { ConfigService } from '@config';
+import { selectStation } from '@root-state/player';
 
 /** Service which handles the underlying core logic of playing radio
  * stations and maintains the nowPlaying state */
@@ -24,6 +27,7 @@ export class PlayerService {
     private loggingService: LoggingService,
     private configService: ConfigService,
     private titleService: Title,
+    private store: Store<RootState>,
     @Inject(AudioElementToken) private audio: AudioElement) {
       /* Subscribe to the events that we care about from the AudioElement
       and pass them on to the appropriate handler. */
@@ -96,6 +100,7 @@ export class PlayerService {
 
   /** Plays the specified Station */
   public playStation(station: Station) {
+    this.store.dispatch(selectStation({station}));
     // Pause the current audio in case it's already playing something
     this.pause();
     // Update the current station

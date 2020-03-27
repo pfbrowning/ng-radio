@@ -4,11 +4,10 @@ import { ConfigService } from './services/config.service';
 import { HttpClientModule } from '@angular/common/http';
 
 export function initializeConfig(configService: ConfigService) {
-    return () => configService.initialize().toPromise();
+  return () => configService.initialize().toPromise();
 }
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     HttpClientModule

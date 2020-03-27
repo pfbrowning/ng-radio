@@ -66,7 +66,7 @@ export class StationLookupService {
   private mapStation(station: any) {
     // If a non-empty tags string was provided, then split it into an array by the comma delimiter
     const tags = !isBlank(station.tags) ? station.tags.split(',') : null;
-    return new Station(station.name, station.url, null, station.favicon, tags);
+    return new Station(null, station.name, station.url, null, station.favicon, tags);
   }
 
   /** Retrieves the 'Developer-Suggested' stations from the JSON file stored in 'assets' */

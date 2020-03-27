@@ -9,11 +9,20 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
-import { PlayerService, CoreRadioLogicModule, NowPlaying, Station, StreamInfo,
-  StreamInfoStatus, SleepTimerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { createPlayerServiceSpy, createSleepTimerServiceSpy
-  } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
+import {
+  PlayerService,
+  CoreRadioLogicModule,
+  NowPlaying,
+  Station,
+  StreamInfo,
+  StreamInfoStatus,
+  SleepTimerService
+} from '@modules/core/core-radio-logic/core-radio-logic.module';
+import {
+  createPlayerServiceSpy,
+  createSleepTimerServiceSpy
+} from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { NotificationService } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
@@ -22,6 +31,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -59,7 +70,8 @@ describe('PlayerBarComponent', () => {
         { provide: PlayerService, useValue: playerService },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService }
+        { provide: SleepTimerService, useValue: sleepTimerService },
+        provideMockStore({ initialState: initialRootState })
       ]
     })
     .compileComponents();
@@ -79,22 +91,22 @@ describe('PlayerBarComponent', () => {
     // Arrange: Define a few dummy NowPlaying entries
     const testEntries = [
       new NowPlaying(
-        new Station('station title', 'http://url.com', 'station genre', 'http://icon.com/'),
+        new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
         new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
+        new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
         new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
+        new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
         new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
         StreamInfoStatus.Valid
       ),
       new NowPlaying(
-        new Station('Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
+        new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
         new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
         StreamInfoStatus.Valid
       )
