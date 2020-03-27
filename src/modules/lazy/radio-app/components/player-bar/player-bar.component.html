@@ -5,17 +5,29 @@
     <span class="fill-remaining"></span>
     <div [class.off-white]="(sleepTimerService.minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
       [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
-      class="indicator-icon large-screen-only" >
+      class="indicator-icon selectable large-screen-only" >
       <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{sleepTimerService.minutesUntilSleep$ | async}}</span>
     </div>
     <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
       [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
-      class="indicator-icon large-screen-only keep-awake">
+      class="indicator-icon selectable large-screen-only keep-awake">
       <mat-icon>settings_cell</mat-icon>
     </div>
-    <div class="indicator-icon large-screen-only" matTooltip="Add To Favorites" (click)="onAddToFavoritesClicked()" >
-      <mat-icon>favorite</mat-icon>
-    </div>
+    <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessed">
+      <div class="indicator-icon large-screen-only" [matTooltip]="decideFavoritesProcessingTooltipText(favoritesProcessingState$ | async)">
+        <mat-spinner diameter="25"></mat-spinner>
+      </div>
+    </ng-container>
+    <ng-template #favoritesProcessed>
+      <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
+        <mat-icon>favorite</mat-icon>
+      </div>
+      <ng-template #notInFavorites>
+        <div (click)="onAddToFavoritesClicked()" class="indicator-icon selectable large-screen-only off-white" matTooltip="Add To Favorites">
+          <mat-icon>favorite</mat-icon>
+        </div>
+      </ng-template>
+    </ng-template>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -37,10 +49,24 @@
     <mat-icon>settings_cell</mat-icon>
     <span>Toggle Keep Awake</span>
   </button>
-  <button mat-menu-item (click)="onAddToFavoritesClicked()">
-    <mat-icon>favorite</mat-icon>
-    <span>Add To Favorites</span>
+  <button *ngIf="processingFavorites$ | async; else favoritesProcessed" mat-menu-item>
+    <span class="spinner-container">
+      <mat-spinner diameter="25"></mat-spinner>
+    </span>
+    <span>{{ favoritesProcessingState$ | async }}</span>
   </button>
+  <ng-template #favoritesProcessed>
+    <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
+      <mat-icon>favorite</mat-icon>
+      <span>Remove From Favorites</span>
+    </button>
+    <ng-template #notInFavorites>
+      <button mat-menu-item (click)="onAddToFavoritesClicked()">
+        <mat-icon>favorite</mat-icon>
+        <span>Add To Favorites</span>
+      </button>
+    </ng-template>
+  </ng-template>
 </mat-menu>
 
 <blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>

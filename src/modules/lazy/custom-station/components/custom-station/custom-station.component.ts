@@ -16,7 +16,6 @@ export class CustomStationComponent implements OnInit {
 
   @ViewChild('titleInput', { static: true }) titleInput: MatInput;
   public station: Station = new Station();
-  public urlPattern = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
 
   ngOnInit() {
     /* Focus the title input on init so that the user can start typing
@@ -30,7 +29,7 @@ export class CustomStationComponent implements OnInit {
       the player service because the object reference will
       be cleared once we reset the form. */
       this.playerService.playStation(clone(this.station));
-      this.router.navigate(['/now-playing']);
+      this.router.navigate(['/app', 'now-playing']);
     }
   }
 }

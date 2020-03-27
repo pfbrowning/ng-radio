@@ -12,6 +12,7 @@ import { PlayerBarComponent } from './components/player-bar/player-bar.component
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SharedComponentsModule } from '@modules/shared/shared-components/shared
     ResponsiveSidenavModule,
     MatMenuModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     SharedComponentsModule
   ]
 })

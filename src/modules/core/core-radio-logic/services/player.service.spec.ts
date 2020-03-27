@@ -14,6 +14,8 @@ import { Title } from '@angular/platform-browser';
 import { LoggingService } from '@modules/core/logging/logging.module';
 import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
 import { StreamInfoStatus } from '../models/stream-info-status';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 import isBlank from 'is-blank';
 
 describe('PlayerService', () => {
@@ -42,7 +44,8 @@ describe('PlayerService', () => {
         { provide: StreamInfoService, useClass: StreamInfoServiceStub },
         { provide: NotificationService, useValue: notificationServiceSpy },
         { provide: AudioElementToken, useValue: audioElement },
-        { provide: LoggingService, useValue: loggingServiceSpy }
+        { provide: LoggingService, useValue: loggingServiceSpy },
+        provideMockStore({ initialState: initialRootState })
       ]
     });
     playerService = TestBed.inject(PlayerService);
@@ -88,11 +91,11 @@ describe('PlayerService', () => {
   it('should properly change stations', () => {
     // Arrange: Set up some dummy test data
     const testEntries = [
-      new Station('station 1', 'url 1', 'genre 1', 'someicon.jpg', null),
-      new Station('another station', 'http://79.111.119.111:9107/;', 'Speed Metal', null, ['tag 1', 'another tag']),
-      new Station('Radio Metal On: The Thrasher', 'http://188.165.212.92:8020/thrasher128mp3',
+      new Station(null, 'station 1', 'url 1', 'genre 1', 'someicon.jpg', null),
+      new Station(null, 'another station', 'http://79.111.119.111:9107/;', 'Speed Metal', null, ['tag 1', 'another tag']),
+      new Station(null, 'Radio Metal On: The Thrasher', 'http://188.165.212.92:8020/thrasher128mp3',
         'Thrash Metal', 'http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg'),
-      new Station('WQXR', 'http://stream.wqxr.org/wqxr')
+      new Station(null, 'WQXR', 'http://stream.wqxr.org/wqxr')
     ];
 
     let iteration = 0;
@@ -125,7 +128,7 @@ describe('PlayerService', () => {
   it('should properly load initial metadata', fakeAsync(() => {
     // Arrange
     // Set up our dummy station
-    const testStation = new Station('Station Title', 'station url');
+    const testStation = new Station(null, 'Station Title', 'station url');
     // The audio element should not have been played or paused yet
     expect(audioElement.pauseSpy).not.toHaveBeenCalled();
     expect(audioElement.playSpy).not.toHaveBeenCalled();
@@ -169,7 +172,7 @@ describe('PlayerService', () => {
     testEntries.forEach(testEntry => {
       // Act
       // Play our test station
-      const testStation = new Station(testEntry.station, null);
+      const testStation = new Station(null, testEntry.station, null);
       playerService.playStation(testStation);
       audioElement.playResolve();
       tick();
@@ -228,7 +231,7 @@ describe('PlayerService', () => {
     ];
 
     // Play a test station and immediately flush a metadata entry for the initial fetch
-    playerService.playStation(new Station('Test Station', 'Test url'));
+    playerService.playStation(new Station(null, 'Test Station', 'Test url'));
     audioElement.playResolve();
     tick();
     streamInfoService.flushMetadata(testEntries[0]);
@@ -262,7 +265,7 @@ describe('PlayerService', () => {
   it('should not initiate a new metadata fetch if the previous one is still in progress', fakeAsync(() => {
     /* Act: Initiate the station play and wait for 3 times the refresh interval
     before flushing any metadata. */
-    playerService.playStation(new Station('Station Title', 'station url'));
+    playerService.playStation(new Station(null, 'Station Title', 'station url'));
     audioElement.playResolve();
     tick(configServiceSpy.appConfig.metadataRefreshInterval * 3);
     streamInfoService.flushMetadata(new StreamInfo('Title 1', 'Fetchsource 1'));
@@ -291,7 +294,7 @@ describe('PlayerService', () => {
     let previousNowPlaying: NowPlaying;
     testEntries.forEach(testEntry => {
       // Play a station and flush the test metadata entry
-      playerService.playStation(new Station('Test Station', 'Test url'));
+      playerService.playStation(new Station(null, 'Test Station', 'Test url'));
       audioElement.playResolve();
       tick();
       streamInfoService.flushMetadata(testEntry);
@@ -337,7 +340,7 @@ describe('PlayerService', () => {
     ];
 
     // Play a test station and immediately flush a metadata entry for the initial fetch
-    playerService.playStation(new Station('Test Station', 'Test url'));
+    playerService.playStation(new Station(null, 'Test Station', 'Test url'));
     audioElement.playResolve();
     tick();
     streamInfoService.flushMetadata(testEntries[0]);

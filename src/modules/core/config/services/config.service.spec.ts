@@ -31,12 +31,13 @@ describe('ConfigService', () => {
 
   it('should properly handle successful config fetch', (done: DoneFn) => {
     const dummyConfig: IAppConfig = {
-      'metadataApiUrl': 'testapi',
-      'radioBrowserApiUrl': 'testradiobrowserapi',
-      'metadataRefreshInterval': 1,
-      'metadataFetchTimeout': 2,
-      'appInsightsInstrumentationKey': null,
-      'authConfig': {}
+      metadataApiUrl: 'testapi',
+      radioBrowserApiUrl: 'testradiobrowserapi',
+      favoriteStationsApiUrl: 'testFavoritesApi',
+      metadataRefreshInterval: 1,
+      metadataFetchTimeout: 2,
+      appInsightsInstrumentationKey: null,
+      authConfig: {}
     };
 
     expect(loadedSpy).not.toHaveBeenCalled();
@@ -91,33 +92,35 @@ describe('ConfigService', () => {
   it('should merge local config with app config', (done: DoneFn) => {
     // Arrange
     const appConfig = {
-      'metadataApiUrl': 'testapi',
-      'radioBrowserApiUrl': 'testradiobrowserapi',
-      'metadataRefreshInterval': 1,
-      'metadataFetchTimeout': 2,
-      'authConfig': {
+      metadataApiUrl: 'testapi',
+      radioBrowserApiUrl: 'testradiobrowserapi',
+      favoriteStationsApiUrl: 'testFavoritesApi',
+      metadataRefreshInterval: 1,
+      metadataFetchTimeout: 2,
+      authConfig: {
         'issuer': 'app issuer',
         'clientId': 'app client',
         'logoutUrl': null
       }
     };
     const localConfig = {
-      'appInsightsInstrumentationKey': 'app insights key value',
-      'authConfig': {
-        'logoutUrl': 'some place',
-        'clientId': 'local client'
+      appInsightsInstrumentationKey: 'app insights key value',
+      authConfig: {
+        logoutUrl: 'some place',
+        clientId: 'local client'
       }
     };
     const mergedConfig = {
-      'metadataApiUrl': 'testapi',
-      'radioBrowserApiUrl': 'testradiobrowserapi',
-      'metadataRefreshInterval': 1,
-      'metadataFetchTimeout': 2,
-      'appInsightsInstrumentationKey': 'app insights key value',
-      'authConfig': {
-        'issuer': 'app issuer',
-        'clientId': 'local client',
-        'logoutUrl': 'some place',
+      metadataApiUrl: 'testapi',
+      radioBrowserApiUrl: 'testradiobrowserapi',
+      favoriteStationsApiUrl: 'testFavoritesApi',
+      metadataRefreshInterval: 1,
+      metadataFetchTimeout: 2,
+      appInsightsInstrumentationKey: 'app insights key value',
+      authConfig: {
+        issuer: 'app issuer',
+        clientId: 'local client',
+        logoutUrl: 'some place',
       }
     };
 
@@ -140,12 +143,13 @@ describe('ConfigService', () => {
   it('should resolve app config if no local config is found', (done: DoneFn) => {
     // Arrange
     const appConfig = {
-      'metadataApiUrl': 'testapi',
-      'appInsightsInstrumentationKey': 'app insights key value',
-      'radioBrowserApiUrl': 'testradiobrowserapi',
-      'metadataRefreshInterval': 1,
-      'metadataFetchTimeout': 2,
-      'authConfig': {}
+      metadataApiUrl: 'testapi',
+      appInsightsInstrumentationKey: 'app insights key value',
+      radioBrowserApiUrl: 'testradiobrowserapi',
+      favoriteStationsApiUrl: 'testFavoritesApi',
+      metadataRefreshInterval: 1,
+      metadataFetchTimeout: 2,
+      authConfig: {}
     };
 
     configService.initialize().subscribe(config => {

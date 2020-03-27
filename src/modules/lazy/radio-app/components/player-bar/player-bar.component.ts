@@ -1,12 +1,21 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { SleepTimerService, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { setAltSrc } from '@utilities';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { Subscription, merge, timer } from 'rxjs';
-import { delay, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
+import { Store, select } from '@ngrx/store';
+import { RootState } from '@root-state';
+import {
+  addCurrentStationToFavoritesRequested,
+  removeCurrentStationFromFavoritesRequested,
+  selectIsProcessingFavoritesForCurrentStation,
+  selectCurrentStationFavoritesProcessingState,
+  selectIsCurrentStationInFavorites,
+  CurrentStationFavoritesProcessingState
+} from '@root-state/favorite-stations';
+import { PlayerService, SleepTimerService } from '@core-radio-logic';
+import { KeepAwakeService } from '@keep-awake';
 
 @Component({
   selector: 'blr-player-bar',
@@ -17,12 +26,15 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   constructor(public playerService: PlayerService,
     public sleepTimerService: SleepTimerService,
     public keepAwakeService: KeepAwakeService,
-    private notificationService: NotificationService,
     private changeDetectorRef: ChangeDetectorRef,
-    private router: Router) {}
+    private router: Router,
+    private store: Store<RootState>) {}
 
-  private changeDetectionSubscription: Subscription;
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
+  private changeDetectionSubscription: Subscription;
+  public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
+  public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
+  public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged
@@ -64,6 +76,23 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   }
 
   public onAddToFavoritesClicked(): void {
-    this.notificationService.notify(Severities.Info, 'Coming Soon', 'Favorites functionality coming soon!');
+    this.store.dispatch(addCurrentStationToFavoritesRequested());
+  }
+
+  public onRemoveFromFavoritesClicked(): void {
+    this.store.dispatch(removeCurrentStationFromFavoritesRequested());
+  }
+
+  public decideFavoritesProcessingTooltipText(state: CurrentStationFavoritesProcessingState) {
+    switch (state) {
+      case CurrentStationFavoritesProcessingState.Loading:
+        return 'Loading Favorites';
+      case CurrentStationFavoritesProcessingState.Adding:
+        return 'Adding Current Station To Favorites';
+      case CurrentStationFavoritesProcessingState.Removing:
+        return 'Removing Current Station From Favorites';
+      default:
+        return null;
+    }
   }
 }

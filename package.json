@@ -1,6 +1,6 @@
 {
   "name": "ng-radio",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -30,6 +30,9 @@
     "@browninglogic/ng-loading-indicator": "3.0.1",
     "@browninglogic/ng-modal": "4.0.4",
     "@markpieszak/ng-application-insights": "^8.0.1",
+    "@ngrx/effects": "^9.0.0",
+    "@ngrx/store": "^9.0.0",
+    "@ngrx/store-devtools": "^9.0.0",
     "@types/lodash": "^4.14.149",
     "angular-oauth2-oidc": "^9.0.1",
     "core-js": "^3.6.4",
@@ -49,6 +52,7 @@
     "@angular/cli": "^9.0.5",
     "@angular/compiler-cli": "^9.0.5",
     "@angular/language-service": "~9.0.5",
+    "@ngrx/schematics": "^9.0.0",
     "@types/jasmine": "~3.5.8",
     "@types/jasminewd2": "~2.0.8",
     "@types/node": "^13.9.0",
