@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { PlayerEffects } from './player.effects';
 
 describe('PlayerEffects', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = null;
   let effects: PlayerEffects;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('PlayerEffects', () => {
       ]
     });
 
-    effects = TestBed.get<PlayerEffects>(PlayerEffects);
+    effects = TestBed.inject<PlayerEffects>(PlayerEffects);
   });
 
   it('should be created', () => {

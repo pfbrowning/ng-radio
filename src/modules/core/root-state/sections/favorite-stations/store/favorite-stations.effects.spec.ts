@@ -8,7 +8,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 
 describe('FavoriteStationsEffects', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = null;
   let effects: FavoriteStationsEffects;
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('FavoriteStationsEffects', () => {
       ]
     });
 
-    effects = TestBed.get<FavoriteStationsEffects>(FavoriteStationsEffects);
+    effects = TestBed.inject<FavoriteStationsEffects>(FavoriteStationsEffects);
   });
 
   it('should be created', () => {
