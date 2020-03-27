@@ -2,10 +2,19 @@ import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core
 import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PlayerService, CoreRadioLogicModule, NowPlaying,
-  Station, StreamInfo, StreamInfoStatus, SleepTimerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { createPlayerServiceSpy, createSleepTimerServiceSpy
-  } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import {
+  PlayerService,
+  CoreRadioLogicModule,
+  NowPlaying,
+  Station,
+  StreamInfo,
+  StreamInfoStatus,
+  SleepTimerService
+} from '@modules/core/core-radio-logic/core-radio-logic.module';
+import {
+  createPlayerServiceSpy,
+  createSleepTimerServiceSpy
+} from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
@@ -17,6 +26,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 import isBlank from 'is-blank';
 
 
@@ -51,7 +62,8 @@ describe('NowPlayingComponent', () => {
         { provide: PlayerService, useValue: playerService },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService }
+        { provide: SleepTimerService, useValue: sleepTimerService },
+        provideMockStore({ initialState: initialRootState })
       ]
     })
     .compileComponents();

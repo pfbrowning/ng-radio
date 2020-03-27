@@ -14,6 +14,8 @@ import { Title } from '@angular/platform-browser';
 import { LoggingService } from '@modules/core/logging/logging.module';
 import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
 import { StreamInfoStatus } from '../models/stream-info-status';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 import isBlank from 'is-blank';
 
 describe('PlayerService', () => {
@@ -42,7 +44,8 @@ describe('PlayerService', () => {
         { provide: StreamInfoService, useClass: StreamInfoServiceStub },
         { provide: NotificationService, useValue: notificationServiceSpy },
         { provide: AudioElementToken, useValue: audioElement },
-        { provide: LoggingService, useValue: loggingServiceSpy }
+        { provide: LoggingService, useValue: loggingServiceSpy },
+        provideMockStore({ initialState: initialRootState })
       ]
     });
     playerService = TestBed.inject(PlayerService);

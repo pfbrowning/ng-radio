@@ -9,11 +9,20 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
-import { PlayerService, CoreRadioLogicModule, NowPlaying, Station, StreamInfo,
-  StreamInfoStatus, SleepTimerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { createPlayerServiceSpy, createSleepTimerServiceSpy
-  } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
+import {
+  PlayerService,
+  CoreRadioLogicModule,
+  NowPlaying,
+  Station,
+  StreamInfo,
+  StreamInfoStatus,
+  SleepTimerService
+} from '@modules/core/core-radio-logic/core-radio-logic.module';
+import {
+  createPlayerServiceSpy,
+  createSleepTimerServiceSpy
+} from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+import { NotificationService } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
@@ -22,6 +31,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -59,7 +70,8 @@ describe('PlayerBarComponent', () => {
         { provide: PlayerService, useValue: playerService },
         { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService }
+        { provide: SleepTimerService, useValue: sleepTimerService },
+        provideMockStore({ initialState: initialRootState })
       ]
     })
     .compileComponents();
