@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { NotificationsModule } from '@modules/core/notifications/notifications.m
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { AuthenticationModule } from '@modules/core/authentication/authentication.module';
 import { RootStateModule } from '@root-state';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { RootStateModule } from '@root-state';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastModule,
+    ConfirmDialogModule,
     ModalManagerModule,
     NgLoadingIndicatorModule,
     ErrorHandlingModule,
@@ -36,6 +39,9 @@ import { RootStateModule } from '@root-state';
     NotificationsModule,
     SharedComponentsModule,
     RootStateModule
+  ],
+  providers: [
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
