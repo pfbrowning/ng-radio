@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
 import { ReplaySubject, forkJoin, EMPTY, throwError, of, Observable } from 'rxjs';
 import { IAppConfig } from '../models/app-config';
@@ -39,12 +39,18 @@ export class ConfigService {
   /** Initializer function used by APP_INITIALIZER to
    * retrieve app config before app bootstrap */
   public initialize(): Observable<IAppConfig> {
+    // Set headers to disable caching: We always want clients to fetch the latest config values
+    const headers = new HttpHeaders({
+      'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
     // Fetch and store the config
     return forkJoin([
       // Always load the regular app.config.json
-      this.httpClient.get<IAppConfig>('/assets/config/app.config.json'),
+      this.httpClient.get<IAppConfig>('/assets/config/app.config.json', { headers }),
       // If we're not in prod mode, attempt to load a local configuration
-      environment.production ? of(null) : this.httpClient.get<IAppConfig>('/assets/config/local.config.json').pipe(
+      environment.production ? of(null) : this.httpClient.get<IAppConfig>('/assets/config/local.config.json', { headers }).pipe(
         catchError(error => {
           // If local config doesn't exist, then continue silently.  This isn't an error condition.
           if (error.status === 404) {
