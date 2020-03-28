@@ -29,7 +29,7 @@ export class CustomStationComponent implements OnInit {
       the player service because the object reference will
       be cleared once we reset the form. */
       this.playerService.playStation(clone(this.station));
-      this.router.navigate(['/app', 'now-playing']);
+      this.router.navigate(['/now-playing']);
     }
   }
 }

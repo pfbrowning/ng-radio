@@ -71,7 +71,7 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     there. */
     if (this.router.url !== '/now-playing') {
       console.log('navigating');
-      this.router.navigate(['/app', 'now-playing']);
+      this.router.navigate(['/now-playing']);
     }
   }
 
