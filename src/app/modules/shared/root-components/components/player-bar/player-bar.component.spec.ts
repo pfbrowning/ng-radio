@@ -28,11 +28,11 @@ import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedComponentsModule } from 'src/app/modules/shared/shared';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
+import { SharedModule } from '@shared';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -64,7 +64,7 @@ describe('PlayerBarComponent', () => {
         FormsModule,
         NoopAnimationsModule,
         CoreModule,
-        SharedComponentsModule
+        SharedModule
       ],
       providers: [
         { provide: PlayerService, useValue: playerService },

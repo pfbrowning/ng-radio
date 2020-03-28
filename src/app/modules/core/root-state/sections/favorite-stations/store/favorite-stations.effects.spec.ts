@@ -20,7 +20,7 @@ describe('FavoriteStationsEffects', () => {
         provideMockActions(() => actions$),
         provideMockStore({ initialState: initialRootState }),
         { provide: FavoriteStationsService, useValue: createFavoriteStationsServiceSpy() },
-        { provide: NotificationService, useValue: createNotificationServiceSpy() }        
+        { provide: NotificationService, useValue: createNotificationServiceSpy() }
       ]
     });
 
