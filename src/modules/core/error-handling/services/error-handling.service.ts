@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { AppError } from '../models/app-error';
-import { LoggingService } from '@modules/core/logging/logging.module';
+import { LoggingService } from '@logging';
 
 @Injectable()
 export class ErrorHandlingService {

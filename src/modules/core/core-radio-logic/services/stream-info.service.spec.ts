@@ -2,12 +2,12 @@ import { Type } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ConfigService } from '@modules/core/config/config.module';
-import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
+import { ConfigService } from '@config';
+import { createConfigServiceSpy } from '@config/testing';
 import { StreamInfo } from '../models/stream-info';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
+import { createOAuthServiceSpy } from '@authentication/testing';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;

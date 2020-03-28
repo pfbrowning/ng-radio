@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SleepTimerService } from './sleep-timer.service';
-import { NotificationService } from '@modules/core/notifications/notifications.module';
+import { NotificationService } from '@notifications';
 import { CoreRadioLogicModule } from '../core-radio-logic.module';
 import { createNotificationServiceSpy } from '@notifications/testing';
 

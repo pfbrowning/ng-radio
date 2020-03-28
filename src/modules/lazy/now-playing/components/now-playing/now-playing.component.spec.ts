@@ -10,20 +10,20 @@ import {
   StreamInfo,
   StreamInfoStatus,
   SleepTimerService
-} from '@modules/core/core-radio-logic/core-radio-logic.module';
+} from '@core-radio-logic';
 import {
   createPlayerServiceSpy,
   createSleepTimerServiceSpy
-} from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
+} from '@core-radio-logic/testing';
 import { MatMenuModule } from '@angular/material/menu';
-import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
-import { NotificationService } from '@modules/core/notifications/notifications.module';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
+import { SharedComponentsModule } from '@shared-components';
+import { NotificationService } from '@notifications';
+import { KeepAwakeService } from '@keep-awake';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
+import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';

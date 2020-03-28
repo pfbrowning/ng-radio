@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PlayerService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { PlayerService, Station } from '@core-radio-logic';
 import { clone } from 'lodash';
 import { MatInput } from '@angular/material/input';
 

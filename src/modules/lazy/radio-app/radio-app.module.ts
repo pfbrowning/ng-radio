@@ -7,11 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ResponsiveSidenavModule } from '@modules/core/responsive-sidenav/responsive-sidenav.module';
+import { ResponsiveSidenavModule } from '@responsive-sidenav';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
+import { SharedComponentsModule } from '@shared-components';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({

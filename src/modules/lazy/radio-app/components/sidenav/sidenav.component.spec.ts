@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
-import { AuthenticationService } from '@modules/core/authentication/authentication.module';
-import { createAuthenticationServiceSpy } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
+import { AuthenticationService } from '@authentication';
+import { createAuthenticationServiceSpy } from '@authentication/testing';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;

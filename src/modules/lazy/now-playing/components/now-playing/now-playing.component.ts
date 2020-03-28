@@ -1,6 +1,4 @@
 import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
-import { SleepTimerService, StreamInfoStatus, PlayerService } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { Subscription, merge, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { setAltSrc } from '@utilities';
@@ -11,9 +9,10 @@ import {
   removeCurrentStationFromFavoritesRequested,
   selectIsProcessingFavoritesForCurrentStation,
   selectIsCurrentStationInFavorites,
-  selectCurrentStationFavoritesProcessingState,
-  CurrentStationFavoritesProcessingState
+  selectCurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
+import { PlayerService, SleepTimerService, StreamInfoStatus } from '@core-radio-logic';
+import { KeepAwakeService } from '@keep-awake';
 
 @Component({
   templateUrl: './now-playing.component.html',

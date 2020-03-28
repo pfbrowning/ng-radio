@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { Station } from '@core-radio-logic';
 
 @Component({
   selector: 'blr-suggested-stations-section',

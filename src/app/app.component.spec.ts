@@ -2,13 +2,13 @@ import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
-import { ErrorWindowComponent, ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
+import { ErrorWindowComponent, ErrorHandlingService } from '@error-handling';
 import { NgLoadingIndicatorModule, LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
 import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
-import { ConfigService } from '@modules/core/config/config.module';
-import { ConfigServiceStub } from '@modules/core/config/testing/config.service.stub';
-import { createErrorHandlingServiceSpy } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
+import { ConfigService } from '@config';
+import { ConfigServiceStub } from '@config/testing';
+import { createErrorHandlingServiceSpy } from '@error-handling/testing';
 import { MessageService } from 'primeng/api';
 import { Router, Route } from '@angular/router';
 import { RouteResolverStub } from '@test-helpers';

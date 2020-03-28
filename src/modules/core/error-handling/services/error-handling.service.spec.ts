@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorHandlingService } from './error-handling.service';
 import { Subscription } from 'rxjs';
 import { AppError } from '../models/app-error';
-import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
-import { LoggingService } from '@modules/core/logging/logging.module';
+import { LoggingSpyFactories } from '@logging/testing';
+import { LoggingService } from '@logging';
 
 describe('ErrorHandlingService', () => {
   let errorHandlingService: ErrorHandlingService;

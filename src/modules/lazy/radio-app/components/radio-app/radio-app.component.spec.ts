@@ -7,19 +7,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SidenavComponent, PlayerBarComponent, PlayerBarStationInfoComponent } from '../../radio-app.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ResponsiveSidenavModule } from '@modules/core/responsive-sidenav/responsive-sidenav.module';
-import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
-import { AuthenticationService } from '@modules/core/authentication/authentication.module';
-import { createAuthenticationServiceSpy } from '@modules/core/authentication/testing/authentication-spy-factories.spec';
+import { ResponsiveSidenavModule } from '@responsive-sidenav';
+import { SharedComponentsModule } from '@shared-components';
+import { AuthenticationService } from '@authentication';
+import { createAuthenticationServiceSpy } from '@authentication/testing';
 import {
   createPlayerServiceSpy,
   createStationLookupServiceSpy
-} from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { StationLookupService, PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { NotificationService } from '@modules/core/notifications/notifications.module';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
+} from '@core-radio-logic/testing';
+import { StationLookupService, PlayerService, CoreRadioLogicModule } from '@core-radio-logic';
+import { NotificationService } from '@notifications';
+import { KeepAwakeService } from '@keep-awake';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
+import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';

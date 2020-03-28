@@ -16,19 +16,19 @@ import {
   StreamInfo,
   StreamInfoStatus,
   SleepTimerService
-} from '@modules/core/core-radio-logic/core-radio-logic.module';
+} from '@core-radio-logic';
 import {
   createPlayerServiceSpy,
   createSleepTimerServiceSpy
-} from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { NotificationService } from '@modules/core/notifications/notifications.module';
-import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
+} from '@core-radio-logic/testing';
+import { NotificationService } from '@notifications';
+import { KeepAwakeService } from '@keep-awake';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
-import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
+import { SharedComponentsModule } from '@shared-components';
+import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '@modules/core/authentication/authentication.module';
+import { AuthenticationService } from '@authentication';
 
 @Component({
   selector: 'blr-side-nav',

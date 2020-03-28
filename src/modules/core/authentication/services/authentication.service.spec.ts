@@ -1,16 +1,16 @@
 import { AuthenticationService } from './authentication.service';
 import { Subscription } from 'rxjs';
 import { OAuthInfoEvent } from 'angular-oauth2-oidc';
-import { ConfigService } from '@modules/core/config/config.module';
-import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
-import { createErrorHandlingServiceSpy } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
-import { ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
-import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
-import { LoggingService } from '@modules/core/logging/logging.module';
-import { NotificationService } from '@modules/core/notifications/notifications.module';
+import { ConfigService } from '@config';
+import { createConfigServiceSpy } from '@config/testing';
+import { createErrorHandlingServiceSpy } from '@error-handling/testing';
+import { ErrorHandlingService } from '@error-handling';
+import { LoggingSpyFactories } from '@logging/testing';
+import { LoggingService } from '@logging';
+import { NotificationService } from '@notifications';
 import { createOAuthServiceSpy } from '../testing/authentication-spy-factories.spec';
-import * as moment from 'moment';
 import { createNotificationServiceSpy } from '@notifications/testing';
+import * as moment from 'moment';
 
 describe('AuthenticationService', () => {
   let authenticationService: AuthenticationService;

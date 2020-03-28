@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { Station } from '@core-radio-logic';
 import { setAltSrc } from '@utilities';
 
 @Component({

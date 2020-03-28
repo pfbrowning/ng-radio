@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
-import { PlayerService, StationLookupService, Station } from '@modules/core/core-radio-logic/core-radio-logic.module';
+import { PlayerService, StationLookupService, Station } from '@core-radio-logic';
 import isBlank from 'is-blank';
 import { MatInput } from '@angular/material/input';
 

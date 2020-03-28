@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { ConfigService } from '@modules/core/config/config.module';
+import { ConfigService } from '@config';
 import { AppInsightsService } from '@markpieszak/ng-application-insights';
-import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
+import { createConfigServiceSpy } from '@config/testing';
 import { LoggingSpyFactories } from '../testing/logging-spy-factories.spec';
-import { LoggingModule, LoggingService } from '@modules/core/logging/logging.module';
+import { LoggingModule, LoggingService } from '@logging';
 
 describe('LoggingService', () => {
   let loggingService: LoggingService;

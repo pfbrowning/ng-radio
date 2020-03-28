@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ConfigService } from '@modules/core/config/config.module';
-import { ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
+import { ErrorHandlingService } from '@error-handling';
+import { ConfigService } from '@config';
 
 @Component({
   selector: 'blr-root',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '@modules/core/config/config.module';
 import { AppInsightsService, SeverityLevel } from '@markpieszak/ng-application-insights';
+import { ConfigService } from '@config';
 import isBlank from 'is-blank';
 
 /**

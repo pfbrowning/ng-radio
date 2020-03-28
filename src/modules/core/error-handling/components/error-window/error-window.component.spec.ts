@@ -5,8 +5,8 @@ import { ErrorHandlingService } from '../../services/error-handling.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
-import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
-import { LoggingService } from '@modules/core/logging/logging.module';
+import { LoggingSpyFactories } from '@logging/testing';
+import { LoggingService } from '@logging';
 
 describe('ErrorWindowComponent', () => {
   let component: ErrorWindowComponent;

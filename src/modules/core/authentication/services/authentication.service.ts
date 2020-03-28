@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, timer } from 'rxjs';
 import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
-import { ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
-import { ConfigService } from '@modules/core/config/config.module';
-import { LoggingService } from '@modules/core/logging/logging.module';
+import { NotificationService, Severities } from '@notifications';
+import { ErrorHandlingService } from '@error-handling';
+import { ConfigService } from '@config';
+import { LoggingService } from '@logging';
 import * as moment from 'moment';
 
 @Injectable()

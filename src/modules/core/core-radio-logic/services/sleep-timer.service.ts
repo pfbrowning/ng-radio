@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Subscription, timer, BehaviorSubject } from 'rxjs';
-import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
+import { NotificationService, Severities } from '@notifications';
 import * as moment from 'moment';
 
 /** Service which maintains the sleep timer functionality & state */
