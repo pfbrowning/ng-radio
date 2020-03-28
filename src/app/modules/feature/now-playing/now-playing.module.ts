@@ -4,7 +4,7 @@ import { NowPlayingComponent } from './components/now-playing/now-playing.compon
 import { NowPlayingRoutingModule } from './now-playing-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { SharedComponentsModule } from '@shared-components';
+import { SharedModule } from '@shared';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { SharedComponentsModule } from '@shared-components';
     NowPlayingRoutingModule,
     MatButtonModule,
     MatMenuModule,
-    SharedComponentsModule
+    SharedModule
   ]
 })
 export class NowPlayingModule { }

@@ -4,17 +4,11 @@ import { SleepTimerMenuComponent } from './components/sleep-timer-menu/sleep-tim
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  declarations: [
-    SleepTimerMenuComponent
-  ],
   imports: [
     CommonModule,
     MatMenuModule
   ],
-  exports: [
-    SleepTimerMenuComponent
-  ]
+  declarations: [ SleepTimerMenuComponent ],
+  exports: [ SleepTimerMenuComponent ]
 })
-export class SharedComponentsModule { }
-
-export { SleepTimerMenuComponent };
+export class SharedModule { }

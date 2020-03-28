@@ -18,7 +18,6 @@ import {
   createKeepAwakeServiceSpy
 } from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
-import { SharedComponentsModule } from '@shared-components';
 import { NotificationService } from '@notifications';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
@@ -28,6 +27,7 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
+import { SharedModule } from '@shared';
 import isBlank from 'is-blank';
 
 
@@ -56,7 +56,7 @@ describe('NowPlayingComponent', () => {
         NoopAnimationsModule,
         FormsModule,
         CoreModule,
-        SharedComponentsModule
+        SharedModule
       ],
       providers: [
         { provide: PlayerService, useValue: playerService },

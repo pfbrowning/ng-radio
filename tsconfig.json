@@ -34,7 +34,7 @@
       "@root-state/player": ["src/app/modules/core/root-state/sections/player/index"],
       "@error-handling": ["src/app/modules/core/error-handling/index"],
       "@error-handling/testing": ["src/app/modules/core/error-handling/index.spec"],
-      "@shared-components": ["src/app/modules/shared/shared-components/index"],
+      "@shared": ["src/app/modules/shared/shared/index"],
       "@root-components": ["src/app/modules/shared/root-components/index"],
       "@utilities": ["src/app/utilities/index"],
       "@utilities/testing": ["src/app/utilities/index.spec"]

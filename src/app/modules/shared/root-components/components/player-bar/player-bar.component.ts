@@ -27,7 +27,8 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
     public keepAwakeService: KeepAwakeService,
     private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
-    private store: Store<RootState>) {}
+    private store: Store<RootState>
+  ) {}
 
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
   private changeDetectionSubscription: Subscription;

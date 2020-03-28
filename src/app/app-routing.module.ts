@@ -4,12 +4,35 @@ import { AuthGuard } from '@authentication';
 
 const routes: Routes = [
   {
-    path: 'app',
-    // Check to ensure that the user is authenticated before loading the radio app module
+    path: 'suggested-stations',
     canActivate: [ AuthGuard ],
-    loadChildren: () => import('../app/modules/feature/radio-app/radio-app.module').then(m => m.RadioAppModule)
+    loadChildren: () => import('../app/modules/feature/suggested-stations/suggested-stations.module').then(m => m.SuggestedStationsModule)
   },
-  { path: '', redirectTo: 'app', pathMatch: 'full'}
+  {
+    path: 'now-playing',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('../app/modules/feature/now-playing/now-playing.module').then(m => m.NowPlayingModule)
+  },
+  {
+    path: 'custom-station',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('../app/modules/feature/custom-station/custom-station.module').then(m => m.CustomStationModule)
+  },
+  {
+    path: 'radio-browser',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('../app/modules/feature/radio-browser/radio-browser.module').then(m => m.RadioBrowserModule)
+  },
+  {
+    path: 'favorites',
+    canActivate: [ AuthGuard ],
+    loadChildren: () => import('../app/modules/feature/favorites/favorites.module').then(m => m.FavoritesModule)
+  },
+  {
+    path: '',
+    redirectTo: 'suggested-stations',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({

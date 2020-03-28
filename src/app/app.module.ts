@@ -12,10 +12,14 @@ import { ConfigModule } from '@config';
 import { ErrorHandlingModule } from '@error-handling';
 import { LoggingModule } from '@logging';
 import { NotificationsModule } from '@notifications';
-import { SharedComponentsModule } from '@shared-components';
 import { AuthenticationModule } from '@authentication';
 import { RootStateModule } from '@root-state';
 import { ConfirmationService } from 'primeng/api';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RootComponentsModule } from '@root-components';
+import { SharedModule } from '@shared';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -35,8 +39,12 @@ import { ConfirmationService } from 'primeng/api';
     ErrorHandlingModule,
     LoggingModule,
     NotificationsModule,
-    SharedComponentsModule,
-    RootStateModule
+    SharedModule,
+    RootStateModule,
+    RootComponentsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   providers: [
     ConfirmationService
