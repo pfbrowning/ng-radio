@@ -60,9 +60,10 @@ ng serve --open
   * Log Page Views & Initial App load
   * Remove moment.js entirely.  Replace with day.js if a third party lib is needed.
   * Migrate build from classic Azure DevOps to YAML build
+  * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
+  * Configure SCSS imports to use TS path rather than relative path
   * Optimize bundle size
   * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
-  * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
   * Package up reusable things and deploy to npm
   * Switch to and enforce HTTPS.
     * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.

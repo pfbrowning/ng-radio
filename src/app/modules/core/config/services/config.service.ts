@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
-import { ReplaySubject, forkJoin, EMPTY, throwError, of, Observable } from 'rxjs';
+import { ReplaySubject, forkJoin, throwError, of, Observable } from 'rxjs';
 import { IAppConfig } from '../models/app-config';
 import { merge } from 'lodash';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 /** Abstraction layer for configuration.  Fetches any necessary configuration files
  * before the app bootstraps and then stores the corresponding config info to be
