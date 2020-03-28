@@ -20,6 +20,7 @@ import { RootComponentsModule } from '@root-components';
 import { SharedModule } from '@shared';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatIconModule } from '@angular/material/icon';
     RootComponentsModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     ConfirmationService

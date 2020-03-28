@@ -9,13 +9,13 @@ import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElement } from '../models/audio-element';
 import { StreamInfoStatus } from '../models/stream-info-status';
 import { isEqual } from 'lodash';
-import isBlank from 'is-blank';
 import { RootState } from '@root-state';
 import { Store } from '@ngrx/store';
 import { NotificationService, Severities } from '@notifications';
 import { LoggingService } from '@logging';
 import { ConfigService } from '@config';
 import { selectStation } from '@root-state/player';
+import isBlank from 'is-blank';
 
 /** Service which handles the underlying core logic of playing radio
  * stations and maintains the nowPlaying state */
@@ -31,7 +31,7 @@ export class PlayerService {
     @Inject(AudioElementToken) private audio: AudioElement) {
       /* Subscribe to the events that we care about from the AudioElement
       and pass them on to the appropriate handler. */
-      this.audio.playing.subscribe(() => this.onAudioPlaying());
+      // this.audio.playing.subscribe(() => this.onAudioPlaying());
       this.audio.paused.subscribe(() => this.onAudioPaused());
       // Pause the playing audio when the sleep timer does its thing
       this.sleepTimerService.sleep.subscribe(() => this.pause());
@@ -76,7 +76,7 @@ export class PlayerService {
   private onAudioPaused(): void {
     /* Clear the src in order to prevent the browser from continuing to
     download audio in the background. */
-    this.audio.src = '';
+    // this.audio.src = '';
     /* Notify listeners that the audio is now paused. */
     this.paused.next(true);
     /* Unsubscribe from the refresh interval and from any concurrent metadata
@@ -166,7 +166,7 @@ export class PlayerService {
     if (this.refreshSub) { this.refreshSub.unsubscribe(); }
     if (this.metaFetchSub) { this.metaFetchSub.unsubscribe(); }
     // Update the StreamInfoStatus to reflect that we're attempting to play the station
-    this.nowPlaying.next(new NowPlaying(this.nowPlaying.value.station, null, StreamInfoStatus.LoadingAudio));
+    this.nowPlaying.next(new NowPlaying(this.nowPlaying.value.station, null, StreamInfoStatus.NotInitialized));
     // Play the audio
     this.audio.play()
       // On successful load of the stream

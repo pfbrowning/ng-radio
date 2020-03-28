@@ -6,13 +6,11 @@ export class AudioElement {
         private readonly audio: HTMLAudioElement = new Audio()
     ) {
         this.audio.onerror = (error) => this.error.emit(error);
-        this.audio.onplaying = () => this.playing.emit();
         this.audio.onpause = () => this.paused.emit();
         this.audio.preload = 'none';
     }
 
     public error = new EventEmitter<any>();
-    public playing = new EventEmitter<void>();
     public paused = new EventEmitter<void>();
 
     public get src(): string {

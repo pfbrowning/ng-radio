@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { reducers } from './root-reducer';
 import { FavoriteStationsEffects } from './sections/favorite-stations/store/favorite-stations.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { PlayerEffects } from './sections/player/store/player.effects';
 
 @NgModule({
   declarations: [],
@@ -17,7 +18,7 @@ import { EffectsModule } from '@ngrx/effects';
         strictActionImmutability: true,
       }
     }),
-    EffectsModule.forRoot([FavoriteStationsEffects]),
+    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ]
 })

@@ -15,6 +15,7 @@ import {
   CurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
 import { PlayerService, SleepTimerService, KeepAwakeService } from '@core';
+import { PlayerStatus, selectPlayerStatus, selectCurrentStation, playAudioStart, pauseAudioSubmit } from '@root-state/player';
 
 @Component({
   selector: 'blr-player-bar',
@@ -32,9 +33,12 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
   private changeDetectionSubscription: Subscription;
+  public playerStatus = PlayerStatus;
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
+  public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
+  public currentStation$ = this.store.pipe(select(selectCurrentStation));
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged
@@ -94,5 +98,13 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
       default:
         return null;
     }
+  }
+
+  public onPlayClicked(): void {
+    this.store.dispatch(playAudioStart());
+  }
+
+  public onPauseClicked(): void {
+    this.store.dispatch(pauseAudioSubmit());
   }
 }

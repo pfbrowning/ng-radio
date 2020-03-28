@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
-  <ng-container *ngIf="(playerService.nowPlaying$ | async).station">
-    <img class="station-icon-thumb" [src]="(playerService.nowPlaying$ | async).station.iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
-    <blr-player-bar-station-info #stationInfo [nowPlaying]="playerService.nowPlaying$ | async" class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
+  <ng-container *ngIf="(currentStation$ | async) != null">
+    <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
+    <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
     <span class="fill-remaining"></span>
     <div [class.off-white]="(sleepTimerService.minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
       [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
@@ -31,12 +31,17 @@
     <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
       <mat-icon>more_vert</mat-icon>
     </button>
-    <button *ngIf="playerService.paused$ | async" mat-fab color="accent" class="play-pause-button" (click)="playerService.play()" matTooltip="Play the selected station">
-      <mat-icon>play_arrow</mat-icon>
-    </button>
-    <button *ngIf="!(playerService.paused$ | async)" mat-fab color="accent" class="play-pause-button" (click)="playerService.pause()" matTooltip="Pause the currently playing station">
-      <mat-icon>pause</mat-icon>
-    </button>
+    <ng-container [ngSwitch]="playerStatus$ | async">
+      <button *ngSwitchCase="playerStatus.Stopped" mat-fab color="accent" class="play-pause-button" (click)="onPlayClicked()" matTooltip="Play the selected station" type="button">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button *ngSwitchCase="playerStatus.Playing" mat-fab color="accent" class="play-pause-button" (click)="onPauseClicked()" matTooltip="Pause the currently playing station" type="button">
+        <mat-icon>pause</mat-icon>
+      </button>
+      <div *ngSwitchCase="playerStatus.LoadingAudio" class="indicator-icon large-screen-only loading-audio-spinner" matTooltip="Loading Audio">
+        <mat-spinner diameter="25"></mat-spinner>
+      </div>
+    </ng-container>
   </ng-container>
 </mat-toolbar>
 

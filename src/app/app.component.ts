@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
 import { ErrorHandlingService } from '@error-handling';
 import { ConfigService } from '@config';
+import { AudioElementEventListenerService } from '@core';
 
 @Component({
   selector: 'blr-root',
@@ -12,6 +13,7 @@ import { ConfigService } from '@config';
 })
 export class AppComponent implements OnInit, OnDestroy {
   constructor(private errorHandlingService: ErrorHandlingService,
+    private audioElementEventListenerService: AudioElementEventListenerService,
     private loadingIndicatorService: LoadingIndicatorService,
     private configService: ConfigService,
     private router: Router) {}

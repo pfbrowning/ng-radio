@@ -1,17 +1,22 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
-import { PlayerService, StationLookupService, Station } from '@core';
-import isBlank from 'is-blank';
+import { StationLookupService, Station } from '@core';
 import { MatInput } from '@angular/material/input';
+import { RootState } from '@root-state';
+import { Store } from '@ngrx/store';
+import { selectStation } from '@root-state/player';
+import isBlank from 'is-blank';
 
 @Component({
   templateUrl: './radio-browser.component.html',
   styleUrls: ['./radio-browser.component.scss']
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
-  constructor(private playerService: PlayerService,
-    private stationLookupService: StationLookupService) {}
+  constructor(
+    private store: Store<RootState>,
+    private stationLookupService: StationLookupService
+  ) {}
 
   @ViewChild('nameSearchInput', { static: true }) nameSearchInput: MatInput;
 
@@ -58,6 +63,6 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   }
 
   onRowClicked(station: Station) {
-    this.playerService.playStation(station);
+    this.store.dispatch(selectStation({station}));
   }
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SuggestedStations } from '../../models/suggested-stations';
-import { PlayerService, Station } from '@core';
+import { Station } from '@core';
+import { RootState } from '@root-state';
+import { Store } from '@ngrx/store';
+import { selectStation } from '@root-state/player';
 
 @Component({
   selector: 'blr-suggested-stations',
@@ -9,8 +12,10 @@ import { PlayerService, Station } from '@core';
   styleUrls: ['./suggested-stations.component.scss']
 })
 export class SuggestedStationsComponent implements OnInit {
-  constructor(private playerService: PlayerService,
-    private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private store: Store<RootState>
+  ) {}
 
   public developerSuggested: Array<Station>;
   public radioBrowserTopClicked: Array<Station>;
@@ -25,6 +30,6 @@ export class SuggestedStationsComponent implements OnInit {
   }
 
   onStationSelected(station: Station) {
-    this.playerService.playStation(station);
+    this.store.dispatch(selectStation({station}));
   }
 }

@@ -1,70 +1,60 @@
-import { Component, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef,
-  Input, OnChanges, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
-import { NowPlaying, StreamInfoStatus } from '@core';
+import { StreamInfoStatus } from '@core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewChecked,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { RootState } from '@root-state';
+import { selectStreamInfoStatus } from '@root-state/player';
+import { selectStreamInfoTitle, selectCurrentStationTitle } from 'src/app/modules/core/root-state/sections/player/store/player.selectors';
+
+
 
 @Component({
   selector: 'blr-player-bar-station-info',
   templateUrl: './player-bar-station-info.component.html',
-  styleUrls: ['./player-bar-station-info.component.scss']
+  styleUrls: ['./player-bar-station-info.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlayerBarStationInfoComponent implements AfterViewChecked, OnChanges, OnInit, OnDestroy {
-  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+export class PlayerBarStationInfoComponent implements AfterViewChecked {
+  constructor(private store: Store<RootState>, private changeDetectorRef: ChangeDetectorRef) {}
 
+  @ViewChild('title') titleElement: ElementRef;
+  @ViewChild('station') stationElement: ElementRef;
   public streamInfoStatus = StreamInfoStatus;
   public titleMarquee = false;
   public stationMarquee = false;
-  private checkMarquee = false;
-  @Input() nowPlaying: NowPlaying;
-  @ViewChild('title') titleElement: ElementRef;
-  @ViewChild('station') stationElement: ElementRef;
-
-  ngOnInit() {
-    /* Set checkmarquee on all window resize events because the marquee
-    needs to be re-evaluated for each screen size. */
-    window.onresize = () => this.checkMarquee = true;
-  }
-
-  ngOnDestroy() {
-    window.onresize = null;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.checkMarquee = true;
-  }
+  public streamInfoStatus$ = this.store.pipe(select(selectStreamInfoStatus));
+  public streamInfoTitle$ = this.store.pipe(select(selectStreamInfoTitle));
+  public currentStationTitle$ = this.store.pipe(select(selectCurrentStationTitle));
 
   ngAfterViewChecked() {
-    /* Check and apply marquee classes immediately after a change detection operation in
-    which either now playing input model or the screen size just changed.  This must
-    happen immediately after change detection because we won't know whether the
-    content is overflowing until it's been bound to the template. */
-    if (this.checkMarquee) {
-      this.checkMarquee = false;
-      this.checkApplyMarquees();
-    }
+    /* Check and apply marquee classes immediately after each change detection operation because
+    we won't know whether the content is overflowing until it's been bound to the template. */
+    this.checkApplyMarquees();
   }
 
   /** Checks and updates the marquee properties for title and station
    * based on whether the title or station content is overflowing. */
   private checkApplyMarquees() {
-    if (this.nowPlaying != null) {
-      // Take note of the marquee values before checking for overflow so that we know later if they changed
-      const titleMarqueeBefore = this.titleMarquee;
-      const stationMarqueeBefore = this.stationMarquee;
-      // Set the marquee values based on whether the corresponding element is overflowing
-      this.titleMarquee = this.isElementOverflowing(this.titleElement.nativeElement);
-      this.stationMarquee = this.isElementOverflowing(this.stationElement.nativeElement);
-      /* If either marquee value changed, then initiate another round of change detection
-      in order to bind the marquee classes to the template. */
-      if (this.titleMarquee !== titleMarqueeBefore || this.stationMarquee !== stationMarqueeBefore) {
-        this.changeDetectorRef.detectChanges();
-      }
+    // Take note of the marquee values before checking for overflow so that we know later if they changed
+    const titleMarqueeBefore = this.titleMarquee;
+    const stationMarqueeBefore = this.stationMarquee;
+    // Set the marquee values based on whether the corresponding element is overflowing
+    this.titleMarquee = this.isElementOverflowingX(this.titleElement.nativeElement);
+    this.stationMarquee = this.isElementOverflowingX(this.stationElement.nativeElement);
+    /* If either marquee value changed, then initiate another round of change detection
+    in order to bind the marquee classes to the template. */
+    if (this.titleMarquee !== titleMarqueeBefore || this.stationMarquee !== stationMarqueeBefore) {
+      this.changeDetectorRef.detectChanges();
     }
   }
 
-  private isElementOverflowing(element: HTMLElement): boolean {
-    const overflowX = element.offsetWidth < element.scrollWidth,
-        overflowY = element.offsetHeight < element.scrollHeight;
-
-    return (overflowX || overflowY);
+  private isElementOverflowingX(element: HTMLElement): boolean {
+    return element.offsetWidth < element.scrollWidth;
   }
 }

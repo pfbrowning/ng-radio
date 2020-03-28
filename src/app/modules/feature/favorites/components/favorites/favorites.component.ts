@@ -1,23 +1,24 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
-import { PlayerService, Station } from '@core';
+import { Station } from '@core';
 import { selectFavoriteStationRows, removeFromFavoritesStart } from '@root-state/favorite-stations';
 import { ConfirmationService } from 'primeng/api';
+import { selectStation } from '@root-state/player';
 
 @Component({
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss']
 })
 export class FavoritesComponent {
-  constructor(private store: Store<RootState>, private playerService: PlayerService, private confirmationService: ConfirmationService) { }
+  constructor(private store: Store<RootState>, private confirmationService: ConfirmationService) { }
 
   public columns = ['spinner', 'name', 'icon', 'actions'];
 
   public stationRows$ = this.store.pipe(select(selectFavoriteStationRows));
 
   public onRowClicked(station: Station): void {
-    this.playerService.playStation(station);
+    this.store.dispatch(selectStation({station}));
   }
 
   public onDeleteClicked(station: Station, event): void {
