@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
-import { CoreRadioLogicModule } from '@core-radio-logic';
+import { CoreModule } from '@core';
 import { ConfigModule } from '@config';
 import { ErrorHandlingModule } from '@error-handling';
 import { LoggingModule } from '@logging';
@@ -25,7 +25,7 @@ import { ConfirmationService } from 'primeng/api';
   imports: [
     ConfigModule,
     AuthenticationModule,
-    CoreRadioLogicModule,
+    CoreModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

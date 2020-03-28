@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { AudioElementToken } from '@core-radio-logic';
-import { AudioElementStub } from '@core-radio-logic/testing';
+import { AudioElementToken } from '@core';
+import { AudioElementStub } from '@core/testing';
 import { KeepAwakeModule } from '@keep-awake';
 import { MessageService } from 'primeng/api';
 import { createKeepAwakeServiceSpy } from '../testing/keep-awake-spy-factories.spec';

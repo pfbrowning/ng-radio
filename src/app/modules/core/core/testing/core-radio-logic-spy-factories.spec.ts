@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { NowPlaying } from '@core-radio-logic';
+import { NowPlaying } from '@core';
 import { StreamInfoStatus } from '../models/stream-info-status';
 
 export function createPlayerServiceSpy(): any {

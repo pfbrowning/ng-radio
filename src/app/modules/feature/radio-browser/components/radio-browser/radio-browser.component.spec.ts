@@ -6,11 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
-import { PlayerService, StationLookupService } from '@core-radio-logic';
+import { PlayerService, StationLookupService } from '@core';
 import {
   createPlayerServiceSpy,
   createStationLookupServiceSpy
-} from '@core-radio-logic/testing';
+} from '@core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RadioBrowserComponent', () => {

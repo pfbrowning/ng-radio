@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Station } from '@core-radio-logic';
+import { Station } from '@core';
 
 export enum FavoriteStationsActions {
     FetchStationsStart = '[Favorite Stations] Fetch Stations Start',

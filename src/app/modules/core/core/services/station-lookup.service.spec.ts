@@ -6,7 +6,7 @@ import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { HttpParams } from '@angular/common/http';
 import { Station } from '../models/station';
-import { CoreRadioLogicModule } from '../core-radio-logic.module';
+import { CoreModule } from '../core.module';
 import isBlank from 'is-blank';
 
 describe('StationLookupService', () => {
@@ -18,7 +18,7 @@ describe('StationLookupService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        CoreRadioLogicModule
+        CoreModule
       ],
       providers: [
         { provide: ConfigService, useValue: createConfigServiceSpy() }

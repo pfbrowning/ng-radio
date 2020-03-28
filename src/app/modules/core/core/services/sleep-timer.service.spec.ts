@@ -1,7 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SleepTimerService } from './sleep-timer.service';
 import { NotificationService } from '@notifications';
-import { CoreRadioLogicModule } from '../core-radio-logic.module';
+import { CoreModule } from '../core.module';
 import { createNotificationServiceSpy } from '@notifications/testing';
 
 describe('SleepTimerService', () => {
@@ -15,7 +15,7 @@ describe('SleepTimerService', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        CoreRadioLogicModule
+        CoreModule
       ],
       providers: [
         { provide: NotificationService, useValue: notificationServiceSpy }

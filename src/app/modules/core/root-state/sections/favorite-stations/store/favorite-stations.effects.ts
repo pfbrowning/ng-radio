@@ -15,7 +15,7 @@ import {
 } from './favorite-stations.actions';
 import { switchMap, catchError, map, withLatestFrom, filter, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { FavoriteStationsService } from '@core-radio-logic';
+import { FavoriteStationsService } from '@core';
 import { selectStation } from '../../player/store/player-actions';
 import { Store, select } from '@ngrx/store';
 import { selectFavoriteStationsLoadingStatus, selectIsCurrentStationInFavorites, selectCurrentFavoriteStationId } from './favorite-stations.selectors';

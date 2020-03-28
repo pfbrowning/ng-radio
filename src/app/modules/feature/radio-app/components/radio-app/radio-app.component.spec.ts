@@ -14,8 +14,8 @@ import { createAuthenticationServiceSpy } from '@authentication/testing';
 import {
   createPlayerServiceSpy,
   createStationLookupServiceSpy
-} from '@core-radio-logic/testing';
-import { StationLookupService, PlayerService, CoreRadioLogicModule } from '@core-radio-logic';
+} from '@core/testing';
+import { StationLookupService, PlayerService, CoreModule } from '@core';
 import { NotificationService } from '@notifications';
 import { KeepAwakeService } from '@keep-awake';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,7 +45,7 @@ describe('RadioAppComponent', () => {
         RouterTestingModule,
         ResponsiveSidenavModule,
         SharedComponentsModule,
-        CoreRadioLogicModule,
+        CoreModule,
         NoopAnimationsModule
       ],
       providers: [

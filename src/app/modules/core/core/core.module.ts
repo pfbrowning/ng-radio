@@ -22,12 +22,4 @@ import { HttpClientModule } from '@angular/common/http';
     { provide: AudioElementToken, useValue: new AudioElement() },
   ]
 })
-export class CoreRadioLogicModule {}
-
-export { PlayerService, SleepTimerService, StationLookupService,
-  StreamInfoService, AudioElement, AudioElementToken };
-
-export { NowPlaying } from './models/now-playing';
-export { Station } from './models/station';
-export { StreamInfo } from './models/stream-info';
-export { StreamInfoStatus } from './models/stream-info-status';
+export class CoreModule {}

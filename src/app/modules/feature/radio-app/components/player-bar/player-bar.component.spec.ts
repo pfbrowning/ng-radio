@@ -10,17 +10,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   PlayerService,
-  CoreRadioLogicModule,
+  CoreModule,
   NowPlaying,
   Station,
   StreamInfo,
   StreamInfoStatus,
   SleepTimerService
-} from '@core-radio-logic';
+} from '@core';
 import {
   createPlayerServiceSpy,
   createSleepTimerServiceSpy
-} from '@core-radio-logic/testing';
+} from '@core/testing';
 import { NotificationService } from '@notifications';
 import { KeepAwakeService } from '@keep-awake';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
@@ -63,7 +63,7 @@ describe('PlayerBarComponent', () => {
         ModalManagerModule,
         FormsModule,
         NoopAnimationsModule,
-        CoreRadioLogicModule,
+        CoreModule,
         SharedComponentsModule
       ],
       providers: [

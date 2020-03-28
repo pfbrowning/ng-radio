@@ -4,17 +4,17 @@ import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   PlayerService,
-  CoreRadioLogicModule,
+  CoreModule,
   NowPlaying,
   Station,
   StreamInfo,
   StreamInfoStatus,
   SleepTimerService
-} from '@core-radio-logic';
+} from '@core';
 import {
   createPlayerServiceSpy,
   createSleepTimerServiceSpy
-} from '@core-radio-logic/testing';
+} from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedComponentsModule } from '@shared-components';
 import { NotificationService } from '@notifications';
@@ -55,7 +55,7 @@ describe('NowPlayingComponent', () => {
         MatInputModule,
         NoopAnimationsModule,
         FormsModule,
-        CoreRadioLogicModule,
+        CoreModule,
         SharedComponentsModule
       ],
       providers: [

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SuggestedStations } from '../../models/suggested-stations';
-import { PlayerService, Station } from '@core-radio-logic';
+import { PlayerService, Station } from '@core';
 
 @Component({
   selector: 'blr-suggested-stations',

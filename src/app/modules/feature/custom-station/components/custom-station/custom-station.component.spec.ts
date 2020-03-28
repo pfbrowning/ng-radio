@@ -4,8 +4,8 @@ import { CustomStationComponent } from './custom-station.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { PlayerService } from '@core-radio-logic';
-import { createPlayerServiceSpy } from '@core-radio-logic/testing';
+import { PlayerService } from '@core';
+import { createPlayerServiceSpy } from '@core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CustomStationComponent', () => {

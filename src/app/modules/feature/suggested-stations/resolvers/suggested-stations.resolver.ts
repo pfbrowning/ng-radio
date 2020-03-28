@@ -3,7 +3,7 @@ import { Resolve } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SuggestedStations } from '../models/suggested-stations';
-import { StationLookupService } from '@core-radio-logic';
+import { StationLookupService } from '@core';
 
 @Injectable()
 export class SuggestedStationsResolver implements Resolve<SuggestedStations> {

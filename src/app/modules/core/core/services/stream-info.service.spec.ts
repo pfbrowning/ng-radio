@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { StreamInfo } from '../models/stream-info';
-import { CoreRadioLogicModule } from '../core-radio-logic.module';
+import { CoreModule } from '../core.module';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '@authentication/testing';
 
@@ -19,7 +19,7 @@ describe('StreamInfoService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        CoreRadioLogicModule
+        CoreModule
       ],
       providers: [
         { provide: ConfigService, useValue: createConfigServiceSpy() },

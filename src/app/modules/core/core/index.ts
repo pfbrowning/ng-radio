@@ -14,4 +14,4 @@ export { PlayerService } from './services/player.service';
 export { SleepTimerService } from './services/sleep-timer.service';
 export { StationLookupService } from './services/station-lookup.service';
 
-export { CoreRadioLogicModule } from './core-radio-logic.module';
+export { CoreModule } from './core.module';

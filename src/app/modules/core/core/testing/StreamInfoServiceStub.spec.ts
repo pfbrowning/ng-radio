@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { StreamInfo } from '@core-radio-logic';
+import { StreamInfo } from '@core';
 
 export class StreamInfoServiceStub {
     private metaSubject = new Subject<StreamInfo>();

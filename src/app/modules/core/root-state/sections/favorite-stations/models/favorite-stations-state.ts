@@ -1,4 +1,4 @@
-import { Station } from '@core-radio-logic';
+import { Station } from '@core';
 
 export interface FavoriteStationsState {
     favoriteStations: Array<Station>;

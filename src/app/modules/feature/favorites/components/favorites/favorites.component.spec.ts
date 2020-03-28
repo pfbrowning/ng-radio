@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoritesComponent } from './favorites.component';
 import { initialRootState } from '@root-state';
 import { provideMockStore } from '@ngrx/store/testing';
-import { PlayerService } from '@core-radio-logic';
-import { createPlayerServiceSpy } from '@core-radio-logic/testing';
+import { PlayerService } from '@core';
+import { createPlayerServiceSpy } from '@core/testing';
 import { ConfirmationService } from 'primeng/api';
 
 describe('FavoritesComponent', () => {

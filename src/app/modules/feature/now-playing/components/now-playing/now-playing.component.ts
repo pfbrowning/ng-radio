@@ -11,7 +11,7 @@ import {
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
-import { PlayerService, SleepTimerService, StreamInfoStatus } from '@core-radio-logic';
+import { PlayerService, SleepTimerService, StreamInfoStatus } from '@core';
 import { KeepAwakeService } from '@keep-awake';
 
 @Component({

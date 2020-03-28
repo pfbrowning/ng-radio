@@ -4,8 +4,8 @@ import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { StreamInfoService } from './stream-info.service';
 import { NotificationService, Severities } from '@notifications';
-import { AudioElementToken, Station, CoreRadioLogicModule } from '@core-radio-logic';
-import { AudioElementStub, StreamInfoServiceStub } from '@core-radio-logic/testing';
+import { AudioElementToken, Station, CoreModule } from '@core';
+import { AudioElementStub, StreamInfoServiceStub } from '@core/testing';
 import { NowPlaying } from '../models/now-playing';
 import { StreamInfo } from '../models/stream-info';
 import { Title } from '@angular/platform-browser';
@@ -36,7 +36,7 @@ describe('PlayerService', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        CoreRadioLogicModule
+        CoreModule
       ],
       providers: [
         { provide: ConfigService, useValue: configServiceSpy },
