@@ -3,9 +3,9 @@ import { ResponsiveSidenavComponent } from './responsive-sidenav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { WindowToken } from '../../injection-tokens/window-token';
-import { WindowStub } from '../../testing/window.stub';
 import { Route, Router } from '@angular/router';
+import { WindowToken } from '@core';
+import { WindowStub } from '@utilities/testing';
 
 describe('ResponsiveSidenavComponent', () => {
   let component: ResponsiveSidenavComponent;

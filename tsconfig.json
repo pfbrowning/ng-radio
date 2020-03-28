@@ -35,7 +35,7 @@
       "@error-handling": ["src/app/modules/core/error-handling/index"],
       "@error-handling/testing": ["src/app/modules/core/error-handling/index.spec"],
       "@shared-components": ["src/app/modules/shared/shared-components/index"],
-      "@responsive-sidenav": ["src/app/modules/core/responsive-sidenav/index"],
+      "@root-components": ["src/app/modules/shared/root-components/index"],
       "@utilities": ["src/app/utilities/index"],
       "@utilities/testing": ["src/app/utilities/index.spec"]
     }

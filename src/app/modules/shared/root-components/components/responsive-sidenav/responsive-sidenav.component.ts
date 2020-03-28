@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, OnInit, OnDestroy, Inject } from '@angular
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, Event, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { WindowToken } from '../../injection-tokens/window-token';
+import { WindowToken } from '@core';
 
 /** Component which abstracts away the logic of showing and hiding an
  * Angular Material sidenav in a responsive manner based on a specified

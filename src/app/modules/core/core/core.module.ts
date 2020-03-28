@@ -9,6 +9,7 @@ import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
+import { WindowToken } from './injection-tokens/window-token';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -25,6 +26,7 @@ import * as NoSleep from 'nosleep.js';
     KeepAwakeService,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
+    { provide: WindowToken, useValue: window },
   ]
 })
 export class CoreModule {}

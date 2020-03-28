@@ -7,22 +7,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SidenavComponent, PlayerBarComponent, PlayerBarStationInfoComponent } from '../../radio-app.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ResponsiveSidenavModule } from '@responsive-sidenav';
 import { SharedComponentsModule } from '@shared-components';
 import { AuthenticationService } from '@authentication';
 import { createAuthenticationServiceSpy } from '@authentication/testing';
 import {
   createPlayerServiceSpy,
-  createStationLookupServiceSpy
+  createStationLookupServiceSpy,
+  createKeepAwakeServiceSpy
 } from '@core/testing';
-import { StationLookupService, PlayerService, CoreModule } from '@core';
+import { StationLookupService, PlayerService, CoreModule, KeepAwakeService } from '@core';
 import { NotificationService } from '@notifications';
-import { KeepAwakeService } from '@keep-awake';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
+import { RootComponentsModule } from '@root-components';
 
 describe('RadioAppComponent', () => {
   let component: RadioAppComponent;
@@ -43,7 +42,7 @@ describe('RadioAppComponent', () => {
         MatMenuModule,
         MatTooltipModule,
         RouterTestingModule,
-        ResponsiveSidenavModule,
+        RootComponentsModule,
         SharedComponentsModule,
         CoreModule,
         NoopAnimationsModule

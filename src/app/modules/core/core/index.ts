@@ -7,6 +7,7 @@ export { NowPlaying } from './models/now-playing';
 
 // Injection Tokens
 export { AudioElementToken } from './injection-tokens/audio-element-token';
+export { WindowToken } from './injection-tokens/window-token';
 
 // Services
 export { FavoriteStationsService } from './services/favorite-stations.service';
