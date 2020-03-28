@@ -29,7 +29,7 @@ import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedComponentsModule } from '@shared-components';
 import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
-import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';

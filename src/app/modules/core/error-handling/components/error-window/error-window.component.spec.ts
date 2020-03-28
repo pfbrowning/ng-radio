@@ -4,7 +4,7 @@ import { ModalManagerModule, ModalWindowComponent } from '@browninglogic/ng-moda
 import { ErrorHandlingService } from '../../services/error-handling.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { LoggingSpyFactories } from '@logging/testing';
 import { LoggingService } from '@logging';
 

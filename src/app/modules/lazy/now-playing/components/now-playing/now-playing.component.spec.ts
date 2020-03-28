@@ -24,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
-import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
+import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';

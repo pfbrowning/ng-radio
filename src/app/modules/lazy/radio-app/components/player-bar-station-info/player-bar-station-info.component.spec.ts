@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PlayerBarStationInfoComponent } from './player-bar-station-info.component';
 import { NowPlaying, Station, StreamInfo, StreamInfoStatus } from '@core-radio-logic';
-import { getElementTextBySelector } from '@test-helpers';
+import { getElementTextBySelector } from '@utilities/testing';
 
 describe('PlayerBarStationInfoComponent', () => {
   let component: PlayerBarStationInfoComponent;

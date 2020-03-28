@@ -38,8 +38,8 @@
       "@error-handling/testing": ["src/app/modules/core/error-handling/index.spec"],
       "@shared-components": ["src/app/modules/shared/shared-components/index"],
       "@responsive-sidenav": ["src/app/modules/core/responsive-sidenav/index"],
-      "@test-helpers": ["src/test-helpers"],
-      "@utilities": ["src/utilities"],
+      "@utilities": ["src/app/utilities/index"],
+      "@utilities/testing": ["src/app/utilities/index.spec"]
     }
   }
 }

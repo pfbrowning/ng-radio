@@ -11,7 +11,7 @@ import { ConfigServiceStub } from '@config/testing';
 import { createErrorHandlingServiceSpy } from '@error-handling/testing';
 import { MessageService } from 'primeng/api';
 import { Router, Route } from '@angular/router';
-import { RouteResolverStub } from '@test-helpers';
+import { RouteResolverStub } from '@utilities/testing';
 import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
 import { createMessageServiceSpy } from '@notifications/testing';
 
