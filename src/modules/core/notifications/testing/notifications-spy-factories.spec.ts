@@ -1,16 +1,14 @@
 import { Subject } from 'rxjs';
+import { NotificationService } from '../services/notification.service';
+import { MessageService } from 'primeng/api';
 
-export class NotificationsSpyFactories {
-    public static CreateNotificationServiceSpy(): any {
-      const spy = jasmine.createSpyObj('notificationServiceSpy', ['notify']);
-      return spy;
-    }
+export function createNotificationServiceSpy(): jasmine.SpyObj<NotificationService> {
+  return jasmine.createSpyObj('notificationServiceSpy', ['notify']);
+}
 
-    public static CreateMessageServiceSpy(): any {
-      const spy = jasmine.createSpyObj('messageServiceSpy', ['add']);
-      spy['messageObserver'] = new Subject();
-      spy['clearObserver'] = new Subject();
-      return spy;
-    }
-  }
-
+export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
+  const spy = jasmine.createSpyObj('messageServiceSpy', ['add']);
+  spy['messageObserver'] = new Subject();
+  spy['clearObserver'] = new Subject();
+  return spy;
+}

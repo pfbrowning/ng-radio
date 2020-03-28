@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import {
   PlayerService,
   CoreRadioLogicModule,
@@ -33,6 +32,7 @@ import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
+import { createNotificationServiceSpy } from '@notifications/testing';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
@@ -68,7 +68,7 @@ describe('PlayerBarComponent', () => {
       ],
       providers: [
         { provide: PlayerService, useValue: playerService },
-        { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
+        { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
         { provide: SleepTimerService, useValue: sleepTimerService },
         provideMockStore({ initialState: initialRootState })

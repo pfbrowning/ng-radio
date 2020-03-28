@@ -20,6 +20,7 @@
     ],
     "paths": {
       "@notifications": [ "src/modules/core/notifications/index"],
+      "@notifications/testing": [ "src/modules/core/notifications/index.spec"],
       "@logging": [ "src/modules/core/logging/index" ],
       "@core-radio-logic": ["src/modules/core/core-radio-logic/index"],
       "@core-radio-logic/testing": ["src/modules/core/core-radio-logic/index.spec"],

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElementToken } from '@modules/core/core-radio-logic/core-radio-logic.module';
 import { AudioElementStub } from '@modules/core/core-radio-logic/testing/AudioElementStub.spec';
 import { KeepAwakeModule } from '@modules/core/keep-awake/keep-awake.module';
 import { MessageService } from 'primeng/api';
 import { createKeepAwakeServiceSpy } from '../testing/keep-awake-spy-factories.spec';
+import { createMessageServiceSpy } from '@notifications/testing';
 import * as NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
@@ -26,7 +26,7 @@ describe('KeepAwakeService', () => {
       providers: [
         { provide: AudioElementToken, useValue: audioElement },
         { provide: NoSleepToken, useValue: noSleepSpy },
-        { provide: MessageService, useValue: NotificationsSpyFactories.CreateMessageServiceSpy() }
+        { provide: MessageService, useValue: createMessageServiceSpy() }
       ]
     });
 

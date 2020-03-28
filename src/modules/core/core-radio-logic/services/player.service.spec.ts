@@ -2,7 +2,6 @@ import { TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/te
 import { PlayerService } from './player.service';
 import { ConfigService } from '@modules/core/config/config.module';
 import { createConfigServiceSpy } from '@modules/core/config/testing/config-spy-factories.spec';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { StreamInfoService } from './stream-info.service';
 import { NotificationService, Severities } from '@modules/core/notifications/notifications.module';
 import { AudioElementToken, Station, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
@@ -16,6 +15,7 @@ import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-f
 import { StreamInfoStatus } from '../models/stream-info-status';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
+import { createNotificationServiceSpy } from '@notifications/testing';
 import isBlank from 'is-blank';
 
 describe('PlayerService', () => {
@@ -31,7 +31,7 @@ describe('PlayerService', () => {
 
   beforeEach(() => {
     audioElement = new AudioElementStub();
-    notificationServiceSpy = NotificationsSpyFactories.CreateNotificationServiceSpy();
+    notificationServiceSpy = createNotificationServiceSpy();
     configServiceSpy = createConfigServiceSpy();
     loggingServiceSpy = LoggingSpyFactories.CreateLoggingServiceSpy();
 

@@ -7,10 +7,10 @@ import { createErrorHandlingServiceSpy } from '@modules/core/error-handling/test
 import { ErrorHandlingService } from '@modules/core/error-handling/error-handling.module';
 import { LoggingSpyFactories } from '@modules/core/logging/testing/logging-spy-factories.spec';
 import { LoggingService } from '@modules/core/logging/logging.module';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { NotificationService } from '@modules/core/notifications/notifications.module';
 import { createOAuthServiceSpy } from '../testing/authentication-spy-factories.spec';
 import * as moment from 'moment';
+import { createNotificationServiceSpy } from '@notifications/testing';
 
 describe('AuthenticationService', () => {
   let authenticationService: AuthenticationService;
@@ -28,7 +28,7 @@ describe('AuthenticationService', () => {
     errorHandlingServiceSpy = createErrorHandlingServiceSpy();
     configServiceSpy = createConfigServiceSpy();
     loggingServiceSpy = LoggingSpyFactories.CreateLoggingServiceSpy();
-    notificationServiceSpy = NotificationsSpyFactories.CreateNotificationServiceSpy();
+    notificationServiceSpy = createNotificationServiceSpy();
     oAuthServiceSpy = createOAuthServiceSpy();
     currentDate = spyOnProperty(AuthenticationService.prototype, 'currentDate');
   });

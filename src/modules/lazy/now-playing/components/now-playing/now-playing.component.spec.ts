@@ -15,7 +15,6 @@ import {
   createPlayerServiceSpy,
   createSleepTimerServiceSpy
 } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedComponentsModule } from '@modules/shared/shared-components/shared-components.module';
 import { NotificationService } from '@modules/core/notifications/notifications.module';
@@ -28,6 +27,7 @@ import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep
 import { getElementBySelector, getElementTextBySelector } from '@test-helpers';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
+import { createNotificationServiceSpy } from '@notifications/testing';
 import isBlank from 'is-blank';
 
 
@@ -60,7 +60,7 @@ describe('NowPlayingComponent', () => {
       ],
       providers: [
         { provide: PlayerService, useValue: playerService },
-        { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
+        { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
         { provide: SleepTimerService, useValue: sleepTimerService },
         provideMockStore({ initialState: initialRootState })

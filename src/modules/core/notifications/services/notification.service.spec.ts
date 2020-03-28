@@ -2,14 +2,14 @@ import { TestBed } from '@angular/core/testing';
 import { NotificationService } from '@modules/core/notifications/notifications.module';
 import { Severities } from '../models/severities';
 import { MessageService } from 'primeng/api';
-import { NotificationsSpyFactories } from '../testing/notifications-spy-factories.spec';
+import { createMessageServiceSpy } from '../testing/notifications-spy-factories.spec';
 
 describe('NotificationService', () => {
   let notificationService: NotificationService;
   let messageServiceSpy: any;
 
   beforeEach(() => {
-    messageServiceSpy = NotificationsSpyFactories.CreateMessageServiceSpy();
+    messageServiceSpy = createMessageServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [

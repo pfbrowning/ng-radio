@@ -6,6 +6,8 @@ import { FavoriteStationsService } from '@core-radio-logic';
 import { createFavoriteStationsServiceSpy } from '@core-radio-logic/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
+import { createNotificationServiceSpy } from '@notifications/testing';
+import { NotificationService } from '@notifications';
 
 describe('FavoriteStationsEffects', () => {
   const actions$: Observable<any> = null;
@@ -15,9 +17,10 @@ describe('FavoriteStationsEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         FavoriteStationsEffects,
-        { provide: FavoriteStationsService, useValue: createFavoriteStationsServiceSpy() },
         provideMockActions(() => actions$),
-        provideMockStore({ initialState: initialRootState })
+        provideMockStore({ initialState: initialRootState }),
+        { provide: FavoriteStationsService, useValue: createFavoriteStationsServiceSpy() },
+        { provide: NotificationService, useValue: createNotificationServiceSpy() }        
       ]
     });
 

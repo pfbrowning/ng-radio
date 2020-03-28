@@ -8,12 +8,12 @@ import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { ConfigService } from '@modules/core/config/config.module';
 import { ConfigServiceStub } from '@modules/core/config/testing/config.service.stub';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { createErrorHandlingServiceSpy } from '@modules/core/error-handling/testing/error-handling-spy-factories.spec';
 import { MessageService } from 'primeng/api';
 import { Router, Route } from '@angular/router';
 import { RouteResolverStub } from '@test-helpers';
 import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
+import { createMessageServiceSpy } from '@notifications/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -57,7 +57,7 @@ describe('AppComponent', () => {
       providers: [
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ErrorHandlingService, useValue: errorHandlingServiceSpy },
-        { provide: MessageService, useValue: NotificationsSpyFactories.CreateMessageServiceSpy() },
+        { provide: MessageService, useValue: createMessageServiceSpy() },
         { provide: RouteResolverStub, useValue: routeResolver },
         { provide: LoadingIndicatorService, useValue: loadingIndicatorServiceSpy }
       ]

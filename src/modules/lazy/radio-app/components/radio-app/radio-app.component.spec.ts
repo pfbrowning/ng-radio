@@ -16,13 +16,13 @@ import {
   createStationLookupServiceSpy
 } from '@modules/core/core-radio-logic/testing/core-radio-logic-spy-factories.spec';
 import { StationLookupService, PlayerService, CoreRadioLogicModule } from '@modules/core/core-radio-logic/core-radio-logic.module';
-import { NotificationsSpyFactories } from '@modules/core/notifications/testing/notifications-spy-factories.spec';
 import { NotificationService } from '@modules/core/notifications/notifications.module';
 import { KeepAwakeService } from '@modules/core/keep-awake/keep-awake.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { createKeepAwakeServiceSpy } from '@modules/core/keep-awake/testing/keep-awake-spy-factories.spec';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
+import { createNotificationServiceSpy } from '@notifications/testing';
 
 describe('RadioAppComponent', () => {
   let component: RadioAppComponent;
@@ -52,7 +52,7 @@ describe('RadioAppComponent', () => {
         { provide: AuthenticationService, useValue: createAuthenticationServiceSpy() },
         { provide: PlayerService, useValue: createPlayerServiceSpy() },
         { provide: StationLookupService, useValue: createStationLookupServiceSpy() },
-        { provide: NotificationService, useValue: NotificationsSpyFactories.CreateNotificationServiceSpy() },
+        { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: createKeepAwakeServiceSpy() },
         provideMockStore({ initialState: initialRootState })
       ]
