@@ -14,8 +14,7 @@ import {
   selectIsCurrentStationInFavorites,
   CurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
-import { PlayerService, SleepTimerService } from '@core';
-import { KeepAwakeService } from '@keep-awake';
+import { PlayerService, SleepTimerService, KeepAwakeService } from '@core';
 
 @Component({
   selector: 'blr-player-bar',

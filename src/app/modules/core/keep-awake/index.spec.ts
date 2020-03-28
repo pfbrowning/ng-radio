@@ -1,1 +1,0 @@
-export * from './testing/keep-awake-spy-factories.spec';

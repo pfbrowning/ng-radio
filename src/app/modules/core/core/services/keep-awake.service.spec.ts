@@ -2,10 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElementToken } from '@core';
-import { AudioElementStub } from '@core/testing';
-import { KeepAwakeModule } from '@keep-awake';
+import { AudioElementStub, createKeepAwakeServiceSpy } from '@core/testing';
 import { MessageService } from 'primeng/api';
-import { createKeepAwakeServiceSpy } from '../testing/keep-awake-spy-factories.spec';
 import { createMessageServiceSpy } from '@notifications/testing';
 import * as NoSleep from 'nosleep.js';
 
@@ -20,13 +18,11 @@ describe('KeepAwakeService', () => {
     noSleepSpy = createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
-      imports: [
-        KeepAwakeModule
-      ],
       providers: [
         { provide: AudioElementToken, useValue: audioElement },
         { provide: NoSleepToken, useValue: noSleepSpy },
-        { provide: MessageService, useValue: createMessageServiceSpy() }
+        { provide: MessageService, useValue: createMessageServiceSpy() },
+        KeepAwakeService
       ]
     });
 

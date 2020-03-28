@@ -13,5 +13,6 @@ export { FavoriteStationsService } from './services/favorite-stations.service';
 export { PlayerService } from './services/player.service';
 export { SleepTimerService } from './services/sleep-timer.service';
 export { StationLookupService } from './services/station-lookup.service';
+export { KeepAwakeService } from './services/keep-awake.service';
 
 export { CoreModule } from './core.module';

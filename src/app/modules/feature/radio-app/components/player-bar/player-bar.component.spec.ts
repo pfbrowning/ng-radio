@@ -15,20 +15,20 @@ import {
   Station,
   StreamInfo,
   StreamInfoStatus,
-  SleepTimerService
+  SleepTimerService,
+  KeepAwakeService
 } from '@core';
 import {
   createPlayerServiceSpy,
-  createSleepTimerServiceSpy
+  createSleepTimerServiceSpy,
+  createKeepAwakeServiceSpy
 } from '@core/testing';
 import { NotificationService } from '@notifications';
-import { KeepAwakeService } from '@keep-awake';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedComponentsModule } from '@shared-components';
-import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';

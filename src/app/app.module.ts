@@ -11,7 +11,6 @@ import { CoreModule } from '@core';
 import { ConfigModule } from '@config';
 import { ErrorHandlingModule } from '@error-handling';
 import { LoggingModule } from '@logging';
-import { KeepAwakeModule } from '@keep-awake';
 import { NotificationsModule } from '@notifications';
 import { SharedComponentsModule } from '@shared-components';
 import { AuthenticationModule } from '@authentication';
@@ -35,7 +34,6 @@ import { ConfirmationService } from 'primeng/api';
     NgLoadingIndicatorModule,
     ErrorHandlingModule,
     LoggingModule,
-    KeepAwakeModule,
     NotificationsModule,
     SharedComponentsModule,
     RootStateModule

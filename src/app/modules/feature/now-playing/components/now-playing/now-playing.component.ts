@@ -11,8 +11,7 @@ import {
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
-import { PlayerService, SleepTimerService, StreamInfoStatus } from '@core';
-import { KeepAwakeService } from '@keep-awake';
+import { PlayerService, SleepTimerService, StreamInfoStatus, KeepAwakeService } from '@core';
 
 @Component({
   templateUrl: './now-playing.component.html',

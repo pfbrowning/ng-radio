@@ -7,6 +7,9 @@ import { StreamInfoService } from './services/stream-info.service';
 import { AudioElement } from './models/audio-element';
 import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule } from '@angular/common/http';
+import { KeepAwakeService } from './services/keep-awake.service';
+import { NoSleepToken } from './injection-tokens/no-sleep-token';
+import * as NoSleep from 'nosleep.js';
 
 @NgModule({
   declarations: [],
@@ -19,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     PlayerService,
     SleepTimerService,
     StreamInfoService,
+    KeepAwakeService,
+    { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
   ]
 })

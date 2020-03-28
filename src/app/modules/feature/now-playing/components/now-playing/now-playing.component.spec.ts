@@ -9,21 +9,21 @@ import {
   Station,
   StreamInfo,
   StreamInfoStatus,
-  SleepTimerService
+  SleepTimerService,
+  KeepAwakeService
 } from '@core';
 import {
   createPlayerServiceSpy,
-  createSleepTimerServiceSpy
+  createSleepTimerServiceSpy,
+  createKeepAwakeServiceSpy
 } from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedComponentsModule } from '@shared-components';
 import { NotificationService } from '@notifications';
-import { KeepAwakeService } from '@keep-awake';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { createKeepAwakeServiceSpy } from '@keep-awake/testing';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@root-state';
