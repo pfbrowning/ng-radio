@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { AuthGuard } from './auth.guard';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@root-state';
-import { Store } from '@ngrx/store';
-import { initialAuthenticationState } from '@root-state/authentication';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '../testing/authentication-spy-factories.spec';
+import { initialAuthenticationState } from '../models/initial-authentication-state';
 
 describe('AuthGuard', () => {
   let authGuard: AuthGuard;

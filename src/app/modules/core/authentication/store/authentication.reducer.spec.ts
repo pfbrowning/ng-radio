@@ -1,13 +1,14 @@
-import { reducer, initialState } from './authentication.reducer';
+import { authenticationReducer } from "./authentication.reducer";
+import { initialAuthenticationState } from '../models/initial-authentication-state';
 
 describe('Authentication Reducer', () => {
   describe('an unknown action', () => {
     it('should return the previous state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = authenticationReducer(initialAuthenticationState, action);
 
-      expect(result).toBe(initialState);
+      expect(result).toBe(initialAuthenticationState);
     });
   });
 });
