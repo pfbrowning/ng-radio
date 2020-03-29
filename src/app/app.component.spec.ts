@@ -16,6 +16,10 @@ import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indi
 import { createMessageServiceSpy } from '@notifications/testing';
 import { AudioElementEventListenerService } from '@core';
 import { createAudioElementEventListenerSpy } from '@core/testing';
+import { createOauthEventListenerServiceSpy } from '@authentication/testing';
+import { OauthEventListenerService } from '@authentication';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -62,7 +66,9 @@ describe('AppComponent', () => {
         { provide: MessageService, useValue: createMessageServiceSpy() },
         { provide: RouteResolverStub, useValue: routeResolver },
         { provide: LoadingIndicatorService, useValue: loadingIndicatorServiceSpy },
-        { provide: AudioElementEventListenerService, useValue: createAudioElementEventListenerSpy() }
+        { provide: AudioElementEventListenerService, useValue: createAudioElementEventListenerSpy() },
+        { provide: OauthEventListenerService, useValue: createOauthEventListenerServiceSpy() },
+        provideMockStore({initialState: initialRootState})
       ]
     }).compileComponents();
   }));

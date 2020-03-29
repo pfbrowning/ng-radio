@@ -1,25 +1,32 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthGuard } from './auth.guard';
-import { AuthenticationService } from '../services/authentication.service';
-import { AuthenticationServiceStub } from '../testing/authentication.service-stub.spec';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { initialRootState, RootState } from '@root-state';
+import { Store } from '@ngrx/store';
+import { initialAuthenticationState } from '@root-state/authentication';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { createOAuthServiceSpy } from '../testing/authentication-spy-factories.spec';
 
 describe('AuthGuard', () => {
-  let authenticationService: AuthenticationServiceStub;
   let authGuard: AuthGuard;
   let canActivateSpy;
+  let oauthService: jasmine.SpyObj<OAuthService>;
+  let store: MockStore<RootState>;
 
   beforeEach(() => {
-    authenticationService = new AuthenticationServiceStub();
     canActivateSpy = jasmine.createSpyObj('canActivate', ['emit', 'error', 'complete']);
+    oauthService = createOAuthServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [
         AuthGuard,
-        { provide: AuthenticationService, useValue: authenticationService },
+        provideMockStore({initialState: initialRootState}),
+        { provide: OAuthService, useValue: oauthService }
       ]
     });
 
     authGuard = TestBed.inject(AuthGuard);
+    store = TestBed.inject(MockStore);
 
     authGuard.canActivate().subscribe(
       value => canActivateSpy.emit(value),
@@ -29,34 +36,44 @@ describe('AuthGuard', () => {
   });
 
   it('should allow entry for an authenticated user', () => {
-    // Arrange: Set authenticated to true
-    authenticationService.authenticated = true;
     expect(canActivateSpy.emit).not.toHaveBeenCalled();
 
-    // Act: Emit from tokenProcessed$ to simulate the corresponding auth event
-    authenticationService.tokenProcessed$.next();
+    // Arrange & Act
+    store.setState({
+      ...initialRootState,
+      authentication: {
+        ...initialAuthenticationState,
+        initialized: true,
+        authenticated: true
+      }
+    });
 
     // Assert: Ensure that 'true' was emitted and that we didn't call initImplicitFlow
     expect(canActivateSpy.emit).toHaveBeenCalledTimes(1);
     expect(canActivateSpy.emit.calls.mostRecent().args[0]).toBe(true);
     expect(canActivateSpy.error).not.toHaveBeenCalled();
     expect(canActivateSpy.complete).not.toHaveBeenCalled();
-    expect(authenticationService.initImplicitFlowSpy).not.toHaveBeenCalled();
+    expect(oauthService.initImplicitFlow).not.toHaveBeenCalled();
   });
 
   it('should init implicit flow for a non-authenticated user', () => {
-    // Arrange: Set authenticated to false
-    authenticationService.authenticated = false;
     expect(canActivateSpy.emit).not.toHaveBeenCalled();
 
-    // Act: Emit from tokenProcessed$ to simulate the corresponding auth event
-    authenticationService.tokenProcessed$.next();
+    // Arrange & Act
+    store.setState({
+      ...initialRootState,
+      authentication: {
+        ...initialAuthenticationState,
+        initialized: true,
+        authenticated: false
+      }
+    });
 
     // Assert: Ensure that 'true' was emitted and that we didn't call initImplicitFlow
     expect(canActivateSpy.emit).toHaveBeenCalledTimes(1);
     expect(canActivateSpy.emit.calls.mostRecent().args[0]).toBe(false);
     expect(canActivateSpy.error).not.toHaveBeenCalled();
     expect(canActivateSpy.complete).not.toHaveBeenCalled();
-    expect(authenticationService.initImplicitFlowSpy).toHaveBeenCalledTimes(1);
+    expect(oauthService.initImplicitFlow).toHaveBeenCalledTimes(1);
   });
 });
