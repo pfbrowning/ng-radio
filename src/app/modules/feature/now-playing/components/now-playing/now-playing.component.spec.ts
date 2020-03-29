@@ -103,7 +103,7 @@ describe('NowPlayingComponent', () => {
         streamInfo: input.streamInfo,
         streamInfoStatus: input.streamInfoStatus,
       }
-    })
+    });
     fixture.detectChanges();
 
     // Assert: Ensure that the important NowPlaying properties were properly bound to the template
@@ -145,7 +145,7 @@ describe('NowPlayingComponent', () => {
         streamInfo: input.streamInfo,
         streamInfoStatus: input.streamInfoStatus
       }
-    })
+    });
     fixture.detectChanges();
 
     // Assert: Ensure that the text of the title element conveys the current stream status
@@ -244,7 +244,7 @@ describe('NowPlayingComponent', () => {
         streamInfo: new StreamInfo(null, null),
         streamInfoStatus: StreamInfoStatus.Valid
       }
-    })
+    });
     // Set up a sequence of dummy boolean $enabled values to iterate through
     const testEntries = [ false, true, false, true, false ];
 
@@ -277,7 +277,7 @@ describe('NowPlayingComponent', () => {
         ...initialPlayerState,
         currentStation: new Station(),
         streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid        
+        streamInfoStatus: StreamInfoStatus.Valid
       }
     };
     store.setState(state);
@@ -295,7 +295,7 @@ describe('NowPlayingComponent', () => {
         ...state.player,
         playerStatus: PlayerStatus.Playing
       }
-    }
+    };
     store.setState(state);
     fixture.detectChanges();
 
@@ -307,7 +307,7 @@ describe('NowPlayingComponent', () => {
         ...state.player,
         playerStatus: PlayerStatus.Stopped
       }
-    }
+    };
     store.setState(state);
     fixture.detectChanges();
 

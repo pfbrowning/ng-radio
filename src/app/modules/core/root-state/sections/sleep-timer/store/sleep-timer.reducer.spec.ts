@@ -1,4 +1,4 @@
-import { sleepTimerReducer } from "./sleep-timer.reducer";
+import { sleepTimerReducer } from './sleep-timer.reducer';
 import { initialSleepTimerState } from '../models/initial-sleep-timer-state';
 
 describe('Sleep Timer Reducer', () => {

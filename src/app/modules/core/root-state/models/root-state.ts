@@ -5,5 +5,5 @@ import { SleepTimerState } from '../sections/sleep-timer/models/sleep-timer-stat
 export interface RootState {
     favoriteStations: FavoriteStationsState;
     player: PlayerState;
-    sleepTimer: SleepTimerState
+    sleepTimer: SleepTimerState;
 }

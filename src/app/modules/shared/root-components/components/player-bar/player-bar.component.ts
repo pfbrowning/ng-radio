@@ -35,7 +35,7 @@ export class PlayerBarComponent {
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
   public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(selectCurrentStation));
-  public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep))
+  public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
 
   public onImgError(img: HTMLImageElement) {
     setAltSrc(img, '/assets/images/radio.svg');
@@ -43,7 +43,7 @@ export class PlayerBarComponent {
 
   public onTimerSelected(minutes: number) {
     if (minutes != null) {
-      this.store.dispatch(setSleepTimerSubmit({minutes}))
+      this.store.dispatch(setSleepTimerSubmit({minutes}));
     } else {
       this.store.dispatch(clearSleepTimer());
     }

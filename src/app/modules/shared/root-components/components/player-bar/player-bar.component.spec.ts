@@ -80,7 +80,7 @@ describe('PlayerBarComponent', () => {
 
   it('should update the template to reflect changes in minutes until sleep', () => {
     // Arrange
-    let state : RootState = {
+    let state: RootState = {
       ...initialRootState,
       player: {
         ...initialPlayerState,
@@ -88,7 +88,7 @@ describe('PlayerBarComponent', () => {
         streamInfo: new StreamInfo(null, null),
         streamInfoStatus: StreamInfoStatus.Valid
       }
-    }
+    };
     store.setState(state);
 
     for (let i = 300; i >= 0; i--) {
@@ -122,7 +122,7 @@ describe('PlayerBarComponent', () => {
 
   it('should update the template to reflect changes in the keepAwake state', () => {
     // Arrange
-    let state : RootState = {
+    const state: RootState = {
       ...initialRootState,
       player: {
         ...initialPlayerState,
@@ -130,7 +130,7 @@ describe('PlayerBarComponent', () => {
         streamInfo: new StreamInfo(null, null),
         streamInfoStatus: StreamInfoStatus.Valid
       }
-    }
+    };
     store.setState(state);
     fixture.detectChanges();
     const keepAwakeElement = getElementBySelector<PlayerBarComponent>(fixture, '.keep-awake');
@@ -148,7 +148,7 @@ describe('PlayerBarComponent', () => {
 
   it('should update the pause button on global play & pause', () => {
     // Arrange
-    let state : RootState = {
+    let state: RootState = {
       ...initialRootState,
       player: {
         ...initialPlayerState,
@@ -156,7 +156,7 @@ describe('PlayerBarComponent', () => {
         streamInfo: new StreamInfo(null, null),
         streamInfoStatus: StreamInfoStatus.Valid
       }
-    }
+    };
     store.setState(state);
 
     fixture.detectChanges();
@@ -172,7 +172,7 @@ describe('PlayerBarComponent', () => {
         ...state.player,
         playerStatus: PlayerStatus.Playing
       }
-    }
+    };
     store.setState(state);
     fixture.detectChanges();
 
@@ -184,7 +184,7 @@ describe('PlayerBarComponent', () => {
         ...state.player,
         playerStatus: PlayerStatus.Stopped
       }
-    }
+    };
     store.setState(state);
     fixture.detectChanges();
 

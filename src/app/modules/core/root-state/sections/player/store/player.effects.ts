@@ -40,7 +40,7 @@ export class PlayerEffects {
     ofType(selectStation),
     tap(action => {
       this.audio.src = action.station.url;
-      if(!isBlank(action.station.title)) {
+      if (!isBlank(action.station.title)) {
         this.titleService.setTitle(action.station.title);
       } else {
         this.titleService.setTitle('Browninglogic Radio');
@@ -107,8 +107,8 @@ export class PlayerEffects {
     withLatestFrom(this.store.pipe(select(selectCurrentStationAndStreamInfo))),
     tap(([action, selected]) => {
       this.notificationService.notify(Severities.Info, 'Now Playing', !isBlank(selected.streamInfo.title) ?
-      `${selected.streamInfo.title} - ${selected.station.title}` : selected.station.title)
-    })    
+      `${selected.streamInfo.title} - ${selected.station.title}` : selected.station.title);
+    })
   ), { dispatch: false });
 
   updateTitleOnStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
@@ -116,13 +116,13 @@ export class PlayerEffects {
     filter(action => action.streamInfoChanged),
     withLatestFrom(this.store.pipe(select(selectCurrentStationAndStreamInfo))),
     tap(([action, selected]) => {
-      if(!isBlank(selected.streamInfo.title)) {
+      if (!isBlank(selected.streamInfo.title)) {
         this.titleService.setTitle(selected.streamInfo.title);
-      } else if(!isBlank(selected.station.title)) {
+      } else if (!isBlank(selected.station.title)) {
         this.titleService.setTitle(selected.station.title);
       } else {
         this.titleService.setTitle('Browninglogic Radio');
       }
-    })    
+    })
   ), { dispatch: false });
 }

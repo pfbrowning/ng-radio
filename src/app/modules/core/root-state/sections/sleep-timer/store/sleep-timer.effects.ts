@@ -8,7 +8,7 @@ import { RootState } from '../../../models/root-state';
 import { Store, select } from '@ngrx/store';
 import { selectSleepTime } from './sleep-timer.selectors';
 import { setSleepTimerSubmit, sleepTimerSet, clearSleepTimer, goToSleep, setMinutesUntilSleep, countMinutesUntilSleep } from './sleep-timer.actions';
-import * as dayjs from 'dayjs'
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class SleepTimerEffects {
@@ -57,16 +57,16 @@ export class SleepTimerEffects {
   notifySleepTimerSet$ = createEffect(() => this.actions$.pipe(
     ofType(sleepTimerSet),
     map(action => dayjs(action.sleepTime).format('h:mm:ss a')),
-    tap(time => this.notificationService.notify(Severities.Success, 'Sleep Timer Set', `Sleep timer set for ${time}.`))    
+    tap(time => this.notificationService.notify(Severities.Success, 'Sleep Timer Set', `Sleep timer set for ${time}.`))
   ), { dispatch: false });
 
   notifySleepTimerCleared$ = createEffect(() => this.actions$.pipe(
     ofType(clearSleepTimer),
-    tap(() => this.notificationService.notify(Severities.Success, 'Sleep Timer Cleared', 'Sleep timer cleared.'))    
+    tap(() => this.notificationService.notify(Severities.Success, 'Sleep Timer Cleared', 'Sleep timer cleared.'))
   ), { dispatch: false });
 
   notifyGoingToSleep$ = createEffect(() => this.actions$.pipe(
     ofType(goToSleep),
-    tap(() => this.notificationService.notify(Severities.Info, 'Going to sleep', 'Good night!'))    
+    tap(() => this.notificationService.notify(Severities.Info, 'Going to sleep', 'Good night!'))
   ), { dispatch: false });
 }

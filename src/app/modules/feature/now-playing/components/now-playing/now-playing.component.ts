@@ -40,7 +40,7 @@ export class NowPlayingComponent {
 
   public onTimerSelected(minutes: number) {
     if (minutes != null) {
-      this.store.dispatch(setSleepTimerSubmit({minutes}))
+      this.store.dispatch(setSleepTimerSubmit({minutes}));
     } else {
       this.store.dispatch(clearSleepTimer());
     }
