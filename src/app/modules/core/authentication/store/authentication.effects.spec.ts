@@ -12,7 +12,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '@authentication/testing';
 
 describe('AuthenticationEffects', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = null;
   let effects: AuthenticationEffects;
 
   beforeEach(() => {
