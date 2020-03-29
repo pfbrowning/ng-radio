@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '@authentication';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'blr-side-nav',
@@ -7,5 +7,9 @@ import { AuthenticationService } from '@authentication';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
-  constructor(public authenticationService: AuthenticationService) {}
+  constructor(private oauthService: OAuthService) {}
+
+  public onLogoutClicked() {
+    this.oauthService.logOut();
+  }
 }

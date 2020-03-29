@@ -10,7 +10,6 @@ import { PlayerEffects } from './sections/player/store/player.effects';
 import { SleepTimerEffects } from './sections/sleep-timer/store/sleep-timer.effects';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     StoreModule.forRoot(reducers, {

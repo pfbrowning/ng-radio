@@ -1,29 +1,28 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { AuthenticationService } from '../services/authentication.service';
+import { tap, filter, switchMap } from 'rxjs/operators';
+import { RootState } from '@root-state';
+import { Store, select } from '@ngrx/store';
+import { selectIsAuthenticationInitialized, selectIsAuthenticated } from '../../root-state/sections/authentication/store/authentication.selectors';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    constructor(private authenticationService: AuthenticationService) {}
+    constructor(private store: Store<RootState>, private oauthService: OAuthService) {}
 
     canActivate(): Observable<boolean> {
-        // Once the login has been processed
-        return this.authenticationService.tokenProcessed$.pipe(
-            // Map the authenticated state as the canActivate result
-            map(() => this.authenticationService.authenticated),
-            tap(authenticated => {
-                /* If the user isn't authenticated, then send them directly
-                to the identity provider for login, rather than sending them
-                to a login landing page.
-                I want the user to be authenticated before they access the app
-                at all because I want to secure the now playing API with an
-                access token. */
-                if (!authenticated) {
-                    this.authenticationService.initImplicitFlow();
-                }
-            })
-        );
+        return this.store.pipe(
+            select(selectIsAuthenticationInitialized),
+            filter(initialized => initialized),
+            switchMap(() => this.store.pipe(
+                select(selectIsAuthenticated),
+                tap(authenticated => {
+                    if (!authenticated) {
+                        this.oauthService.initImplicitFlow();
+                    }
+                })
+            ))
+        )
     }
 }

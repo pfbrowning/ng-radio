@@ -55,6 +55,7 @@ ng serve --open
 ## Backlog
 * Chores
   * Implement NGRX for state management throughout the app.
+  * Restructure modules so that related functionality is together, regardless of whether it relates to NGRX
   * Come up with a better location for models - particularly those which are shared between modules.
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR

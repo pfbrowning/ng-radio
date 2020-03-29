@@ -5,6 +5,9 @@ import { LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
 import { ErrorHandlingService } from '@error-handling';
 import { ConfigService } from '@config';
 import { AudioElementEventListenerService } from '@core';
+import { OauthEventListenerService } from '@authentication';
+import { Store } from '@ngrx/store';
+import { RootState, appInit } from '@root-state';
 
 @Component({
   selector: 'blr-root',
@@ -14,15 +17,18 @@ import { AudioElementEventListenerService } from '@core';
 export class AppComponent implements OnInit, OnDestroy {
   constructor(private errorHandlingService: ErrorHandlingService,
     private audioElementEventListenerService: AudioElementEventListenerService,
+    private oauthEventListenerService: OauthEventListenerService,
     private loadingIndicatorService: LoadingIndicatorService,
     private configService: ConfigService,
-    private router: Router) {}
+    private router: Router,
+    private store: Store<RootState>) {}
 
   /** Subscription to Router Events for the purpose of handling
    * any router-events-based logic on an app-wide basis */
   private routerEventsSubscription: Subscription;
 
   ngOnInit() {
+    this.store.dispatch(appInit());
     // Subscribe to router events so that we can show & hide the loading indicator accordingly
     this.routerEventsSubscription = this.router.events.subscribe(event => this.onRouterEvent(event));
     /* If the root app config failed to load before bootstrap, this is a critical error and a big

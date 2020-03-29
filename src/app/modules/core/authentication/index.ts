@@ -1,4 +1,4 @@
-export { AuthenticationService } from './services/authentication.service';
+export { OauthEventListenerService } from './services/oauth-event-listener.service';
 
 export { AuthGuard } from './guards/auth.guard';
 

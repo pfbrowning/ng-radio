@@ -56,7 +56,7 @@ export class SleepTimerEffects {
 
   notifySleepTimerSet$ = createEffect(() => this.actions$.pipe(
     ofType(sleepTimerSet),
-    map(action => dayjs(action.sleepTime).format('h:mm:ss a')),
+    map(action => dayjs(action.sleepTime).format('h:mm:ssa')),
     tap(time => this.notificationService.notify(Severities.Success, 'Sleep Timer Set', `Sleep timer set for ${time}.`))
   ), { dispatch: false });
 
