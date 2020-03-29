@@ -3,7 +3,7 @@ import { PlayerBarStationInfoComponent } from './player-bar-station-info.compone
 import { getElementTextBySelector } from '@utilities/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RootState, initialRootState } from '@root-state';
-import { initialPlayerState, Station, StreamInfo, StreamInfoStatus } from '@root-state/player';
+import { initialPlayerState, Station, StreamInfo, StreamInfoStatus, PlayerStatus } from '@root-state/player';
 import theoretically from 'jasmine-theories';
 
 describe('PlayerBarStationInfoComponent', () => {
@@ -36,23 +36,52 @@ describe('PlayerBarStationInfoComponent', () => {
     {
       station: new Station(),
       streamInfo: new StreamInfo(null, null),
-      streamInfoStatus: StreamInfoStatus.NotInitialized
+      playerStatus: PlayerStatus.LoadingAudio,
+      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      expected: 'Loading Audio...'
     },
     {
       station: new Station(),
       streamInfo: new StreamInfo(null, null),
-      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      expected: ''
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
+      expected: ''
     },
     {
       station: new Station(),
       streamInfo: new StreamInfo('Valid Title', null),
-      streamInfoStatus: StreamInfoStatus.Valid
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.Valid,
+      expected: 'Valid Title'
     },
     {
       station: new Station(),
       streamInfo: new StreamInfo(null, null),
-      streamInfoStatus: StreamInfoStatus.Error
-    }
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.Error,
+      expected: ''
+    },
+    {
+      station: new Station(),
+      streamInfo: null,
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
+      expected: 'Loading Stream Info...'
+    },
+    {
+      station: new Station(),
+      streamInfo: null,
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.Error,
+      expected: 'Metadata Unavailable'
+    },
   ];
   theoretically.it('should reflect the various streamInfoStatus states properly in the template',
     streamInfoStatusTemplateInput, (input) => {
@@ -63,25 +92,13 @@ describe('PlayerBarStationInfoComponent', () => {
         ...initialPlayerState,
         currentStation: input.station,
         streamInfo: input.streamInfo,
-        streamInfoStatus: input.streamInfoStatus
+        streamInfoStatus: input.streamInfoStatus,
+        playerStatus: input.playerStatus
       }
     });
     fixture.detectChanges();
+
     // Assert: Ensure that the text of the title element conveys the current stream status
-    const titleText = getElementTextBySelector<PlayerBarStationInfoComponent>(fixture, '.title');
-    switch (input.streamInfoStatus) {
-      case StreamInfoStatus.NotInitialized:
-        expect(titleText).toBe('');
-        break;
-      case StreamInfoStatus.LoadingStreamInfo:
-        expect(titleText).toBe('Loading Stream Info...');
-        break;
-      case StreamInfoStatus.Valid:
-        expect(titleText).toBe(input.streamInfo.title);
-        break;
-      case StreamInfoStatus.Error:
-        expect(titleText).toBe('Metadata Unavailable');
-        break;
-    }
+    expect(getElementTextBySelector<PlayerBarStationInfoComponent>(fixture, '.title')).toBe(input.expected);
   });
 });

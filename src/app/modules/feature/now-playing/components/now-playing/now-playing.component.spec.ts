@@ -100,6 +100,7 @@ describe('NowPlayingComponent', () => {
         currentStation: input.station,
         streamInfo: input.streamInfo,
         streamInfoStatus: input.streamInfoStatus,
+        playerStatus: PlayerStatus.Playing
       }
     });
     fixture.detectChanges();
@@ -115,22 +116,51 @@ describe('NowPlayingComponent', () => {
     {
       station: new Station(),
       streamInfo: new StreamInfo(null, null),
-      streamInfoStatus: StreamInfoStatus.NotInitialized
+      playerStatus: PlayerStatus.LoadingAudio,
+      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      expected: 'Loading Audio...'
     },
     {
       station: new Station(),
       streamInfo: new StreamInfo(null, null),
-      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      expected: ''
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
+      expected: ''
     },
     {
       station: new Station(),
       streamInfo: new StreamInfo('Valid Title', null),
-      streamInfoStatus: StreamInfoStatus.Valid
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.Valid,
+      expected: 'Valid Title'
     },
     {
       station: new Station(),
       streamInfo: new StreamInfo(null, null),
-      streamInfoStatus: StreamInfoStatus.Error
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.Error,
+      expected: ''
+    },
+    {
+      station: new Station(),
+      streamInfo: null,
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
+      expected: 'Loading Stream Info...'
+    },
+    {
+      station: new Station(),
+      streamInfo: null,
+      playerStatus: PlayerStatus.Playing,
+      streamInfoStatus: StreamInfoStatus.Error,
+      expected: 'Metadata Unavailable'
     },
   ];
   theoretically.it('should reflect the various streamInfoStatus states properly in the template',
@@ -142,27 +172,14 @@ describe('NowPlayingComponent', () => {
         ...initialPlayerState,
         currentStation: input.station,
         streamInfo: input.streamInfo,
-        streamInfoStatus: input.streamInfoStatus
+        streamInfoStatus: input.streamInfoStatus,
+        playerStatus: input.playerStatus
       }
     });
     fixture.detectChanges();
 
     // Assert: Ensure that the text of the title element conveys the current stream status
-    const titleText = getElementTextBySelector<NowPlayingComponent>(fixture, '.title');
-    switch (input.streamInfoStatus) {
-      case StreamInfoStatus.NotInitialized:
-        expect(titleText).toBe('');
-        break;
-      case StreamInfoStatus.LoadingStreamInfo:
-        expect(titleText).toBe('Loading Stream Info...');
-        break;
-      case StreamInfoStatus.Valid:
-        expect(titleText).toBe(input.streamInfo.title);
-        break;
-      case StreamInfoStatus.Error:
-        expect(titleText).toBe('Metadata Unavailable');
-        break;
-    }
+    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.expected);
   });
 
   const nonEmptyBitrateInput = [
