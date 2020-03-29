@@ -1,13 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
-import { NowPlaying } from '@core';
-import { StreamInfoStatus } from '../models/stream-info-status';
-
-export function createPlayerServiceSpy(): any {
-  const spy = jasmine.createSpyObj('playerService', ['playStation']);
-  spy['nowPlaying$'] = new BehaviorSubject<NowPlaying>(new NowPlaying(null, null, StreamInfoStatus.NotInitialized));
-  spy['paused$'] = new BehaviorSubject<boolean>(true);
-  return spy;
-}
+import { AudioElementEventListenerService } from '../services/audio-element-event-listener.service';
+import { CurrentTimeService } from '../services/current-time.service';
+import { StreamInfoService } from '../services/stream-info.service';
 
 export function createStationLookupServiceSpy(): any {
   const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
@@ -19,15 +13,6 @@ export function createStationLookupServiceSpy(): any {
   return spy;
 }
 
-export function createSleepTimerServiceSpy(): any {
-  const spy = jasmine.createSpyObj('sleepTimerServiceSpy', [
-    'setTimer',
-    'cancelTimer'
-  ]);
-  spy['minutesUntilSleep$'] = new BehaviorSubject<number>(null);
-  return spy;
-}
-
 export function createFavoriteStationsServiceSpy(): any {
   return jasmine.createSpyObj('favoriteStationsService', ['fetchAll']);
 }
@@ -36,4 +21,16 @@ export function createKeepAwakeServiceSpy(): any {
   const spy = jasmine.createSpyObj('keepAwakeServiceSpy', ['enable', 'disable']);
   spy['enabled$'] = new BehaviorSubject<boolean>(false);
   return spy;
+}
+
+export function createAudioElementEventListenerSpy(): jasmine.SpyObj<AudioElementEventListenerService> {
+  return jasmine.createSpyObj('audioElementEventListener', ['constructor']);
+}
+
+export function createCurrentTimeServiceSpy(): jasmine.SpyObj<CurrentTimeService> {
+  return jasmine.createSpyObj('currentTimeService', ['unix']);
+}
+
+export function createStreamInfoServiceSpy(): jasmine.SpyObj<StreamInfoService> {
+  return jasmine.createSpyObj('streamInfoService', ['getMetadata']);
 }

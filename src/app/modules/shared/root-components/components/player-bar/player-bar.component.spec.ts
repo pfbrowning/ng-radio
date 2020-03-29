@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerBarComponent } from './player-bar.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,41 +9,33 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  PlayerService,
   CoreModule,
-  NowPlaying,
   Station,
   StreamInfo,
   StreamInfoStatus,
-  SleepTimerService,
   KeepAwakeService
 } from '@core';
-import {
-  createPlayerServiceSpy,
-  createSleepTimerServiceSpy,
-  createKeepAwakeServiceSpy
-} from '@core/testing';
+import { createKeepAwakeServiceSpy } from '@core/testing';
 import { NotificationService } from '@notifications';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { initialRootState, RootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
 import { SharedModule } from '@shared';
+import { initialPlayerState, PlayerStatus } from '@root-state/player';
+import theoretically from 'jasmine-theories';
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
   let fixture: ComponentFixture<PlayerBarComponent>;
-  let playerService: any;
-  let sleepTimerService: any;
   let keepAwakeServiceSpy: any;
+  let store: MockStore<RootState>;
 
   beforeEach(async(() => {
-    playerService = createPlayerServiceSpy();
-    sleepTimerService = createSleepTimerServiceSpy();
     keepAwakeServiceSpy = createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
@@ -67,10 +59,8 @@ describe('PlayerBarComponent', () => {
         SharedModule
       ],
       providers: [
-        { provide: PlayerService, useValue: playerService },
         { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService },
         provideMockStore({ initialState: initialRootState })
       ]
     })
@@ -80,6 +70,7 @@ describe('PlayerBarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerBarComponent);
     component = fixture.componentInstance;
+    store = TestBed.inject(MockStore);
     fixture.detectChanges();
   });
 
@@ -87,48 +78,29 @@ describe('PlayerBarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should bind updated nowPlaying info to the template and the station-info component', fakeAsync(() => {
-    // Arrange: Define a few dummy NowPlaying entries
-    const testEntries = [
-      new NowPlaying(
-        new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
-        new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
-        StreamInfoStatus.Valid
-      ),
-      new NowPlaying(
-        new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
-        new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
-        StreamInfoStatus.Valid
-      ),
-      new NowPlaying(
-        new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
-        new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
-        StreamInfoStatus.Valid
-      ),
-      new NowPlaying(
-        new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
-        new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
-        StreamInfoStatus.Valid
-      )
-    ];
-
-    testEntries.forEach(nowPlaying => {
-      // Act: Emit this iteration's NowPlaying entry and pause for the template bindings to catch up
-      playerService.nowPlaying$.next(nowPlaying);
-      tick(0);
-      // Assert: Ensure that the NowPlaying data was bound to the template and stationInfo component
-      expect(getElementBySelector<PlayerBarComponent>(fixture, '.station-icon-thumb').src).toBe(nowPlaying.station.iconUrl);
-      expect(fixture.componentInstance.stationInfo.nowPlaying).toEqual(nowPlaying);
-    });
-  }));
-
   it('should update the template to reflect changes in minutes until sleep', () => {
-    // Arrange: Emit an empty nowPlaying so that the player controls are rendered
-    playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
+    // Arrange
+    let state : RootState = {
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: new Station(),
+        streamInfo: new StreamInfo(null, null),
+        streamInfoStatus: StreamInfoStatus.Valid
+      }
+    }
+    store.setState(state);
 
     for (let i = 300; i >= 0; i--) {
       // Act: Emit a new minutesUntilSleep value and detect changes
-      sleepTimerService.minutesUntilSleep$.next(i);
+      state = {
+        ...state,
+        sleepTimer: {
+          ...state.sleepTimer,
+          minutesUntilSleep: i
+        }
+      };
+      store.setState(state);
       fixture.detectChanges();
       // Assert: Ensure that the new value was rendered properly in the template
       expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe(i.toString());
@@ -136,15 +108,30 @@ describe('PlayerBarComponent', () => {
 
     /* Clear the sleep timer and ensure that 'minutes until sleep'
     no longer shows a number. */
-    sleepTimerService.minutesUntilSleep$.next(null);
+    state = {
+      ...state,
+      sleepTimer: {
+        ...state.sleepTimer,
+        minutesUntilSleep: null
+      }
+    };
+    store.setState(state);
     fixture.detectChanges();
     expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe('');
   });
 
   it('should update the template to reflect changes in the keepAwake state', () => {
     // Arrange
-    // Emit an empty nowPlaying so that the player controls are rendered
-    playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
+    let state : RootState = {
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: new Station(),
+        streamInfo: new StreamInfo(null, null),
+        streamInfoStatus: StreamInfoStatus.Valid
+      }
+    }
+    store.setState(state);
     fixture.detectChanges();
     const keepAwakeElement = getElementBySelector<PlayerBarComponent>(fixture, '.keep-awake');
     // Set up a sequence of dummy boolean $enabled values to iterate through
@@ -159,10 +146,19 @@ describe('PlayerBarComponent', () => {
     });
   });
 
-  it('should update the pause button on global play & pause', fakeAsync(() => {
+  it('should update the pause button on global play & pause', () => {
     // Arrange
-    // Emit an empty nowPlaying entry and detect changes to render the player controls
-    playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
+    let state : RootState = {
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: new Station(),
+        streamInfo: new StreamInfo(null, null),
+        streamInfoStatus: StreamInfoStatus.Valid
+      }
+    }
+    store.setState(state);
+
     fixture.detectChanges();
     const getPlayPauseBtnText = () => getElementTextBySelector<PlayerBarComponent>(fixture, '.play-pause-button');
     // The 'Play' button should be drawn initially before we start to play something
@@ -170,14 +166,28 @@ describe('PlayerBarComponent', () => {
 
     /* Act & Assert: Simulate a play & pause action and ensure that the correct button
     is rendered in the template accordingly. */
-    playerService.paused$.next(false);
-    tick();
+    state = {
+      ...state,
+      player: {
+        ...state.player,
+        playerStatus: PlayerStatus.Playing
+      }
+    }
+    store.setState(state);
+    fixture.detectChanges();
 
     expect(getPlayPauseBtnText()).toBe('pause');
 
-    playerService.paused$.next(true);
-    tick();
+    state = {
+      ...state,
+      player: {
+        ...state.player,
+        playerStatus: PlayerStatus.Stopped
+      }
+    }
+    store.setState(state);
+    fixture.detectChanges();
 
     expect(getPlayPauseBtnText()).toBe('play_arrow');
-  }));
+  });
 });

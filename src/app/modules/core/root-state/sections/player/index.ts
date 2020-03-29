@@ -1,4 +1,5 @@
 export { PlayerStatus } from './models/player-status';
+export { initialPlayerState } from './models/initial-player-state';
 
 export { selectStation, playAudioStart, pauseAudioSubmit, audioPaused } from './store/player-actions';
 

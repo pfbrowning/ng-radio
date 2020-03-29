@@ -4,9 +4,9 @@ import { CustomStationComponent } from './custom-station.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { PlayerService } from '@core';
-import { createPlayerServiceSpy } from '@core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 
 describe('CustomStationComponent', () => {
   let component: CustomStationComponent;
@@ -23,7 +23,7 @@ describe('CustomStationComponent', () => {
       ],
       declarations: [ CustomStationComponent ],
       providers: [
-        { provide: PlayerService, useValue: createPlayerServiceSpy() },
+        provideMockStore({initialState: initialRootState})
       ]
     })
     .compileComponents();

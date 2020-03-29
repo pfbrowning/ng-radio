@@ -2,8 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoritesComponent } from './favorites.component';
 import { initialRootState } from '@root-state';
 import { provideMockStore } from '@ngrx/store/testing';
-import { PlayerService } from '@core';
-import { createPlayerServiceSpy } from '@core/testing';
 import { ConfirmationService } from 'primeng/api';
 
 describe('FavoritesComponent', () => {
@@ -15,7 +13,6 @@ describe('FavoritesComponent', () => {
       declarations: [ FavoritesComponent ],
       providers: [
         provideMockStore({ initialState: initialRootState }),
-        { provide: PlayerService, useValue: createPlayerServiceSpy() },
         { provide: ConfirmationService, useValue: jasmine.createSpyObj('confirmationService', ['confirm']) }
       ]
     })

@@ -3,20 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  PlayerService,
   CoreModule,
   NowPlaying,
   Station,
   StreamInfo,
   StreamInfoStatus,
-  SleepTimerService,
   KeepAwakeService
 } from '@core';
-import {
-  createPlayerServiceSpy,
-  createSleepTimerServiceSpy,
-  createKeepAwakeServiceSpy
-} from '@core/testing';
+import { createKeepAwakeServiceSpy } from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { NotificationService } from '@notifications';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
@@ -24,23 +18,22 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { initialRootState, RootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
 import { SharedModule } from '@shared';
+import { PlayerStatus, initialPlayerState } from '@root-state/player';
 import isBlank from 'is-blank';
+import theoretically from 'jasmine-theories';
 
 
 describe('NowPlayingComponent', () => {
   let component: NowPlayingComponent;
   let fixture: ComponentFixture<NowPlayingComponent>;
-  let playerService: any;
-  let sleepTimerService: any;
   let keepAwakeServiceSpy: any;
+  let store: MockStore<RootState>;
 
   beforeEach(async(() => {
-    playerService = createPlayerServiceSpy();
-    sleepTimerService = createSleepTimerServiceSpy();
     keepAwakeServiceSpy = createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
@@ -59,10 +52,8 @@ describe('NowPlayingComponent', () => {
         SharedModule
       ],
       providers: [
-        { provide: PlayerService, useValue: playerService },
         { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService },
         provideMockStore({ initialState: initialRootState })
       ]
     })
@@ -72,6 +63,7 @@ describe('NowPlayingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NowPlayingComponent);
     component = fixture.componentInstance;
+    store = TestBed.inject(MockStore);
     fixture.detectChanges();
   });
 
@@ -79,108 +71,150 @@ describe('NowPlayingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update the template to reflect changes in nowPlaying metadata', fakeAsync(() => {
-    // Arrange: Define a few dummy NowPlaying entries
-    const testEntries = [
-      new NowPlaying(
-        new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
-        new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
-        StreamInfoStatus.Valid
-      ),
-      new NowPlaying(
-        new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
-        new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
-        StreamInfoStatus.Valid
-      ),
-      new NowPlaying(
-        new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
-        new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
-        StreamInfoStatus.Valid
-      ),
-      new NowPlaying(
-        new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
-        new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
-        StreamInfoStatus.Valid
-      )
-    ];
+  const nowPlayingTemplateInput = [
+    {
+      station: new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
+      streamInfo: new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
+      streamInfo: new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
+      streamInfo: new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
+      streamInfo: new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
+      streamInfoStatus: StreamInfoStatus.Valid
+    }
+  ];
+  theoretically.it('should update the template to reflect changes in nowPlaying metadata', nowPlayingTemplateInput, (input) => {
+    // Act
+    store.setState({
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: input.station,
+        streamInfo: input.streamInfo,
+        streamInfoStatus: input.streamInfoStatus,
+      }
+    })
+    fixture.detectChanges();
 
-    testEntries.forEach(nowPlaying => {
-      // Act: Emit this iteration's NowPlaying entry and pause for the template to catch up
-      playerService.nowPlaying$.next(nowPlaying);
-      tick(0);
-      // Assert: Ensure that the important NowPlaying properties were properly bound to the template
-      expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(nowPlaying.station.iconUrl);
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(nowPlaying.station.title);
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(nowPlaying.streamInfo.title);
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${nowPlaying.streamInfo.bitrate}`);
-    });
-  }));
+    // Assert: Ensure that the important NowPlaying properties were properly bound to the template
+    expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(input.station.iconUrl);
+    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(input.station.title);
+    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.streamInfo.title);
+    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.streamInfo.bitrate}`);
+  });
 
-  it('should reflect the various streamInfoStatus states properly in the template', fakeAsync(() => {
-    // Arrange: Define a dummy NowPlaying entry for each StreamInfoStatus
-    const testEntries = [
-      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.NotInitialized),
-      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.LoadingAudio),
-      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.LoadingStreamInfo),
-      new NowPlaying(new Station(), new StreamInfo('Valid Title', null), StreamInfoStatus.Valid),
-      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Error),
-    ];
+  const streamInfoStatusTemplateInput = [
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.NotInitialized
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo('Valid Title', null),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.Error
+    },
+  ];
+  theoretically.it('should reflect the various streamInfoStatus states properly in the template', streamInfoStatusTemplateInput, (input) => {
+    // Act
+    store.setState({
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: input.station,
+        streamInfo: input.streamInfo,
+        streamInfoStatus: input.streamInfoStatus
+      }
+    })
+    fixture.detectChanges();
 
-    testEntries.forEach(nowPlaying => {
-      // Act: Emit this iteration's NowPlaying entry and pause for the template to catch up
-      playerService.nowPlaying$.next(nowPlaying);
-      tick(0);
-      // Assert: Ensure that the text of the title element conveys the current stream status
-      const titleText = getElementTextBySelector<NowPlayingComponent>(fixture, '.title');
-      switch (nowPlaying.streamInfoStatus) {
-        case StreamInfoStatus.NotInitialized:
-          expect(titleText).toBe('');
-          break;
-        case StreamInfoStatus.LoadingAudio:
-          expect(titleText).toBe('Loading Audio...');
-          break;
-        case StreamInfoStatus.LoadingStreamInfo:
-          expect(titleText).toBe('Loading Stream Info...');
-          break;
-        case StreamInfoStatus.Valid:
-          expect(titleText).toBe(nowPlaying.streamInfo.title);
-          break;
-        case StreamInfoStatus.Error:
-          expect(titleText).toBe('Metadata Unavailable');
-          break;
+    // Assert: Ensure that the text of the title element conveys the current stream status
+    const titleText = getElementTextBySelector<NowPlayingComponent>(fixture, '.title');
+    switch (input.streamInfoStatus) {
+      case StreamInfoStatus.NotInitialized:
+        expect(titleText).toBe('');
+        break;
+      case StreamInfoStatus.LoadingStreamInfo:
+        expect(titleText).toBe('Loading Stream Info...');
+        break;
+      case StreamInfoStatus.Valid:
+        expect(titleText).toBe(input.streamInfo.title);
+        break;
+      case StreamInfoStatus.Error:
+        expect(titleText).toBe('Metadata Unavailable');
+        break;
+    }
+  });
+
+  const nonEmptyBitrateInput = [
+    new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid),
+    new NowPlaying(new Station(), new StreamInfo(null, null, ''), StreamInfoStatus.Valid),
+    new NowPlaying(new Station(), new StreamInfo(null, null, '128'), StreamInfoStatus.Valid),
+  ];
+  theoretically.it('should only display bitrate when a non-empty value is present', nonEmptyBitrateInput, (input) => {
+    // Act
+    store.setState({
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: input.station,
+        streamInfo: input.streamInfo,
+        streamInfoStatus: input.streamInfoStatus
       }
     });
-  }));
+    fixture.detectChanges();
 
-  it('should only display bitrate when a non-empty value is present', fakeAsync(() => {
-    // Arrange: Put together a few dummy entries with blank and non-blank bitrates
-    const testEntries = [
-      new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid),
-      new NowPlaying(new Station(), new StreamInfo(null, null, ''), StreamInfoStatus.Valid),
-      new NowPlaying(new Station(), new StreamInfo(null, null, '128'), StreamInfoStatus.Valid),
-    ];
-
-    testEntries.forEach(nowPlaying => {
-      // Act: Emit this iteration's NowPlaying entry and pause for the template to catch up
-      playerService.nowPlaying$.next(nowPlaying);
-      tick(0);
-
-      // Assert: Ensure that the bitrate is displayed if not blank and not shown at all if it is blank
-      if (!isBlank(nowPlaying.streamInfo.bitrate)) {
-        expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${nowPlaying.streamInfo.bitrate}`);
-      } else {
-        expect(getElementBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBeNull();
-      }
-    });
-  }));
+    // Assert: Ensure that the bitrate is displayed if not blank and not shown at all if it is blank
+    if (!isBlank(input.streamInfo.bitrate)) {
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.streamInfo.bitrate}`);
+    } else {
+      expect(getElementBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBeNull();
+    }
+  });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
     // Arrange: Emit an empty nowPlaying so that the 'selected' template is rendered
-    playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
+    let state = {
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: new Station(),
+        streamInfo: new StreamInfo(null, null),
+        streamInfoStatus: StreamInfoStatus.Valid
+      }
+    };
+    store.setState(state);
 
     for (let i = 300; i >= 0; i--) {
-      // Act: Emit a new minutesUntilSleep value and detect changes
-      sleepTimerService.minutesUntilSleep$.next(i);
+      // Act
+      state = {
+        ...state,
+        sleepTimer: {
+          ...state.sleepTimer,
+          minutesUntilSleep: i
+        }
+      };
+      store.setState(state);
       fixture.detectChanges();
       // Assert: Ensure that the new value was rendered properly in the template
       expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.minutes-until-sleep')).toBe(`Sleeping in ${i} minutes`);
@@ -188,15 +222,29 @@ describe('NowPlayingComponent', () => {
 
     /* Clear the sleep timer and ensure that 'minutes until sleep' is
     removed from the template accordingly. */
-    sleepTimerService.minutesUntilSleep$.next(null);
+    state = {
+      ...state,
+      sleepTimer: {
+        ...state.sleepTimer,
+        minutesUntilSleep: null
+      }
+    };
+    store.setState(state);
     fixture.detectChanges();
     expect(getElementBySelector<NowPlayingComponent>(fixture, '.minutes-until-sleep')).toBeNull();
   });
 
   it('should update the template to reflect changes in the keepAwake state', () => {
     // Arrange
-    // Emit an empty nowPlaying so that the 'selected' template is rendered
-    playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
+    store.setState({
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: new Station(),
+        streamInfo: new StreamInfo(null, null),
+        streamInfoStatus: StreamInfoStatus.Valid
+      }
+    })
     // Set up a sequence of dummy boolean $enabled values to iterate through
     const testEntries = [ false, true, false, true, false ];
 
@@ -221,10 +269,18 @@ describe('NowPlayingComponent', () => {
     });
   });
 
-  it('should update the pause button on global play & pause', fakeAsync(() => {
+  it('should update the pause button on global play & pause', () => {
     // Arrange
-    // Emit an empty nowPlaying entry and detect changes to render the 'selected' template.
-    playerService.nowPlaying$.next(new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid));
+    let state: RootState = {
+      ...initialRootState,
+      player: {
+        ...initialPlayerState,
+        currentStation: new Station(),
+        streamInfo: new StreamInfo(null, null),
+        streamInfoStatus: StreamInfoStatus.Valid        
+      }
+    };
+    store.setState(state);
     fixture.detectChanges();
     // Create a helper function to retrieve the play button text in a less verbose manner
     const getPlayPauseBtnText = () => getElementTextBySelector<NowPlayingComponent>(fixture, 'li.play-pause button');
@@ -233,14 +289,28 @@ describe('NowPlayingComponent', () => {
 
     /* Act & Assert: Simulate a play & pause action and ensure that the correct button
     is rendered in the template accordingly. */
-    playerService.paused$.next(false);
-    tick();
+    state = {
+      ...state,
+      player: {
+        ...state.player,
+        playerStatus: PlayerStatus.Playing
+      }
+    }
+    store.setState(state);
+    fixture.detectChanges();
 
     expect(getPlayPauseBtnText()).toBe('Pause');
 
-    playerService.paused$.next(true);
-    tick();
+    state = {
+      ...state,
+      player: {
+        ...state.player,
+        playerStatus: PlayerStatus.Stopped
+      }
+    }
+    store.setState(state);
+    fixture.detectChanges();
 
     expect(getPlayPauseBtnText()).toBe('Play');
-  }));
+  });
 });

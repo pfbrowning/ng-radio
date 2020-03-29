@@ -14,6 +14,8 @@ import { Router, Route } from '@angular/router';
 import { RouteResolverStub } from '@utilities/testing';
 import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
 import { createMessageServiceSpy } from '@notifications/testing';
+import { AudioElementEventListenerService } from '@core';
+import { createAudioElementEventListenerSpy } from '@core/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -59,7 +61,8 @@ describe('AppComponent', () => {
         { provide: ErrorHandlingService, useValue: errorHandlingServiceSpy },
         { provide: MessageService, useValue: createMessageServiceSpy() },
         { provide: RouteResolverStub, useValue: routeResolver },
-        { provide: LoadingIndicatorService, useValue: loadingIndicatorServiceSpy }
+        { provide: LoadingIndicatorService, useValue: loadingIndicatorServiceSpy },
+        { provide: AudioElementEventListenerService, useValue: createAudioElementEventListenerSpy() }
       ]
     }).compileComponents();
   }));
