@@ -7,7 +7,6 @@ import { silentRefreshFailed, silentRefreshSucceeded } from '../store/authentica
 @Injectable()
 export class OauthEventListenerService {
   constructor(private oauthService: OAuthService, private store: Store<RootState>) {
-    console.log('construct');
     this.oauthService.events.subscribe(event => this.onOauthEvent(event));
   }
 
