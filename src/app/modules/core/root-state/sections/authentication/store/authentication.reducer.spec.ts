@@ -1,4 +1,4 @@
-import { authenticationReducer } from "./authentication.reducer";
+import { authenticationReducer } from './authentication.reducer';
 import { initialAuthenticationState } from '../models/initial-authentication-state';
 
 describe('Authentication Reducer', () => {

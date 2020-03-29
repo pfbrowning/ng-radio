@@ -5,4 +5,4 @@ export interface AuthenticationState {
     accessTokenExpiration: number;
     authenticated: boolean;
     initialized: boolean;
-};
+}

@@ -7,4 +7,4 @@ export const initialAuthenticationState: AuthenticationState = {
     accessTokenExpiration: null,
     authenticated: false,
     initialized: false
-}
+};
