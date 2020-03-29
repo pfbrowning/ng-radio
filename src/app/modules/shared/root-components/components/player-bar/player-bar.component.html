@@ -3,10 +3,10 @@
     <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
     <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
     <span class="fill-remaining"></span>
-    <div [class.off-white]="(sleepTimerService.minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
-      [matTooltip]="(sleepTimerService.minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
+    <div [class.off-white]="(minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
+      [matTooltip]="(minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
       class="indicator-icon selectable large-screen-only" >
-      <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{sleepTimerService.minutesUntilSleep$ | async}}</span>
+      <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesUntilSleep$ | async}}</span>
     </div>
     <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
       [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 

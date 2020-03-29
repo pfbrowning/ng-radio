@@ -22,6 +22,7 @@ import {
   fetchStreamInfoFailed
 } from './player-actions';
 import isBlank from 'is-blank';
+import { goToSleep } from '../../sleep-timer/store/sleep-timer.actions';
 
 @Injectable()
 export class PlayerEffects {
@@ -60,6 +61,11 @@ export class PlayerEffects {
     ofType(pauseAudioSubmit),
     tap(() => this.audio.pause())
   ), { dispatch: false });
+
+  pauseOnGoToSleep$ = createEffect(() => this.actions$.pipe(
+    ofType(goToSleep),
+    map(() => pauseAudioSubmit())
+  ));
 
   notifyPlayAudioFailed$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioFailed),

@@ -17,5 +17,6 @@ export { StationLookupService } from './services/station-lookup.service';
 export { KeepAwakeService } from './services/keep-awake.service';
 export { StreamInfoService } from './services/stream-info.service';
 export { AudioElementEventListenerService } from './services/audio-element-event-listener.service';
+export { CurrentTimeService } from './services/current-time.service';
 
 export { CoreModule } from './core.module';

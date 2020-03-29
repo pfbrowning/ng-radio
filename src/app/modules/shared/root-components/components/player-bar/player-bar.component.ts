@@ -16,6 +16,8 @@ import {
 } from '@root-state/favorite-stations';
 import { PlayerService, SleepTimerService, KeepAwakeService } from '@core';
 import { PlayerStatus, selectPlayerStatus, selectCurrentStation, playAudioStart, pauseAudioSubmit } from '@root-state/player';
+import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'blr-player-bar',
@@ -32,40 +34,41 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   ) {}
 
   @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
-  private changeDetectionSubscription: Subscription;
   public playerStatus = PlayerStatus;
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
   public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(selectCurrentStation));
+  public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep))
+  private subs = new SubSink();
 
   public ngOnInit() {
     // When the play / pause state or the now playing info canged
-    this.changeDetectionSubscription = merge(
-      this.playerService.nowPlaying$,
-      this.playerService.paused$
-    )
-    /* Wait 0ms for the async pipe bindings to catch up.
-    Use timer in place of delay because of
-    https://github.com/angular/angular/issues/10127 */
-    .pipe(switchMap(() => timer(0)))
-    .subscribe(() => this.changeDetectorRef.detectChanges());
+    this.subs.sink = merge(
+        this.playerService.nowPlaying$,
+        this.playerService.paused$
+      )
+      /* Wait 0ms for the async pipe bindings to catch up.
+      Use timer in place of delay because of
+      https://github.com/angular/angular/issues/10127 */
+      .pipe(switchMap(() => timer(0)))
+      .subscribe(() => this.changeDetectorRef.detectChanges());
   }
 
   ngOnDestroy() {
-    if (this.changeDetectionSubscription) { this.changeDetectionSubscription.unsubscribe(); }
+    this.subs.unsubscribe();
   }
 
   public onImgError(img: HTMLImageElement) {
     setAltSrc(img, '/assets/images/radio.svg');
   }
 
-  public onTimerSelected(length: number) {
-    if (length != null) {
-      this.sleepTimerService.setTimer(length);
+  public onTimerSelected(minutes: number) {
+    if (minutes != null) {
+      this.store.dispatch(setSleepTimerSubmit({minutes}))
     } else {
-      this.sleepTimerService.cancelTimer();
+      this.store.dispatch(clearSleepTimer());
     }
   }
 

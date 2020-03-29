@@ -7,6 +7,7 @@ import { reducers } from './root-reducer';
 import { FavoriteStationsEffects } from './sections/favorite-stations/store/favorite-stations.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { PlayerEffects } from './sections/player/store/player.effects';
+import { SleepTimerEffects } from './sections/sleep-timer/store/sleep-timer.effects';
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,7 @@ import { PlayerEffects } from './sections/player/store/player.effects';
         strictActionImmutability: true,
       }
     }),
-    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects]),
+    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ]
 })

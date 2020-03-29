@@ -11,6 +11,7 @@ import { KeepAwakeService } from './services/keep-awake.service';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { WindowToken } from './injection-tokens/window-token';
 import { AudioElementEventListenerService } from './services/audio-element-event-listener.service';
+import { CurrentTimeService } from './services/current-time.service';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -26,6 +27,7 @@ import * as NoSleep from 'nosleep.js';
     StreamInfoService,
     KeepAwakeService,
     AudioElementEventListenerService,
+    CurrentTimeService,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
     { provide: WindowToken, useValue: window },
