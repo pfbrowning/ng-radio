@@ -32,6 +32,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'suggested-stations',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'suggested-stations'
   }
 ];
 
