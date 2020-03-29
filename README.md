@@ -73,6 +73,8 @@ ng serve --open
   * Improve handling of mobile input on search
 * Features
   * Investigate alternatives to interval-based polling for "Now Playing" stream info
+    * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
+    * [Service Worker](https://github.com/cryptiksouls/icecast-shoutcast-metadata-grabber)
     * [icecast.js](https://www.npmjs.com/package/icecast.js)
     * [Socket.IO](https://www.npmjs.com/package/socket.io)
     * Long-polling based streamInfoChange API logic
