@@ -29,10 +29,6 @@ export class AuthenticationEffects implements OnInitEffects {
     private notificationService: NotificationService,
   ) { }
 
-  ngrxOnInitEffects(): Action {
-    return effectsInit();
-  }
-
   initAuthOnAppInit$ = createEffect(() => this.actions$.pipe(
     ofType(appInit),
     map(() => initializeStart())
@@ -82,4 +78,8 @@ export class AuthenticationEffects implements OnInitEffects {
     ofType(idTokenExpired, accessTokenExpired),
     tap(() => this.notificationService.notify(Severities.Error, 'Tokens Expired', 'Tokens expired.  This should not happen regularly.'))
   ), { dispatch: false });
+
+  ngrxOnInitEffects(): Action {
+    return effectsInit();
+  }
 }
