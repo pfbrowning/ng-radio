@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { switchMap, catchError, map, filter, tap, takeUntil, mapTo } from 'rxjs/operators';
 import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -7,7 +7,9 @@ import { ConfigService } from '@config';
 import { CurrentTimeService } from '@core';
 import { appInit } from '../../root-state/root.actions';
 import { NotificationService, Severities } from '@notifications';
+import { Action } from '@ngrx/store';
 import {
+  effectsInit,
   initializeStart,
   initializeSucceeded,
   initializeFailed,
@@ -18,15 +20,17 @@ import {
 import * as dayjs from 'dayjs';
 
 @Injectable()
-export class AuthenticationEffects {
+export class AuthenticationEffects implements OnInitEffects {
   constructor(
     private actions$: Actions,
     private oauthService: OAuthService,
     private configService: ConfigService,
     private currentTimeService: CurrentTimeService,
     private notificationService: NotificationService,
-  ) {
-    console.log('Auth Effects init');
+  ) { }
+
+  ngrxOnInitEffects(): Action {
+    return effectsInit();
   }
 
   initAuthOnAppInit$ = createEffect(() => this.actions$.pipe(

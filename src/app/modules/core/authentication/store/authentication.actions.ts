@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 export enum AuthenticationActions {
+    EffectsInit = '[Authentication] Effects Init',
     InitializeStart = '[Authentication] Initialize Start',
     InitializeSucceeded = '[Authentication] Initialize Succeeded',
     InitializeFailed = '[Authentication] Initialize Failed',
@@ -10,6 +11,10 @@ export enum AuthenticationActions {
     IdTokenExpired = '[Authentication] Id Token Expired',
     AccessTokenExpired = '[Authentication] Access Token Expired',
 }
+
+export const effectsInit = createAction(
+    AuthenticationActions.EffectsInit
+);
 
 export const initializeStart = createAction(
     AuthenticationActions.InitializeStart
