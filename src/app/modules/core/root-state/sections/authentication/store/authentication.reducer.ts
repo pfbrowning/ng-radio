@@ -1,7 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { initialAuthenticationState } from '../models/initial-authentication-state';
-import { initializeSucceeded, initializeFailed, silentRefreshSucceeded, idTokenExpired, accessTokenExpired } from './authentication.actions';
 import { AuthenticationState } from '../models/authentication-state';
+import {
+  initializeSucceeded,
+  initializeFailed,
+  silentRefreshSucceeded,
+  idTokenExpired,
+  accessTokenExpired
+} from './authentication.actions';
 
 const reducer = createReducer(
   initialAuthenticationState,
