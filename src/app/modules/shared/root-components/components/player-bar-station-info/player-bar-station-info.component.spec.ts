@@ -39,7 +39,8 @@ describe('PlayerBarStationInfoComponent', () => {
     new NowPlaying(new Station(), new StreamInfo('Valid Title', null), StreamInfoStatus.Valid),
     new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Error),
   ];
-  theoretically.it('should reflect the various streamInfoStatus states properly in the template', streamInfoStatusTemplateInput, (input) => {
+  theoretically.it('should reflect the various streamInfoStatus states properly in the template',
+    streamInfoStatusTemplateInput, (input) => {
     // Act: Bind this iteration's NowPlaying entry and detect changes
     store.setState({
       ...initialRootState,

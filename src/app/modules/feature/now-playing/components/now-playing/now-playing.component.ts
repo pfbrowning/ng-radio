@@ -11,7 +11,15 @@ import {
 } from '@root-state/favorite-stations';
 import { StreamInfoStatus, KeepAwakeService } from '@core';
 import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
-import { selectCurrentStation, selectStreamInfo, selectStreamInfoStatus, selectPlayerStatus, PlayerStatus, playAudioStart, pauseAudioSubmit } from '@root-state/player';
+import {
+  selectCurrentStation,
+  selectStreamInfo,
+  selectStreamInfoStatus,
+  selectPlayerStatus,
+  PlayerStatus,
+  playAudioStart,
+  pauseAudioSubmit
+} from '@root-state/player';
 
 @Component({
   templateUrl: './now-playing.component.html',

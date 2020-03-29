@@ -89,7 +89,9 @@ describe('NowPlayingComponent', () => {
     },
     {
       station: new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
-      streamInfo: new StreamInfo('Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'),
+      streamInfo: new StreamInfo(
+        'Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'
+      ),
       streamInfoStatus: StreamInfoStatus.Valid
     }
   ];
@@ -135,7 +137,8 @@ describe('NowPlayingComponent', () => {
       streamInfoStatus: StreamInfoStatus.Error
     },
   ];
-  theoretically.it('should reflect the various streamInfoStatus states properly in the template', streamInfoStatusTemplateInput, (input) => {
+  theoretically.it('should reflect the various streamInfoStatus states properly in the template',
+    streamInfoStatusTemplateInput, (input) => {
     // Act
     store.setState({
       ...initialRootState,
