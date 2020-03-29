@@ -1,4 +1,6 @@
-import { Station, StreamInfo, StreamInfoStatus } from '@core';
+import { Station } from './station';
+import { StreamInfo } from './stream-info';
+import { StreamInfoStatus } from './stream-info-status';
 import { PlayerStatus } from './player-status';
 
 export interface PlayerState {

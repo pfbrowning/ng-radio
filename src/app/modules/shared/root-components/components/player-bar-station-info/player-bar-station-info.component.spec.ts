@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerBarStationInfoComponent } from './player-bar-station-info.component';
-import { NowPlaying, Station, StreamInfo, StreamInfoStatus } from '@core';
 import { getElementTextBySelector } from '@utilities/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RootState, initialRootState } from '@root-state';
-import { initialPlayerState } from '@root-state/player';
+import { initialPlayerState, Station, StreamInfo, StreamInfoStatus } from '@root-state/player';
 import theoretically from 'jasmine-theories';
 
 describe('PlayerBarStationInfoComponent', () => {
@@ -34,10 +33,26 @@ describe('PlayerBarStationInfoComponent', () => {
   });
 
   const streamInfoStatusTemplateInput = [
-    new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.NotInitialized),
-    new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.LoadingStreamInfo),
-    new NowPlaying(new Station(), new StreamInfo('Valid Title', null), StreamInfoStatus.Valid),
-    new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Error),
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.NotInitialized
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo('Valid Title', null),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.Error
+    }
   ];
   theoretically.it('should reflect the various streamInfoStatus states properly in the template',
     streamInfoStatusTemplateInput, (input) => {

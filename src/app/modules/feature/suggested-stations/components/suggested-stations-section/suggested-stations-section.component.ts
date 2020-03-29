@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Station } from '@core';
+import { Station } from '@root-state/player';
 
 @Component({
   selector: 'blr-suggested-stations-section',

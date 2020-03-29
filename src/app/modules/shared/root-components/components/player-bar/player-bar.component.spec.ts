@@ -10,9 +10,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   CoreModule,
-  Station,
-  StreamInfo,
-  StreamInfoStatus,
   KeepAwakeService
 } from '@core';
 import { createKeepAwakeServiceSpy } from '@core/testing';
@@ -26,7 +23,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
 import { SharedModule } from '@shared';
-import { initialPlayerState, PlayerStatus } from '@root-state/player';
+import { initialPlayerState, PlayerStatus, Station, StreamInfo, StreamInfoStatus } from '@root-state/player';
 import theoretically from 'jasmine-theories';
 
 describe('PlayerBarComponent', () => {

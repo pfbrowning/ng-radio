@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { initialPlayerState } from '../models/initial-player-state';
 import { PlayerState } from '../models/player-state';
 import { PlayerStatus } from '../models/player-status';
-import { StreamInfoStatus } from '@core';
+import { StreamInfoStatus } from '../models/stream-info-status';
 import {
   selectStation,
   playAudioStart,

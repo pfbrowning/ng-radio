@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
-import { StationLookupService, Station } from '@core';
+import { StationLookupService } from '@core';
 import { MatInput } from '@angular/material/input';
 import { RootState } from '@root-state';
 import { Store } from '@ngrx/store';
-import { selectStation } from '@root-state/player';
+import { selectStation, Station } from '@root-state/player';
 import isBlank from 'is-blank';
 
 @Component({

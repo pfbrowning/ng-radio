@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Station, StreamInfo } from '@core';
+import { Station } from '../models/station';
+import { StreamInfo } from '../models/stream-info';
 
 export enum PlayerActions {
     SelectStation = '[Radio Player] Select Station',

@@ -1,4 +1,4 @@
-import { StreamInfoStatus } from '@core';
+import { StreamInfoStatus } from '@root-state/player';
 import {
   Component,
   ViewChild,

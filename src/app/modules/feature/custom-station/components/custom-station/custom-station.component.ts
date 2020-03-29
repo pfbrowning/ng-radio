@@ -1,12 +1,11 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Station } from '@core';
 import { cloneDeep } from 'lodash';
 import { MatInput } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { RootState } from '@root-state';
-import { selectStation } from '@root-state/player';
+import { selectStation, Station } from '@root-state/player';
 
 @Component({
   selector: 'blr-custom-station',

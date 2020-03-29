@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from '@config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Station } from '../models/station';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { Station } from '@root-state/player';
 
 @Injectable({providedIn: 'root'})
 export class FavoriteStationsService {

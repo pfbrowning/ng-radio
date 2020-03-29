@@ -1,4 +1,4 @@
-import { Station } from '@core';
+import { Station } from '../../player/models/station';
 
 export class FavoriteStationRow {
     constructor(

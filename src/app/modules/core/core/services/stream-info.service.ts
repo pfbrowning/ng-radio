@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
-import { StreamInfo } from '../models/stream-info';
+import { StreamInfo } from '@root-state/player';
 import { ConfigService } from '@config';
 import { OAuthService } from 'angular-oauth2-oidc';
 

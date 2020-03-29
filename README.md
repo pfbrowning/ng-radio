@@ -58,6 +58,7 @@ ng serve --open
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR
   * Remove moment.js entirely.  Replace with day.js if a third party lib is needed.
+  * Come up with a better location for models - particularly those which are shared between modules.
   * Migrate build from classic Azure DevOps to YAML build
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
   * Configure SCSS imports to use TS path rather than relative path

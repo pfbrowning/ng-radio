@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
-import { Station } from '@core';
+import { Station } from '@root-state/player';
 import { selectFavoriteStationRows, removeFromFavoritesStart } from '@root-state/favorite-stations';
 import { ConfirmationService } from 'primeng/api';
 import { selectStation } from '@root-state/player';

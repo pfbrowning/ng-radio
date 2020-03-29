@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Station } from '@core';
+import { Station } from '../../player/models/station';
 
 export enum FavoriteStationsActions {
     FetchStationsStart = '[Favorite Stations] Fetch Stations Start',

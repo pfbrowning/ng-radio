@@ -9,7 +9,7 @@ import {
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
-import { StreamInfoStatus, KeepAwakeService } from '@core';
+import { KeepAwakeService } from '@core';
 import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
 import {
   selectCurrentStation,
@@ -18,7 +18,8 @@ import {
   selectPlayerStatus,
   PlayerStatus,
   playAudioStart,
-  pauseAudioSubmit
+  pauseAudioSubmit,
+  StreamInfoStatus
 } from '@root-state/player';
 
 @Component({

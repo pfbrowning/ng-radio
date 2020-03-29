@@ -4,10 +4,6 @@ import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   CoreModule,
-  NowPlaying,
-  Station,
-  StreamInfo,
-  StreamInfoStatus,
   KeepAwakeService
 } from '@core';
 import { createKeepAwakeServiceSpy } from '@core/testing';
@@ -22,7 +18,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@root-state';
 import { createNotificationServiceSpy } from '@notifications/testing';
 import { SharedModule } from '@shared';
-import { PlayerStatus, initialPlayerState } from '@root-state/player';
+import { PlayerStatus, initialPlayerState, Station, StreamInfo, StreamInfoStatus } from '@root-state/player';
 import isBlank from 'is-blank';
 import theoretically from 'jasmine-theories';
 
@@ -170,9 +166,21 @@ describe('NowPlayingComponent', () => {
   });
 
   const nonEmptyBitrateInput = [
-    new NowPlaying(new Station(), new StreamInfo(null, null), StreamInfoStatus.Valid),
-    new NowPlaying(new Station(), new StreamInfo(null, null, ''), StreamInfoStatus.Valid),
-    new NowPlaying(new Station(), new StreamInfo(null, null, '128'), StreamInfoStatus.Valid),
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null, ''),
+      streamInfoStatus: StreamInfoStatus.Valid
+    },
+    {
+      station: new Station(),
+      streamInfo: new StreamInfo(null, null, '128'),
+      streamInfoStatus: StreamInfoStatus.Valid
+    }
   ];
   theoretically.it('should only display bitrate when a non-empty value is present', nonEmptyBitrateInput, (input) => {
     // Act

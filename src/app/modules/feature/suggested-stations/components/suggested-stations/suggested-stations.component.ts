@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SuggestedStations } from '../../models/suggested-stations';
-import { Station } from '@core';
 import { RootState } from '@root-state';
 import { Store } from '@ngrx/store';
-import { selectStation } from '@root-state/player';
+import { selectStation, Station } from '@root-state/player';
 
 @Component({
   selector: 'blr-suggested-stations',
