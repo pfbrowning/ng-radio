@@ -1,6 +1,19 @@
-<div #title [ngSwitch]="streamInfoStatus$ | async" class="title" [class.marquee]="titleMarquee">
-    <ng-container *ngSwitchCase="streamInfoStatus.Error">Metadata Unavailable</ng-container>
-    <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">Loading Stream Info...</ng-container>
-    <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ streamInfoTitle$ | async }}</ng-container>
+<div #title [ngSwitch]="playerStatus$ | async" class="title" [class.marquee]="titleMarquee">
+    <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
+    <ng-container *ngSwitchCase="playerStatus.Playing">
+        <ng-container *ngIf="streamInfoPresent$ | async; else noStreamInfo">
+            {{ streamInfoTitle$ | async }}
+        </ng-container>
+        <ng-template #noStreamInfo>
+            <ng-container [ngSwitch]="streamInfoStatus$ | async">
+                <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
+                    Loading Stream Info...
+                </ng-container>
+                <ng-container *ngSwitchCase="streamInfoStatus.Error">
+                    Metadata Unavailable
+                </ng-container>
+            </ng-container>
+        </ng-template>
+    </ng-container>
 </div>
 <div #station class="station" [class.marquee]="stationMarquee">{{ currentStationTitle$ | async }}</div>

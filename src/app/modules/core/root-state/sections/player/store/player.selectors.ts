@@ -28,6 +28,11 @@ export const selectStreamInfo = createSelector(
     (state) => state.streamInfo
 );
 
+export const selectIsStreamInfoPresent = createSelector(
+    selectStreamInfo,
+    (streamInfo) => streamInfo != null
+);
+
 export const selectStreamInfoStatus = createSelector(
     selectPlayerState,
     (state) => state.streamInfoStatus

@@ -1,4 +1,4 @@
-import { StreamInfoStatus } from '@root-state/player';
+import { StreamInfoStatus, PlayerStatus, selectPlayerStatus } from '@root-state/player';
 import {
   Component,
   ViewChild,
@@ -10,7 +10,7 @@ import {
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
 import { selectStreamInfoStatus } from '@root-state/player';
-import { selectStreamInfoTitle, selectCurrentStationTitle } from 'src/app/modules/core/root-state/sections/player/store/player.selectors';
+import { selectStreamInfoTitle, selectCurrentStationTitle, selectIsStreamInfoPresent } from '@root-state/player';
 
 
 
@@ -26,11 +26,14 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked {
   @ViewChild('title') titleElement: ElementRef;
   @ViewChild('station') stationElement: ElementRef;
   public streamInfoStatus = StreamInfoStatus;
+  public playerStatus = PlayerStatus;
   public titleMarquee = false;
   public stationMarquee = false;
+  public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
   public streamInfoStatus$ = this.store.pipe(select(selectStreamInfoStatus));
   public streamInfoTitle$ = this.store.pipe(select(selectStreamInfoTitle));
   public currentStationTitle$ = this.store.pipe(select(selectCurrentStationTitle));
+  public streamInfoPresent$ = this.store.pipe(select(selectIsStreamInfoPresent));
 
   ngAfterViewChecked() {
     /* Check and apply marquee classes immediately after each change detection operation because

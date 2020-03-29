@@ -19,7 +19,9 @@ import {
   PlayerStatus,
   playAudioStart,
   pauseAudioSubmit,
-  StreamInfoStatus
+  StreamInfoStatus,
+  selectStreamInfoTitle,
+  selectIsStreamInfoPresent
 } from '@root-state/player';
 
 @Component({
@@ -39,7 +41,9 @@ export class NowPlayingComponent {
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
   public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(selectCurrentStation));
+  public streamInfoPresent$ = this.store.pipe(select(selectIsStreamInfoPresent));
   public streamInfo$ = this.store.pipe(select(selectStreamInfo));
+  public streamInfoTitle$ = this.store.pipe(select(selectStreamInfoTitle));
   public streamInfoStatus$ = this.store.pipe(select(selectStreamInfoStatus));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
 

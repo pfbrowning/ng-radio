@@ -6,4 +6,12 @@ export { StreamInfoStatus } from './models/stream-info-status';
 
 export { selectStation, playAudioStart, pauseAudioSubmit, audioPaused } from './store/player-actions';
 
-export { selectPlayerStatus, selectCurrentStation, selectStreamInfo, selectStreamInfoStatus } from './store/player.selectors';
+export {
+    selectPlayerStatus,
+    selectCurrentStation,
+    selectStreamInfo,
+    selectStreamInfoStatus,
+    selectIsStreamInfoPresent,
+    selectStreamInfoTitle,
+    selectCurrentStationTitle
+} from './store/player.selectors';

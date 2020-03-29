@@ -9,10 +9,23 @@
     </div>
     <div class="flex-column-third">
       <div class="now-playing">
-        <div [ngSwitch]="streamInfoStatus$ | async" class="title">
-          <ng-container *ngSwitchCase="streamInfoStatus.Error">Metadata Unavailable</ng-container>
-          <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">Loading Stream Info...</ng-container>
-          <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (streamInfo$ | async)?.title }}</ng-container>
+        <div [ngSwitch]="playerStatus$ | async" class="title">
+          <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
+          <ng-container *ngSwitchCase="playerStatus.Playing">
+              <ng-container *ngIf="streamInfoPresent$ | async; else noStreamInfo">
+                  {{ streamInfoTitle$ | async }}
+              </ng-container>
+              <ng-template #noStreamInfo>
+                  <ng-container [ngSwitch]="streamInfoStatus$ | async">
+                      <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
+                          Loading Stream Info...
+                      </ng-container>
+                      <ng-container *ngSwitchCase="streamInfoStatus.Error">
+                          Metadata Unavailable
+                      </ng-container>
+                  </ng-container>
+              </ng-template>
+          </ng-container>
         </div>
         <div class="station-title">{{ (currentStation$ | async).title }}</div>
         <div *ngIf="(streamInfo$ | async)?.bitrate" class="bitrate">Bitrate: {{ (streamInfo$ | async)?.bitrate }}</div>

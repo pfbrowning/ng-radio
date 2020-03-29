@@ -55,16 +55,17 @@ ng serve --open
 ## Backlog
 * Chores
   * Implement NGRX for state management throughout the app.
+  * Come up with a better location for models - particularly those which are shared between modules.
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR
   * Remove moment.js entirely.  Replace with day.js if a third party lib is needed.
-  * Come up with a better location for models - particularly those which are shared between modules.
-  * Migrate build from classic Azure DevOps to YAML build
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
+  * Migrate build from classic Azure DevOps to YAML build
   * Configure SCSS imports to use TS path rather than relative path
   * Optimize bundle size
-  * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
   * Package up reusable things and deploy to npm
+  * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
+  * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
   * Switch to and enforce HTTPS.
     * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
     * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
