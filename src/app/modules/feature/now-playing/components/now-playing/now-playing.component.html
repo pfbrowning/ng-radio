@@ -12,10 +12,10 @@
         <div [ngSwitch]="streamInfoStatus$ | async" class="title">
           <ng-container *ngSwitchCase="streamInfoStatus.Error">Metadata Unavailable</ng-container>
           <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">Loading Stream Info...</ng-container>
-          <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (streamInfo$ | async).title }}</ng-container>
+          <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (streamInfo$ | async)?.title }}</ng-container>
         </div>
         <div class="station-title">{{ (currentStation$ | async).title }}</div>
-        <div *ngIf="(streamInfo$ | async).bitrate" class="bitrate">Bitrate: {{ (streamInfo$ | async).bitrate }}</div>
+        <div *ngIf="(streamInfo$ | async)?.bitrate" class="bitrate">Bitrate: {{ (streamInfo$ | async)?.bitrate }}</div>
         <div *ngIf="(minutesUntilSleep$ | async) != null" class="minutes-until-sleep">
           Sleeping in {{minutesUntilSleep$ | async}} minutes
         </div>
@@ -61,9 +61,9 @@
 
 <ng-template #notSelected>
   <p>
-    There's no media selected.  Please go to the <a [routerLink]="['../../radio-browser']">Radio Browser Search</a> or 
-    <a [routerLink]="['../../suggested-stations']">Suggested Stations</a> to find a station to play or 
-    <a [routerLink]="['../../custom-station']">enter a custom URL</a>.
+    There's no media selected.  Please go to the <a [routerLink]="['../radio-browser']">Radio Browser Search</a> or 
+    <a [routerLink]="['../suggested-stations']">Suggested Stations</a> to find a station to play or 
+    <a [routerLink]="['../custom-station']">enter a custom URL</a>.
   </p>
 </ng-template>
 
