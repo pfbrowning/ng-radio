@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { tap, filter, switchMap } from 'rxjs/operators';
 import { RootState } from '@root-state';
 import { Store, select } from '@ngrx/store';
-import { selectIsAuthenticationInitialized, selectIsAuthenticated } from '../../root-state/sections/authentication/store/authentication.selectors';
+import { selectIsAuthenticationInitialized, selectIsAuthenticated } from '../store/authentication.selectors';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()

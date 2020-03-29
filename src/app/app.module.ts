@@ -14,7 +14,6 @@ import { LoggingModule } from '@logging';
 import { NotificationsModule } from '@notifications';
 import { AuthenticationModule } from '@authentication';
 import { RootStateModule } from '@root-state';
-import { RootEffectsModule } from '@root-effects';
 import { ConfirmationService } from 'primeng/api';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RootComponentsModule } from '@root-components';
@@ -43,7 +42,6 @@ import { MatButtonModule } from '@angular/material/button';
     NotificationsModule,
     SharedModule,
     RootStateModule,
-    RootEffectsModule,
     RootComponentsModule,
     MatToolbarModule,
     MatSidenavModule,

@@ -5,6 +5,8 @@ import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '@config';
 import { CurrentTimeService } from '@core';
+import { appInit } from '../../root-state/root.actions';
+import { NotificationService, Severities } from '@notifications';
 import {
   initializeStart,
   initializeSucceeded,
@@ -12,9 +14,7 @@ import {
   silentRefreshSucceeded,
   idTokenExpired,
   accessTokenExpired
-} from '@root-state/authentication';
-import { appInit } from '../../root-state/root.actions';
-import { NotificationService, Severities } from '@notifications';
+} from './authentication.actions';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -25,7 +25,9 @@ export class AuthenticationEffects {
     private configService: ConfigService,
     private currentTimeService: CurrentTimeService,
     private notificationService: NotificationService,
-  ) {}
+  ) {
+    console.log('Auth Effects init');
+  }
 
   initAuthOnAppInit$ = createEffect(() => this.actions$.pipe(
     ofType(appInit),

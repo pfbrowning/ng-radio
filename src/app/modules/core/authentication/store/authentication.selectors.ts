@@ -1,7 +1,7 @@
-import { RootState } from '../../../models/root-state';
-import { createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { AuthenticationState } from '../models/authentication-state';
 
-export const selectAuthenticationState = (state: RootState) => state.authentication;
+export const selectAuthenticationState = createFeatureSelector<AuthenticationState>('authentication');
 
 export const selectIsAuthenticationInitialized = createSelector(
     selectAuthenticationState,
