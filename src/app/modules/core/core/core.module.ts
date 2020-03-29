@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlayerService } from './services/player.service';
-import { SleepTimerService } from './services/sleep-timer.service';
 import { StationLookupService } from './services/station-lookup.service';
 import { StreamInfoService } from './services/stream-info.service';
 import { AudioElement } from './models/audio-element';
@@ -22,8 +20,6 @@ import * as NoSleep from 'nosleep.js';
   ],
   providers: [
     StationLookupService,
-    PlayerService,
-    SleepTimerService,
     StreamInfoService,
     KeepAwakeService,
     AudioElementEventListenerService,

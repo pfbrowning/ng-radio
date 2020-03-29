@@ -1,8 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { setAltSrc } from '@utilities';
-import { Subscription, merge, timer } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
@@ -14,21 +12,18 @@ import {
   selectIsCurrentStationInFavorites,
   CurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
-import { PlayerService, SleepTimerService, KeepAwakeService } from '@core';
+import { KeepAwakeService } from '@core';
 import { PlayerStatus, selectPlayerStatus, selectCurrentStation, playAudioStart, pauseAudioSubmit } from '@root-state/player';
 import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
-import { SubSink } from 'subsink';
 
 @Component({
   selector: 'blr-player-bar',
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss']
 })
-export class PlayerBarComponent implements OnInit, OnDestroy {
-  constructor(public playerService: PlayerService,
-    public sleepTimerService: SleepTimerService,
+export class PlayerBarComponent {
+  constructor(
     public keepAwakeService: KeepAwakeService,
-    private changeDetectorRef: ChangeDetectorRef,
     private router: Router,
     private store: Store<RootState>
   ) {}
@@ -41,24 +36,6 @@ export class PlayerBarComponent implements OnInit, OnDestroy {
   public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(selectCurrentStation));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep))
-  private subs = new SubSink();
-
-  public ngOnInit() {
-    // When the play / pause state or the now playing info canged
-    this.subs.sink = merge(
-        this.playerService.nowPlaying$,
-        this.playerService.paused$
-      )
-      /* Wait 0ms for the async pipe bindings to catch up.
-      Use timer in place of delay because of
-      https://github.com/angular/angular/issues/10127 */
-      .pipe(switchMap(() => timer(0)))
-      .subscribe(() => this.changeDetectorRef.detectChanges());
-  }
-
-  ngOnDestroy() {
-    this.subs.unsubscribe();
-  }
 
   public onImgError(img: HTMLImageElement) {
     setAltSrc(img, '/assets/images/radio.svg');

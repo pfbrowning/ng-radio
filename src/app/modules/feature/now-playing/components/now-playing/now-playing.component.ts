@@ -1,6 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, merge, timer } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { setAltSrc } from '@utilities';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@root-state';
@@ -11,52 +9,40 @@ import {
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState
 } from '@root-state/favorite-stations';
-import { PlayerService, SleepTimerService, StreamInfoStatus, KeepAwakeService } from '@core';
+import { StreamInfoStatus, KeepAwakeService } from '@core';
+import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
+import { selectCurrentStation, selectStreamInfo, selectStreamInfoStatus, selectPlayerStatus, PlayerStatus, playAudioStart, pauseAudioSubmit } from '@root-state/player';
 
 @Component({
   templateUrl: './now-playing.component.html',
   styleUrls: ['./now-playing.component.scss']
 })
-export class NowPlayingComponent implements OnInit, OnDestroy {
-  constructor(public playerService: PlayerService,
-    public sleepTimerService: SleepTimerService,
+export class NowPlayingComponent {
+  constructor(
     public keepAwakeService: KeepAwakeService,
-    private changeDetectorRef: ChangeDetectorRef,
     private store: Store<RootState>
   ) {}
 
   public streamInfoStatus = StreamInfoStatus;
-  private changeDetectionSubscription: Subscription;
+  public playerStatus = PlayerStatus;
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
-
-  public ngOnInit() {
-    // When the play / pause state or the now playing info canged
-    this.changeDetectionSubscription = merge(
-      this.playerService.nowPlaying$,
-      this.playerService.paused$
-    )
-    /* Wait 0ms for the async pipe bindings to catch up.
-    Use timer in place of delay because of
-    https://github.com/angular/angular/issues/10127 */
-    .pipe(switchMap(() => timer(0)))
-    .subscribe(() => this.changeDetectorRef.detectChanges());
-  }
-
-  ngOnDestroy() {
-    if (this.changeDetectionSubscription) { this.changeDetectionSubscription.unsubscribe(); }
-  }
+  public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
+  public currentStation$ = this.store.pipe(select(selectCurrentStation));
+  public streamInfo$ = this.store.pipe(select(selectStreamInfo));
+  public streamInfoStatus$ = this.store.pipe(select(selectStreamInfoStatus));
+  public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
 
   public onImgError(img: HTMLImageElement, altSrc: string) {
     setAltSrc(img, altSrc);
   }
 
-  public onTimerSelected(length: number) {
-    if (length != null) {
-      this.sleepTimerService.setTimer(length);
+  public onTimerSelected(minutes: number) {
+    if (minutes != null) {
+      this.store.dispatch(setSleepTimerSubmit({minutes}))
     } else {
-      this.sleepTimerService.cancelTimer();
+      this.store.dispatch(clearSleepTimer());
     }
   }
 
@@ -66,5 +52,13 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
 
   public onRemoveFromFavoritesClicked(): void {
     this.store.dispatch(removeCurrentStationFromFavoritesRequested());
+  }
+
+  public onPlayClicked(): void {
+    this.store.dispatch(playAudioStart());
+  }
+
+  public onPauseClicked(): void {
+    this.store.dispatch(pauseAudioSubmit());
   }
 }

@@ -1,24 +1,23 @@
 <h1 class="mat-headline">Now Playing</h1>
 
-<div *ngIf="(playerService.nowPlaying$ | async).station; then selected else notSelected"></div>
+<div *ngIf="currentStation$ | async; then selected else notSelected"></div>
 
 <ng-template #selected>
   <div class="flex-grid">
     <div class="flex-column-third">
-      <img [src]="(playerService.nowPlaying$ | async).station.iconUrl" class="station-icon" (error)="onImgError($event.target, '/assets/images/radio.svg')" >
+      <img [src]="(currentStation$ | async).iconUrl" class="station-icon" (error)="onImgError($event.target, '/assets/images/radio.svg')" >
     </div>
     <div class="flex-column-third">
       <div class="now-playing">
-        <div [ngSwitch]="(playerService.nowPlaying$ | async).streamInfoStatus" class="title">
+        <div [ngSwitch]="streamInfoStatus$ | async" class="title">
           <ng-container *ngSwitchCase="streamInfoStatus.Error">Metadata Unavailable</ng-container>
-          <ng-container *ngSwitchCase="streamInfoStatus.LoadingAudio">Loading Audio...</ng-container>
           <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">Loading Stream Info...</ng-container>
-          <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (playerService.nowPlaying$ | async).streamInfo?.title }}</ng-container>
+          <ng-container *ngSwitchCase="streamInfoStatus.Valid">{{ (streamInfo$ | async).title }}</ng-container>
         </div>
-        <div class="station-title">{{ (playerService.nowPlaying$ | async).station.title }}</div>
-        <div *ngIf="(playerService.nowPlaying$ | async).streamInfo?.bitrate" class="bitrate">Bitrate: {{ (playerService.nowPlaying$ | async).streamInfo.bitrate }}</div>
-        <div *ngIf="(sleepTimerService.minutesUntilSleep$ | async) != null" class="minutes-until-sleep">
-          Sleeping in {{sleepTimerService.minutesUntilSleep$ | async}} minutes
+        <div class="station-title">{{ (currentStation$ | async).title }}</div>
+        <div *ngIf="(streamInfo$ | async).bitrate" class="bitrate">Bitrate: {{ (streamInfo$ | async).bitrate }}</div>
+        <div *ngIf="(minutesUntilSleep$ | async) != null" class="minutes-until-sleep">
+          Sleeping in {{minutesUntilSleep$ | async}} minutes
         </div>
         <div class="keep-awake" *ngIf="(keepAwakeService.enabled$ | async) == true">
           Keeping Awake
@@ -28,8 +27,10 @@
     <div class="flex-column-third">
       <ul class="bulletless-list action-items">
         <li class="play-pause">
-          <button mat-raised-button *ngIf="playerService.paused$ | async" (click)="playerService.play()" color="primary">Play</button>
-          <button mat-raised-button *ngIf="!(playerService.paused$ | async)" (click)="playerService.pause()" color="primary">Pause</button>
+          <button mat-raised-button *ngIf="(playerStatus$ | async) == playerStatus.Stopped; else notStopped" (click)="onPlayClicked()" color="primary">Play</button>
+          <ng-template #notStopped>
+            <button mat-raised-button [disabled]="(playerStatus$ | async) == playerStatus.LoadingAudio" (click)="onPauseClicked()" color="primary">Pause</button>
+          </ng-template>
         </li>
         <li>
           <button mat-raised-button color="primary" [matMenuTriggerFor]="sleepTimerMenu.menu">Sleep Timer</button>
