@@ -55,7 +55,6 @@ ng serve --open
 ## Backlog
 * Chores
   * Implement NGRX for state management throughout the app.
-  * Remove appInit action once config service is working with NGRX
   * Restructure modules so that related functionality is together, regardless of whether it relates to NGRX
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR

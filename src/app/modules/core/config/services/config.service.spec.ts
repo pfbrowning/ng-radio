@@ -7,7 +7,6 @@ import { IAppConfig } from '../models/app-config';
 describe('ConfigService', () => {
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
-  let loadedSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,8 +20,6 @@ describe('ConfigService', () => {
 
     configService = TestBed.inject(ConfigService);
     httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
-    loadedSpy = jasmine.createSpy('loaded');
-    configService.loaded$.subscribe(() => loadedSpy());
   });
 
   it('should be created', () => {
@@ -40,16 +37,8 @@ describe('ConfigService', () => {
       authConfig: {}
     };
 
-    expect(loadedSpy).not.toHaveBeenCalled();
-
     // Listen to the initialize observable
-    configService.initialize().subscribe(config => {
-      /* On successful resolve, we expect the initialize accessors
-      to indicate a successful config fetch with no error. */
-      expect(configService.initialized).toBe(true);
-      expect(configService.initializationError).toBeNull();
-      // loaded$ should have emitted once on successful config load
-      expect(loadedSpy).toHaveBeenCalledTimes(1);
+    configService.fetch().subscribe(config => {
       /* The exposed appConfig should match the one flushed
       by the http testing controller */
       expect(configService.appConfig).toEqual(dummyConfig);
@@ -67,19 +56,13 @@ describe('ConfigService', () => {
   });
 
   it('should properly handle failed config fetch', (done: DoneFn) => {
-    // Listen for initialize resolve
-    configService.initialize().subscribe(config => {
-      /* On failure, we expect initialize to resolve
-      successfully with an 'initialized' value of
-      false, appConfig value of undefined, and an exposed
-      error.  loaded$ should not emit anything.*/
-      expect(configService.initialized).toBe(false);
-      expect(configService.appConfig).toBeUndefined();
-      expect(configService.initializationError).not.toBeNull();
-      expect(loadedSpy).not.toHaveBeenCalled();
-      // Lastly, verify that there are no outstanding http requests
-      httpTestingController.verify();
-      done();
+    configService.fetch().subscribe({
+      error: error => {
+        expect(configService.appConfig).toBeUndefined();
+        // Lastly, verify that there are no outstanding http requests
+        httpTestingController.verify();
+        done();
+      }
     });
 
     // Expect one app.config.json request & throw our dummy error
@@ -124,7 +107,7 @@ describe('ConfigService', () => {
       }
     };
 
-    configService.initialize().subscribe(config => {
+    configService.fetch().subscribe(config => {
       // Assert
       expect(config).toEqual(mergedConfig);
 
@@ -152,7 +135,7 @@ describe('ConfigService', () => {
       authConfig: {}
     };
 
-    configService.initialize().subscribe(config => {
+    configService.fetch().subscribe(config => {
       // Assert
       expect(config).toEqual(appConfig);
 

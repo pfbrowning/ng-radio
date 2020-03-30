@@ -10,6 +10,8 @@ import { NotificationService } from '@notifications';
 import { createNotificationServiceSpy } from '@notifications/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '@authentication/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@root-state';
 
 describe('AuthenticationEffects', () => {
   const actions$: Observable<any> = null;
@@ -20,6 +22,7 @@ describe('AuthenticationEffects', () => {
       providers: [
         AuthenticationEffects,
         provideMockActions(() => actions$),
+        provideMockStore({initialState: initialRootState}),
         { provide: ConfigService, useValue: createConfigServiceSpy() },
         { provide: CurrentTimeService, useValue: createCurrentTimeServiceSpy() },
         { provide: NotificationService, useValue: createNotificationServiceSpy() },

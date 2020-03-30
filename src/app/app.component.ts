@@ -15,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private audioElementEventListenerService: AudioElementEventListenerService,
     private oauthEventListenerService: OauthEventListenerService,
     private loadingIndicatorService: LoadingIndicatorService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   /** Subscription to Router Events for the purpose of handling
    * any router-events-based logic on an app-wide basis */

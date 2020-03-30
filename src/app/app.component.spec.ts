@@ -2,36 +2,30 @@ import { TestBed, async, ComponentFixture, fakeAsync, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
-import { ErrorWindowComponent, ErrorHandlingService } from '@error-handling';
 import { NgLoadingIndicatorModule, LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
 import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
-import { ConfigService } from '@config';
 import { ConfigServiceStub } from '@config/testing';
 import { createErrorHandlingServiceSpy } from '@error-handling/testing';
-import { MessageService } from 'primeng/api';
 import { Router, Route } from '@angular/router';
 import { RouteResolverStub } from '@utilities/testing';
 import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
-import { createMessageServiceSpy } from '@notifications/testing';
 import { AudioElementEventListenerService } from '@core';
 import { createAudioElementEventListenerSpy } from '@core/testing';
 import { createOauthEventListenerServiceSpy } from '@authentication/testing';
 import { OauthEventListenerService } from '@authentication';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { ErrorHandlingService, ErrorWindowComponent } from '@error-handling';
+import { MessageService } from 'primeng/api';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let errorHandlingServiceSpy: jasmine.SpyObj<ErrorHandlingService>;
   let loadingIndicatorServiceSpy;
   let configServiceStub: ConfigServiceStub;
   let routeResolver: RouteResolverStub;
   let router: Router;
 
   beforeEach(async(() => {
-    errorHandlingServiceSpy = createErrorHandlingServiceSpy();
     loadingIndicatorServiceSpy = CreateLoadingIndicatorServiceSpy();
     configServiceStub = new ConfigServiceStub();
     routeResolver = new RouteResolverStub();
@@ -61,14 +55,12 @@ describe('AppComponent', () => {
         ErrorWindowComponent
       ],
       providers: [
-        { provide: ConfigService, useValue: configServiceStub },
-        { provide: ErrorHandlingService, useValue: errorHandlingServiceSpy },
-        { provide: MessageService, useValue: createMessageServiceSpy() },
         { provide: RouteResolverStub, useValue: routeResolver },
         { provide: LoadingIndicatorService, useValue: loadingIndicatorServiceSpy },
         { provide: AudioElementEventListenerService, useValue: createAudioElementEventListenerSpy() },
         { provide: OauthEventListenerService, useValue: createOauthEventListenerServiceSpy() },
-        provideMockStore({initialState: initialRootState})
+        { provide: ErrorHandlingService, useValue: createErrorHandlingServiceSpy() },
+        MessageService
       ]
     }).compileComponents();
   }));
@@ -84,22 +76,8 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     expect(configServiceStub.initialized).toBe(true);
 
-    // Assert: Ensure that the component was created and that nothing was passed to handleError
+    // Assert
     expect(component).toBeTruthy();
-    expect(errorHandlingServiceSpy.handleError).not.toHaveBeenCalled();
-  });
-
-  it('should properly handle config init failure', () => {
-    // Arrange: Set the config service to a failed state
-    configServiceStub.initialized = false;
-    expect(errorHandlingServiceSpy.handleError).not.toHaveBeenCalled();
-
-    // Act: Init change detection to trigger ngOnInit
-    fixture.detectChanges();
-
-    // Assert: Ensure that handleError was called with the appropriate comment
-    expect(errorHandlingServiceSpy.handleError).toHaveBeenCalledTimes(1);
-    expect(errorHandlingServiceSpy.handleError.calls.mostRecent().args[1]).toBe('Failed to load configuration');
   });
 
   it('should show loading indicator while resolving route data', fakeAsync(() => {
