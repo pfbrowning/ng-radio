@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AppInsightsService, SeverityLevel } from '@markpieszak/ng-application-insights';
-import { ConfigService } from '@config';
+import { Store, select } from '@ngrx/store';
+import { RootState } from '../../root-state/models/root-state';
+import { selectConfig } from '../../config/store/config.selectors';
+import { filter, take } from 'rxjs/operators';
 import isBlank from 'is-blank';
 
 /**
@@ -9,13 +12,13 @@ import isBlank from 'is-blank';
  */
 @Injectable()
 export class LoggingService {
-  constructor(private configService: ConfigService, private appInsightsService: AppInsightsService) {
-    // Once the async app config has loaded
-    this.configService.loaded$.subscribe(appConfig => {
+  constructor(private store: Store<RootState>, private appInsightsService: AppInsightsService) {
+    // Once the app config has loaded
+    this.store.pipe(select(selectConfig), filter(config => config != null), take(1)).subscribe(config => {
       // If an app insights key was provided
-      if (!isBlank(appConfig.appInsightsInstrumentationKey)) {
+      if (!isBlank(config.appInsightsInstrumentationKey)) {
         // Initialize the app insights library
-        this.appInsightsService.config.instrumentationKey = appConfig.appInsightsInstrumentationKey;
+        this.appInsightsService.config.instrumentationKey = config.appInsightsInstrumentationKey;
         this.appInsightsService.init();
       }
     });

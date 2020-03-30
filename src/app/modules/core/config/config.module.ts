@@ -1,22 +1,21 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfigService } from './services/config.service';
 import { HttpClientModule } from '@angular/common/http';
-
-export function initializeConfig(configService: ConfigService) {
-  return () => configService.initialize().toPromise();
-}
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { configReducer } from './store/config.reducer';
+import { ConfigEffects } from './store/config.effects';
 
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forFeature('config', configReducer),
+    EffectsModule.forFeature([ConfigEffects])
   ],
   providers: [
-    ConfigService,
-    { provide: APP_INITIALIZER, useFactory: initializeConfig, deps: [ConfigService], multi: true }
+    ConfigService
   ]
 })
 export class ConfigModule {}
-
-export { ConfigService } from './services/config.service';

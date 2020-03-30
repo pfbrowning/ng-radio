@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
-import { ReplaySubject, forkJoin, throwError, of, Observable } from 'rxjs';
+import { forkJoin, throwError, of, Observable } from 'rxjs';
 import { IAppConfig } from '../models/app-config';
 import { merge } from 'lodash';
 import { environment } from '../../../../../environments/environment';
@@ -13,32 +13,14 @@ import { environment } from '../../../../../environments/environment';
 export class ConfigService {
   constructor(private httpClient: HttpClient) {}
 
-  private _initialized = false;
-  private _initializationError: any = null;
   private _appConfig: IAppConfig;
-  private loaded = new ReplaySubject<IAppConfig>(1);
-  public loaded$ = this.loaded.asObservable();
 
   /** Public accessor for app config */
   public get appConfig(): IAppConfig {
     return this._appConfig;
   }
 
-  /** Tells whether the config data was successfully fetched */
-  public get initialized(): boolean {
-    return this._initialized;
-  }
-
-  /** Public accessor for initialization error so that the
-   * error can be properly logged and displayed on app
-   * bootstrap */
-  public get initializationError(): any {
-    return this._initializationError;
-  }
-
-  /** Initializer function used by APP_INITIALIZER to
-   * retrieve app config before app bootstrap */
-  public initialize(): Observable<IAppConfig> {
+  public fetch(): Observable<IAppConfig> {
     // Set headers to disable caching: We always want clients to fetch the latest config values
     const headers = new HttpHeaders({
       'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
@@ -63,16 +45,7 @@ export class ConfigService {
     ]).pipe(
       // Use lodash to deep merge local config into app config
       map(forkData => merge({}, forkData[0], forkData[1])),
-      tap(config => {
-        this._appConfig = config;
-        this._initialized = true;
-        this.loaded.next(config);
-      }),
-      catchError(error => {
-        this._initializationError = error;
-        this._initialized = false;
-        return of(null);
-      })
+      tap(config => this._appConfig = config)
     );
   }
 }

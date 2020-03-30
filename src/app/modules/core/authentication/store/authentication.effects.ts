@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { switchMap, catchError, map, filter, tap, takeUntil, mapTo } from 'rxjs/operators';
+import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, take } from 'rxjs/operators';
 import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '@config';
 import { CurrentTimeService } from '@core';
-import { appInit } from '../../root-state/root.actions';
 import { NotificationService, Severities } from '@notifications';
-import { Action } from '@ngrx/store';
+import { Action, Store, select } from '@ngrx/store';
 import {
   effectsInit,
   initializeStart,
@@ -18,20 +17,28 @@ import {
   accessTokenExpired
 } from './authentication.actions';
 import * as dayjs from 'dayjs';
+import { RootState } from '@root-state';
+import { selectConfig } from '@config'
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {
   constructor(
     private actions$: Actions,
+    private store: Store<RootState>,
     private oauthService: OAuthService,
     private configService: ConfigService,
     private currentTimeService: CurrentTimeService,
     private notificationService: NotificationService,
   ) { }
 
-  initAuthOnAppInit$ = createEffect(() => this.actions$.pipe(
-    ofType(appInit),
-    map(() => initializeStart())
+  initAuthOnConfigLoad$ = createEffect(() => this.actions$.pipe(
+    ofType(effectsInit),
+    switchMap(() => this.store.pipe(
+      select(selectConfig),
+      filter(config => config != null),
+      take(1),
+      map(() => initializeStart())
+    ))
   ));
 
   initialize$ = createEffect(() => this.actions$.pipe(
