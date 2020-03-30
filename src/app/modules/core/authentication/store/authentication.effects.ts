@@ -18,7 +18,7 @@ import {
 } from './authentication.actions';
 import * as dayjs from 'dayjs';
 import { RootState } from '@root-state';
-import { selectConfig } from '@config'
+import { selectConfig } from '@config';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {

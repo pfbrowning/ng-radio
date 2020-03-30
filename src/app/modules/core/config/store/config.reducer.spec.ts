@@ -1,4 +1,4 @@
-import { configReducer } from "./config.reducer";
+import { configReducer } from './config.reducer';
 import { initialConfigState } from '../models/initial-config-state';
 
 describe('Config Reducer', () => {
