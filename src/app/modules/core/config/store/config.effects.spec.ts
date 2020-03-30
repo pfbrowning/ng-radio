@@ -8,7 +8,7 @@ import { NotificationService } from '@notifications';
 import { createNotificationServiceSpy } from '@notifications/testing';
 
 describe('ConfigEffects', () => {
-  let actions$: Observable<any>;
+  const actions$: Observable<any> = null;
   let effects: ConfigEffects;
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('ConfigEffects', () => {
       ]
     });
 
-    effects = TestBed.get<ConfigEffects>(ConfigEffects);
+    effects = TestBed.inject<ConfigEffects>(ConfigEffects);
   });
 
   it('should be created', () => {

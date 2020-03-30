@@ -30,7 +30,7 @@ describe('AuthenticationEffects', () => {
       ]
     });
 
-    effects = TestBed.get<AuthenticationEffects>(AuthenticationEffects);
+    effects = TestBed.inject<AuthenticationEffects>(AuthenticationEffects);
   });
 
   it('should be created', () => {
