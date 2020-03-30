@@ -16,9 +16,9 @@ import {
   idTokenExpired,
   accessTokenExpired
 } from './authentication.actions';
-import * as dayjs from 'dayjs';
 import { RootState } from '@root-state';
 import { selectConfig } from '@config';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {

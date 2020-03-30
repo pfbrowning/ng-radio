@@ -3,10 +3,12 @@ import { initialFavoriteStationsState } from '../sections/favorite-stations/mode
 import { initialPlayerState } from '../sections/player/models/initial-player-state';
 import { initialSleepTimerState } from '../sections/sleep-timer/models/initial-sleep-timer-state';
 import { initialAuthenticationState } from '@authentication';
+import { initialConfigState } from '@config';
 
 export const initialRootState: RootState = {
     favoriteStations: initialFavoriteStationsState,
     player: initialPlayerState,
     sleepTimer: initialSleepTimerState,
-    authentication: initialAuthenticationState
+    authentication: initialAuthenticationState,
+    config: initialConfigState
 };
