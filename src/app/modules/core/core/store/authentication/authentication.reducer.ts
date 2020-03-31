@@ -6,8 +6,8 @@ import {
   idTokenExpired,
   accessTokenExpired
 } from './authentication.actions';
-import { initialAuthenticationState } from '../models/initial-authentication-state';
-import { AuthenticationState } from '../models/authentication-state';
+import { initialAuthenticationState } from '../../models/authentication/initial-authentication-state';
+import { AuthenticationState } from '../../models/authentication/authentication-state';
 
 const reducer = createReducer(
   initialAuthenticationState,

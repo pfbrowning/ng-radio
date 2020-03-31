@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { OAuthService, OAuthEvent } from 'angular-oauth2-oidc';
 import { Store } from '@ngrx/store';
 import { RootState } from '@core';
-import { silentRefreshFailed, silentRefreshSucceeded } from '../store/authentication.actions';
+import { silentRefreshFailed, silentRefreshSucceeded } from '../store/authentication/authentication.actions';
 
 @Injectable()
 export class OauthEventListenerService {

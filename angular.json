@@ -27,7 +27,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/.htaccess",
-              { "glob": "silent-refresh.html", "input": "src/app/modules/core/authentication", "output": "/"}
+              { "glob": "silent-refresh.html", "input": "src/", "output": "/"}
             ],
             "styles": [
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",

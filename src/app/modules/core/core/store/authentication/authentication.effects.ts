@@ -4,7 +4,7 @@ import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, take } from 
 import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '@config';
-import { CurrentTimeService } from '@core';
+import { CurrentTimeService } from '../../services/current-time.service';
 import { NotificationService, Severities } from '@notifications';
 import { Action, Store, select } from '@ngrx/store';
 import {
@@ -16,7 +16,7 @@ import {
   idTokenExpired,
   accessTokenExpired
 } from './authentication.actions';
-import { RootState } from '@core';
+import { RootState } from '../../models/root-state';
 import { selectConfig } from '@config';
 import * as dayjs from 'dayjs';
 

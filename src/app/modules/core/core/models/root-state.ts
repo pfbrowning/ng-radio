@@ -1,4 +1,4 @@
-import { AuthenticationState } from '@authentication';
+import { AuthenticationState } from './authentication/authentication-state';
 import { ConfigState } from '@config';
 import { FavoriteStationsState } from './favorite-stations/favorite-stations-state';
 import { PlayerState } from './player/player-state';

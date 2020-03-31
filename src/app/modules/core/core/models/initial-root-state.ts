@@ -1,5 +1,5 @@
 import { RootState } from './root-state';
-import { initialAuthenticationState } from '@authentication';
+import { initialAuthenticationState } from './authentication/initial-authentication-state';
 import { initialConfigState } from '@config';
 import { initialFavoriteStationsState } from './favorite-stations/initial-favorite-stations-state';
 import { initialPlayerState } from './player/initial-player-state';

@@ -9,7 +9,7 @@ import { createCurrentTimeServiceSpy } from '@core/testing';
 import { NotificationService } from '@notifications';
 import { createNotificationServiceSpy } from '@notifications/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '@authentication/testing';
+import { createOAuthServiceSpy } from '../../testing/core-spy-factories.spec';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 

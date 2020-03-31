@@ -20,6 +20,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { sleepTimerReducer } from './store/sleep-timer/sleep-timer.reducer';
 import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
 import { AudioElement } from './services/audio-element';
+import { authenticationReducer } from './store/authentication/authentication.reducer';
+import { AuthenticationEffects } from './store/authentication/authentication.effects';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { OauthEventListenerService } from './services/oauth-event-listener.service';
+import { AuthGuard } from './guards/auth.guard';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -27,17 +32,19 @@ import * as NoSleep from 'nosleep.js';
   imports: [
     CommonModule,
     HttpClientModule,
+    OAuthModule.forRoot(),
     StoreModule.forRoot({
       favoriteStations: favoriteStationsReducer,
       player: playerReducer,
-      sleepTimer: sleepTimerReducer
+      sleepTimer: sleepTimerReducer,
+      authentication: authenticationReducer
     }, {
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
       }
     }),
-    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects]),
+    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects, AuthenticationEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
@@ -46,6 +53,8 @@ import * as NoSleep from 'nosleep.js';
     KeepAwakeService,
     AudioElementEventListenerService,
     CurrentTimeService,
+    OauthEventListenerService,
+    AuthGuard,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
     { provide: WindowToken, useValue: window },

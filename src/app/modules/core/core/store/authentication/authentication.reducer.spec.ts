@@ -1,5 +1,5 @@
 import { authenticationReducer } from './authentication.reducer';
-import { initialAuthenticationState } from '../models/initial-authentication-state';
+import { initialAuthenticationState } from '../../models/authentication/initial-authentication-state';
 
 describe('Authentication Reducer', () => {
   describe('an unknown action', () => {

@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingIndicatorService } from '@browninglogic/ng-loading-indicator';
-import { AudioElementEventListenerService } from '@core';
-import { OauthEventListenerService } from '@authentication';
+import { AudioElementEventListenerService, OauthEventListenerService } from '@core';
 
 @Component({
   selector: 'blr-root',

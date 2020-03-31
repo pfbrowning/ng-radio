@@ -12,7 +12,6 @@ import { ConfigModule } from '@config';
 import { ErrorHandlingModule } from '@error-handling';
 import { LoggingModule } from '@logging';
 import { NotificationsModule } from '@notifications';
-import { AuthenticationModule } from '@authentication';
 import { ConfirmationService } from 'primeng/api';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RootComponentsModule } from '@root-components';
@@ -27,7 +26,6 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   imports: [
     ConfigModule,
-    AuthenticationModule,
     CoreModule,
     BrowserModule,
     AppRoutingModule,
