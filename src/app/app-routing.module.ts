@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: 'favorites',
     canActivate: [ AuthGuard ],
-    loadChildren: () => import('../app/modules/feature/favorites/favorites.module').then(m => m.FavoritesModule)
+    loadChildren: () => import('../app/modules/feature/favorite-stations/favorite-stations.module').then(m => m.FavoriteStationsModule)
   },
   {
     path: '',

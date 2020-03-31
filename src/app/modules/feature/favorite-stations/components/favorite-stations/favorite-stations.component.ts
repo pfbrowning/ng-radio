@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
-import { Station } from '@core/models/player';
-import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
 import { ConfirmationService } from 'primeng/api';
+import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
+import { Station } from '@core/models/player';
 import { selectStation } from '@core/store/player';
 
 @Component({
-  templateUrl: './favorites.component.html',
-  styleUrls: ['./favorites.component.scss']
+  selector: 'blr-favorite-stations',
+  templateUrl: './favorite-stations.component.html',
+  styleUrls: ['./favorite-stations.component.scss']
 })
-export class FavoritesComponent {
+export class FavoriteStationsComponent {
   constructor(private store: Store<RootState>, private confirmationService: ConfirmationService) { }
 
   public columns = ['spinner', 'name', 'icon', 'actions'];
@@ -29,5 +30,4 @@ export class FavoritesComponent {
       accept: () => this.store.dispatch(removeFromFavoritesStart({stationId: station.stationId}))
     });
   }
-
 }

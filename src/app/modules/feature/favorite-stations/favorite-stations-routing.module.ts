@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FavoritesComponent } from './components/favorites/favorites.component';
 import { FavoriteStationsResolver } from './resolvers/favorite-stations.resolver';
+import { FavoriteStationsComponent } from './components/favorite-stations/favorite-stations.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: FavoritesComponent,
+    component: FavoriteStationsComponent,
     resolve: { favoriteStations: FavoriteStationsResolver }
   }
 ];
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FavoritesRoutingModule { }
+export class FavoriteStationsRoutingModule { }

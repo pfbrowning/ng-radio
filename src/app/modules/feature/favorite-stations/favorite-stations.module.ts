@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FavoritesRoutingModule } from './favorites-routing.module';
-import { FavoritesComponent } from './components/favorites/favorites.component';
+import { FavoriteStationsComponent } from './components/favorite-stations/favorite-stations.component';
+import { FavoriteStationsRoutingModule } from './favorite-stations-routing.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [
-    FavoritesComponent
-  ],
+  declarations: [FavoriteStationsComponent],
   imports: [
     CommonModule,
-    FavoritesRoutingModule,
+    FavoriteStationsRoutingModule,
     MatTableModule,
     MatButtonModule,
     MatProgressSpinnerModule
   ]
 })
-export class FavoritesModule {}
+export class FavoriteStationsModule { }

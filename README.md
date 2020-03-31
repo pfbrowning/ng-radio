@@ -54,7 +54,6 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Figure out a better place to put the AudioElement class
   * Implement NGRX for state management throughout the app.
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR

@@ -1,18 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FavoritesComponent } from './favorites.component';
-import { initialRootState } from '@core';
+import { FavoriteStationsComponent } from './favorite-stations.component';
 import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
 
-describe('FavoritesComponent', () => {
-  let component: FavoritesComponent;
-  let fixture: ComponentFixture<FavoritesComponent>;
+describe('FavoriteStationsComponent', () => {
+  let component: FavoriteStationsComponent;
+  let fixture: ComponentFixture<FavoriteStationsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FavoritesComponent ],
+      declarations: [ FavoriteStationsComponent ],
       providers: [
-        provideMockStore({ initialState: initialRootState }),
+        provideMockStore({initialState: initialRootState}),
         { provide: ConfirmationService, useValue: jasmine.createSpyObj('confirmationService', ['confirm']) }
       ]
     })
@@ -20,7 +20,7 @@ describe('FavoritesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FavoritesComponent);
+    fixture = TestBed.createComponent(FavoriteStationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
