@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AudioElementEventListenerService } from './audio-element-event-listener.service';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '../../root-state/models/initial-root-state';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { AudioElementStub } from '../testing/AudioElementStub.spec';
+import { initialRootState } from '../models/initial-root-state';
 
 describe('AudioElementEventListenerService', () => {
   let service: AudioElementEventListenerService;

@@ -4,10 +4,10 @@ import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
-import { StreamInfo } from '@root-state/player';
 import { CoreModule } from '../core.module';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '@authentication/testing';
+import { StreamInfo } from '../models/player/stream-info';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;

@@ -1,9 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { RootState } from '../../root-state/models/root-state';
-import { AudioElement } from '../models/audio-element';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
-import { audioPaused } from '@root-state/player';
+import { AudioElement } from './audio-element';
+import { RootState } from '../models/root-state';
+import { audioPaused } from '../store/player/player-actions';
 
 @Injectable()
 export class AudioElementEventListenerService {

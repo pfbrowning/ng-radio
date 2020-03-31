@@ -16,7 +16,7 @@ import {
   idTokenExpired,
   accessTokenExpired
 } from './authentication.actions';
-import { RootState } from '@root-state';
+import { RootState } from '@core';
 import { selectConfig } from '@config';
 import * as dayjs from 'dayjs';
 

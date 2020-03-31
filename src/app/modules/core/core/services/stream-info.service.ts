@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
-import { StreamInfo } from '@root-state/player';
 import { ConfigService } from '@config';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { StreamInfo } from '../models/player/stream-info';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
  * the configured radio metadata API */

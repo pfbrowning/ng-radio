@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '@config';
-import { Station } from '@root-state/player';
+import { Station } from '../models/player/station';
 import isBlank from 'is-blank';
 
 /** Service which searches for and retrieves station data from the radio browser

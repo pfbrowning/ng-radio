@@ -3,9 +3,10 @@ import { Subject, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, finalize } from 'rxjs/operators';
 import { StationLookupService } from '@core';
 import { MatInput } from '@angular/material/input';
-import { RootState } from '@root-state';
+import { RootState } from '@core';
 import { Store } from '@ngrx/store';
-import { selectStation, Station } from '@root-state/player';
+import { selectStation } from '@core/store/player';
+import { Station } from '@core/models/player';
 import isBlank from 'is-blank';
 
 @Component({

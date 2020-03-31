@@ -1,4 +1,4 @@
-import { Station } from '@root-state/player';
+import { Station } from '@core/models/player';
 
 export class SuggestedStations {
     constructor(

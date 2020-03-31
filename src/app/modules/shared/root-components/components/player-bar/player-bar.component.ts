@@ -3,18 +3,18 @@ import { Router } from '@angular/router';
 import { setAltSrc } from '@utilities';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { Store, select } from '@ngrx/store';
-import { RootState } from '@root-state';
+import { KeepAwakeService, RootState } from '@core';
+import { PlayerStatus } from '@core/models/player';
+import { selectPlayerStatus, selectCurrentStation, playAudioStart, pauseAudioSubmit } from '@core/store/player';
 import {
-  addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested,
-  selectIsProcessingFavoritesForCurrentStation,
-  selectCurrentStationFavoritesProcessingState,
   selectIsCurrentStationInFavorites,
-  CurrentStationFavoritesProcessingState
-} from '@root-state/favorite-stations';
-import { KeepAwakeService } from '@core';
-import { PlayerStatus, selectPlayerStatus, selectCurrentStation, playAudioStart, pauseAudioSubmit } from '@root-state/player';
-import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
+  selectCurrentStationFavoritesProcessingState,
+  selectIsProcessingFavoritesForCurrentStation,
+  addCurrentStationToFavoritesRequested,
+  removeCurrentStationFromFavoritesRequested
+} from '@core/store/favorite-stations';
+import { selectMinutesUntilSleep, setSleepTimerSubmit, clearSleepTimer } from '@core/store/sleep-timer';
+import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 
 @Component({
   selector: 'blr-player-bar',

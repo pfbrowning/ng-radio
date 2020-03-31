@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap, filter, switchMap } from 'rxjs/operators';
-import { RootState } from '@root-state';
+import { RootState } from '@core';
 import { Store, select } from '@ngrx/store';
 import { selectIsAuthenticationInitialized, selectIsAuthenticated } from '../store/authentication.selectors';
 import { OAuthService } from 'angular-oauth2-oidc';

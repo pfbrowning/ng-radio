@@ -1,4 +1,4 @@
-import { StreamInfoStatus, PlayerStatus, selectPlayerStatus } from '@root-state/player';
+import { StreamInfoStatus, PlayerStatus } from '@core/models/player';
 import {
   Component,
   ViewChild,
@@ -8,9 +8,14 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { RootState } from '@root-state';
-import { selectStreamInfoStatus } from '@root-state/player';
-import { selectStreamInfoTitle, selectCurrentStationTitle, selectIsStreamInfoPresent } from '@root-state/player';
+import { RootState } from '@core';
+import {
+  selectStreamInfoStatus,
+  selectStreamInfoTitle,
+  selectCurrentStationTitle,
+  selectIsStreamInfoPresent,
+  selectPlayerStatus
+} from '@core/store/player';
 
 
 

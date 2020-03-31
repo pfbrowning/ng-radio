@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Station } from '@root-state/player';
+import { Station } from '@core/models/player';
 import { setAltSrc } from '@utilities';
 
 @Component({

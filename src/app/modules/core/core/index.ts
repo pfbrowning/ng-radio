@@ -1,5 +1,5 @@
 // Models
-export { AudioElement } from './models/audio-element';
+export { RootState } from './models/root-state';
 
 // Injection Tokens
 export { AudioElementToken } from './injection-tokens/audio-element-token';
@@ -12,5 +12,6 @@ export { KeepAwakeService } from './services/keep-awake.service';
 export { StreamInfoService } from './services/stream-info.service';
 export { AudioElementEventListenerService } from './services/audio-element-event-listener.service';
 export { CurrentTimeService } from './services/current-time.service';
+export { AudioElement } from './services/audio-element';
 
 export { CoreModule } from './core.module';

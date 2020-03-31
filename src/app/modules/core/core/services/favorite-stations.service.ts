@@ -3,7 +3,7 @@ import { ConfigService } from '@config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Station } from '@root-state/player';
+import { Station } from '../models/player/station';
 
 @Injectable({providedIn: 'root'})
 export class FavoriteStationsService {

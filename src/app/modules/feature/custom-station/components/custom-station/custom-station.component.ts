@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { MatInput } from '@angular/material/input';
 import { Store } from '@ngrx/store';
-import { RootState } from '@root-state';
-import { selectStation, Station } from '@root-state/player';
+import { RootState } from '@core';
+import { selectStation } from '@core/store/player';
+import { Station } from '@core/models/player';
 
 @Component({
   selector: 'blr-custom-station',

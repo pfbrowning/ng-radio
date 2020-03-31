@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { RootState } from '@root-state';
-import { Station } from '@root-state/player';
-import { selectFavoriteStationRows, removeFromFavoritesStart } from '@root-state/favorite-stations';
+import { RootState } from '@core';
+import { Station } from '@core/models/player';
+import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
 import { ConfirmationService } from 'primeng/api';
-import { selectStation } from '@root-state/player';
+import { selectStation } from '@core/store/player'
 
 @Component({
   templateUrl: './favorites.component.html',

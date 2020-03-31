@@ -5,8 +5,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { HttpParams } from '@angular/common/http';
-import { Station } from '@root-state/player';
 import { CoreModule } from '../core.module';
+import { Station } from '../models/player/station';
 import isBlank from 'is-blank';
 
 describe('StationLookupService', () => {

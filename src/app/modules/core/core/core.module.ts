@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StationLookupService } from './services/station-lookup.service';
 import { StreamInfoService } from './services/stream-info.service';
-import { AudioElement } from './models/audio-element';
 import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
@@ -10,13 +9,36 @@ import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { WindowToken } from './injection-tokens/window-token';
 import { AudioElementEventListenerService } from './services/audio-element-event-listener.service';
 import { CurrentTimeService } from './services/current-time.service';
+import { StoreModule } from '@ngrx/store';
+import { favoriteStationsReducer } from './store/favorite-stations/favorite-stations.reducer';
+import { playerReducer } from './store/player/player.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { environment } from 'src/environments/environment';
+import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stations.effects';
+import { PlayerEffects } from './store/player/player.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { sleepTimerReducer } from './store/sleep-timer/sleep-timer.reducer';
+import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
+import { AudioElement } from './services/audio-element';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({
+      favoriteStations: favoriteStationsReducer,
+      player: playerReducer,
+      sleepTimer: sleepTimerReducer
+    }, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     StationLookupService,

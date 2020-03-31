@@ -54,8 +54,8 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Restructure modules so that related functionality is together, regardless of whether it relates to NGRX
   * Implement NGRX for state management throughout the app.
+  * Figure out a better place to put the AudioElement class
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area

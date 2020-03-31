@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppInsightsService, SeverityLevel } from '@markpieszak/ng-application-insights';
 import { Store, select } from '@ngrx/store';
-import { RootState } from '../../root-state/models/root-state';
+import { RootState } from '@core';
 import { selectConfig } from '../../config/store/config.selectors';
 import { filter, take } from 'rxjs/operators';
 import isBlank from 'is-blank';

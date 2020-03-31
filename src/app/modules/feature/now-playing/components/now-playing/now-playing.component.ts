@@ -1,28 +1,27 @@
 import { Component } from '@angular/core';
 import { setAltSrc } from '@utilities';
 import { Store, select } from '@ngrx/store';
-import { RootState } from '@root-state';
+import { RootState } from '@core';
 import {
   addCurrentStationToFavoritesRequested,
   removeCurrentStationFromFavoritesRequested,
   selectIsProcessingFavoritesForCurrentStation,
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState
-} from '@root-state/favorite-stations';
+} from '@core/store/favorite-stations';
 import { KeepAwakeService } from '@core';
-import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@root-state/sleep-timer';
+import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import {
   selectCurrentStation,
   selectStreamInfo,
   selectStreamInfoStatus,
   selectPlayerStatus,
-  PlayerStatus,
   playAudioStart,
   pauseAudioSubmit,
-  StreamInfoStatus,
   selectStreamInfoTitle,
   selectIsStreamInfoPresent
-} from '@root-state/player';
+} from '@core/store/player';
+import { PlayerStatus, StreamInfoStatus } from '@core/models/player';
 
 @Component({
   templateUrl: './now-playing.component.html',
