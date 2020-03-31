@@ -3,7 +3,7 @@ export {
     removeCurrentStationFromFavoritesRequested,
     fetchStationsStart,
     removeFromFavoritesStart
-} from './favorite-stations.actions'
+} from './favorite-stations.actions';
 
 export {
     selectIsProcessingFavoritesForCurrentStation,

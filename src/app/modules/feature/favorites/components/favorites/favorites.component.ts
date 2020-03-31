@@ -4,7 +4,7 @@ import { RootState } from '@core';
 import { Station } from '@core/models/player';
 import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
 import { ConfirmationService } from 'primeng/api';
-import { selectStation } from '@core/store/player'
+import { selectStation } from '@core/store/player';
 
 @Component({
   templateUrl: './favorites.component.html',
