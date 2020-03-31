@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '@authentication/testing';
+import { createOAuthServiceSpy } from '@core/testing';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;

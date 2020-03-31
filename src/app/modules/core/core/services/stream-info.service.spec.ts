@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '@authentication/testing';
+import { createOAuthServiceSpy } from '@core/testing';
 import { StreamInfo } from '../models/player/stream-info';
 
 describe('StreamInfoService', () => {

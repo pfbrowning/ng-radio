@@ -12,8 +12,8 @@ import { RouteResolverStub } from '@utilities/testing';
 import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
 import { AudioElementEventListenerService } from '@core';
 import { createAudioElementEventListenerSpy } from '@core/testing';
-import { createOauthEventListenerServiceSpy } from '@authentication/testing';
-import { OauthEventListenerService } from '@authentication';
+import { createOauthEventListenerServiceSpy } from '@core/testing';
+import { OauthEventListenerService } from '@core';
 import { ErrorHandlingService, ErrorWindowComponent } from '@error-handling';
 import { MessageService } from 'primeng/api';
 

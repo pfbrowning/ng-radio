@@ -61,6 +61,7 @@ ng serve --open
   * Migrate build from classic Azure DevOps to YAML build
   * Configure SCSS imports to use TS path rather than relative path
   * Optimize bundle size
+  * Consolidate compartmentalized core modules into a single CoreModule
   * Package up reusable things and deploy to npm
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
   * Determine whether it's appropriate to remove Material and go entirely to PrimeNG

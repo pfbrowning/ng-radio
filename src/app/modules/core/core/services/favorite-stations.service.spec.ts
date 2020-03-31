@@ -4,7 +4,7 @@ import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '@authentication/testing';
+import { createOAuthServiceSpy } from '@core/testing';
 
 describe('FavoriteStationsService', () => {
   let service: FavoriteStationsService;
