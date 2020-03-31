@@ -9,6 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { StoreModule } from '@ngrx/store';
+import { radioBrowserReducer, radioBrowserFeatureKey } from './store/radio-browser.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { RadioBrowserEffects } from './store/radio-browser.effects';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTableModule,
     MatTooltipModule,
     MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    StoreModule.forFeature(radioBrowserFeatureKey, radioBrowserReducer),
+    EffectsModule.forFeature([RadioBrowserEffects])
   ]
 })
 export class RadioBrowserModule {}

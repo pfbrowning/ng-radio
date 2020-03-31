@@ -6,11 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
-import { StationLookupService } from '@core';
-import { createStationLookupServiceSpy } from '@core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@core';
+import { initialRadioBrowserRootState } from '../../models/initial-radio-browser-root-state';
 
 describe('RadioBrowserComponent', () => {
   let component: RadioBrowserComponent;
@@ -30,8 +28,7 @@ describe('RadioBrowserComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: StationLookupService, useValue: createStationLookupServiceSpy() },
-        provideMockStore({initialState: initialRootState})
+        provideMockStore({initialState: initialRadioBrowserRootState})
       ]
     })
     .compileComponents();
