@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerBarStationInfoComponent } from './player-bar-station-info.component';
 import { getElementTextBySelector } from '@utilities/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { RootState, initialRootState } from '@root-state';
-import { initialPlayerState, Station, StreamInfo, StreamInfoStatus, PlayerStatus } from '@root-state/player';
+import { RootState, initialRootState } from '@core';
+import { initialPlayerState, Station, StreamInfo, StreamInfoStatus, PlayerStatus } from '@core/models/player';
 import theoretically from 'jasmine-theories';
 
 describe('PlayerBarStationInfoComponent', () => {

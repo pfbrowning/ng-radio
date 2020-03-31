@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoritesComponent } from './favorites.component';
-import { initialRootState } from '@root-state';
+import { initialRootState } from '@core';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ConfirmationService } from 'primeng/api';
 

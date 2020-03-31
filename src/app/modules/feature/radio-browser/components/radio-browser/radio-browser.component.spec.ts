@@ -10,7 +10,7 @@ import { StationLookupService } from '@core';
 import { createStationLookupServiceSpy } from '@core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { initialRootState } from '@core';
 
 describe('RadioBrowserComponent', () => {
   let component: RadioBrowserComponent;

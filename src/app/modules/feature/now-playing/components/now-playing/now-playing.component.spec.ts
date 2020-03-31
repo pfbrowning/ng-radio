@@ -1,24 +1,19 @@
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  CoreModule,
-  KeepAwakeService
-} from '@core';
+import { KeepAwakeService } from '@core';
 import { createKeepAwakeServiceSpy } from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
-import { NotificationService } from '@notifications';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { initialRootState, RootState } from '@root-state';
-import { createNotificationServiceSpy } from '@notifications/testing';
+import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { PlayerStatus, initialPlayerState, Station, StreamInfo, StreamInfoStatus } from '@root-state/player';
+import { PlayerStatus, initialPlayerState, Station, StreamInfo, StreamInfoStatus } from '@core/models/player';
 import isBlank from 'is-blank';
 import theoretically from 'jasmine-theories';
 
@@ -44,13 +39,11 @@ describe('NowPlayingComponent', () => {
         MatInputModule,
         NoopAnimationsModule,
         FormsModule,
-        CoreModule,
         SharedModule
       ],
       providers: [
-        { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        provideMockStore({ initialState: initialRootState })
+        provideMockStore({ initialState: initialRootState }),
       ]
     })
     .compileComponents();

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthGuard } from './auth.guard';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { initialRootState, RootState } from '@root-state';
+import { initialRootState, RootState } from '@core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '../testing/authentication-spy-factories.spec';
 import { initialAuthenticationState } from '../models/initial-authentication-state';

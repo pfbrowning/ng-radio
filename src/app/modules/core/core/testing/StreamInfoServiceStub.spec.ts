@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { StreamInfo } from '../../root-state/sections/player/models/stream-info';
+import { StreamInfo } from '../models/player/stream-info';
 
 export class StreamInfoServiceStub {
     private metaSubject = new Subject<StreamInfo>();

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { FavoriteStationsResolver } from './favorite-stations.resolver';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { initialRootState } from '@core';
 
 describe('FavoriteStationsResolver', () => {
   let resolver: FavoriteStationsResolver;

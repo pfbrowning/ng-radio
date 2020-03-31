@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { initialRootState } from '@core';
 
 describe('CustomStationComponent', () => {
   let component: CustomStationComponent;

@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '@utilities/testing';
 import { SuggestedStations } from '../../models/suggested-stations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { initialRootState } from '@core';
 
 describe('SuggestedStationsComponent', () => {
   let component: SuggestedStationsComponent;

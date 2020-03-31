@@ -1,5 +1,6 @@
 // Models
 export { RootState } from './models/root-state';
+export { initialRootState } from './models/initial-root-state';
 
 // Injection Tokens
 export { AudioElementToken } from './injection-tokens/audio-element-token';

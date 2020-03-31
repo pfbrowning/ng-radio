@@ -11,7 +11,7 @@ import { createNotificationServiceSpy } from '@notifications/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '@authentication/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@root-state';
+import { initialRootState } from '@core';
 
 describe('AuthenticationEffects', () => {
   const actions$: Observable<any> = null;

@@ -5,7 +5,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
 import { HttpParams } from '@angular/common/http';
-import { CoreModule } from '../core.module';
 import { Station } from '../models/player/station';
 import isBlank from 'is-blank';
 
@@ -17,10 +16,10 @@ describe('StationLookupService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        CoreModule
+        HttpClientTestingModule
       ],
       providers: [
+        StationLookupService,
         { provide: ConfigService, useValue: createConfigServiceSpy() }
       ]
     });

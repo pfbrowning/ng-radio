@@ -4,7 +4,6 @@ import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from '@config';
 import { createConfigServiceSpy } from '@config/testing';
-import { CoreModule } from '../core.module';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '@authentication/testing';
 import { StreamInfo } from '../models/player/stream-info';
@@ -18,10 +17,10 @@ describe('StreamInfoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        CoreModule
+        HttpClientTestingModule
       ],
       providers: [
+        StreamInfoService,
         { provide: ConfigService, useValue: createConfigServiceSpy() },
         { provide: OAuthService, useValue: createOAuthServiceSpy() }
       ]
