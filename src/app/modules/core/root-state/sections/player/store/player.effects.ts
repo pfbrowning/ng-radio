@@ -79,7 +79,7 @@ export class PlayerEffects {
   ));
 
   fetchOnInterval$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStreamInfoSucceeded),
+    ofType(fetchStreamInfoSucceeded, fetchStreamInfoFailed),
     withLatestFrom(this.store.pipe(select(selectCurrentStationUrl))),
     switchMap(([action, streamUrl]) => timer(this.configService.appConfig.metadataRefreshInterval).pipe(
         takeUntil(this.actions$.pipe(ofType(selectStation, audioPaused))),
@@ -124,5 +124,10 @@ export class PlayerEffects {
         this.titleService.setTitle('Browninglogic Radio');
       }
     })
+  ), { dispatch: false });
+
+  clearTitle$ = createEffect(() => this.actions$.pipe(
+    ofType(fetchStreamInfoFailed, audioPaused),
+    tap(() => this.titleService.setTitle('Browninglogic Radio'))
   ), { dispatch: false });
 }
