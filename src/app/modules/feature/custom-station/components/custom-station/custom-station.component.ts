@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
@@ -11,7 +11,8 @@ import { Station } from '@core/models/player';
 @Component({
   selector: 'blr-custom-station',
   templateUrl: './custom-station.component.html',
-  styleUrls: ['./custom-station.component.scss']
+  styleUrls: ['./custom-station.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomStationComponent implements OnInit {
   constructor(private store: Store<RootState>, private router: Router) {}

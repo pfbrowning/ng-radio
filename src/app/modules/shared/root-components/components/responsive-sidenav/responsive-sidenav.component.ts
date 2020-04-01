@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, Event, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,8 @@ import { WindowToken } from '@core';
 @Component({
   selector: 'blr-responsive-sidenav-container',
   templateUrl: './responsive-sidenav.component.html',
-  styleUrls: ['./responsive-sidenav.component.scss']
+  styleUrls: ['./responsive-sidenav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   /** The minimum screen width that we consider to be a large screen.

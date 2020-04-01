@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
@@ -12,7 +12,8 @@ import { RadioBrowserRootState } from '../../models/radio-browser-root-state';
 
 @Component({
   templateUrl: './radio-browser.component.html',
-  styleUrls: ['./radio-browser.component.scss']
+  styleUrls: ['./radio-browser.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(private store: Store<RadioBrowserRootState>) {}

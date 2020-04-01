@@ -1,10 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Station } from '@core/models/player';
 
 @Component({
   selector: 'blr-suggested-stations-section',
   templateUrl: './suggested-stations-section.component.html',
-  styleUrls: ['./suggested-stations-section.component.scss']
+  styleUrls: ['./suggested-stations-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SuggestedStationsSectionComponent {
   @Input() stations: Array<Station>;

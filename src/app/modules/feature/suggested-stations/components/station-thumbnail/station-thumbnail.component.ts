@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Station } from '@core/models/player';
 import { setAltSrc } from '@utilities';
 
 @Component({
   selector: 'blr-station-thumbnail',
   templateUrl: './station-thumbnail.component.html',
-  styleUrls: ['./station-thumbnail.component.scss']
+  styleUrls: ['./station-thumbnail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StationThumbnailComponent {
   @Input() station: Station;

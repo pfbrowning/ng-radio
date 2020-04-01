@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ModalWindowComponent } from '@browninglogic/ng-modal';
 import { Subscription } from 'rxjs';
 import { AppError } from '../../models/app-error';
@@ -9,7 +9,8 @@ import { ErrorHandlingService } from '../../services/error-handling.service';
 @Component({
   selector: 'blr-error-window',
   templateUrl: './error-window.component.html',
-  styleUrls: ['./error-window.component.scss']
+  styleUrls: ['./error-window.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorWindowComponent implements OnInit, OnDestroy {
   constructor(private errorHandlingService: ErrorHandlingService) {}

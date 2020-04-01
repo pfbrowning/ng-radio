@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { selectStation } from '@core/store/player';
 import { Station } from '@core/models/player';
@@ -8,7 +8,8 @@ import { SuggestedStationsRootState } from '../../models/suggested-stations-root
 @Component({
   selector: 'blr-suggested-stations',
   templateUrl: './suggested-stations.component.html',
-  styleUrls: ['./suggested-stations.component.scss']
+  styleUrls: ['./suggested-stations.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SuggestedStationsComponent {
   constructor(private store: Store<SuggestedStationsRootState>) {}

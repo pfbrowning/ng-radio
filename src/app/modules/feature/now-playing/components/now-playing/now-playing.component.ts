@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { setAltSrc } from '@utilities';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
@@ -25,7 +25,8 @@ import { PlayerStatus, StreamInfoStatus } from '@core/models/player';
 
 @Component({
   templateUrl: './now-playing.component.html',
-  styleUrls: ['./now-playing.component.scss']
+  styleUrls: ['./now-playing.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NowPlayingComponent {
   constructor(

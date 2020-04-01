@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { setAltSrc } from '@utilities';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
@@ -19,7 +19,8 @@ import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-st
 @Component({
   selector: 'blr-player-bar',
   templateUrl: './player-bar.component.html',
-  styleUrls: ['./player-bar.component.scss']
+  styleUrls: ['./player-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayerBarComponent {
   constructor(
