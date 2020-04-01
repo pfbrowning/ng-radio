@@ -4,5 +4,6 @@ export interface AuthenticationState {
     idTokenExpiration: number;
     accessTokenExpiration: number;
     authenticated: boolean;
+    email: string;
     initialized: boolean;
 }

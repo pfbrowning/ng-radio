@@ -54,9 +54,8 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Use OnPush change detection in all components
-  * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR
+  * Log Page Views
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
   * Migrate build from classic Azure DevOps to YAML build
   * Configure SCSS imports to use TS path rather than relative path

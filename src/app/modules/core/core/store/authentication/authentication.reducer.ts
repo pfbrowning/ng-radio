@@ -11,13 +11,14 @@ import { AuthenticationState } from '../../models/authentication/authentication-
 
 const reducer = createReducer(
   initialAuthenticationState,
-  on(initializeSucceeded, (state, { idToken, accessToken, idTokenExpiration, accessTokenExpiration, authenticated }) => ({
+  on(initializeSucceeded, (state, { idToken, accessToken, idTokenExpiration, accessTokenExpiration, authenticated, email }) => ({
     ...state,
     idToken,
     accessToken,
     idTokenExpiration,
     accessTokenExpiration,
     authenticated,
+    email,
     initialized: true
   })),
   on(initializeFailed, state => ({

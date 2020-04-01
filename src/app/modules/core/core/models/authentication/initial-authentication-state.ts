@@ -6,5 +6,6 @@ export const initialAuthenticationState: AuthenticationState = {
     idTokenExpiration: null,
     accessTokenExpiration: null,
     authenticated: false,
+    email: null,
     initialized: false
 };

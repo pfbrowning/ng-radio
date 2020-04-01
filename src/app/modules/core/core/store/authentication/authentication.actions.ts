@@ -22,7 +22,14 @@ export const initializeStart = createAction(
 
 export const initializeSucceeded = createAction(
     AuthenticationActions.InitializeSucceeded,
-    props<{ idToken: string, idTokenExpiration: number, accessToken: string, accessTokenExpiration: number, authenticated: boolean }>()
+    props<{
+        idToken: string,
+        idTokenExpiration: number,
+        accessToken: string,
+        accessTokenExpiration: number,
+        authenticated: boolean,
+        email: string
+    }>()
 );
 
 export const initializeFailed = createAction(

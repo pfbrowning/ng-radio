@@ -19,6 +19,7 @@ import {
 } from './authentication.actions';
 import { RootState } from '../../models/root-state';
 import { selectConfig } from '@config';
+import { LoggingService } from '@logging';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -30,6 +31,7 @@ export class AuthenticationEffects implements OnInitEffects {
     private configService: ConfigService,
     private currentTimeService: CurrentTimeService,
     private notificationService: NotificationService,
+    private loggingService: LoggingService
   ) { }
 
   initAuthOnConfigLoad$ = createEffect(() => this.actions$.pipe(
@@ -52,9 +54,11 @@ export class AuthenticationEffects implements OnInitEffects {
         accessToken: this.oauthService.getAccessToken(),
         idTokenExpiration: this.oauthService.getIdTokenExpiration(),
         accessTokenExpiration: this.oauthService.getAccessTokenExpiration(),
-        authenticated: this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken()
+        authenticated: this.oauthService.hasValidIdToken() && this.oauthService.hasValidAccessToken(),
+        email: this.oauthService.getIdentityClaims()['email']
       })),
       tap(action => {
+        console.log('id token claims', this.oauthService.getIdentityClaims());
         console.log('id token expiration', dayjs(action.idTokenExpiration).format('h:mm:ssa'));
         console.log('access token expiration', dayjs(action.accessTokenExpiration).format('h:mm:ssa'));
       }),
@@ -100,6 +104,12 @@ export class AuthenticationEffects implements OnInitEffects {
   notifyTokenExpired$ = createEffect(() => this.actions$.pipe(
     ofType(idTokenExpired, accessTokenExpired),
     tap(() => this.notificationService.notify(Severities.Error, 'Tokens Expired', 'Tokens expired.  This should not happen regularly.'))
+  ), { dispatch: false });
+
+  logUserInit$ = createEffect(() => this.actions$.pipe(
+    ofType(initializeSucceeded),
+    filter(action => action.authenticated && action.email != null),
+    tap(action => this.loggingService.logEvent('userInitialized', { 'email': action.email }))
   ), { dispatch: false });
 
   ngrxOnInitEffects(): Action {
