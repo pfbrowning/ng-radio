@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorHandlingService } from './error-handling.service';
 import { Subscription } from 'rxjs';
 import { AppError } from '../models/app-error';
-import { LoggingSpyFactories } from '@logging/testing';
+import { createLoggingServiceSpy } from '@logging/testing';
 import { LoggingService } from '@logging';
 
 describe('ErrorHandlingService', () => {
@@ -14,7 +14,7 @@ describe('ErrorHandlingService', () => {
     TestBed.configureTestingModule({
       providers: [
         ErrorHandlingService,
-        { provide: LoggingService, useValue: LoggingSpyFactories.CreateLoggingServiceSpy() }
+        { provide: LoggingService, useValue: createLoggingServiceSpy() }
       ]
     });
 

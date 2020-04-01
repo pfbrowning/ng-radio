@@ -9,8 +9,7 @@ import { ErrorHandlingService } from '../../services/error-handling.service';
 @Component({
   selector: 'blr-error-window',
   templateUrl: './error-window.component.html',
-  styleUrls: ['./error-window.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./error-window.component.scss']
 })
 export class ErrorWindowComponent implements OnInit, OnDestroy {
   constructor(private errorHandlingService: ErrorHandlingService) {}

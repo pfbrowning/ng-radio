@@ -12,6 +12,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy } from '../../testing/core-spy-factories.spec';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
+import { createLoggingServiceSpy } from '@logging/testing';
+import { LoggingService } from '@logging';
 
 describe('AuthenticationEffects', () => {
   const actions$: Observable<any> = null;
@@ -27,6 +29,7 @@ describe('AuthenticationEffects', () => {
         { provide: CurrentTimeService, useValue: createCurrentTimeServiceSpy() },
         { provide: NotificationService, useValue: createNotificationServiceSpy() },
         { provide: OAuthService, useValue: createOAuthServiceSpy() },
+        { provide: LoggingService, useValue: createLoggingServiceSpy() },
       ]
     });
 

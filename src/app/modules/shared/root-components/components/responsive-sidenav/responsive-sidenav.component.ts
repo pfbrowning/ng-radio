@@ -10,8 +10,7 @@ import { WindowToken } from '@core';
 @Component({
   selector: 'blr-responsive-sidenav-container',
   templateUrl: './responsive-sidenav.component.html',
-  styleUrls: ['./responsive-sidenav.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./responsive-sidenav.component.scss']
 })
 export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   /** The minimum screen width that we consider to be a large screen.

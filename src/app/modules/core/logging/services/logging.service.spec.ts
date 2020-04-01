@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AppInsightsService } from '@markpieszak/ng-application-insights';
-import { LoggingSpyFactories } from '../testing/logging-spy-factories.spec';
 import { LoggingModule, LoggingService } from '@logging';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
+import { createAppInsightsServiceSpy } from '../testing/logging-spy-factories.spec';
 
 describe('LoggingService', () => {
   let loggingService: LoggingService;
@@ -15,7 +15,7 @@ describe('LoggingService', () => {
       ],
       providers: [
         provideMockStore({initialState: initialRootState}),
-        { provide: AppInsightsService, useValue: LoggingSpyFactories.CreateAppInsightsServiceSpy() }
+        { provide: AppInsightsService, useValue: createAppInsightsServiceSpy() }
       ]
     });
 
