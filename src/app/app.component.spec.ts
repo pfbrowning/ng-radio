@@ -9,7 +9,6 @@ import { ConfigServiceStub } from '@config/testing';
 import { createErrorHandlingServiceSpy } from '@error-handling/testing';
 import { Router, Route } from '@angular/router';
 import { RouteResolverStub } from '@utilities/testing';
-import { CreateLoadingIndicatorServiceSpy } from '@browninglogic/ng-loading-indicator/testing';
 import { AudioElementEventListenerService } from '@core';
 import { createAudioElementEventListenerSpy } from '@core/testing';
 import { createOauthEventListenerServiceSpy } from '@core/testing';
@@ -20,13 +19,11 @@ import { MessageService } from 'primeng/api';
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let loadingIndicatorServiceSpy;
   let configServiceStub: ConfigServiceStub;
   let routeResolver: RouteResolverStub;
   let router: Router;
 
   beforeEach(async(() => {
-    loadingIndicatorServiceSpy = CreateLoadingIndicatorServiceSpy();
     configServiceStub = new ConfigServiceStub();
     routeResolver = new RouteResolverStub();
 
@@ -56,7 +53,6 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: RouteResolverStub, useValue: routeResolver },
-        { provide: LoadingIndicatorService, useValue: loadingIndicatorServiceSpy },
         { provide: AudioElementEventListenerService, useValue: createAudioElementEventListenerSpy() },
         { provide: OauthEventListenerService, useValue: createOauthEventListenerServiceSpy() },
         { provide: ErrorHandlingService, useValue: createErrorHandlingServiceSpy() },
@@ -79,25 +75,4 @@ describe('AppComponent', () => {
     // Assert
     expect(component).toBeTruthy();
   });
-
-  it('should show loading indicator while resolving route data', fakeAsync(() => {
-    // Arrange: Detect changes in order to trigger ngOnInit
-    fixture.detectChanges();
-    expect(loadingIndicatorServiceSpy.showLoadingIndicator).not.toHaveBeenCalled();
-
-    // Act: Initiate route navigation to a dummy route with a dummy resolver
-    router.navigate(['/route-with-resolver']);
-
-    /* Assert: Ensure that while waiting for the route data to resolve the loading indicator
-    has been shown and has not yet been hidden. */
-    expect(loadingIndicatorServiceSpy.showLoadingIndicator).toHaveBeenCalledTimes(1);
-    expect(loadingIndicatorServiceSpy.hideLoadingIndicator).not.toHaveBeenCalled();
-
-    // Act: Complete the navigation by passing data to the route resolver
-    routeResolver.routeData.next({});
-    tick();
-    // Assert: Ensure that the loading indicator has been hidden.
-    expect(loadingIndicatorServiceSpy.showLoadingIndicator).toHaveBeenCalledTimes(1);
-    expect(loadingIndicatorServiceSpy.hideLoadingIndicator).toHaveBeenCalledTimes(1);
-  }));
 });
