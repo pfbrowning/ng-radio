@@ -89,4 +89,16 @@ export class FavoriteStationsEffects {
     ofType(addToFavoritesSucceeded),
     tap(action => this.notificationService.notify(Severities.Success, 'Added To Favorites', `${action.station.title} has been added to favorites.`))
   ), { dispatch: false });
+
+  notifyAddFailed$ = createEffect(() => this.actions$.pipe(
+    ofType(addToFavoritesFailed),
+    tap(action => this.notificationService.notify(Severities.Error, 'Failed to Add To Favorites', `${action.station.title} was not added to favorites.`))
+  ), { dispatch: false });
+
+  notifyRemoveFailed$ = createEffect(() => this.actions$.pipe(
+    ofType(removeFromFavoritesFailed),
+    tap(() =>
+      this.notificationService.notify(Severities.Error, 'Failed to Remove From Favorites', `Station was not removed from favorites.`)
+    )
+  ), { dispatch: false });
 }

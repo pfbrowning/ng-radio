@@ -54,8 +54,6 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Implement NGRX for state management throughout the app.
-  * Operation failure notifications
   * Use OnPush change detection in all components
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR
