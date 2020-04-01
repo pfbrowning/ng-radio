@@ -2,16 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SuggestedStationsComponent } from './suggested-stations.component';
 import { SuggestedStationsSectionComponent } from '../suggested-stations-section/suggested-stations-section.component';
 import { StationThumbnailComponent } from '../station-thumbnail/station-thumbnail.component';
-import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from '@utilities/testing';
-import { SuggestedStations } from '../../models/suggested-stations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@core';
+import { initialSuggestedStationsRootState } from '../../models/initial-suggested-stations-root-state';
 
 describe('SuggestedStationsComponent', () => {
   let component: SuggestedStationsComponent;
   let fixture: ComponentFixture<SuggestedStationsComponent>;
-  let activatedRoute: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,8 +17,7 @@ describe('SuggestedStationsComponent', () => {
         StationThumbnailComponent
       ],
       providers: [
-        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-        provideMockStore({initialState: initialRootState})
+        provideMockStore({initialState: initialSuggestedStationsRootState})
       ]
     })
     .compileComponents();
@@ -31,8 +26,6 @@ describe('SuggestedStationsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SuggestedStationsComponent);
     component = fixture.componentInstance;
-    activatedRoute = TestBed.inject(ActivatedRoute);
-    activatedRoute.setData({'suggestedStations': new SuggestedStations([], [], [])});
     fixture.detectChanges();
   });
 
