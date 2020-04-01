@@ -42,7 +42,7 @@ export class StationLookupService {
    * Retrieves the 'Top Clicked' stations from the radio browser API
    * @param count Number of stations to request
    */
-  public getTopClicked(count: number = 15): Observable<Array<Station>> {
+  public fetchTopClicked(count: number = 15): Observable<Array<Station>> {
     return this.httpClient.get<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topclick/${count}`).pipe(
       map(stations => stations.map(station => this.mapStation(station)))
     );
@@ -52,7 +52,7 @@ export class StationLookupService {
    * Retrieves the 'Top Voted' stations from the Radio Browser API
    * @param count Number of stations to request
    */
-  public getTopVoted(count: number = 15): Observable<Array<Station>> {
+  public fetchTopVoted(count: number = 15): Observable<Array<Station>> {
     return this.httpClient.get<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topvote/${count}`).pipe(
       map(stations => stations.map(station => this.mapStation(station)))
     );
@@ -70,7 +70,7 @@ export class StationLookupService {
   }
 
   /** Retrieves the 'Developer-Suggested' stations from the JSON file stored in 'assets' */
-  public getDeveloperSuggestions(): Observable<Array<Station>> {
+  public fetchDeveloperSuggestions(): Observable<Array<Station>> {
     return this.httpClient.get<Array<Station>>('/assets/data/suggested-stations.json');
   }
 }

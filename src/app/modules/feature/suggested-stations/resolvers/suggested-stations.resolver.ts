@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SuggestedStations } from '../models/suggested-stations';
-import { StationLookupService } from '@core';
+import { Observable } from 'rxjs';
+import { map, filter, tap, take } from 'rxjs/operators';
+import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
+import { Store, select } from '@ngrx/store';
+import { selectAreSuggestedStationsPresentOrFailed } from '../store/suggested-stations.selectors';
 
 @Injectable()
-export class SuggestedStationsResolver implements Resolve<SuggestedStations> {
-  constructor(private stationLookupService: StationLookupService) {}
-  resolve(): Observable<SuggestedStations> {
-    return forkJoin([
-      this.stationLookupService.getDeveloperSuggestions(),
-      this.stationLookupService.getTopClicked(14),
-      this.stationLookupService.getTopVoted(14)
-    ]).pipe(
-      map(stationArrays => new SuggestedStations(stationArrays[0], stationArrays[1], stationArrays[2]))
+export class SuggestedStationsResolver implements Resolve<void> {
+  constructor(private store: Store<SuggestedStationsRootState>) { }
+
+  resolve(): Observable<void> {
+    return this.store.pipe(
+      select(selectAreSuggestedStationsPresentOrFailed),
+      filter(resolved => resolved),
+      map(() => null),
+      take(1)
     );
   }
 }

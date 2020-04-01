@@ -1,33 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SuggestedStations } from '../../models/suggested-stations';
-import { RootState } from '@core';
-import { Store } from '@ngrx/store';
+import { Component } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { selectStation } from '@core/store/player';
 import { Station } from '@core/models/player';
+import { selectDeveloperSuggested, selectTopClicked, selectTopVoted } from '../../store/suggested-stations.selectors';
+import { SuggestedStationsRootState } from '../../models/suggested-stations-root-state';
 
 @Component({
   selector: 'blr-suggested-stations',
   templateUrl: './suggested-stations.component.html',
   styleUrls: ['./suggested-stations.component.scss']
 })
-export class SuggestedStationsComponent implements OnInit {
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private store: Store<RootState>
-  ) {}
+export class SuggestedStationsComponent {
+  constructor(private store: Store<SuggestedStationsRootState>) {}
 
-  public developerSuggested: Array<Station>;
-  public radioBrowserTopClicked: Array<Station>;
-  public radioBrowserTopVoted: Array<Station>;
-
-  ngOnInit() {
-    this.activatedRoute.data.subscribe((data: { suggestedStations: SuggestedStations }) => {
-      this.developerSuggested = data.suggestedStations.developerSuggested;
-      this.radioBrowserTopClicked = data.suggestedStations.topClicked;
-      this.radioBrowserTopVoted = data.suggestedStations.topVoted;
-    });
-  }
+  public developerSuggested$ = this.store.pipe(select(selectDeveloperSuggested));
+  public topClicked$ = this.store.pipe(select(selectTopClicked));
+  public topVoted$ = this.store.pipe(select(selectTopVoted));
 
   onStationSelected(station: Station) {
     this.store.dispatch(selectStation({station}));

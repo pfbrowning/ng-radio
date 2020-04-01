@@ -55,6 +55,8 @@ ng serve --open
 ## Backlog
 * Chores
   * Implement NGRX for state management throughout the app.
+  * Operation failure notifications
+  * Use OnPush change detection in all components
   * Log Page Views & Initial App load
   * Pass bearer token via HTTP_INTERCEPTOR
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
@@ -68,10 +70,8 @@ ng serve --open
   * Switch to and enforce HTTPS.
     * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
     * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
-* Bugs
-  * Fall back gracefully when Radio Browser API is down
-  * Improve handling of mobile input on search
 * Features
+  * Custom URL regex validation
   * Investigate alternatives to interval-based polling for "Now Playing" stream info
     * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
     * [Service Worker](https://github.com/cryptiksouls/icecast-shoutcast-metadata-grabber)
