@@ -24,7 +24,8 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    @Inject(WindowToken) private window: Window) {}
+    @Inject(WindowToken) private window: Window
+  ) {}
 
   ngOnInit() {
     // Pass all router events to onRouterEvent

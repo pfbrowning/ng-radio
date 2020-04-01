@@ -54,7 +54,6 @@ export class PlayerBarComponent {
     take them to the now-playing component if they're not already
     there. */
     if (this.router.url !== '/now-playing') {
-      console.log('navigating');
       this.router.navigate(['/now-playing']);
     }
   }

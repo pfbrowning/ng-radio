@@ -68,7 +68,6 @@ export class LoggingService {
   public logInformation(message: string, properties: Object = null) {
     const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
     this.appInsightsService.trackTrace(message, convertedProperties);
-    console.log(message, convertedProperties);
   }
 
   /**
@@ -79,6 +78,5 @@ export class LoggingService {
   public logEvent(eventName: string, properties: object = null) {
     const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
     this.appInsightsService.trackEvent(eventName, convertedProperties);
-    console.log('Event', eventName, convertedProperties);
   }
 }
