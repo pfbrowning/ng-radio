@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { WindowToken } from './injection-tokens/window-token';
-import { AudioElementEventListenerService } from './services/audio-element-event-listener.service';
 import { CurrentTimeService } from './services/current-time.service';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -24,7 +23,6 @@ import { AudioElement } from './services/audio-element';
 import { authenticationReducer } from './store/authentication/authentication.reducer';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { OAuthModule } from 'angular-oauth2-oidc';
-import { OauthEventListenerService } from './services/oauth-event-listener.service';
 import { AuthGuard } from './guards/auth.guard';
 import { routerExtendedReducer } from './store/router-extended/router-extended.reducer';
 import { RouterExtendedEffects } from './store/router-extended/router-extended.effects';
@@ -56,9 +54,7 @@ import * as NoSleep from 'nosleep.js';
     StationLookupService,
     StreamInfoService,
     KeepAwakeService,
-    AudioElementEventListenerService,
     CurrentTimeService,
-    OauthEventListenerService,
     AuthGuard,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },

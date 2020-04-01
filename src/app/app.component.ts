@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AudioElementEventListenerService, OauthEventListenerService } from '@core';
 
 @Component({
   selector: 'blr-root',
@@ -7,8 +6,5 @@ import { AudioElementEventListenerService, OauthEventListenerService } from '@co
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(
-    private audioElementEventListenerService: AudioElementEventListenerService,
-    private oauthEventListenerService: OauthEventListenerService
-  ) {}
+  constructor() {}
 }

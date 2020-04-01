@@ -14,7 +14,8 @@ import {
   initializeFailed,
   silentRefreshSucceeded,
   idTokenExpired,
-  accessTokenExpired
+  accessTokenExpired,
+  silentRefreshFailed
 } from './authentication.actions';
 import { RootState } from '../../models/root-state';
 import { selectConfig } from '@config';
@@ -59,6 +60,21 @@ export class AuthenticationEffects implements OnInitEffects {
       }),
       catchError(error => of(initializeFailed({error})))
     ))
+  ));
+
+  silentRefreshFailed$ = createEffect(() => this.oauthService.events.pipe(
+    filter(event => ['silent_refresh_timeout', 'silent_refresh_error'].includes(event.type)),
+    map(event => silentRefreshFailed({error: event}))
+  ));
+
+  silentRefreshSucceeded$ = createEffect(() => this.oauthService.events.pipe(
+    filter(event => event.type === 'silently_refreshed'),
+    map(() => silentRefreshSucceeded({
+      idToken: this.oauthService.getIdToken(),
+      accessToken: this.oauthService.getAccessToken(),
+      idTokenExpiration: this.oauthService.getIdTokenExpiration(),
+      accessTokenExpiration: this.oauthService.getAccessTokenExpiration()
+    }))
   ));
 
   idTokenExpiration$ = createEffect(() => this.actions$.pipe(

@@ -38,6 +38,10 @@ export class PlayerEffects {
     @Inject(AudioElementToken) private audio: AudioElement
   ) {}
 
+  listenForAudioPaused$ = createEffect(() =>
+    this.audio.paused.pipe(map(() => audioPaused()))
+  );
+
   selectStation$ = createEffect(() => this.actions$.pipe(
     ofType(selectStation),
     tap(action => {
