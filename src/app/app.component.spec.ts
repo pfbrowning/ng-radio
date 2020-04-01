@@ -9,10 +9,6 @@ import { ConfigServiceStub } from '@config/testing';
 import { createErrorHandlingServiceSpy } from '@error-handling/testing';
 import { Router, Route } from '@angular/router';
 import { RouteResolverStub } from '@utilities/testing';
-import { AudioElementEventListenerService } from '@core';
-import { createAudioElementEventListenerSpy } from '@core/testing';
-import { createOauthEventListenerServiceSpy } from '@core/testing';
-import { OauthEventListenerService } from '@core';
 import { ErrorHandlingService, ErrorWindowComponent } from '@error-handling';
 import { MessageService } from 'primeng/api';
 
@@ -53,8 +49,6 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: RouteResolverStub, useValue: routeResolver },
-        { provide: AudioElementEventListenerService, useValue: createAudioElementEventListenerSpy() },
-        { provide: OauthEventListenerService, useValue: createOauthEventListenerServiceSpy() },
         { provide: ErrorHandlingService, useValue: createErrorHandlingServiceSpy() },
         MessageService
       ]

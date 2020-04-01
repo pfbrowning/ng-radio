@@ -1,5 +1,4 @@
 import { BehaviorSubject, Subject } from 'rxjs';
-import { AudioElementEventListenerService } from '../services/audio-element-event-listener.service';
 import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
 import { OAuthEvent } from 'angular-oauth2-oidc';
@@ -22,10 +21,6 @@ export function createKeepAwakeServiceSpy(): any {
   const spy = jasmine.createSpyObj('keepAwakeServiceSpy', ['enable', 'disable']);
   spy['enabled$'] = new BehaviorSubject<boolean>(false);
   return spy;
-}
-
-export function createAudioElementEventListenerSpy(): jasmine.SpyObj<AudioElementEventListenerService> {
-  return jasmine.createSpyObj('audioElementEventListener', ['constructor']);
 }
 
 export function createCurrentTimeServiceSpy(): jasmine.SpyObj<CurrentTimeService> {
@@ -54,8 +49,4 @@ export function createOAuthServiceSpy(): any {
   spy['events'] = new Subject<OAuthEvent>();
   spy.loadDiscoveryDocumentAndTryLogin.and.returnValue(Promise.resolve());
   return spy;
-}
-
-export function createOauthEventListenerServiceSpy(): any {
-  return jasmine.createSpyObj('oauthEventListenerService', ['construct']);
 }
