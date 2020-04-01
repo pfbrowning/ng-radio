@@ -9,6 +9,7 @@ import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { WindowToken } from './injection-tokens/window-token';
 import { AudioElementEventListenerService } from './services/audio-element-event-listener.service';
 import { CurrentTimeService } from './services/current-time.service';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { favoriteStationsReducer } from './store/favorite-stations/favorite-stations.reducer';
 import { playerReducer } from './store/player/player.reducer';
@@ -25,15 +26,18 @@ import { AuthenticationEffects } from './store/authentication/authentication.eff
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { OauthEventListenerService } from './services/oauth-event-listener.service';
 import { AuthGuard } from './guards/auth.guard';
+import { routerExtendedReducer } from './store/router-extended/router-extended.reducer';
+import { RouterExtendedEffects } from './store/router-extended/router-extended.effects';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     HttpClientModule,
     OAuthModule.forRoot(),
     StoreModule.forRoot({
+      router: routerReducer,
+      routerExtended: routerExtendedReducer,
       favoriteStations: favoriteStationsReducer,
       player: playerReducer,
       sleepTimer: sleepTimerReducer,
@@ -44,8 +48,9 @@ import * as NoSleep from 'nosleep.js';
         strictActionImmutability: true,
       }
     }),
-    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects, AuthenticationEffects]),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects, AuthenticationEffects, RouterExtendedEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     StationLookupService,
