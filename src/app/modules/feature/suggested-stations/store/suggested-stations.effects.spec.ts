@@ -24,7 +24,7 @@ describe('SuggestedStationsEffects', () => {
       ]
     });
 
-    effects = TestBed.get<SuggestedStationsEffects>(SuggestedStationsEffects);
+    effects = TestBed.inject<SuggestedStationsEffects>(SuggestedStationsEffects);
   });
 
   it('should be created', () => {

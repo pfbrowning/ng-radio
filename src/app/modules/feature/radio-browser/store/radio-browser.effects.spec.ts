@@ -20,7 +20,7 @@ describe('RadioBrowserEffects', () => {
       ]
     });
 
-    effects = TestBed.get<RadioBrowserEffects>(RadioBrowserEffects);
+    effects = TestBed.inject<RadioBrowserEffects>(RadioBrowserEffects);
   });
 
   it('should be created', () => {
