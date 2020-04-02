@@ -4,7 +4,6 @@ export { initialRootState } from './models/initial-root-state';
 
 // Injection Tokens
 export { AudioElementToken } from './injection-tokens/audio-element-token';
-export { WindowToken } from './injection-tokens/window-token';
 
 // Services
 export { FavoriteStationsService } from './services/favorite-stations.service';
@@ -13,6 +12,7 @@ export { KeepAwakeService } from './services/keep-awake.service';
 export { StreamInfoService } from './services/stream-info.service';
 export { CurrentTimeService } from './services/current-time.service';
 export { AudioElement } from './services/audio-element';
+export { WindowService } from './services/window.service';
 
 export { AuthGuard } from './guards/auth.guard';
 

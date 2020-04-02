@@ -6,7 +6,6 @@ import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
-import { WindowToken } from './injection-tokens/window-token';
 import { CurrentTimeService } from './services/current-time.service';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -59,7 +58,6 @@ import * as NoSleep from 'nosleep.js';
     AuthGuard,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
-    { provide: WindowToken, useValue: window },
     { provide: HTTP_INTERCEPTORS, useClass: BearerTokenService, multi: true }
   ]
 })

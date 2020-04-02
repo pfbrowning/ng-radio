@@ -4,13 +4,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, Router } from '@angular/router';
-import { WindowToken } from '@core';
-import { WindowStub } from '@utilities/testing';
+import { WindowService } from '@core';
+import { WindowServiceStub } from '@core/testing';
+import theoretically from 'jasmine-theories';
 
 describe('ResponsiveSidenavComponent', () => {
   let component: ResponsiveSidenavComponent;
   let fixture: ComponentFixture<ResponsiveSidenavComponent>;
-  let window: any;
+  let windowService: WindowServiceStub;
   let router: Router;
 
   const dummyTestingRoutes: Array<Route> = [
@@ -27,7 +28,7 @@ describe('ResponsiveSidenavComponent', () => {
         RouterTestingModule.withRoutes(dummyTestingRoutes)
       ],
       providers: [
-        { provide: WindowToken, useClass: WindowStub }
+        { provide: WindowService, useClass: WindowServiceStub }
       ]
     })
     .compileComponents();
@@ -35,7 +36,7 @@ describe('ResponsiveSidenavComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveSidenavComponent);
-    window = TestBed.inject(WindowToken);
+    windowService = TestBed.inject(WindowService);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
   });
@@ -47,7 +48,7 @@ describe('ResponsiveSidenavComponent', () => {
 
   it('should initialize properly on a small screen', () => {
     // Arrange: Set the screen width
-    window.innerWidth = 799;
+    windowService.innerWidth = 799;
 
     // Act: Init the component
     fixture.detectChanges();
@@ -60,7 +61,7 @@ describe('ResponsiveSidenavComponent', () => {
 
   it('should initialize properly on a large screen', () => {
     // Arrange: Set the screen width
-    window.innerWidth = 800;
+    windowService.innerWidth = 800;
 
     // Act: Init the component
     fixture.detectChanges();
@@ -83,38 +84,36 @@ describe('ResponsiveSidenavComponent', () => {
     // For each test entry
     testEntries.forEach(testEntry => {
       // Arrange: Set the screen width
-      window.innerWidth = testEntry.screenSize;
-      // Act: Trigger change detection
+      windowService.innerWidth = testEntry.screenSize;
+      windowService.resize.emit();
       fixture.detectChanges();
+
       // Assert that the sidenav state matches our expectation
       expect(component.sideNav.opened).toBe(testEntry.shouldShowSidenav);
     });
   });
 
-  it('should properly use provided non-default values for screenSizeCutoff', () => {
+  const nonDefaultCutoffInput = [
+    { screenSize: 699, shouldShowSidenav: false },
+    { screenSize: 700, shouldShowSidenav: true }
+  ];
+  theoretically.it('should properly use provided non-default values for screenSizeCutoff', nonDefaultCutoffInput, (input) => {
     // Arrange
     // Set up test entries for a small & large screen
-    const testEntries = [
-      { screenSize: 699, shouldShowSidenav: false },
-      { screenSize: 700, shouldShowSidenav: true }
-    ];
     // Specify an arbitrary screenSizeCutoff
     component.screenSizeCutoff = 700;
 
-    // For each test entry
-    testEntries.forEach(testEntry => {
-      // Arrange: Set the screen width
-      window.innerWidth = testEntry.screenSize;
-      // Act: Detect changes
-      fixture.detectChanges();
-      // Assert that the sidenav state matches our expectation
-      expect(component.sideNav.opened).toBe(testEntry.shouldShowSidenav);
-    });
+    // Arrange: Set the screen width
+    windowService.innerWidth = input.screenSize;
+    // Act: Detect changes
+    fixture.detectChanges();
+    // Assert that the sidenav state matches our expectation
+    expect(component.sideNav.opened).toBe(input.shouldShowSidenav);
   });
 
   it('should properly toggle the sidenav when told to do so', () => {
     // Arrange: Specify the screen width & detect changes
-    window.innerWidth = 600;
+    windowService.innerWidth = 600;
     fixture.detectChanges();
     expect(component.sideNav.opened).toBe(false);
 
@@ -128,7 +127,7 @@ describe('ResponsiveSidenavComponent', () => {
 
   it('should close the sidenav on navigation on small screens', () => {
     // Arrange: Set a small screen width, init the component, and show the sideNav
-    window.innerWidth = 600;
+    windowService.innerWidth = 600;
     fixture.detectChanges();
     component.toggle();
     expect(component.sideNav.opened).toBe(true);
@@ -143,7 +142,7 @@ describe('ResponsiveSidenavComponent', () => {
 
   it('should not close the sidenav on navigation on large screens', () => {
     // Arrange: Set a large screen width & init the component
-    window.innerWidth = 900;
+    windowService.innerWidth = 900;
     fixture.detectChanges();
     expect(component.sideNav.opened).toBe(true);
 

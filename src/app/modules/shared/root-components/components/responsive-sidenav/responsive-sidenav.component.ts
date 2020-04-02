@@ -1,8 +1,8 @@
-import { Component, Input, ViewChild, OnInit, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Router, Event, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { WindowToken } from '@core';
+import { Router, NavigationStart, Event } from '@angular/router';
+import { WindowService } from '@core';
+import { SubSink } from 'subsink';
 
 /** Component which abstracts away the logic of showing and hiding an
  * Angular Material sidenav in a responsive manner based on a specified
@@ -10,7 +10,8 @@ import { WindowToken } from '@core';
 @Component({
   selector: 'blr-responsive-sidenav-container',
   templateUrl: './responsive-sidenav.component.html',
-  styleUrls: ['./responsive-sidenav.component.scss']
+  styleUrls: ['./responsive-sidenav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   /** The minimum screen width that we consider to be a large screen.
@@ -20,21 +21,22 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   @Input() screenSizeCutoff = 800;
   /** Internal ViewChild hook for interacting with the MatSideNav component. */
   @ViewChild('sideNav', { static: true }) sideNav: MatSidenav;
-  private routerEventsSub: Subscription;
+  private subs = new SubSink();
 
   constructor(
     private router: Router,
-    @Inject(WindowToken) private window: Window
+    private changeDetectorRef: ChangeDetectorRef,
+    private windowService: WindowService
   ) {}
 
   ngOnInit() {
-    // Pass all router events to onRouterEvent
-    this.routerEventsSub = this.router.events.subscribe(event => this.onRouterEvent(event));
+    // Perform CD on window resize so that we can show / hide the sidenav as necessary
+    this.subs.sink = this.windowService.resize.subscribe(() => this.changeDetectorRef.detectChanges());
+    this.subs.sink = this.router.events.subscribe(event => this.onRouterEvent(event));
   }
 
   ngOnDestroy() {
-    // Unsubscribe from router events to prevent memory leaks
-    if (this.routerEventsSub) { this.routerEventsSub.unsubscribe(); }
+    this.subs.unsubscribe();
   }
 
   private onRouterEvent(routerEvent: Event) {
@@ -43,17 +45,19 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
     expanded sidebar menu. */
     if (routerEvent instanceof NavigationStart && this.smallScreen) {
       this.sideNav.close();
+      this.changeDetectorRef.detectChanges();
     }
   }
 
   /** We're in smallScreen mode if the current window width is less than
    * the specified screenSizeCutoff. */
   public get smallScreen(): boolean {
-    return this.window.innerWidth < this.screenSizeCutoff;
+    return this.windowService.innerWidth < this.screenSizeCutoff;
   }
 
   /** Toggle the Angular Material Sidenav */
   public toggle(): void {
     this.sideNav.toggle();
+    this.changeDetectorRef.detectChanges();
   }
 }
