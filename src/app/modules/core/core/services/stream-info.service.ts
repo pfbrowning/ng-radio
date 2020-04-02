@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
 import { ConfigService } from '@config';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { StreamInfo } from '../models/player/stream-info';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
  * the configured radio metadata API */
 @Injectable()
 export class StreamInfoService {
-  constructor(private httpClient: HttpClient,
-    private configService: ConfigService,
-    private oauthService: OAuthService) {}
+  constructor(
+    private httpClient: HttpClient,
+    private configService: ConfigService
+  ) {}
 
   /* Keep track of the stream types returned from the metadata API
   so that we can pass them on subsequent calls.
@@ -28,7 +28,6 @@ export class StreamInfoService {
   public getMetadata(url: string): Observable<StreamInfo> {
     // Encode the URL before sending it via query param
     const encodedUrl = encodeURIComponent(url);
-    const headers = new HttpHeaders({'Authorization': `Bearer ${this.oauthService.getAccessToken()}`});
     let params = new HttpParams();
     params = params.append('url', encodedUrl);
     // If we already know the stream type, then add the 'method' querystring param
@@ -38,7 +37,7 @@ export class StreamInfoService {
     // GET now-playing data from the API
     return this.httpClient.get<any>(
       `${this.configService.appConfig.metadataApiUrl}/now-playing`,
-      { headers: headers, params: params }).pipe(
+      { params: params }).pipe(
         // Time out after a configured amount of time
         timeout(this.configService.appConfig.metadataFetchTimeout),
         /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
