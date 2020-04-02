@@ -39,6 +39,11 @@ export const selectIsFavoriteStationFetchInProgress = createSelector(
     (state) => state.fetchInProgress
 );
 
+export const selectDidFavoriteStationsFailToLoad = createSelector(
+    selectFavoriteStationsState,
+    state => state.fetchFailed
+);
+
 export const selectIsAddCurrentStationToFavoritesInProgress = createSelector(
     selectAddInProgressUrls,
     selectCurrentStation,
@@ -92,7 +97,8 @@ export const selectCurrentStationFavoritesProcessingState = createSelector(
 export const selectFavoriteStationsLoadingStatus = createSelector(
     selectAreFavoriteStationsLoaded,
     selectIsFavoriteStationFetchInProgress,
-    (loaded, inProgress) => ({loaded, inProgress})
+    selectDidFavoriteStationsFailToLoad,
+    (loaded, inProgress, failed) => ({loaded, inProgress, failed})
 );
 
 export const selectIsCurrentStationInFavorites = createSelector(

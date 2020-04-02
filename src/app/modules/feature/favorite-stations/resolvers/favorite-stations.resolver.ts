@@ -13,13 +13,12 @@ export class FavoriteStationsResolver implements Resolve<void> {
     return this.store.pipe(
       select(selectFavoriteStationsLoadingStatus),
       filter(selected => !selected.inProgress),
-      map(selected => selected.loaded),
-      tap(loaded => {
-        if (!loaded) {
+      tap(selected => {
+        if (!selected.loaded && !selected.failed) {
           this.store.dispatch(fetchStationsStart());
         }
       }),
-      filter(loaded => loaded),
+      filter(selected => selected.loaded || selected.failed),
       map(() => null),
       take(1)
     );

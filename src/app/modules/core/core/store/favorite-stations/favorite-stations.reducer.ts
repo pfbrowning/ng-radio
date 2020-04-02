@@ -21,7 +21,11 @@ const reducer = createReducer(
     favoriteStations: stations,
     fetchInProgress: false
   })),
-  on(fetchStationsFailed, state => ({ ...state, fetchInProgress: false})),
+  on(fetchStationsFailed, state => ({
+    ...state,
+    fetchInProgress: false,
+    fetchFailed: true
+  })),
   on(addToFavoritesStart, (state, {station}) => ({
     ...state,
     addInProgressUrls: state.addInProgressUrls.concat(station.url)
