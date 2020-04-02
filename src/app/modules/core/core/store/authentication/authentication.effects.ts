@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, take } from 'rxjs/operators';
+import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, take, withLatestFrom } from 'rxjs/operators';
 import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '@config';
@@ -20,6 +20,7 @@ import {
 import { RootState } from '../../models/root-state';
 import { selectConfig } from '@config';
 import { LoggingService } from '@logging';
+import { selectEmail } from './authentication.selectors';
 import * as dayjs from 'dayjs';
 
 @Injectable()
@@ -109,7 +110,25 @@ export class AuthenticationEffects implements OnInitEffects {
   logUserInit$ = createEffect(() => this.actions$.pipe(
     ofType(initializeSucceeded),
     filter(action => action.authenticated && action.email != null),
-    tap(action => this.loggingService.logEvent('userInitialized', { 'email': action.email }))
+    tap(action => this.loggingService.logInformation('userInitialized', { 'email': action.email }))
+  ), { dispatch: false });
+
+  logInitializeFailed$ = createEffect(() => this.actions$.pipe(
+    ofType(initializeFailed),
+    tap(action => this.loggingService.logCritical(action.error, {
+      'event': 'Failed To Initialize Authentication',
+      'details': action.error
+    }))
+  ), { dispatch: false });
+
+  logSilentRefreshFailed$ = createEffect(() => this.actions$.pipe(
+    ofType(silentRefreshFailed),
+    withLatestFrom(this.store.pipe(select(selectEmail))),
+    tap(([action, email]) => this.loggingService.logError(action.error, {
+      event: 'Silent Refresh Failed',
+      details: action.error,
+      email
+    }))
   ), { dispatch: false });
 
   ngrxOnInitEffects(): Action {

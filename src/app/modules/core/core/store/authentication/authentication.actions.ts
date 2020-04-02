@@ -33,7 +33,7 @@ export const initializeSucceeded = createAction(
 );
 
 export const initializeFailed = createAction(
-    AuthenticationActions.InitializeSucceeded,
+    AuthenticationActions.InitializeFailed,
     props<{ error: any }>()
 );
 

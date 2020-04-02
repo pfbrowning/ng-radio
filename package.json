@@ -29,7 +29,7 @@
     "@angular/router": "~9.0.5",
     "@browninglogic/ng-loading-indicator": "3.0.1",
     "@browninglogic/ng-modal": "4.0.4",
-    "@markpieszak/ng-application-insights": "^8.0.1",
+    "@microsoft/applicationinsights-web": "^2.5.3",
     "@ngrx/effects": "^9.0.0",
     "@ngrx/router-store": "^9.0.0",
     "@ngrx/store": "^9.0.0",

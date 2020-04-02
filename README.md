@@ -54,7 +54,6 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Genericize LoggingService
   * Use OnPush change detection for ErrorWindowComponent and ResponsiveSidenavComponent
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
   * Migrate build from classic Azure DevOps to YAML build

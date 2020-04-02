@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AppInsightsService, SeverityLevel } from '@markpieszak/ng-application-insights';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { selectConfig } from '../../config/store/config.selectors';
 import { filter, take } from 'rxjs/operators';
+import { ApplicationInsights, SeverityLevel, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
+import { ReplaySubject } from 'rxjs';
 import isBlank from 'is-blank';
 
 /**
@@ -12,17 +13,25 @@ import isBlank from 'is-blank';
  */
 @Injectable()
 export class LoggingService {
-  constructor(private store: Store<RootState>, private appInsightsService: AppInsightsService) {
+  constructor(private store: Store<RootState>) {
     // Once the app config has loaded
     this.store.pipe(select(selectConfig), filter(config => config != null), take(1)).subscribe(config => {
       // If an app insights key was provided
       if (!isBlank(config.appInsightsInstrumentationKey)) {
-        // Initialize the app insights library
-        this.appInsightsService.config.instrumentationKey = config.appInsightsInstrumentationKey;
-        this.appInsightsService.init();
+        this.appInsights = new ApplicationInsights({
+          config: {
+            instrumentationKey: config.appInsightsInstrumentationKey,
+            enableAutoRouteTracking: true
+          }
+        });
+        this.appInsights.loadAppInsights();
+        this.initialized.next();
       }
     });
   }
+
+  private appInsights: ApplicationInsights;
+  private initialized = new ReplaySubject<void>(1);
 
   /**
    * Takes an Object and converts it to the dictionary format
@@ -50,33 +59,81 @@ export class LoggingService {
   }
 
   /**
-   * Log an Error and any relevant associated information, with the Error severity level
-   * @param error A regular JS error
-   * @param properties JS object detailing additional information to log
+   * Logs information to App Insights at the specified severity level once app insights has been initialized
+   * @param message Message to log
+   * @param severityLevel Severity level to log the message as
+   * @param properties JS object mapping extra information to log as key/value pairs
+   */
+  private logTrace(message: string, severityLevel: SeverityLevel, properties: object = null) {
+    this.initialized.pipe(take(1)).subscribe(() => {
+      const traceTelemetry: ITraceTelemetry = {
+        message,
+        severityLevel,
+        properties: LoggingService.objectToLoggingDictionary(properties)
+      };
+      this.appInsights.trackTrace(traceTelemetry);
+    });
+  }
+
+  /**
+   * Logs an error to App Insights at the specified severity level once app insights has been initialized
+   * @param error Error to log.  A regular old JS error.
+   * @param severityLevel Severity level to log the message as
+   * @param properties JS object mapping extra information to log as key/value pairs
+   */
+  private logException(error: Error, severityLevel: SeverityLevel, properties: Object = null) {
+    this.initialized.pipe(take(1)).subscribe(() => {
+      const exceptionTelementry: IExceptionTelemetry = {
+        exception: error,
+        severityLevel,
+        properties: LoggingService.objectToLoggingDictionary(properties)
+      };
+      this.appInsights.trackException(exceptionTelementry);
+    });
+  }
+
+  /**
+   * Provider-agnostic logging entry point for verbose-level logging
+   * @param message Message to log
+   * @param properties Extra information to log as a set of key/value pairs
+   */
+  public logVerbose(message: string, properties: object = null) {
+    this.logTrace(message, SeverityLevel.Verbose, properties);
+  }
+
+  /**
+   * Provider-agnostic logging entry point for warn-level logging
+   * @param message Message to log
+   * @param properties Extra information to log as a set of key/value pairs
+   */
+  public logWarning(message: string, properties: object = null) {
+    this.logTrace(message, SeverityLevel.Warning, properties);
+  }
+
+  /**
+   * Provider-agnostic logging entry point for information-level logging
+   * @param message Message to log
+   * @param properties Extra information to log as a set of key/value pairs
+   */
+  public logInformation(message: string, properties: object = null) {
+    this.logTrace(message, SeverityLevel.Information, properties);
+  }
+
+  /**
+   * Provider-agnostic logging entry point for error-level logging
+   * @param error Error to log
+   * @param properties Extra information to log as a set of key/value pairs
    */
   public logError(error: Error, properties: Object = null) {
-    const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
-    this.appInsightsService.trackException(error, null, convertedProperties, null, SeverityLevel.Error);
-    console.error(error, convertedProperties);
+    this.logException(error, SeverityLevel.Error, properties);
   }
 
   /**
-   * Logs information at the Information severity level
-   * @param message String message to identify the log entry
-   * @param properties JS object detailing additional information to log
+   * Provider-agnostic logging entry point for critical-level logging
+   * @param error Error to log
+   * @param properties Extra information to log as a set of key/value pairs
    */
-  public logInformation(message: string, properties: Object = null) {
-    const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
-    this.appInsightsService.trackTrace(message, convertedProperties);
-  }
-
-  /**
-   * Logs an event to Azure Application Insights
-   * @param eventName Name of the event to log
-   * @param properties Extra informational properties to log in AppInsights
-   */
-  public logEvent(eventName: string, properties: object = null) {
-    const convertedProperties = LoggingService.objectToLoggingDictionary(properties);
-    this.appInsightsService.trackEvent(eventName, convertedProperties);
+  public logCritical(error: Error, properties: Object = null) {
+    this.logException(error, SeverityLevel.Critical, properties);
   }
 }

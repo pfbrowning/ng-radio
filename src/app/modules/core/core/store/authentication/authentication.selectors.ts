@@ -23,3 +23,8 @@ export const selectInitializedAndAccessToken = createSelector(
     selectAccessToken,
     (initialized, accessToken) => ({initialized, accessToken})
 );
+
+export const selectEmail = createSelector(
+    selectAuthenticationState,
+    state => state.email
+);
