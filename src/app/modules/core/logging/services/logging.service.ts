@@ -92,6 +92,12 @@ export class LoggingService {
     });
   }
 
+  public setAuthenticatedUserContext(userId: string, accountId: string) {
+    this.initialized.pipe(take(1)).subscribe(() => {
+      this.appInsights.setAuthenticatedUserContext(userId, accountId);
+    });
+  }
+
   /**
    * Provider-agnostic logging entry point for verbose-level logging
    * @param message Message to log

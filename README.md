@@ -54,33 +54,33 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Use OnPush change detection for ErrorWindowComponent and ResponsiveSidenavComponent
   * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
   * Migrate build from classic Azure DevOps to YAML build
   * Configure SCSS imports to use TS path rather than relative path
   * Optimize bundle size
   * Consolidate compartmentalized core modules into a single CoreModule
+----------------------------------------
   * Package up reusable things and deploy to npm
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
   * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
   * Switch to and enforce HTTPS.
     * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
-    * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable as a developer, but it would make the Radio Browser API functionality basically useless.
+    * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable, but it would make the Radio Browser API functionality basically useless.
 * Features
-  * Custom URL regex validation
   * Investigate alternatives to interval-based polling for "Now Playing" stream info
     * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
     * [Service Worker](https://github.com/cryptiksouls/icecast-shoutcast-metadata-grabber)
     * [icecast.js](https://www.npmjs.com/package/icecast.js)
     * [Socket.IO](https://www.npmjs.com/package/socket.io)
     * Long-polling based streamInfoChange API logic
+  * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
   * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
-  * Favorite station edits
-  * Favorite station tags
+  * Custom URL regex validation
   * Browser-based audio recording
   * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
+  * Favorite station edits
+  * Favorite station tags
   * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
   * Support pls & similar files by fetching and reading the file itself to find a valid URL
-  * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
   * Search by country and any other Radio Browser API criteria which makes sense
   * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).

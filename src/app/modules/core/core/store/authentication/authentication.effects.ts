@@ -110,7 +110,10 @@ export class AuthenticationEffects implements OnInitEffects {
   logUserInit$ = createEffect(() => this.actions$.pipe(
     ofType(initializeSucceeded),
     filter(action => action.authenticated && action.email != null),
-    tap(action => this.loggingService.logInformation('userInitialized', { 'email': action.email }))
+    tap(action => {
+      this.loggingService.setAuthenticatedUserContext(action.email, this.oauthService.getIdentityClaims()['sub']);
+      this.loggingService.logInformation('userInitialized', { 'email': action.email });
+    })
   ), { dispatch: false });
 
   logInitializeFailed$ = createEffect(() => this.actions$.pipe(
