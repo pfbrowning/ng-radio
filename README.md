@@ -54,7 +54,6 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Configure SCSS imports to use TS path rather than relative path
   * Migrate build from classic Azure DevOps to YAML build
   * Optimize bundle size
   * Consolidate compartmentalized core modules into a single CoreModule
