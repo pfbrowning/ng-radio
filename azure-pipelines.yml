@@ -42,7 +42,7 @@ steps:
 - script: |
     echo %COVERALLS_REPO_TOKEN%
   env:
-    MySecret: $(COVERALLS_REPO_TOKEN)
+    COVERALLS_REPO_TOKEN: $(COVERALLS_REPO_TOKEN)
   displayName: 'Copy Coveralls Repo TOken'
 
 - task: Npm@1
