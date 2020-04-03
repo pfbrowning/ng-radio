@@ -5,6 +5,8 @@
 
 trigger:
 - master
+variables:
+  COVERALLS_REPO_TOKEN: $(COVERALLS_REPO_TOKEN)
 pool:
   vmImage: 'ubuntu-latest'
 steps:
@@ -38,12 +40,6 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage/cobertura-coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage/'
-
-- script: |
-    echo %COVERALLS_REPO_TOKEN%
-  env:
-    COVERALLS_REPO_TOKEN: $(COVERALLS_REPO_TOKEN)
-  displayName: 'Copy Coveralls Repo TOken'
 
 - task: Npm@1
   displayName: Coveralls
