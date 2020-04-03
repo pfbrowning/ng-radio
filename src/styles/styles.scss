@@ -15,6 +15,7 @@ table.mat-table .mat-row.selectable-row {
 
 @media (min-width:$smallScreenCutoff) {
     .small-screen-only,
+    .mat-toolbar.small-screen-only,
     .mat-icon-button.small-screen-only,
     .mat-menu-item.small-screen-only {
         display: none;
@@ -25,21 +26,6 @@ table.mat-table .mat-row.selectable-row {
     .large-screen-only {
         display: none;
     }
-}
-
-.fixed-toolbar.mat-toolbar-single-row {
-    position: fixed;
-    left:0px;
-    z-index:2;
-    height:$toolbarHeight;
-}
-
-.fixed-toolbar-top {
-    top:0px;
-}
-
-.fixed-toolbar-bottom {
-    bottom:0px;
 }
 
 .mat-toolbar .mat-raised-button {

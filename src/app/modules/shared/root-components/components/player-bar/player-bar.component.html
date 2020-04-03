@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="fixed-toolbar fixed-toolbar-bottom">
+<mat-toolbar color="primary">
   <ng-container *ngIf="(currentStation$ | async) != null">
     <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
     <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
