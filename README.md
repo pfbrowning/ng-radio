@@ -1,6 +1,6 @@
 # Browninglogic Radio
 
-[![Build Status](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_apis/build/status/Browninglogic%20Radio%20UI?branchName=master)](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_build/latest?definitionId=2&branchName=master)
+[![Build Status](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_apis/build/status/Browninglogic%20Radio%20UI%20-%20YAML?branchName=master)](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_build/latest?definitionId=4&branchName=master)
 [![Coverage Status](https://coveralls.io/repos/github/pfbrowning/ng-radio/badge.svg?branch=master)](https://coveralls.io/github/pfbrowning/ng-radio?branch=master)
 
 ## Introduction
@@ -18,7 +18,6 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 * Logging to Azure Application Insights
 
 ## Planned Features
-* Persistent "Favorites" functionality
 * Tagging of "Favorite" stations
 * [HTML5 Notifications](https://developer.mozilla.org/en-US/docs/Web/API/notification)
 * [Installable Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs)
@@ -65,20 +64,22 @@ ng serve --open
     * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
     * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable, but it would make the Radio Browser API functionality basically useless.
 * Features
+  * Validate & preprocess URL before playing
+    * Download & read playlist file (pls, m3u, etc)
+    * Add missing trailing `/;` for stations which fail to play
+    * Attempt to load https version of http URLs
   * Investigate alternatives to interval-based polling for "Now Playing" stream info
     * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
     * [Service Worker](https://github.com/cryptiksouls/icecast-shoutcast-metadata-grabber)
     * [icecast.js](https://www.npmjs.com/package/icecast.js)
     * [Socket.IO](https://www.npmjs.com/package/socket.io)
     * Long-polling based streamInfoChange API logic
-  * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
   * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
+  * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
   * Custom URL regex validation
   * Browser-based audio recording
   * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
   * Favorite station edits
   * Favorite station tags
-  * Come up with a better user experience for Shoutcast urls which lack the trailing `/;` and for invalid URLs in general.
-  * Support pls & similar files by fetching and reading the file itself to find a valid URL
   * Search by country and any other Radio Browser API criteria which makes sense
   * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
