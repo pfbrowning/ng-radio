@@ -1,0 +1,77 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+
+steps:
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+  displayName: 'npm install and build'
+
+
+trigger:
+- master
+pool:
+  vmImage: 'ubuntu-latest'
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node Version'
+  inputs:
+    versionSpec: 13.10.1
+    checkLatest: true
+
+- task: Npm@1
+  displayName: 'Install Dependencies'
+  inputs:
+    verbose: false
+
+- task: Npm@1
+  displayName: 'Run Tests'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run test-single-headless'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFiles: '**\TESTS-HeadlessChrome*.xml'
+  condition: succeededOrFailed()
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage/'
+
+- task: Npm@1
+  displayName: Coveralls
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run test:coveralls'
+
+- task: Npm@1
+  displayName: Lint
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run lint'
+
+- task: Npm@1
+  displayName: Build
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run build'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: dist
+
