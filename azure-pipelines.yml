@@ -5,8 +5,6 @@
 
 trigger:
 - master
-variables:
-  COVERALLS_REPO_TOKEN: $(COVERALLS_REPO_TOKEN)
 pool:
   vmImage: 'ubuntu-latest'
 steps:
@@ -47,6 +45,8 @@ steps:
     command: custom
     verbose: false
     customCommand: 'run test:coveralls'
+  env:
+    COVERALLS_REPO_TOKEN: $(coveralls-token)
 
 - task: Npm@1
   displayName: Lint
