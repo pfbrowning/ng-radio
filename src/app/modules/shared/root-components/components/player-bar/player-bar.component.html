@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
+  <img class="station-icon-thumb" [src]="(currentStation$ | async)?.iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
   <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
   <span class="fill-remaining"></span>
   <div [class.off-white]="(minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
