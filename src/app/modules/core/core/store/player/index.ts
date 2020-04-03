@@ -8,4 +8,5 @@ export {
     selectStreamInfoTitle,
     selectIsStreamInfoPresent,
     selectCurrentStationTitle,
+    selectIsStationSelected
 } from './player.selectors';

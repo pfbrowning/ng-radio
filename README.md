@@ -54,9 +54,8 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Refactor the core site layout to use vertical flexbox rather than using a fixed-position div for the center content area
-  * Migrate build from classic Azure DevOps to YAML build
   * Configure SCSS imports to use TS path rather than relative path
+  * Migrate build from classic Azure DevOps to YAML build
   * Optimize bundle size
   * Consolidate compartmentalized core modules into a single CoreModule
 ----------------------------------------

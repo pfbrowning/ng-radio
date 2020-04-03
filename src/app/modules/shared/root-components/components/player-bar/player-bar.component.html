@@ -1,47 +1,45 @@
 <mat-toolbar color="primary">
-  <ng-container *ngIf="(currentStation$ | async) != null">
-    <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
-    <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
-    <span class="fill-remaining"></span>
-    <div [class.off-white]="(minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
-      [matTooltip]="(minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
-      class="indicator-icon selectable large-screen-only" >
-      <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesUntilSleep$ | async}}</span>
+  <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
+  <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"></blr-player-bar-station-info>
+  <span class="fill-remaining"></span>
+  <div [class.off-white]="(minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
+    [matTooltip]="(minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
+    class="indicator-icon selectable large-screen-only" >
+    <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesUntilSleep$ | async}}</span>
+  </div>
+  <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
+    [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
+    class="indicator-icon selectable large-screen-only keep-awake">
+    <mat-icon>settings_cell</mat-icon>
+  </div>
+  <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessed">
+    <div class="indicator-icon large-screen-only" [matTooltip]="decideFavoritesProcessingTooltipText(favoritesProcessingState$ | async)">
+      <mat-spinner diameter="25"></mat-spinner>
     </div>
-    <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
-      [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
-      class="indicator-icon selectable large-screen-only keep-awake">
-      <mat-icon>settings_cell</mat-icon>
+  </ng-container>
+  <ng-template #favoritesProcessed>
+    <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
+      <mat-icon>favorite</mat-icon>
     </div>
-    <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessed">
-      <div class="indicator-icon large-screen-only" [matTooltip]="decideFavoritesProcessingTooltipText(favoritesProcessingState$ | async)">
-        <mat-spinner diameter="25"></mat-spinner>
-      </div>
-    </ng-container>
-    <ng-template #favoritesProcessed>
-      <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
+    <ng-template #notInFavorites>
+      <div (click)="onAddToFavoritesClicked()" class="indicator-icon selectable large-screen-only off-white" matTooltip="Add To Favorites">
         <mat-icon>favorite</mat-icon>
       </div>
-      <ng-template #notInFavorites>
-        <div (click)="onAddToFavoritesClicked()" class="indicator-icon selectable large-screen-only off-white" matTooltip="Add To Favorites">
-          <mat-icon>favorite</mat-icon>
-        </div>
-      </ng-template>
     </ng-template>
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
-      <mat-icon>more_vert</mat-icon>
+  </ng-template>
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <ng-container [ngSwitch]="playerStatus$ | async">
+    <button *ngSwitchCase="playerStatus.Stopped" mat-fab color="accent" class="play-pause-button" (click)="onPlayClicked()" matTooltip="Play the selected station" type="button">
+      <mat-icon>play_arrow</mat-icon>
     </button>
-    <ng-container [ngSwitch]="playerStatus$ | async">
-      <button *ngSwitchCase="playerStatus.Stopped" mat-fab color="accent" class="play-pause-button" (click)="onPlayClicked()" matTooltip="Play the selected station" type="button">
-        <mat-icon>play_arrow</mat-icon>
-      </button>
-      <button *ngSwitchCase="playerStatus.Playing" mat-fab color="accent" class="play-pause-button" (click)="onPauseClicked()" matTooltip="Pause the currently playing station" type="button">
-        <mat-icon>pause</mat-icon>
-      </button>
-      <div *ngSwitchCase="playerStatus.LoadingAudio" class="indicator-icon large-screen-only loading-audio-spinner" matTooltip="Loading Audio">
-        <mat-spinner diameter="25"></mat-spinner>
-      </div>
-    </ng-container>
+    <button *ngSwitchCase="playerStatus.Playing" mat-fab color="accent" class="play-pause-button" (click)="onPauseClicked()" matTooltip="Pause the currently playing station" type="button">
+      <mat-icon>pause</mat-icon>
+    </button>
+    <div *ngSwitchCase="playerStatus.LoadingAudio" class="indicator-icon large-screen-only loading-audio-spinner" matTooltip="Loading Audio">
+      <mat-spinner diameter="25"></mat-spinner>
+    </div>
   </ng-container>
 </mat-toolbar>
 

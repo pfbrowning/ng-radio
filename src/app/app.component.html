@@ -14,7 +14,7 @@
         </blr-responsive-sidenav-container>
     </div>
 
-    <blr-player-bar class="bottom-toolbar"></blr-player-bar>
+    <blr-player-bar *ngIf="stationSelected$ | async" class="bottom-toolbar"></blr-player-bar>
 </div>
 
 <blr-error-window></blr-error-window>
