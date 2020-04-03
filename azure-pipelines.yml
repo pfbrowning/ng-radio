@@ -39,11 +39,11 @@ steps:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage/cobertura-coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage/'
 
-steps:
 - script: |
     echo %COVERALLS_REPO_TOKEN%
   env:
     MySecret: $(COVERALLS_REPO_TOKEN)
+  displayName: 'Copy Coveralls Repo TOken'
 
 - task: Npm@1
   displayName: Coveralls
