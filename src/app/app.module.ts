@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { CoreModule } from '@core';
-import { NotificationsModule } from '@notifications';
 import { ConfirmationService } from 'primeng/api';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RootComponentsModule } from '@root-components';
@@ -30,7 +29,6 @@ import { MatButtonModule } from '@angular/material/button';
     ConfirmDialogModule,
     ModalManagerModule,
     NgLoadingIndicatorModule,
-    NotificationsModule,
     SharedModule,
     RootComponentsModule,
     MatToolbarModule,

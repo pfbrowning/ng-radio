@@ -6,7 +6,8 @@ import { ConfigService } from '../../services/config.service';
 import { of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { effectsInit } from './config.actions';
-import { NotificationService, Severities } from '@notifications';
+import { NotificationService } from '../../services/notification.service';
+import { Severities } from '../../models/notifications/severities';
 
 
 @Injectable()

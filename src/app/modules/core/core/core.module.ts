@@ -30,6 +30,8 @@ import { configReducer } from './store/config/config.reducer';
 import { ConfigService } from './services/config.service';
 import { ConfigEffects } from './store/config/config.effects';
 import { UnhandledErrorService } from './services/unhandled-error.service';
+import { MessageService } from 'primeng/api';
+import { NotificationService } from './services/notification.service';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -69,6 +71,8 @@ import * as NoSleep from 'nosleep.js';
     CurrentTimeService,
     AuthGuard,
     ConfigService,
+    MessageService,
+    NotificationService,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
     { provide: HTTP_INTERCEPTORS, useClass: BearerTokenService, multi: true },

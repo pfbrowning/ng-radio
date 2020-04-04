@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { NotificationService } from '@notifications';
-import { Severities } from '../models/severities';
+import { NotificationService } from '../services/notification.service';
+import { Severities } from '../models/notifications/severities';
 import { MessageService } from 'primeng/api';
-import { createMessageServiceSpy } from '../testing/notifications-spy-factories.spec';
+import { createMessageServiceSpy } from '../testing/core-spy-factories.spec';
 
 describe('NotificationService', () => {
   let notificationService: NotificationService;

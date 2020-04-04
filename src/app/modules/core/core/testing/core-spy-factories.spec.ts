@@ -3,6 +3,8 @@ import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
 import { OAuthEvent } from 'angular-oauth2-oidc';
 import { LoggingService } from '../services/logging.service';
+import { NotificationService } from '../services/notification.service';
+import { MessageService } from 'primeng/api';
 
 export function createStationLookupServiceSpy(): any {
   const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
@@ -67,4 +69,16 @@ export function createConfigServiceSpy(): any {
 
 export function createLoggingServiceSpy(): jasmine.SpyObj<LoggingService> {
   return jasmine.createSpyObj('loggingService', ['logError', 'logInformation', 'logEvent']);
+}
+
+
+export function createNotificationServiceSpy(): jasmine.SpyObj<NotificationService> {
+  return jasmine.createSpyObj('notificationServiceSpy', ['notify']);
+}
+
+export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
+  const spy = jasmine.createSpyObj('messageServiceSpy', ['add']);
+  spy['messageObserver'] = new Subject();
+  spy['clearObserver'] = new Subject();
+  return spy;
 }

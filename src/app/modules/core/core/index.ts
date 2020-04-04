@@ -1,6 +1,7 @@
 // Models
 export { RootState } from './models/root-state';
 export { initialRootState } from './models/initial-root-state';
+export { Severities } from './models/notifications/severities';
 
 // Injection Tokens
 export { AudioElementToken } from './injection-tokens/audio-element-token';
@@ -15,6 +16,7 @@ export { AudioElement } from './services/audio-element';
 export { WindowService } from './services/window.service';
 export { ConfigService } from './services/config.service';
 export { UnhandledErrorService } from './services/unhandled-error.service';
+export { NotificationService } from './services/notification.service';
 
 export { AuthGuard } from './guards/auth.guard';
 

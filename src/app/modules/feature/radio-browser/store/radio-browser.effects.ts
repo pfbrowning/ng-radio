@@ -6,7 +6,7 @@ import { selectSearchCriteria } from './radio-browser.selectors';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserRootState } from '../models/radio-browser-root-state';
-import { NotificationService, Severities } from '@notifications';
+import { NotificationService, Severities } from '@core';
 import * as RadioBrowserActions from './radio-browser.actions';
 
 @Injectable()

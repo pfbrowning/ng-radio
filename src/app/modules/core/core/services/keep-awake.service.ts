@@ -2,7 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElementToken } from '../injection-tokens/audio-element-token';
-import { NotificationService, Severities } from '@notifications';
+import { NotificationService } from '../services/notification.service';
+import { Severities } from '../models/notifications/severities';
 import { AudioElement } from './audio-element';
 import * as NoSleep from 'nosleep.js';
 

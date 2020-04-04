@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Severities } from '../models/severities';
+import { Severities } from '../models/notifications/severities';
 
 /** Convenience wrapper around the PrimeNG MessageService */
 @Injectable({providedIn: 'root'})

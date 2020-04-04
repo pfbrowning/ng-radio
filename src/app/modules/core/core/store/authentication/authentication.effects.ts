@@ -5,7 +5,8 @@ import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '../../services/config.service';
 import { CurrentTimeService } from '../../services/current-time.service';
-import { NotificationService, Severities } from '@notifications';
+import { NotificationService } from '../../services/notification.service';
+import { Severities } from '../../models/notifications/severities';
 import { Action, Store, select } from '@ngrx/store';
 import {
   effectsInit,

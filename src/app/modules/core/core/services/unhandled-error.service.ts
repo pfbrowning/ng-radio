@@ -1,6 +1,7 @@
 import { Injectable, Injector, ErrorHandler } from '@angular/core';
 import { LoggingService } from './logging.service';
-import { NotificationService, Severities } from '@notifications';
+import { NotificationService } from '../services/notification.service';
+import { Severities } from '../models/notifications/severities';
 
 @Injectable()
 export class UnhandledErrorService implements ErrorHandler {
