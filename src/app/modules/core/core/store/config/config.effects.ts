@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { configFetchStart, configFetchSucceeded, configFetchFailed } from './config.actions';
-import { ConfigService } from '../services/config.service';
+import { ConfigService } from '../../services/config.service';
 import { of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { effectsInit } from './config.actions';

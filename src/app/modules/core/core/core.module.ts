@@ -26,6 +26,9 @@ import { AuthGuard } from './guards/auth.guard';
 import { routerExtendedReducer } from './store/router-extended/router-extended.reducer';
 import { RouterExtendedEffects } from './store/router-extended/router-extended.effects';
 import { BearerTokenService } from './services/bearer-token.service';
+import { configReducer } from './store/config/config.reducer';
+import { ConfigService } from './services/config.service';
+import { ConfigEffects } from './store/config/config.effects';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -39,14 +42,22 @@ import * as NoSleep from 'nosleep.js';
       favoriteStations: favoriteStationsReducer,
       player: playerReducer,
       sleepTimer: sleepTimerReducer,
-      authentication: authenticationReducer
+      authentication: authenticationReducer,
+      config: configReducer
     }, {
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
       }
     }),
-    EffectsModule.forRoot([FavoriteStationsEffects, PlayerEffects, SleepTimerEffects, AuthenticationEffects, RouterExtendedEffects]),
+    EffectsModule.forRoot([
+      FavoriteStationsEffects,
+      PlayerEffects,
+      SleepTimerEffects,
+      AuthenticationEffects,
+      RouterExtendedEffects,
+      ConfigEffects
+    ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
   ],
@@ -56,6 +67,7 @@ import * as NoSleep from 'nosleep.js';
     KeepAwakeService,
     CurrentTimeService,
     AuthGuard,
+    ConfigService,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: AudioElementToken, useValue: new AudioElement() },
     { provide: HTTP_INTERCEPTORS, useClass: BearerTokenService, multi: true }

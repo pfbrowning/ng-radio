@@ -1,6 +1,6 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
-export interface IAppConfig {
+export interface AppConfig {
     metadataApiUrl: string;
     radioBrowserApiUrl: string;
     favoriteStationsApiUrl: string;

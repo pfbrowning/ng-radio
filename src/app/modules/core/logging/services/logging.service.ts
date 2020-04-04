@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
-import { selectConfig } from '../../config/store/config.selectors';
+import { selectConfig } from '@core/store/config/selectors';
 import { filter, take } from 'rxjs/operators';
 import { ApplicationInsights, SeverityLevel, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
 import { ReplaySubject } from 'rxjs';

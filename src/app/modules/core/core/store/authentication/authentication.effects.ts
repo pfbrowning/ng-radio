@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, take, withLatestFrom } from 'rxjs/operators';
 import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { ConfigService } from '@config';
+import { ConfigService } from '../../services/config.service';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { NotificationService, Severities } from '@notifications';
 import { Action, Store, select } from '@ngrx/store';
@@ -18,7 +18,7 @@ import {
   silentRefreshFailed
 } from './authentication.actions';
 import { RootState } from '../../models/root-state';
-import { selectConfig } from '@config';
+import { selectConfig } from '@core/store/config/selectors';
 import { LoggingService } from '@logging';
 import { selectEmail } from './authentication.selectors';
 import dayjs from 'dayjs';

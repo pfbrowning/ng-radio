@@ -2,7 +2,7 @@ import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IAppConfig } from '../models/app-config';
+import { AppConfig } from '../models/config/app-config';
 
 describe('ConfigService', () => {
   let configService: ConfigService;
@@ -27,7 +27,7 @@ describe('ConfigService', () => {
   });
 
   it('should properly handle successful config fetch', (done: DoneFn) => {
-    const dummyConfig: IAppConfig = {
+    const dummyConfig: AppConfig = {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',

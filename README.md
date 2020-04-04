@@ -53,11 +53,10 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Configure environment path
   * Consolidate compartmentalized core modules into a single CoreModule
+  * Audio element service
 ----------------------------------------
   * Config observable
-  * Audio element service
   * Package up reusable things and deploy to npm
     * setAltSrc
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
@@ -79,9 +78,9 @@ ng serve --open
   * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
   * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
   * Custom URL regex validation
-  * Browser-based audio recording
   * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
+  * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
+  * Browser-based audio recording
   * Favorite station edits
   * Favorite station tags
   * Search by country and any other Radio Browser API criteria which makes sense
-  * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).

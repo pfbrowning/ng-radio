@@ -6,7 +6,7 @@ import { StationLookupService } from '@core';
 import { Action, Store, select } from '@ngrx/store';
 import { NotificationService, Severities } from '@notifications';
 import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
-import { selectConfig } from '@config';
+import { selectConfig } from '@core/store/config/selectors';
 import * as SuggestedStationsActions from './suggested-stations.actions';
 
 @Injectable()

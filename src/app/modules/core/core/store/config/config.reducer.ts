@@ -1,9 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { initialConfigState } from '../models/initial-config-state';
+import { initialConfigState } from '../../models/config/initial-config-state';
 import { configFetchSucceeded, configFetchFailed } from './config.actions';
-import { ConfigState } from '../models/config-state';
+import { ConfigState } from '../../models/config/config-state';
 
-const reducer = createReducer(
+const reducer = createReducer<ConfigState>(
   initialConfigState,
   on(configFetchSucceeded, configFetchFailed, state => ({
     ...state,

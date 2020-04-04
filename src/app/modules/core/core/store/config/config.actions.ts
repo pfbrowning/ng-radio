@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IAppConfig } from '../models/app-config';
+import { AppConfig } from '../../models/config/app-config';
 
 export enum ConfigActions {
   EffectsInit = '[Config] Effects Init',
@@ -18,7 +18,7 @@ export const configFetchStart = createAction(
 
 export const configFetchSucceeded = createAction(
   ConfigActions.ConfigFetchSucceeded,
-  props<{ config: IAppConfig }>()
+  props<{ config: AppConfig }>()
 );
 
 export const configFetchFailed = createAction(

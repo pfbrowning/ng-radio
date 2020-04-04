@@ -8,7 +8,7 @@ import { from, of, timer } from 'rxjs';
 import { NotificationService, Severities } from '@notifications';
 import { Store, select } from '@ngrx/store';
 import { selectCurrentStationUrl, selectCurrentStationAndStreamInfo, selectStreamInfo } from './player.selectors';
-import { ConfigService } from '@config';
+import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import isEqual from 'lodash/isEqual';
 import {

@@ -13,6 +13,7 @@ export { StreamInfoService } from './services/stream-info.service';
 export { CurrentTimeService } from './services/current-time.service';
 export { AudioElement } from './services/audio-element';
 export { WindowService } from './services/window.service';
+export { ConfigService } from './services/config.service';
 
 export { AuthGuard } from './guards/auth.guard';
 

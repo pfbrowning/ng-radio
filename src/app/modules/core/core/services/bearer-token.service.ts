@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../models/root-state';
-import { selectConfig } from '../../config/store/config.selectors';
+import { selectConfig } from '@core/store/config/selectors';
 import { filter, switchMap } from 'rxjs/operators';
 import { selectInitializedAndAccessToken } from '../store/authentication/authentication.selectors';
 

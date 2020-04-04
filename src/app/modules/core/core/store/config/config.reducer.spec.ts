@@ -1,5 +1,5 @@
 import { configReducer } from './config.reducer';
-import { initialConfigState } from '../models/initial-config-state';
+import { initialConfigState } from '../../models/config/initial-config-state';
 
 describe('Config Reducer', () => {
   describe('an unknown action', () => {
