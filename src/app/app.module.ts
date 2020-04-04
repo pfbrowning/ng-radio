@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { CoreModule } from '@core';
-import { ErrorHandlingModule } from '@error-handling';
 import { LoggingModule } from '@logging';
 import { NotificationsModule } from '@notifications';
 import { ConfirmationService } from 'primeng/api';
@@ -24,15 +23,14 @@ import { MatButtonModule } from '@angular/material/button';
     AppComponent
   ],
   imports: [
-    CoreModule,
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastModule,
     ConfirmDialogModule,
     ModalManagerModule,
     NgLoadingIndicatorModule,
-    ErrorHandlingModule,
     LoggingModule,
     NotificationsModule,
     SharedModule,

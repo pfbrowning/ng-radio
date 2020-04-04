@@ -14,6 +14,7 @@ export { CurrentTimeService } from './services/current-time.service';
 export { AudioElement } from './services/audio-element';
 export { WindowService } from './services/window.service';
 export { ConfigService } from './services/config.service';
+export { UnhandledErrorService } from './services/unhandled-error.service';
 
 export { AuthGuard } from './guards/auth.guard';
 
