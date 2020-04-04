@@ -11,7 +11,7 @@ import isBlank from 'is-blank';
  * This service handles the responsibility of logging errors, events, and
  * information to Azure Application Insights.
  */
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class LoggingService {
   constructor(private store: Store<RootState>) {
     // Once the app config has loaded

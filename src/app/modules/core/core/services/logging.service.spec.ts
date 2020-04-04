@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { LoggingModule, LoggingService } from '@logging';
+import { LoggingService } from './logging.service'
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 
@@ -8,9 +8,6 @@ describe('LoggingService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        LoggingModule
-      ],
       providers: [
         provideMockStore({initialState: initialRootState})
       ]

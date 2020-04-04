@@ -1,5 +1,5 @@
 import { Injectable, Injector, ErrorHandler } from '@angular/core';
-import { LoggingService } from '@logging';
+import { LoggingService } from './logging.service';
 import { NotificationService, Severities } from '@notifications';
 
 @Injectable()

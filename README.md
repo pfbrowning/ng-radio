@@ -57,6 +57,7 @@ ng serve --open
   * Audio element service
 ----------------------------------------
   * Config observable
+  * Partition core/services directory
   * Package up reusable things and deploy to npm
     * setAltSrc
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.

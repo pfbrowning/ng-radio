@@ -19,7 +19,7 @@ import {
 } from './authentication.actions';
 import { RootState } from '../../models/root-state';
 import { selectConfig } from '@core/store/config/selectors';
-import { LoggingService } from '@logging';
+import { LoggingService } from '../../services/logging.service';
 import { selectEmail } from './authentication.selectors';
 import dayjs from 'dayjs';
 

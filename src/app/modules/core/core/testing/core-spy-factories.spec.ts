@@ -2,6 +2,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
 import { OAuthEvent } from 'angular-oauth2-oidc';
+import { LoggingService } from '../services/logging.service';
 
 export function createStationLookupServiceSpy(): any {
   const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
@@ -62,4 +63,8 @@ export function createConfigServiceSpy(): any {
   spy['loaded$'] = new Subject();
   spy['initialized'] = true;
   return spy;
+}
+
+export function createLoggingServiceSpy(): jasmine.SpyObj<LoggingService> {
+  return jasmine.createSpyObj('loggingService', ['logError', 'logInformation', 'logEvent']);
 }
