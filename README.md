@@ -52,17 +52,6 @@ ng serve --open
 ```
   
 ## Backlog
-* Chores
-  * Config observable
-  * Partition core/services directory
-  * Audio element service
-  * Package up reusable things and deploy to npm
-    * setAltSrc
-  * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
-  * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
-  * Switch to and enforce HTTPS.
-    * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
-    * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable, but it would make the Radio Browser API functionality basically useless.
 * Features
   * Validate & preprocess URL before playing
     * Download & read playlist file (pls, m3u, etc)
@@ -83,3 +72,14 @@ ng serve --open
   * Favorite station edits
   * Favorite station tags
   * Search by country and any other Radio Browser API criteria which makes sense
+* Chores
+  * Config observable
+  * Partition core/services directory
+  * Audio element service
+  * Package up reusable things and deploy to npm
+    * setAltSrc
+  * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
+  * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
+  * Switch to and enforce HTTPS.
+    * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
+    * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable, but it would make the Radio Browser API functionality basically useless.
