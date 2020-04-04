@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
 import { forkJoin, throwError, of, Observable } from 'rxjs';
 import { IAppConfig } from '../models/app-config';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '@environment';
 import merge from 'lodash/merge';
 
 /** Abstraction layer for configuration.  Fetches any necessary configuration files

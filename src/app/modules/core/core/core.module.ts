@@ -12,7 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { favoriteStationsReducer } from './store/favorite-stations/favorite-stations.reducer';
 import { playerReducer } from './store/player/player.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { environment } from 'src/environments/environment';
+import { environment } from '@environment';
 import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stations.effects';
 import { PlayerEffects } from './store/player/player.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';

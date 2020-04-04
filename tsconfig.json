@@ -20,6 +20,7 @@
       "dom"
     ],
     "paths": {
+      "@environment": [ "src/environments/environment"],
       "@notifications": [ "src/app/modules/core/notifications/index"],
       "@notifications/testing": [ "src/app/modules/core/notifications/index.spec"],
       "@logging": [ "src/app/modules/core/logging/index" ],
