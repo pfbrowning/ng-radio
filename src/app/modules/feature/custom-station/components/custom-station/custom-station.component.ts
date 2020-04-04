@@ -1,12 +1,12 @@
 import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { cloneDeep } from 'lodash';
 import { MatInput } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { RootState } from '@core';
 import { selectStation } from '@core/store/player';
 import { Station } from '@core/models/player';
+import cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'blr-custom-station',

@@ -21,7 +21,7 @@ import { RootState } from '../../models/root-state';
 import { selectConfig } from '@config';
 import { LoggingService } from '@logging';
 import { selectEmail } from './authentication.selectors';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {

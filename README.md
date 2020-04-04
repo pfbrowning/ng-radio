@@ -53,11 +53,14 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Migrate build from classic Azure DevOps to YAML build
-  * Optimize bundle size
+  * Show play button spinner regardless of screen size
+  * Configure environment path
   * Consolidate compartmentalized core modules into a single CoreModule
 ----------------------------------------
+  * Config observable
+  * Audio element service
   * Package up reusable things and deploy to npm
+    * setAltSrc
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
   * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
   * Switch to and enforce HTTPS.

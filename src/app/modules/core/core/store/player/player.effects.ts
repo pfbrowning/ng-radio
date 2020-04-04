@@ -10,7 +10,7 @@ import { Store, select } from '@ngrx/store';
 import { selectCurrentStationUrl, selectCurrentStationAndStreamInfo, selectStreamInfo } from './player.selectors';
 import { ConfigService } from '@config';
 import { Title } from '@angular/platform-browser';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import {
   selectStation,
   playAudioStart,

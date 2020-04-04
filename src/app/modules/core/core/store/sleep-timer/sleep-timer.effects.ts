@@ -8,7 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { selectSleepTime } from './sleep-timer.selectors';
 import { setSleepTimerSubmit, sleepTimerSet, clearSleepTimer, goToSleep, setMinutesUntilSleep, countMinutesUntilSleep } from './sleep-timer.actions';
 import { RootState } from '../../models/root-state';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class SleepTimerEffects {
