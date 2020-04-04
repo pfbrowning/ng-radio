@@ -23,7 +23,8 @@ table.mat-table .mat-row.selectable-row {
 }
 
 @media (max-width:$smallScreenCutoff - 1) {
-    .large-screen-only {
+    .large-screen-only,
+    div.indicator-icon.large-screen-only {
         display: none;
     }
 }

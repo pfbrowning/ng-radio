@@ -53,7 +53,6 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Show play button spinner regardless of screen size
   * Configure environment path
   * Consolidate compartmentalized core modules into a single CoreModule
 ----------------------------------------

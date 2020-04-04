@@ -15,10 +15,7 @@
 
 .indicator-icon {
     align-items: center;
-    
-    @media (min-width:$smallScreenCutoff) {
-        display: flex;
-    }
+    display: flex;
 
     mat-icon {
         margin:0px 4px;

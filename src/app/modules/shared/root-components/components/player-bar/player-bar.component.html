@@ -37,7 +37,7 @@
     <button *ngSwitchCase="playerStatus.Playing" mat-fab color="accent" class="play-pause-button" (click)="onPauseClicked()" matTooltip="Pause the currently playing station" type="button">
       <mat-icon>pause</mat-icon>
     </button>
-    <div *ngSwitchCase="playerStatus.LoadingAudio" class="indicator-icon large-screen-only loading-audio-spinner" matTooltip="Loading Audio">
+    <div *ngSwitchCase="playerStatus.LoadingAudio" class="indicator-icon loading-audio-spinner" matTooltip="Loading Audio">
       <mat-spinner diameter="25"></mat-spinner>
     </div>
   </ng-container>
