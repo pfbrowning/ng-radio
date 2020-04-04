@@ -4,10 +4,8 @@ import { Observable } from 'rxjs';
 import { SuggestedStationsEffects } from './suggested-stations.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialSuggestedStationsRootState } from '../models/initial-suggested-stations-root-state';
-import { StationLookupService } from '@core';
-import { createStationLookupServiceSpy } from '@core/testing';
-import { NotificationService } from '@notifications';
-import { createNotificationServiceSpy } from '@notifications/testing';
+import { StationLookupService, NotificationService } from '@core';
+import { createStationLookupServiceSpy, createNotificationServiceSpy } from '@core/testing';
 
 describe('SuggestedStationsEffects', () => {
   const actions$: Observable<any> = null;

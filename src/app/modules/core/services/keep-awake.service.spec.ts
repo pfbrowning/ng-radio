@@ -4,7 +4,7 @@ import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { AudioElementToken } from '@core';
 import { AudioElementStub, createKeepAwakeServiceSpy } from '@core/testing';
 import { MessageService } from 'primeng/api';
-import { createMessageServiceSpy } from '@notifications/testing';
+import { createMessageServiceSpy } from '@core/testing';
 import * as NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {

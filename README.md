@@ -53,11 +53,9 @@ ng serve --open
   
 ## Backlog
 * Chores
-  * Consolidate compartmentalized core modules into a single CoreModule
-  * Audio element service
-----------------------------------------
   * Config observable
   * Partition core/services directory
+  * Audio element service
   * Package up reusable things and deploy to npm
     * setAltSrc
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.

@@ -5,7 +5,11 @@ describe('UnhandledErrorService', () => {
   let service: UnhandledErrorService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        UnhandledErrorService
+      ]
+    });
     service = TestBed.inject(UnhandledErrorService);
   });
 

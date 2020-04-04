@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { ConfigEffects } from './config.effects';
 import { ConfigService } from '../../services/config.service';
 import { createConfigServiceSpy } from '../../testing/core-spy-factories.spec';
-import { NotificationService } from '@notifications';
-import { createNotificationServiceSpy } from '@notifications/testing';
+import { NotificationService } from '@core';
+import { createNotificationServiceSpy } from '@core/testing';
 
 describe('ConfigEffects', () => {
   const actions$: Observable<any> = null;

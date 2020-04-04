@@ -2,10 +2,9 @@ import { Type } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ConfigService } from '@config';
-import { createConfigServiceSpy } from '@config/testing';
+import { ConfigService } from '@core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '@core/testing';
+import { createOAuthServiceSpy, createConfigServiceSpy } from '@core/testing';
 import { StreamInfo } from '../models/player/stream-info';
 
 describe('StreamInfoService', () => {

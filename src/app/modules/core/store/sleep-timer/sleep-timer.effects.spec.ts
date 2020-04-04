@@ -3,10 +3,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { SleepTimerEffects } from './sleep-timer.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { NotificationService } from '@notifications';
-import { createNotificationServiceSpy } from '@notifications/testing';
-import { CurrentTimeService } from '@core';
-import { createCurrentTimeServiceSpy } from '@core/testing';
+import { CurrentTimeService, NotificationService } from '@core';
+import { createCurrentTimeServiceSpy, createNotificationServiceSpy } from '@core/testing';
 import { initialRootState } from '../../models/initial-root-state';
 
 describe('SleepTimerEffects', () => {

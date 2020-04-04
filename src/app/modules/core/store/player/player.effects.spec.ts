@@ -3,12 +3,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { PlayerEffects } from './player.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { NotificationService } from '@notifications';
-import { createNotificationServiceSpy } from '@notifications/testing';
-import { StreamInfoService, AudioElementToken } from '@core';
-import { createStreamInfoServiceSpy, AudioElementStub } from '@core/testing';
-import { ConfigService } from '@config';
-import { createConfigServiceSpy } from '@config/testing';
+import { StreamInfoService, AudioElementToken, NotificationService, ConfigService } from '@core';
+import { createStreamInfoServiceSpy, AudioElementStub, createConfigServiceSpy, createNotificationServiceSpy } from '@core/testing';
 import { initialRootState } from '../../models/initial-root-state';
 
 describe('PlayerEffects', () => {
