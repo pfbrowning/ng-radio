@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.httpClient.get('https://thingproxy.freeboard.io/fetch/http://79.111.119.111:9107/7.html',
-    {responseType:'text'})
+    {responseType: 'text'})
     .subscribe({
       next: next => console.log('fetched',  next),
       error: error => console.log('error', error)
