@@ -52,7 +52,6 @@ ng serve --open
   
 ## Backlog
 * Features
-  * Custom URL regex validation
   * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
   * Browser-based audio recording
   * Favorite station edits
