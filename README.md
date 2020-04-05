@@ -20,7 +20,6 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 ## Planned Features
 * Tagging of "Favorite" stations
 * [HTML5 Notifications](https://developer.mozilla.org/en-US/docs/Web/API/notification)
-* [Installable Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs)
 
 ## Supported URL Format
 At its core, this application is basically a fancy frontend for the [HTML5 Audio Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio).  With this in mind, it's safe to say that any internet radio stream URL which a modern web browser can play directly should work in this app with no problem, and by extension if your browser can *not* play the stream directly then it won't work with this app either.  In other words, if you're having trouble playing a stream URL, your first troubleshooting step should be to paste the stream URL directly into your browser's address bar to see if your browser can handle it.
@@ -53,29 +52,22 @@ ng serve --open
   
 ## Backlog
 * Features
-  * Validate & preprocess URL before playing
-    * Download & read playlist file (pls, m3u, etc)
-    * Add missing trailing `/;` for stations which fail to play
-    * Attempt to load https version of http URLs
-  * Investigate alternatives to interval-based polling for "Now Playing" stream info
-    * [Streams API](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API)
-    * [Service Worker](https://github.com/cryptiksouls/icecast-shoutcast-metadata-grabber)
-    * [icecast.js](https://www.npmjs.com/package/icecast.js)
-    * [Socket.IO](https://www.npmjs.com/package/socket.io)
-    * Long-polling based streamInfoChange API logic
-  * Implement a non-logged-in experience such that login is optional and a non-authenticated user can still listen to the radio, but they just can't use favorites or get now-playing info.
-  * Show "Now Playing" stream info for "Suggested", "Favorites", and search results
   * Custom URL regex validation
   * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
-  * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
   * Browser-based audio recording
   * Favorite station edits
   * Favorite station tags
   * Search by country and any other Radio Browser API criteria which makes sense
+  * Validate & preprocess URL before playing
+    * Download & read playlist file (pls, m3u, etc) via CORS proxy
+    * Attempt to load stream via audio element
+      * Add missing trailing `/;` for stations which fail to play
+      * Attempt to load https version of http URLs
+  * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
+
 * Chores
   * Config observable
   * Partition core/services directory
-  * Audio element service
   * Package up reusable things and deploy to npm
     * setAltSrc
   * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.

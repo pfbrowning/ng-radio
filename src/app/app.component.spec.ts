@@ -6,7 +6,6 @@ import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MessageService } from 'primeng/api';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -19,8 +18,7 @@ describe('AppComponent', () => {
       imports: [
         MatIconModule,
         ModalManagerModule,
-        ToastModule,
-        HttpClientTestingModule
+        ToastModule
       ],
       declarations: [
         AppComponent
