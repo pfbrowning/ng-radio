@@ -6,7 +6,7 @@
 ## Introduction
 Browninglogic Radio is an internet radio app written as a Single-Page Application in Angular.  This is a hobby project that I work on in what little free time I have.  My motivation for this is primarily because I enjoy working with Angular and secondarily because I enjoy internet radio.
 
-The in-progress demo version of the app can be accessed at [radio.browninglogic.com](http://radio.browninglogic.com).
+The in-progress demo version of the app can be accessed at [radio.browninglogic.com](https://radio.browninglogic.com).
 
 ## Current Features
 * Display of the current "Now Playing" stream info as provided by [node-internet-radio](https://github.com/gabek/node-internet-radio) and fetched via [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api)

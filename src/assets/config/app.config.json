@@ -1,6 +1,6 @@
 {
     "metadataApiUrl": "http://localhost:3000",
-    "radioBrowserApiUrl": "http://www.radio-browser.info/webservice/json",
+    "radioBrowserApiUrl": "https://www.radio-browser.info/webservice/json",
     "favoriteStationsApiUrl": "https://localhost:5001",
     "metadataRefreshInterval": 20000,
     "metadataFetchTimeout": 15000,
@@ -9,10 +9,10 @@
         "issuer": null,
         "clientId": null,
         "scope": "openid profile email",
-        "redirectUri": "http://localhost:4200",
-        "silentRefreshRedirectUri": "http://localhost:4200/silent-refresh.html",
+        "redirectUri": "https://localhost:4200",
+        "silentRefreshRedirectUri": "https://localhost:4200/silent-refresh.html",
         "logoutUrl": null,
-        "postLogoutRedirectUri": "http://localhost:4200",
+        "postLogoutRedirectUri": "https://localhost:4200",
         "customQueryParams": {
             "audience": null
         }
