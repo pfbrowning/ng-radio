@@ -9,10 +9,10 @@
         "issuer": null,
         "clientId": null,
         "scope": "openid profile email",
-        "redirectUri": "https://localhost:4200",
-        "silentRefreshRedirectUri": "https://localhost:4200/silent-refresh.html",
+        "redirectUri": "http://localhost:4200",
+        "silentRefreshRedirectUri": "http://localhost:4200/silent-refresh.html",
         "logoutUrl": null,
-        "postLogoutRedirectUri": "https://localhost:4200",
+        "postLogoutRedirectUri": "http://localhost:4200",
         "customQueryParams": {
             "audience": null
         }

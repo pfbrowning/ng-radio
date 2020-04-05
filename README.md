@@ -6,7 +6,7 @@
 ## Introduction
 Browninglogic Radio is an internet radio app written as a Single-Page Application in Angular.  This is a hobby project that I work on in what little free time I have.  My motivation for this is primarily because I enjoy working with Angular and secondarily because I enjoy internet radio.
 
-The in-progress demo version of the app can be accessed at [radio.browninglogic.com](https://radio.browninglogic.com).
+The in-progress demo version of the app can be accessed at [radio.browninglogic.com](http://radio.browninglogic.com).
 
 ## Current Features
 * Display of the current "Now Playing" stream info as provided by [node-internet-radio](https://github.com/gabek/node-internet-radio) and fetched via [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api)
@@ -52,25 +52,19 @@ ng serve --open
   
 ## Backlog
 * Features
-  * Use HTML5 notifications for consenting users, and fall back to PrimeNG toast for non-consenting users
   * Browser-based audio recording
   * Favorite station edits
-  * Favorite station tags
   * Search by country and any other Radio Browser API criteria which makes sense
   * Validate & preprocess URL before playing
     * Download & read playlist file (pls, m3u, etc) via CORS proxy
     * Attempt to load stream via audio element
       * Add missing trailing `/;` for stations which fail to play
       * Attempt to load https version of http URLs
-  * Configure the app as an [Installable PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs).
-
+  * Favorite station tags
 * Chores
+  * Show a loading spinner in place of the main app content while waiting for the config to load
+  * Wait until after initial change detection to show notifications
   * Config observable
   * Partition core/services directory
   * Package up reusable things and deploy to npm
     * setAltSrc
-  * Revisit nosleep.js: Switch to an alternative (such as [this](https://github.com/madeInLagny/mil-no-sleep)) if it still appears to be a dead project by then.
-  * Determine whether it's appropriate to remove Material and go entirely to PrimeNG
-  * Switch to and enforce HTTPS.
-    * The challenge here is that the nature of internet radio is that many URLs and icons might be served from plain HTTP only, causing [mixed content woes](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)).  This will require some creativity.
-    * My initial thoughts are that we'd either attempt to access the HTTPS version of provided HTTP URLs or simply enforce that all provided station & icon URLs be HTTPS.  The latter is preferable, but it would make the Radio Browser API functionality basically useless.
