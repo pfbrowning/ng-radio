@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../models/root-state';
 import { selectConfig } from '@core/store/config/selectors';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, take } from 'rxjs/operators';
 import { selectInitializedAndAccessToken } from '../store/authentication/authentication.selectors';
 
 @Injectable()
@@ -20,6 +20,7 @@ export class BearerTokenService implements HttpInterceptor {
       select(selectConfig),
       // Wait for the config to load if it isn't loaded already
       filter(config => config != null),
+      take(1),
       switchMap(config => {
         // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
         if (req.url.startsWith(config.favoriteStationsApiUrl) || req.url.startsWith(config.metadataApiUrl)) {
@@ -27,6 +28,7 @@ export class BearerTokenService implements HttpInterceptor {
             select(selectInitializedAndAccessToken),
             // Wait for authentication to initialize, regardless of whether the user is authenticated
             filter(selected => selected.initialized),
+            take(1),
             switchMap(selected => {
               // If an access token is present, then append it to the Authorization header
               if (selected.accessToken != null) {
