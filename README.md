@@ -52,14 +52,15 @@ ng serve --open
   
 ## Backlog
 * Features
-  * Browser-based audio recording
-  * Favorite station edits
-  * Search by country and any other Radio Browser API criteria which makes sense
   * Validate & preprocess URL before playing
     * Download & read playlist file (pls, m3u, etc) via CORS proxy
     * Attempt to load stream via audio element
       * Add missing trailing `/;` for stations which fail to play
       * Attempt to load https version of http URLs
+  * Show stream info for favorites, search results, and suggested
+  * Browser-based audio recording
+  * Favorite station edits
+  * Search by country and any other Radio Browser API criteria which makes sense
   * Favorite station tags
 * Chores
   * Show a loading spinner in place of the main app content while waiting for the config to load
