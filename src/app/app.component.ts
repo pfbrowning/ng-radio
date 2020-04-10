@@ -10,7 +10,7 @@ import { selectIsStationSelected } from '@core/store/player';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor(private store: Store<RootState>) {}  
+  constructor(private store: Store<RootState>) {}
 
   public stationSelected$ = this.store.pipe(select(selectIsStationSelected));
 }

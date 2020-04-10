@@ -69,10 +69,10 @@ export const selectCurrentStationValidationState = createSelector(
     selectCurrentStationUrl,
     selectValidatedStreams,
     (current, validatedStreams) => validatedStreams.get(current)
-)
+);
 
 export const selectCurrentStationUrlAndItsValidationState = createSelector(
     selectCurrentStationUrl,
     selectCurrentStationValidationState,
     (url, validationState) => ({url, validationState})
-)
+);

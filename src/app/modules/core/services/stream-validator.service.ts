@@ -36,7 +36,7 @@ export class StreamValidatorService {
           if (streamUrl.startsWith('http://')) {
             const retryUrl = streamUrl.replace('http://', 'https://');
             return this.queueStreamForTryPlay(retryUrl).pipe(
-              map(result => result.success ? retryUrl : streamUrl)
+              map(retryResult => retryResult.success ? retryUrl : streamUrl)
             );
           }
           return of(streamUrl);
@@ -44,7 +44,7 @@ export class StreamValidatorService {
           /* If the stream fails and it doesn't end in '/;', then append it and
           try again in order to see if it's a Shoutcast URL that needs to be forced
           into stream mode override. */
-          let retryUrl = null
+          let retryUrl = null;
           if (streamUrl.endsWith('/;')) {
             // Don't retry
           } else if (streamUrl.endsWith('/')) {
@@ -54,22 +54,22 @@ export class StreamValidatorService {
           }
           if (retryUrl != null) {
             return this.queueStreamForTryPlay(retryUrl).pipe(
-              switchMap(result => {
-                if (result.success) {
+              switchMap(retryResult => {
+                if (retryResult.success) {
                   return of(retryUrl);
                 } else {
                   return throwError(
                     new StreamValidationError(streamUrl, result.error, StreamValidationFailureReason.ShoutcastRetryFailed)
-                  )
+                  );
                 }
               })
-            )
+            );
           }
           // If it failed in spite of ending in "/;", then throw an error without attempting to retry
           return throwError(new StreamValidationError(streamUrl, result.error, StreamValidationFailureReason.FailedToLoadStream));
         }
       }),
-    )
+    );
   }
 
   /**
@@ -90,7 +90,7 @@ export class StreamValidatorService {
         this.audio.pause();
         this.audio.src = '';
       }),
-    )
+    );
   }
 
   /**
@@ -103,6 +103,6 @@ export class StreamValidatorService {
     return of(null).pipe(
       tap(() => this.tryPlayQueueSource.next({streamUrl, completed})),
       switchMap(() => completed),
-    )
+    );
   }
 }

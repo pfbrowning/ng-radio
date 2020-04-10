@@ -63,19 +63,19 @@ export const fetchStreamInfoFailed = createAction(
 export const validateStreamSubmit = createAction(
     PlayerActions.ValidateStreamSubmit,
     props<{ streamUrl: string }>()
-)
+);
 
 export const validateStreamStart = createAction(
     PlayerActions.ValidateStreamStart,
     props<{ streamUrl: string }>()
-)
+);
 
 export const validateStreamSucceeded = createAction(
     PlayerActions.ValidateStreamSucceeded,
     props<{ streamUrl: string, validatedUrl: string }>()
-)
+);
 
 export const validateStreamFailed = createAction(
     PlayerActions.ValidateStreamFailed,
     props<{ streamUrl: string, reason: StreamValidationFailureReason, error: any }>()
-)
+);

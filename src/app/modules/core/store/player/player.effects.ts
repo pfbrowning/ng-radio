@@ -35,7 +35,7 @@ import { goToSleep } from '../sleep-timer/sleep-timer.actions';
 import { StreamValidatorService } from '../../services/stream-validator.service';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { AudioElement } from '../../models/player/audio-element';
-import { AudioElementToken } from '../../injection-tokens/audio-element-token'
+import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import isBlank from 'is-blank';
 import isEqual from 'lodash/isEqual';
 
@@ -76,7 +76,7 @@ export class PlayerEffects {
     }),
     switchMap(action => {
       // Validate the stream if it isn't already validated or in progress
-      this.store.dispatch(validateStreamSubmit({streamUrl:action.station.url}));
+      this.store.dispatch(validateStreamSubmit({streamUrl: action.station.url}));
       // Wait for the stream to be successfully validated if it isn't already
       return this.store.pipe(
         select(selectCurrentStationUrlAndItsValidationState),
@@ -103,7 +103,7 @@ export class PlayerEffects {
           ? playAudioStart()
           : selectStation({station: { ... action.station, url: vs.validatedUrl }})
         )
-      )
+      );
     })
   ));
 
@@ -112,7 +112,7 @@ export class PlayerEffects {
     withLatestFrom(this.store.pipe(select(selectCurrentStationValidationState))),
     // Start validation only if it's not already validated and not currently in progress
     filter(([action, vs]) => vs == null || (vs.validatedUrl == null && !vs.inProgress)),
-    map(([action, vs]) => validateStreamStart({streamUrl:action.streamUrl}))
+    map(([action, vs]) => validateStreamStart({streamUrl: action.streamUrl}))
   ));
 
   validateStream$ = createEffect(() => this.actions$.pipe(

@@ -19,7 +19,7 @@ export class ToasterContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.sink = this.messageService.messageObserver.subscribe(() => {
       this.changeDetectorRef.markForCheck();
-    })
+    });
   }
 
   ngOnDestroy(): void {
