@@ -1,25 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { AudioElementToken } from '@core';
-import { AudioElementStub, createKeepAwakeServiceSpy } from '@core/testing';
+import { createKeepAwakeServiceSpy } from '@core/testing';
 import { MessageService } from 'primeng/api';
 import { createMessageServiceSpy } from '@core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Subject } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { audioPaused } from '../store/player/player-actions';
 import * as NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
+  const actions$ = new Subject<Action>();
   let enabledSpy: jasmine.Spy;
   let keepAwakeService: KeepAwakeService;
   let noSleepSpy: jasmine.SpyObj<NoSleep>;
-  let audioElement: AudioElementStub;
 
   beforeEach(() => {
-    audioElement = new AudioElementStub();
     noSleepSpy = createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [
-        { provide: AudioElementToken, useValue: audioElement },
+        provideMockActions(() => actions$),
         { provide: NoSleepToken, useValue: noSleepSpy },
         { provide: MessageService, useValue: createMessageServiceSpy() },
         KeepAwakeService
@@ -102,7 +104,7 @@ describe('KeepAwakeService', () => {
     expect(noSleepSpy.enable).toHaveBeenCalledTimes(1);
 
     // Emit audioPaused
-    audioElement.pause();
+    actions$.next(audioPaused());
     // Nosleep should be disabled now
     expect(noSleepSpy.disable).toHaveBeenCalledTimes(1);
   });

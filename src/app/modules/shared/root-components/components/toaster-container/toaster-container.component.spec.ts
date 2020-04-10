@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToasterContainerComponent } from './toaster-container.component';
+import { MessageService } from 'primeng/api';
+import { createMessageServiceSpy } from '@core/testing';
 
 describe('ToasterContainerComponent', () => {
   let component: ToasterContainerComponent;
@@ -7,7 +9,10 @@ describe('ToasterContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToasterContainerComponent ]
+      declarations: [ ToasterContainerComponent ],
+      providers: [
+        { provide: MessageService, useValue: createMessageServiceSpy() }
+      ]
     })
     .compileComponents();
   }));
