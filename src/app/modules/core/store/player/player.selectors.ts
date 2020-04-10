@@ -59,3 +59,20 @@ export const selectCurrentStationAndStreamInfo = createSelector(
     selectStreamInfo,
     (station, streamInfo) => ({station, streamInfo})
 );
+
+export const selectValidatedStreams = createSelector(
+    selectPlayerState,
+    state => state.validatedStreams
+);
+
+export const selectCurrentStationValidationState = createSelector(
+    selectCurrentStationUrl,
+    selectValidatedStreams,
+    (current, validatedStreams) => validatedStreams.get(current)
+)
+
+export const selectCurrentStationUrlAndItsValidationState = createSelector(
+    selectCurrentStationUrl,
+    selectCurrentStationValidationState,
+    (url, validationState) => ({url, validationState})
+)

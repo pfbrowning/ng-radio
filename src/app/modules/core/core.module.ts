@@ -18,7 +18,7 @@ import { PlayerEffects } from './store/player/player.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { sleepTimerReducer } from './store/sleep-timer/sleep-timer.reducer';
 import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
-import { AudioElement } from './services/audio-element';
+import { AudioElement } from './models/player/audio-element';
 import { authenticationReducer } from './store/authentication/authentication.reducer';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { OAuthModule } from 'angular-oauth2-oidc';

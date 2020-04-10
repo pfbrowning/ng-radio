@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Station } from '../../models/player/station';
 import { StreamInfo } from '../../models/player/stream-info';
+import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
 
 export enum PlayerActions {
     SelectStation = '[Radio Player] Select Station',
@@ -12,6 +13,10 @@ export enum PlayerActions {
     FetchStreamInfoStart = '[Stream Info] Fetch Stream Info Start',
     FetchStreamInfoSucceeded = '[Stream Info] Fetch Stream Info Succeeded',
     FetchStreamInfoFailed = '[Stream Info] Fetch Stream Info Failed',
+    ValidateStreamSubmit = '[Radio Player] Validate Stream Submit',
+    ValidateStreamStart = '[Radio Player] Validate Stream Start',
+    ValidateStreamSucceeded = '[Radio Player] Validate Stream Succeeded',
+    ValidateStreamFailed = '[Radio Player] Validate Stream Failed',
 }
 
 export const selectStation = createAction(
@@ -54,3 +59,23 @@ export const fetchStreamInfoFailed = createAction(
     PlayerActions.FetchStreamInfoFailed,
     props<{ streamUrl: string, error: any }>()
 );
+
+export const validateStreamSubmit = createAction(
+    PlayerActions.ValidateStreamSubmit,
+    props<{ streamUrl: string }>()
+)
+
+export const validateStreamStart = createAction(
+    PlayerActions.ValidateStreamStart,
+    props<{ streamUrl: string }>()
+)
+
+export const validateStreamSucceeded = createAction(
+    PlayerActions.ValidateStreamSucceeded,
+    props<{ streamUrl: string, validatedUrl: string }>()
+)
+
+export const validateStreamFailed = createAction(
+    PlayerActions.ValidateStreamFailed,
+    props<{ streamUrl: string, reason: StreamValidationFailureReason, error: any }>()
+)

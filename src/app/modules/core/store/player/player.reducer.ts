@@ -7,12 +7,17 @@ import {
   audioPaused,
   fetchStreamInfoStart,
   fetchStreamInfoSucceeded,
-  fetchStreamInfoFailed
+  fetchStreamInfoFailed,
+  validateStreamStart,
+  validateStreamSucceeded,
+  validateStreamFailed,
+  validateStreamSubmit
 } from './player-actions';
 import { initialPlayerState } from '../../models/player/initial-player-state';
 import { StreamInfoStatus } from '../../models/player/stream-info-status';
 import { PlayerStatus } from '../../models/player/player-status';
 import { PlayerState } from '../../models/player/player-state';
+import { StreamValidityState } from '../../models/player/stream-validity-state';
 
 const reducer = createReducer(
   initialPlayerState,
@@ -20,7 +25,7 @@ const reducer = createReducer(
     ...state,
     streamInfo: null,
     streamInfoStatus: StreamInfoStatus.NotInitialized,
-    currentStation: station,
+    currentStation: station
   })),
   on(playAudioStart, state => ({
     ...state,
@@ -53,6 +58,45 @@ const reducer = createReducer(
     ...state,
     streamInfo: null,
     streamInfoStatus: StreamInfoStatus.Error
+  })),
+  on(validateStreamSubmit, (state, { streamUrl }) => ({
+    ...state,
+    validatedStreams: new Map([
+      ...state.validatedStreams, [
+        streamUrl,
+        new StreamValidityState(
+          state.validatedStreams.has(streamUrl)
+            ? state.validatedStreams.get(streamUrl).inProgress
+            : false,
+          state.validatedStreams.has(streamUrl)
+            ? state.validatedStreams.get(streamUrl).validatedUrl
+            : null,
+          null
+        )
+      ]
+    ])
+  })),
+  on(validateStreamStart, (state, { streamUrl }) => ({
+    ...state,
+    validatedStreams: new Map([
+      ...state.validatedStreams,
+      [ streamUrl, new StreamValidityState(true, null, null) ]
+    ])
+  })),
+  on(validateStreamSucceeded, (state, { streamUrl, validatedUrl }) => ({
+    ...state,
+    validatedStreams: new Map([
+      ...state.validatedStreams,
+      [ streamUrl, new StreamValidityState(false, validatedUrl, null) ],
+      [ validatedUrl, new StreamValidityState(false, validatedUrl, null) ]
+    ])
+  })),
+  on(validateStreamFailed, (state, { streamUrl, reason }) => ({
+    ...state,
+    validatedStreams: new Map([
+      ...state.validatedStreams,
+      [ streamUrl, new StreamValidityState(false, null, reason)]
+    ])
   })),
 );
 

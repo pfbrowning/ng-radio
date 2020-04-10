@@ -13,10 +13,6 @@ export class AudioElement {
     public error = new EventEmitter<any>();
     public paused = new EventEmitter<void>();
 
-    public get src(): string {
-        return this.audio.src;
-    }
-
     public set src(value: string) {
         this.audio.src = value;
     }
@@ -27,5 +23,9 @@ export class AudioElement {
 
     public pause(): void {
         this.audio.pause();
+    }
+
+    public set muted(value: boolean) {
+        this.audio.muted = value;
     }
 }

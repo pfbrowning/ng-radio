@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { AudioElementToken } from '../injection-tokens/audio-element-token';
 import { NotificationService } from '../services/notification.service';
 import { Severities } from '../models/notifications/severities';
-import { AudioElement } from './audio-element';
+import { Actions, ofType } from '@ngrx/effects';
+import { audioPaused } from '../store/player/player-actions';
 import * as NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
@@ -12,11 +12,11 @@ import * as NoSleep from 'nosleep.js';
 @Injectable()
 export class KeepAwakeService {
   constructor(
+    private actions$: Actions,
     private notificationService: NotificationService,
-    @Inject(AudioElementToken) private audio: AudioElement,
     @Inject(NoSleepToken) private noSleep: NoSleep) {
-    // Disable nosleep when the audio stops, regardless of why
-    this.audio.paused.subscribe(() => this.disable());
+    // Disable nosleep when the audio stops
+    this.actions$.pipe(ofType(audioPaused)).subscribe(() => this.disable());
   }
 
   private enabled = new BehaviorSubject<boolean>(false);

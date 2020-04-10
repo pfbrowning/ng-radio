@@ -62,10 +62,19 @@ ng serve --open
   * Favorite station edits
   * Search by country and any other Radio Browser API criteria which makes sense
   * Favorite station tags
+* Bugs
+  * Favorite button not showing in mat-menu
 * Chores
+  * Service refactor: should StreamValidatorService be split into multiple services?
+  * Show loading indicator while validating stream
+  * Prevent accidental audio streaming through CORS proxy
   * Show a loading spinner in place of the main app content while waiting for the config to load
+  * Turn off sleep timer on audio pause
   * Wait until after initial change detection to show notifications
   * Config observable
+  * Flex styling of player bar: grow to take up available with for song & station title
   * Partition core/services directory
+  * Either type for stream validator logic
   * Package up reusable things and deploy to npm
     * setAltSrc
+    * Either

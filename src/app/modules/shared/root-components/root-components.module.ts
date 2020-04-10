@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { ToasterContainerComponent } from './components/toaster-container/toaster-container.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -25,19 +27,22 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     MatToolbarModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ToastModule
   ],
   declarations: [
     ResponsiveSidenavComponent,
     PlayerBarComponent,
     PlayerBarStationInfoComponent,
-    SidenavComponent
+    SidenavComponent,
+    ToasterContainerComponent
   ],
   exports: [
     ResponsiveSidenavComponent,
     PlayerBarComponent,
     PlayerBarStationInfoComponent,
-    SidenavComponent
+    SidenavComponent,
+    ToasterContainerComponent
   ]
 })
 export class RootComponentsModule { }
