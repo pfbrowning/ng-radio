@@ -34,7 +34,7 @@ export const playAudioSucceeded = createAction(
 
 export const playAudioFailed = createAction(
     PlayerActions.PlayAudioFailed,
-    props<{ error: any }>()
+    props<{ station: Station, error: any }>()
 );
 
 export const pauseAudioSubmit = createAction(
@@ -77,5 +77,5 @@ export const validateStreamSucceeded = createAction(
 
 export const validateStreamFailed = createAction(
     PlayerActions.ValidateStreamFailed,
-    props<{ streamUrl: string, reason: StreamValidationFailureReason, error: any }>()
+    props<{ streamUrl: string, reason: StreamValidationFailureReason, error: any, details: object }>()
 );

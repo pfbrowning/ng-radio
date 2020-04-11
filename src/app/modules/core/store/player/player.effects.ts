@@ -13,7 +13,8 @@ import {
   selectCurrentStationAndStreamInfo,
   selectStreamInfo,
   selectCurrentStationValidationState,
-  selectCurrentStationUrlAndItsValidationState
+  selectCurrentStationUrlAndItsValidationState,
+  selectCurrentStation
 } from './player.selectors';
 import {
   selectStation,
@@ -36,6 +37,8 @@ import { CurrentTimeService } from '../../services/current-time.service';
 import { AudioElement } from '../../models/player/audio-element';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import { StreamValidatorService } from '../../services/player/stream-validator.service';
+import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
+import { LoggingService } from '../../services/logging.service';
 import isBlank from 'is-blank';
 import isEqual from 'lodash/isEqual';
 
@@ -45,6 +48,7 @@ export class PlayerEffects {
     private actions$: Actions,
     private store: Store<RootState>,
     private notificationService: NotificationService,
+    private loggingService: LoggingService,
     private streamInfoService: StreamInfoService,
     private configService: ConfigService,
     private titleService: Title,
@@ -120,8 +124,9 @@ export class PlayerEffects {
     switchMap(action => this.streamValidatorService.validateStream(action.streamUrl).pipe(
       map(validatedUrl => validateStreamSucceeded({streamUrl: action.streamUrl, validatedUrl})),
       catchError(error => of(validateStreamFailed({
+        details: { ...error, reason: undefined, error: undefined },
         streamUrl: action.streamUrl,
-        reason: error.failureReason,
+        reason: error.reason || StreamValidationFailureReason.NoReasonGiven,
         error: error.error
       })))
     ))
@@ -129,9 +134,10 @@ export class PlayerEffects {
 
   playStation$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioStart),
-    switchMap(() => from(this.audio.play()).pipe(
+    withLatestFrom(this.store.pipe(select(selectCurrentStation))),
+    switchMap(([action, station]) => from(this.audio.play()).pipe(
       map(() => playAudioSucceeded()),
-      catchError(error => of(playAudioFailed({error})))
+      catchError(error => of(playAudioFailed({error, station})))
     ))
   ));
 
@@ -145,9 +151,19 @@ export class PlayerEffects {
     map(() => pauseAudioSubmit())
   ));
 
-  notifyPlayAudioFailed$ = createEffect(() => this.actions$.pipe(
+  notifyLogPlayAudioFailed$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioFailed),
-    tap(action => this.notificationService.notify(Severities.Error, 'Failed To Play Audio', action.error.message))
+    tap(({station, error}) => {
+      this.notificationService.notify(Severities.Error, 'Failed To Play Audio', error.message);
+      this.loggingService.logWarning('Failed To Play Audio', { station, error });
+    })
+  ), { dispatch: false });
+
+  logFailedToValidateStream$ = createEffect(() => this.actions$.pipe(
+    ofType(validateStreamFailed),
+    tap(({streamUrl, reason, error, details}) => 
+      this.loggingService.logWarning('Failed To Validate Stream', { streamUrl, reason, error, details })
+    )
   ), { dispatch: false });
 
   fetchOnPlaySucceeded$ = createEffect(() => this.actions$.pipe(

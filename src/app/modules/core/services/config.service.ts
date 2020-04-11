@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap, catchError, map } from 'rxjs/operators';
+import { tap, catchError, map, filter, take } from 'rxjs/operators';
 import { forkJoin, throwError, of, Observable } from 'rxjs';
 import { AppConfig } from '../models/config/app-config';
 import { environment } from '@environment';
+import { Store, select } from '@ngrx/store';
+import { RootState } from '../models/root-state';
+import { selectConfig } from '@core/store/config/selectors';
 import merge from 'lodash/merge';
 
 /** Abstraction layer for configuration.  Fetches any necessary configuration files
@@ -11,7 +14,7 @@ import merge from 'lodash/merge';
  * injected by anybody who needs it. */
 @Injectable()
 export class ConfigService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private store: Store<RootState>) {}
 
   private _appConfig: AppConfig;
 
@@ -19,6 +22,12 @@ export class ConfigService {
   public get appConfig(): AppConfig {
     return this._appConfig;
   }
+
+  public appConfig$ = this.store.pipe(
+    select(selectConfig),
+    filter(config => config != null),
+    take(1)
+  )
 
   public fetch(): Observable<AppConfig> {
     // Set headers to disable caching: We always want clients to fetch the latest config values
