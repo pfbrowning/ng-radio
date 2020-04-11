@@ -52,8 +52,6 @@ ng serve --open
   
 ## Backlog
 * Features
-  * Validate & preprocess URL before playing
-    * Download & read playlist file (pls, m3u, etc) via CORS proxy
   * Show stream info for favorites, search results, and suggested
   * Browser-based audio recording
   * Favorite station edits

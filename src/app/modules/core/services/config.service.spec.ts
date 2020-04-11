@@ -3,6 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfig } from '../models/config/app-config';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '../models/initial-root-state';
 
 describe('ConfigService', () => {
   let configService: ConfigService;
@@ -14,7 +16,8 @@ describe('ConfigService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        ConfigService
+        ConfigService,
+        provideMockStore({initialState: initialRootState})
       ]
     });
 
@@ -31,6 +34,7 @@ describe('ConfigService', () => {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',
+      corsProxyUrl: 'corsProxyApi',
       metadataRefreshInterval: 1,
       metadataFetchTimeout: 2,
       appInsightsInstrumentationKey: null,
@@ -75,28 +79,30 @@ describe('ConfigService', () => {
   it('should merge local config with app config', (done: DoneFn) => {
     // Arrange
     const appConfig = {
-      metadataApiUrl: 'testapi',
-      radioBrowserApiUrl: 'testradiobrowserapi',
-      favoriteStationsApiUrl: 'testFavoritesApi',
-      metadataRefreshInterval: 1,
-      metadataFetchTimeout: 2,
-      authConfig: {
+      'metadataApiUrl': 'testapi',
+      'radioBrowserApiUrl': 'testradiobrowserapi',
+      'favoriteStationsApiUrl': 'testFavoritesApi',
+      'metadataRefreshInterval': 1,
+      'metadataFetchTimeout': 2,
+      'authConfig': {
         'issuer': 'app issuer',
         'clientId': 'app client',
         'logoutUrl': null
       }
     };
     const localConfig = {
-      appInsightsInstrumentationKey: 'app insights key value',
-      authConfig: {
-        logoutUrl: 'some place',
-        clientId: 'local client'
+      'appInsightsInstrumentationKey': 'app insights key value',
+      'corsProxyUrl': 'testCorsProxy',
+      'authConfig': {
+        'logoutUrl': 'some place',
+        'clientId': 'local client'
       }
     };
-    const mergedConfig = {
+    const mergedConfig: AppConfig = {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',
+      corsProxyUrl: 'testCorsProxy',
       metadataRefreshInterval: 1,
       metadataFetchTimeout: 2,
       appInsightsInstrumentationKey: 'app insights key value',
@@ -125,11 +131,12 @@ describe('ConfigService', () => {
 
   it('should resolve app config if no local config is found', (done: DoneFn) => {
     // Arrange
-    const appConfig = {
+    const appConfig: AppConfig = {
       metadataApiUrl: 'testapi',
       appInsightsInstrumentationKey: 'app insights key value',
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',
+      corsProxyUrl: 'testCorsProxy',
       metadataRefreshInterval: 1,
       metadataFetchTimeout: 2,
       authConfig: {}

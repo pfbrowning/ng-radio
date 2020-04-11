@@ -1,10 +1,11 @@
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, of } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
 import { OAuthEvent } from 'angular-oauth2-oidc';
 import { LoggingService } from '../services/logging.service';
 import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
+import { StreamValidatorService } from '../services/player/stream-validator.service';
 
 export function createStationLookupServiceSpy(): any {
   const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
@@ -56,12 +57,14 @@ export function createOAuthServiceSpy(): any {
 
 export function createConfigServiceSpy(): any {
   const spy = jasmine.createSpyObj('configService', ['initialize']);
-  spy['appConfig'] = {
+  const appConfig = {
     'metadataApiUrl': 'test.com',
     'radioBrowserApiUrl': 'test.com',
     'metadataRefreshInterval': 15000,
     'metadataFetchTimeout': 10
   };
+  spy['appConfig'] = appConfig;
+  spy['appConfig$'] = of(appConfig);
   spy['loaded$'] = new Subject();
   spy['initialized'] = true;
   return spy;
@@ -81,4 +84,8 @@ export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
   spy['messageObserver'] = new Subject();
   spy['clearObserver'] = new Subject();
   return spy;
+}
+
+export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
+  return jasmine.createSpyObj('streamValidatorService', ['validate'])
 }
