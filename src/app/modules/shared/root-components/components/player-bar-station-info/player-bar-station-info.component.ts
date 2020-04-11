@@ -31,7 +31,7 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked {
   public streamInfoTitle$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoTitle));
   public currentStationTitle$ = this.store.pipe(select(PlayerSelectors.selectCurrentStationTitle));
   public streamInfoPresent$ = this.store.pipe(select(PlayerSelectors.selectIsStreamInfoPresent));
-  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation))
+  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 
   ngAfterViewChecked() {
     /* Check and apply marquee classes immediately after each change detection operation because

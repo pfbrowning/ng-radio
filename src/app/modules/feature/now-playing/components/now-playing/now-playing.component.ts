@@ -41,7 +41,7 @@ export class NowPlayingComponent {
   public streamInfoTitle$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoTitle));
   public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoStatus));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
-  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation))
+  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 
   public onImgError(img: HTMLImageElement, altSrc: string) {
     setAltSrc(img, altSrc);

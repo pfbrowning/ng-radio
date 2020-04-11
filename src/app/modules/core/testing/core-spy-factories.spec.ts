@@ -87,5 +87,5 @@ export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
 }
 
 export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
-  return jasmine.createSpyObj('streamValidatorService', ['validate'])
+  return jasmine.createSpyObj('streamValidatorService', ['validate']);
 }

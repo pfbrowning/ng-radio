@@ -161,7 +161,7 @@ export class PlayerEffects {
 
   logFailedToValidateStream$ = createEffect(() => this.actions$.pipe(
     ofType(validateStreamFailed),
-    tap(({streamUrl, reason, error, details}) => 
+    tap(({streamUrl, reason, error, details}) =>
       this.loggingService.logWarning('Failed To Validate Stream', { streamUrl, reason, error, details })
     )
   ), { dispatch: false });

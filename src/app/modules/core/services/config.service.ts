@@ -27,7 +27,7 @@ export class ConfigService {
     select(selectConfig),
     filter(config => config != null),
     take(1)
-  )
+  );
 
   public fetch(): Observable<AppConfig> {
     // Set headers to disable caching: We always want clients to fetch the latest config values

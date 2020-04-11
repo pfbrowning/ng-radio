@@ -69,29 +69,29 @@ export class StreamValidatorService {
           });
         }
       })
-    )
+    );
   }
 
   private readPlaylistIfNecessary(streamUrl: string): Observable<string> {
-    if(streamUrl.endsWith('.pls')) {
+    if (streamUrl.endsWith('.pls')) {
       return this.playlistReaderService.readPls(streamUrl).pipe(
-        switchMap(response => isBlank(response) ? throwError("Couldn't process pls file") : of(response)),
+        switchMap(response => isBlank(response) ? throwError('Couldn\'t process pls file') : of(response)),
         catchError(error => throwError({
           streamUrl,
           error,
           reason: StreamValidationFailureReason.FailedToLoadPls
         }))
-      )
+      );
     }
     if (streamUrl.endsWith('.m3u') || streamUrl.endsWith('m3u8')) {
       return this.playlistReaderService.readM3uLike(streamUrl).pipe(
-        switchMap(response => isBlank(response) ? throwError("Couldn't process m3u-like file") : of(response)),
+        switchMap(response => isBlank(response) ? throwError('Couldn\'t process m3u-like file') : of(response)),
         catchError(error => throwError({
           streamUrl,
           error,
           reason: StreamValidationFailureReason.FailedToLoadM3uLike
         }))
-      )
+      );
     }
     return of(streamUrl);
   }
