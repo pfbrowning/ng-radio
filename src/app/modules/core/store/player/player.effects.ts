@@ -32,10 +32,10 @@ import {
 } from './player-actions';
 import { RootState } from '../../models/root-state';
 import { goToSleep } from '../sleep-timer/sleep-timer.actions';
-import { StreamValidatorService } from '../../services/stream-validator.service';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { AudioElement } from '../../models/player/audio-element';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
+import { StreamValidatorService } from '../../services/player/stream-validator.service';
 import isBlank from 'is-blank';
 import isEqual from 'lodash/isEqual';
 
