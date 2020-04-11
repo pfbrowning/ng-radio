@@ -11,6 +11,9 @@
       <div class="now-playing">
         <div [ngSwitch]="playerStatus$ | async" class="title">
           <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
+          <ng-container *ngSwitchCase="playerStatus.Stopped">
+              <ng-container *ngIf="validatingCurrent$ | async">Validating Stream...</ng-container>
+          </ng-container>
           <ng-container *ngSwitchCase="playerStatus.Playing">
               <ng-container *ngIf="streamInfoPresent$ | async; else noStreamInfo">
                   {{ streamInfoTitle$ | async }}
@@ -42,7 +45,7 @@
         <li class="play-pause">
           <button mat-raised-button *ngIf="(playerStatus$ | async) == playerStatus.Stopped; else notStopped" (click)="onPlayClicked()" color="primary">Play</button>
           <ng-template #notStopped>
-            <button mat-raised-button [disabled]="(playerStatus$ | async) == playerStatus.LoadingAudio" (click)="onPauseClicked()" color="primary">Pause</button>
+            <button mat-raised-button [disabled]="(playerStatus$ | async) == playerStatus.LoadingAudio || (validatingCurrent$ | async)" (click)="onPauseClicked()" color="primary">Pause</button>
           </ng-template>
         </li>
         <li>

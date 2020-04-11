@@ -76,3 +76,8 @@ export const selectCurrentStationUrlAndItsValidationState = createSelector(
     selectCurrentStationValidationState,
     (url, validationState) => ({url, validationState})
 );
+
+export const selectIsValidationInProgressForCurrentStation = createSelector(
+    selectCurrentStationValidationState,
+    vs => vs != null && vs.inProgress
+);

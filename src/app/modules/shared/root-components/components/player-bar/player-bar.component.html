@@ -30,17 +30,21 @@
   <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
     <mat-icon>more_vert</mat-icon>
   </button>
-  <ng-container [ngSwitch]="playerStatus$ | async">
-    <button *ngSwitchCase="playerStatus.Stopped" mat-fab color="accent" class="play-pause-button" (click)="onPlayClicked()" matTooltip="Play the selected station" type="button">
-      <mat-icon>play_arrow</mat-icon>
-    </button>
-    <button *ngSwitchCase="playerStatus.Playing" mat-fab color="accent" class="play-pause-button" (click)="onPauseClicked()" matTooltip="Pause the currently playing station" type="button">
-      <mat-icon>pause</mat-icon>
-    </button>
-    <div *ngSwitchCase="playerStatus.LoadingAudio" class="indicator-icon loading-audio-spinner" matTooltip="Loading Audio">
+  <ng-container *ngIf="(playerStatus$ | async) == playerStatus.LoadingAudio || (validatingCurrent$ | async); else notLoading">
+    <div class="indicator-icon loading-audio-spinner" matTooltip="Loading Audio">
       <mat-spinner diameter="25"></mat-spinner>
     </div>
   </ng-container>
+  <ng-template #notLoading>
+    <ng-container [ngSwitch]="playerStatus$ | async">
+      <button *ngSwitchCase="playerStatus.Stopped" mat-fab color="accent" class="play-pause-button" (click)="onPlayClicked()" matTooltip="Play the selected station" type="button">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button *ngSwitchCase="playerStatus.Playing" mat-fab color="accent" class="play-pause-button" (click)="onPauseClicked()" matTooltip="Pause the currently playing station" type="button">
+        <mat-icon>pause</mat-icon>
+      </button>
+    </ng-container>
+  </ng-template>  
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">

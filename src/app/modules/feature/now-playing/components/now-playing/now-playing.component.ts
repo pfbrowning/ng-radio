@@ -12,16 +12,11 @@ import {
 import { KeepAwakeService } from '@core';
 import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import {
-  selectCurrentStation,
-  selectStreamInfo,
-  selectStreamInfoStatus,
-  selectPlayerStatus,
   playAudioStart,
   pauseAudioSubmit,
-  selectStreamInfoTitle,
-  selectIsStreamInfoPresent
 } from '@core/store/player';
 import { PlayerStatus, StreamInfoStatus } from '@core/models/player';
+import * as PlayerSelectors from '@core/store/player/selectors';
 
 @Component({
   templateUrl: './now-playing.component.html',
@@ -39,13 +34,14 @@ export class NowPlayingComponent {
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
-  public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
-  public currentStation$ = this.store.pipe(select(selectCurrentStation));
-  public streamInfoPresent$ = this.store.pipe(select(selectIsStreamInfoPresent));
-  public streamInfo$ = this.store.pipe(select(selectStreamInfo));
-  public streamInfoTitle$ = this.store.pipe(select(selectStreamInfoTitle));
-  public streamInfoStatus$ = this.store.pipe(select(selectStreamInfoStatus));
+  public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
+  public currentStation$ = this.store.pipe(select(PlayerSelectors.selectCurrentStation));
+  public streamInfoPresent$ = this.store.pipe(select(PlayerSelectors.selectIsStreamInfoPresent));
+  public streamInfo$ = this.store.pipe(select(PlayerSelectors.selectStreamInfo));
+  public streamInfoTitle$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoTitle));
+  public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoStatus));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
+  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation))
 
   public onImgError(img: HTMLImageElement, altSrc: string) {
     setAltSrc(img, altSrc);

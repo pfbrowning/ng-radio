@@ -9,15 +9,7 @@ import {
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
-import {
-  selectStreamInfoStatus,
-  selectStreamInfoTitle,
-  selectCurrentStationTitle,
-  selectIsStreamInfoPresent,
-  selectPlayerStatus
-} from '@core/store/player';
-
-
+import * as PlayerSelectors from '@core/store/player/selectors';
 
 @Component({
   selector: 'blr-player-bar-station-info',
@@ -34,11 +26,12 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked {
   public playerStatus = PlayerStatus;
   public titleMarquee = false;
   public stationMarquee = false;
-  public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
-  public streamInfoStatus$ = this.store.pipe(select(selectStreamInfoStatus));
-  public streamInfoTitle$ = this.store.pipe(select(selectStreamInfoTitle));
-  public currentStationTitle$ = this.store.pipe(select(selectCurrentStationTitle));
-  public streamInfoPresent$ = this.store.pipe(select(selectIsStreamInfoPresent));
+  public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
+  public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoStatus));
+  public streamInfoTitle$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoTitle));
+  public currentStationTitle$ = this.store.pipe(select(PlayerSelectors.selectCurrentStationTitle));
+  public streamInfoPresent$ = this.store.pipe(select(PlayerSelectors.selectIsStreamInfoPresent));
+  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation))
 
   ngAfterViewChecked() {
     /* Check and apply marquee classes immediately after each change detection operation because

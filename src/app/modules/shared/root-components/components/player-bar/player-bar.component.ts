@@ -5,7 +5,6 @@ import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player
 import { Store, select } from '@ngrx/store';
 import { KeepAwakeService, RootState } from '@core';
 import { PlayerStatus } from '@core/models/player';
-import { selectPlayerStatus, selectCurrentStation, playAudioStart, pauseAudioSubmit } from '@core/store/player';
 import {
   selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState,
@@ -15,6 +14,8 @@ import {
 } from '@core/store/favorite-stations';
 import { selectMinutesUntilSleep, setSleepTimerSubmit, clearSleepTimer } from '@core/store/sleep-timer';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
+import * as PlayerActions from '@core/store/player/actions';
+import * as PlayerSelectors from '@core/store/player/selectors';
 
 @Component({
   selector: 'blr-player-bar',
@@ -34,9 +35,10 @@ export class PlayerBarComponent {
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
-  public playerStatus$ = this.store.pipe(select(selectPlayerStatus));
-  public currentStation$ = this.store.pipe(select(selectCurrentStation));
+  public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
+  public currentStation$ = this.store.pipe(select(PlayerSelectors.selectCurrentStation));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
+  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 
   public onImgError(img: HTMLImageElement) {
     setAltSrc(img, '/assets/images/radio.svg');
@@ -81,10 +83,10 @@ export class PlayerBarComponent {
   }
 
   public onPlayClicked(): void {
-    this.store.dispatch(playAudioStart());
+    this.store.dispatch(PlayerActions.playAudioStart());
   }
 
   public onPauseClicked(): void {
-    this.store.dispatch(pauseAudioSubmit());
+    this.store.dispatch(PlayerActions.pauseAudioSubmit());
   }
 }

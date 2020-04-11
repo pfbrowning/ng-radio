@@ -1,5 +1,8 @@
 <div #title [ngSwitch]="playerStatus$ | async" class="title" [class.marquee]="titleMarquee">
     <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
+    <ng-container *ngSwitchCase="playerStatus.Stopped">
+        <ng-container *ngIf="validatingCurrent$ | async">Validating Stream...</ng-container>
+    </ng-container>
     <ng-container *ngSwitchCase="playerStatus.Playing">
         <ng-container *ngIf="streamInfoPresent$ | async; else noStreamInfo">
             {{ streamInfoTitle$ | async }}

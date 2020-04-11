@@ -24,8 +24,9 @@ const reducer = createReducer(
   on(selectStation, (state, {station}) => ({
     ...state,
     streamInfo: null,
+    currentStation: station,
     streamInfoStatus: StreamInfoStatus.NotInitialized,
-    currentStation: station
+    playerStatus: PlayerStatus.Stopped
   })),
   on(playAudioStart, state => ({
     ...state,

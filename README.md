@@ -54,9 +54,6 @@ ng serve --open
 * Features
   * Validate & preprocess URL before playing
     * Download & read playlist file (pls, m3u, etc) via CORS proxy
-    * Attempt to load stream via audio element
-      * Add missing trailing `/;` for stations which fail to play
-      * Attempt to load https version of http URLs
   * Show stream info for favorites, search results, and suggested
   * Browser-based audio recording
   * Favorite station edits
@@ -66,7 +63,6 @@ ng serve --open
   * Favorite button not showing in mat-menu
 * Chores
   * Service refactor: should StreamValidatorService be split into multiple services?
-  * Show loading indicator while validating stream
   * Prevent accidental audio streaming through CORS proxy
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Turn off sleep timer on audio pause
@@ -75,6 +71,7 @@ ng serve --open
   * Flex styling of player bar: grow to take up available with for song & station title
   * Partition core/services directory
   * Either type for stream validator logic
+  * Refactor selector import / export logic
   * Package up reusable things and deploy to npm
     * setAltSrc
     * Either
