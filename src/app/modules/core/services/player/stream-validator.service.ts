@@ -73,21 +73,26 @@ export class StreamValidatorService {
   }
 
   private readPlaylistIfNecessary(streamUrl: string): Observable<string> {
-    if (streamUrl.endsWith('.pls')) {
-      return this.playlistReaderService.readPls(streamUrl).pipe(
+    // If we're reading a playlist file, omit any provided querystring
+    const url = new URL(streamUrl);
+    const originWithPath = url.origin + url.pathname;
+    if (originWithPath.endsWith('.pls')) {
+      return this.playlistReaderService.readPls(originWithPath).pipe(
         switchMap(response => isBlank(response) ? throwError('Couldn\'t process pls file') : of(response)),
         catchError(error => throwError({
           streamUrl,
+          originWithPath,
           error,
           reason: StreamValidationFailureReason.FailedToLoadPls
         }))
       );
     }
-    if (streamUrl.endsWith('.m3u') || streamUrl.endsWith('m3u8')) {
-      return this.playlistReaderService.readM3uLike(streamUrl).pipe(
+    if (originWithPath.endsWith('.m3u') || originWithPath.endsWith('m3u8')) {
+      return this.playlistReaderService.readM3uLike(originWithPath).pipe(
         switchMap(response => isBlank(response) ? throwError('Couldn\'t process m3u-like file') : of(response)),
         catchError(error => throwError({
           streamUrl,
+          originWithPath,
           error,
           reason: StreamValidationFailureReason.FailedToLoadM3uLike
         }))

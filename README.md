@@ -60,7 +60,6 @@ ng serve --open
 * Bugs
   * Favorite button not showing in mat-menu
 * Chores
-  * Service refactor: should StreamValidatorService be split into multiple services?
   * Prevent accidental audio streaming through CORS proxy
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Turn off sleep timer on audio pause
@@ -73,3 +72,4 @@ ng serve --open
   * Package up reusable things and deploy to npm
     * setAltSrc
     * Either
+  * Move build pipeline to Github actions
