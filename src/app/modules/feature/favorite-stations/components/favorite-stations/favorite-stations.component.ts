@@ -18,7 +18,6 @@ export class FavoriteStationsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<RootState>, private confirmationService: ConfirmationService) { }
 
   public columns = ['name', 'now-playing', 'actions'];
-  public streamInfoStatus = StreamInfoStatus;
 
   public stationRows$ = this.store.pipe(select(selectFavoriteStationRows));
   public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));

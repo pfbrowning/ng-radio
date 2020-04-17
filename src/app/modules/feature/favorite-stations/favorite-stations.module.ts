@@ -5,12 +5,14 @@ import { FavoriteStationsRoutingModule } from './favorite-stations-routing.modul
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SharedModule } from '@shared';
 
 @NgModule({
   declarations: [FavoriteStationsComponent],
   imports: [
     CommonModule,
     FavoriteStationsRoutingModule,
+    SharedModule,
     MatTableModule,
     MatButtonModule,
     MatProgressSpinnerModule
