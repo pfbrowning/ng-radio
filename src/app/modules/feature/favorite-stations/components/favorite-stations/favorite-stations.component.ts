@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
 import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
-import { Station, StreamInfoStatus } from '@core/models/player';
+import { Station } from '@core/models/player';
 import { selectStation } from '@core/store/player';
 import { take } from 'rxjs/operators';
 import { PlayerActions, PlayerSelectors } from '@core/store/player';

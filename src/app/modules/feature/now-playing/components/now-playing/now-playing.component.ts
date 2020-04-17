@@ -2,15 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { setAltSrc } from '@utilities';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
-import {
-  addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested,
-  selectIsProcessingFavoritesForCurrentStation,
-  selectIsCurrentStationInFavorites,
-  selectCurrentStationFavoritesProcessingState
-} from '@core/store/favorite-stations';
 import { KeepAwakeService } from '@core';
-import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@core/store/sleep-timer';
+import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerStatus, StreamInfoStatus } from '@core/models/player';
 import * as PlayerSelectors from '@core/store/player/selectors';
 

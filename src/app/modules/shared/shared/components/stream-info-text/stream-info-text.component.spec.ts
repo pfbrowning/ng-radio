@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StreamInfoTextComponent } from './stream-info-text.component';
-import { NowPlaying, StreamInfoStatus, PlayerStatus } from '@core/models/player';
-import { getElementTextBySelector } from '@utilities/testing';
-import { By } from '@angular/platform-browser';
+import { NowPlaying, StreamInfoStatus } from '@core/models/player';
 import theoretically from 'jasmine-theories';
 
 describe('StreamInfoTextComponent', () => {
@@ -25,7 +23,7 @@ describe('StreamInfoTextComponent', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
-  
+
   const streamInfoTemplateInput = [
     {
       streamInfo: {

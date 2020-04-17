@@ -58,7 +58,7 @@ describe('NowPlayingComponent', () => {
 
   afterEach(() => {
     store.resetSelectors();
-  })
+  });
 
   it('should create', () => {
     fixture.detectChanges();

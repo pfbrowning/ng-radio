@@ -31,12 +31,12 @@ export const currentStreamInfo = createSelector(
 
 export const currentNowPlaying = createSelector(
     currentStreamInfo,
-    streamInfo => streamInfo.nowPlaying
+    current => current.nowPlaying
 );
 
 export const selectCurrentStationTitle = createSelector(
     selectCurrentStation,
-    (station) => station != null ? station.title : null
+    station => station && station.title
 );
 
 export const currentStationAndNowPlaying = createSelector(

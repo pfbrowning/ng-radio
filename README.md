@@ -51,10 +51,8 @@ ng serve --open
 ```
 
 ## Backlog
-* High Priority Chores & Bugs
-  * Consolidate the 'display now playing title based on status' template logic into a component
 * Features
-  * Show stream info for search results
+  * Show 'now playing' for search results
   * Browser-based audio recording
   * Favorite station edits
   * Search by country and any other Radio Browser API criteria which makes sense

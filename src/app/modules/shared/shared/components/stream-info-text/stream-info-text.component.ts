@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Station, StreamInfoStatus } from '@core/models/player';
+import { Component, Input } from '@angular/core';
+import { StreamInfoStatus } from '@core/models/player';
 import { StreamInfo } from '@core/models/player';
 
 @Component({
@@ -9,6 +9,6 @@ import { StreamInfo } from '@core/models/player';
 })
 export class StreamInfoTextComponent {
   @Input() streamInfo: StreamInfo;
-  
+
   public streamInfoStatus = StreamInfoStatus;
 }
