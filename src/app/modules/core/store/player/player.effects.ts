@@ -115,8 +115,8 @@ export class PlayerEffects {
     ofType(validateStreamSubmit),
     withLatestFrom(this.store.pipe(select(selectCurrentStationValidationState))),
     // Start validation only if it's not already validated and not currently in progress
-    filter(([action, vs]) => vs == null || (vs.validatedUrl == null && !vs.inProgress)),
-    map(([action, vs]) => validateStreamStart({streamUrl: action.streamUrl}))
+    filter(([, vs]) => vs == null || (vs.validatedUrl == null && !vs.inProgress)),
+    map(([action]) => validateStreamStart({streamUrl: action.streamUrl}))
   ));
 
   validateStream$ = createEffect(() => this.actions$.pipe(
@@ -135,7 +135,7 @@ export class PlayerEffects {
   playStation$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioStart),
     withLatestFrom(this.store.pipe(select(selectCurrentStation))),
-    switchMap(([action, station]) => from(this.audio.play()).pipe(
+    switchMap(([, station]) => from(this.audio.play()).pipe(
       map(() => playAudioSucceeded()),
       catchError(error => of(playAudioFailed({error, station})))
     ))
@@ -169,14 +169,14 @@ export class PlayerEffects {
   fetchOnPlaySucceeded$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioSucceeded),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.currentUrlAndFetchInProgressUrls))),
-    filter(([action, {current, fetching}]) => !fetching.includes(current)),
-    map(([action, {current}]) => fetchNowPlayingStart({streamUrl: current}))
+    filter(([, {current, fetching}]) => !fetching.includes(current)),
+    map(([, {current}]) => fetchNowPlayingStart({streamUrl: current}))
   ));
 
   fetchOnListSelected$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.selectStreamInfoUrls),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.nonIntervalOrFetchingStreamInfoUrls))),
-    switchMap(([action, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({streamUrl})))
+    switchMap(([, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({streamUrl})))
   ));
 
   startFetchInterval$ = createEffect(() => this.actions$.pipe(
@@ -211,7 +211,7 @@ export class PlayerEffects {
     filter(([{streamUrl}, {listed, current, status}]) =>
       listed.includes(streamUrl) || (current === streamUrl && status === PlayerStatus.Playing)
     ),
-    map(([{streamUrl}, selected]) => PlayerActions.fetchNowPlayingStart({streamUrl}))
+    map(([{streamUrl}]) => PlayerActions.fetchNowPlayingStart({streamUrl}))
   ));
 
   fetchStreamInfo$ = createEffect(() => this.actions$.pipe(

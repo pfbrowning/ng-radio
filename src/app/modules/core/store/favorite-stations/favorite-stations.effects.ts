@@ -46,9 +46,9 @@ export class FavoriteStationsEffects {
   addCurrentStationToFavoritesRequested$ = createEffect(() => this.actions$.pipe(
     ofType(addCurrentStationToFavoritesRequested),
     withLatestFrom(this.store.pipe(select(selectIsCurrentStationInFavorites))),
-    filter(([action, isFavorite]) => !isFavorite),
+    filter(([, isFavorite]) => !isFavorite),
     withLatestFrom(this.store.pipe(select(selectCurrentStation))),
-    map(([action, station]) => addToFavoritesStart({station}))
+    map(([, station]) => addToFavoritesStart({station}))
   ));
 
   addFavorite$ = createEffect(() => this.actions$.pipe(
@@ -64,9 +64,9 @@ export class FavoriteStationsEffects {
   removeCurrentStationFromFavoritesRequested$ = createEffect(() => this.actions$.pipe(
     ofType(removeCurrentStationFromFavoritesRequested),
     withLatestFrom(this.store.pipe(select(selectIsCurrentStationInFavorites))),
-    filter(([action, isFavorite]) => isFavorite),
+    filter(([, isFavorite]) => isFavorite),
     withLatestFrom(this.store.pipe(select(selectCurrentFavoriteStationId))),
-    map(([action, stationId]) => removeFromFavoritesStart({stationId}))
+    map(([, stationId]) => removeFromFavoritesStart({stationId}))
   ));
 
   removeFavorite$ = createEffect(() => this.actions$.pipe(
@@ -82,7 +82,7 @@ export class FavoriteStationsEffects {
   fetchOnInitialStationSelect$ = createEffect(() => this.actions$.pipe(
     ofType(selectStation),
     withLatestFrom(this.store.pipe(select(selectFavoriteStationsLoadingStatus))),
-    filter(([action, selected]) => !selected.loaded && !selected.inProgress),
+    filter(([, selected]) => !selected.loaded && !selected.inProgress),
     map(() => fetchStationsStart())
   ));
 

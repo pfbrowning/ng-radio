@@ -19,7 +19,7 @@ export class RadioBrowserEffects {
   performSearch$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchStart),
     withLatestFrom(this.store.pipe(select(selectSearchCriteria))),
-    switchMap(([action, criteria]) => this.stationLookupService.search(criteria.nameTerm, criteria.tagTerm).pipe(
+    switchMap(([, criteria]) => this.stationLookupService.search(criteria.nameTerm, criteria.tagTerm).pipe(
         map(results => RadioBrowserActions.searchSucceeded({results})),
         catchError(error => of(RadioBrowserActions.searchFailed({error})))
     ))

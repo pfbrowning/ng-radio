@@ -43,13 +43,13 @@ export class SleepTimerEffects {
   countMinutesUntilSleep$ = createEffect(() => this.actions$.pipe(
     ofType(countMinutesUntilSleep),
     withLatestFrom(this.store.pipe(select(selectSleepTime))),
-    map(([action, sleepTime]) => Math.floor((sleepTime - this.currentTimeService.unix()) / 60000)),
+    map(([, sleepTime]) => Math.floor((sleepTime - this.currentTimeService.unix()) / 60000)),
     map(minutesUntilSleep => setMinutesUntilSleep({minutesUntilSleep}))
   ));
 
   waitToRecountMinutesUntilSleep$ = createEffect(() => this.actions$.pipe(
     ofType(countMinutesUntilSleep),
-    switchMap(action => timer(60000).pipe(
+    switchMap(() => timer(60000).pipe(
         takeUntil(this.actions$.pipe(ofType(sleepTimerSet, clearSleepTimer, goToSleep))),
         map(() => countMinutesUntilSleep())
     ))
