@@ -35,7 +35,8 @@ describe('ConfigService', () => {
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',
       corsProxyUrl: 'corsProxyApi',
-      metadataRefreshInterval: 1,
+      currentStationRefreshInterval: 1,
+      listedStationRefreshInterval: 3,
       metadataFetchTimeout: 2,
       appInsightsInstrumentationKey: null,
       authConfig: {}
@@ -82,8 +83,9 @@ describe('ConfigService', () => {
       'metadataApiUrl': 'testapi',
       'radioBrowserApiUrl': 'testradiobrowserapi',
       'favoriteStationsApiUrl': 'testFavoritesApi',
-      'metadataRefreshInterval': 1,
-      'metadataFetchTimeout': 2,
+      'listedStationRefreshInterval': 1,
+      'currentStationRefreshInterval': 2,
+      'metadataFetchTimeout': 3,
       'authConfig': {
         'issuer': 'app issuer',
         'clientId': 'app client',
@@ -103,8 +105,9 @@ describe('ConfigService', () => {
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',
       corsProxyUrl: 'testCorsProxy',
-      metadataRefreshInterval: 1,
-      metadataFetchTimeout: 2,
+      listedStationRefreshInterval: 1,
+      currentStationRefreshInterval: 2,
+      metadataFetchTimeout: 3,
       appInsightsInstrumentationKey: 'app insights key value',
       authConfig: {
         issuer: 'app issuer',
@@ -137,8 +140,9 @@ describe('ConfigService', () => {
       radioBrowserApiUrl: 'testradiobrowserapi',
       favoriteStationsApiUrl: 'testFavoritesApi',
       corsProxyUrl: 'testCorsProxy',
-      metadataRefreshInterval: 1,
-      metadataFetchTimeout: 2,
+      currentStationRefreshInterval: 1,
+      listedStationRefreshInterval: 2,
+      metadataFetchTimeout: 3,
       authConfig: {}
     };
 

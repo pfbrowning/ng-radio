@@ -18,7 +18,12 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { initialPlayerState, PlayerStatus, Station, StreamInfo, StreamInfoStatus } from '@core/models/player';
+import { initialPlayerState, PlayerStatus, Station, StreamInfoStatus } from '@core/models/player';
+import { NowPlaying } from 'src/app/modules/core/models/player/now-playing';
+import { selectMinutesUntilSleep, SleepTimerSelectors } from '@core/store/sleep-timer';
+import { selectIsProcessingFavoritesForCurrentStation, FavoriteStationsSelectors } from '@core/store/favorite-stations';
+import { PlayerSelectors } from '@core/store/player';
+import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 
 
 describe('PlayerBarComponent', () => {
@@ -59,69 +64,41 @@ describe('PlayerBarComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerBarComponent);
-    component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
-    fixture.detectChanges();
+    store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
+    component = fixture.componentInstance;
   });
 
+  afterEach(() => {
+    store.resetSelectors();
+  })
+
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
-    // Arrange
-    let state: RootState = {
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: new Station(),
-        streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid
-      }
-    };
-    store.setState(state);
-
     for (let i = 300; i >= 0; i--) {
-      // Act: Emit a new minutesUntilSleep value and detect changes
-      state = {
-        ...state,
-        sleepTimer: {
-          ...state.sleepTimer,
-          minutesUntilSleep: i
-        }
-      };
-      store.setState(state);
+      // Act
+      store.overrideSelector(selectMinutesUntilSleep, i);
+      store.refreshState();
       fixture.detectChanges();
+
       // Assert: Ensure that the new value was rendered properly in the template
       expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe(i.toString());
     }
 
     /* Clear the sleep timer and ensure that 'minutes until sleep'
     no longer shows a number. */
-    state = {
-      ...state,
-      sleepTimer: {
-        ...state.sleepTimer,
-        minutesUntilSleep: null
-      }
-    };
-    store.setState(state);
+    store.overrideSelector(selectMinutesUntilSleep, null);
+    store.refreshState();
     fixture.detectChanges();
     expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe('');
   });
 
   it('should update the template to reflect changes in the keepAwake state', () => {
     // Arrange
-    const state: RootState = {
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: new Station(),
-        streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid
-      }
-    };
-    store.setState(state);
     fixture.detectChanges();
     const keepAwakeElement = getElementBySelector<PlayerBarComponent>(fixture, '.keep-awake');
     // Set up a sequence of dummy boolean $enabled values to iterate through
@@ -138,17 +115,6 @@ describe('PlayerBarComponent', () => {
 
   it('should update the pause button on global play & pause', () => {
     // Arrange
-    let state: RootState = {
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: new Station(),
-        streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid
-      }
-    };
-    store.setState(state);
-
     fixture.detectChanges();
     const getPlayPauseBtnText = () => getElementTextBySelector<PlayerBarComponent>(fixture, '.play-pause-button');
     // The 'Play' button should be drawn initially before we start to play something
@@ -156,26 +122,14 @@ describe('PlayerBarComponent', () => {
 
     /* Act & Assert: Simulate a play & pause action and ensure that the correct button
     is rendered in the template accordingly. */
-    state = {
-      ...state,
-      player: {
-        ...state.player,
-        playerStatus: PlayerStatus.Playing
-      }
-    };
-    store.setState(state);
+    store.overrideSelector(PlayerSelectors.selectPlayerStatus, PlayerStatus.Playing);
+    store.refreshState();
     fixture.detectChanges();
 
     expect(getPlayPauseBtnText()).toBe('pause');
 
-    state = {
-      ...state,
-      player: {
-        ...state.player,
-        playerStatus: PlayerStatus.Stopped
-      }
-    };
-    store.setState(state);
+    store.overrideSelector(PlayerSelectors.selectPlayerStatus, PlayerStatus.Stopped);
+    store.refreshState();
     fixture.detectChanges();
 
     expect(getPlayPauseBtnText()).toBe('play_arrow');

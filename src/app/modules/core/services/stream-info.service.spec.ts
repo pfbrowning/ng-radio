@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ConfigService } from '@core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { createOAuthServiceSpy, createConfigServiceSpy } from '@core/testing';
-import { StreamInfo } from '../models/player/stream-info';
+import { NowPlaying } from '../models/player/now-playing';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;
@@ -30,7 +30,7 @@ describe('StreamInfoService', () => {
     getMetadataSpy = jasmine.createSpyObj('getMetadata', ['emit', 'error', 'complete']);
   });
 
-  const testEntries: Array<{rawResponse: object, expectedMapping: StreamInfo }> = [
+  const testEntries: Array<{rawResponse: object, expectedMapping: NowPlaying }> = [
     {
       rawResponse: {
         'title': 'HammerFall - Life Is Now',
@@ -47,7 +47,7 @@ describe('StreamInfoService', () => {
           'icy-br': '48'
         }
       },
-      expectedMapping: new StreamInfo('HammerFall - Life Is Now', 'STREAM', '48', 'Radio Caprice - Power Metal', null, 'See Stream Title')
+      expectedMapping: new NowPlaying('HammerFall - Life Is Now', 'STREAM', '48', 'Radio Caprice - Power Metal', null, 'See Stream Title')
     },
     {
       rawResponse: {
@@ -64,7 +64,7 @@ describe('StreamInfoService', () => {
           'access-control-allow-headers': 'Origin, Accept, X-Requested-With, Content-Type',
           'icy-metaint': '16000'
         }},
-      expectedMapping: new StreamInfo(
+      expectedMapping: new NowPlaying(
         'Pavarotti: 50 Greatest Tracks - Pavarotti: 50 Greatest Tracks', 'STREAM', '128', 'WQXR', 'WQXR', 'Various'
         )
     },
@@ -75,7 +75,7 @@ describe('StreamInfoService', () => {
         'title': 'Angra - Perfect Symmetry',
         'fetchsource': 'SHOUTCAST_V1'
       },
-      expectedMapping: new StreamInfo('Angra - Perfect Symmetry', 'SHOUTCAST_V1', '48')
+      expectedMapping: new NowPlaying('Angra - Perfect Symmetry', 'SHOUTCAST_V1', '48')
     }
   ];
 

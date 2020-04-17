@@ -51,17 +51,19 @@ ng serve --open
 ```
   
 ## Backlog
+* High Priority Chores & Bugs
+  * Fine-tune the mobile favorite stations table view
+  * Consolidate the 'display now playing title based on status' template logic into a component
+  * Favorite button not showing in mat-menu
 * Features
   * Show stream info for favorites, search results, and suggested
   * Browser-based audio recording
   * Favorite station edits
   * Search by country and any other Radio Browser API criteria which makes sense
   * Favorite station tags
-* Bugs
-  * Favorite button not showing in mat-menu
 * Chores
-  * Fine-tune the mobile favorite stations table view
-  * Consolidate the 'display now playing title based on status' template logic into a component
+  * Use tslint-ext to remove unused imports
+  * Split "Now Playing" into its own root store slice
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Wait until after initial change detection to show notifications
   * Turn off sleep timer on audio pause
@@ -77,3 +79,5 @@ ng serve --open
     * setAltSrc
     * Either
   * Move build pipeline to Github actions
+  * Socket.IO-based now playing listener / stream proxy
+  * Improve test coverage

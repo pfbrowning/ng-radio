@@ -3,7 +3,8 @@ import { PlayerBarStationInfoComponent } from './player-bar-station-info.compone
 import { getElementTextBySelector } from '@utilities/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RootState, initialRootState } from '@core';
-import { initialPlayerState, Station, StreamInfo, StreamInfoStatus, PlayerStatus } from '@core/models/player';
+import { initialPlayerState, Station, StreamInfoStatus, PlayerStatus, NowPlaying } from '@core/models/player';
+import { PlayerSelectors } from '@core/store/player';
 import theoretically from 'jasmine-theories';
 
 describe('PlayerBarStationInfoComponent', () => {
@@ -25,45 +26,42 @@ describe('PlayerBarStationInfoComponent', () => {
     fixture = TestBed.createComponent(PlayerBarStationInfoComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
-    fixture.detectChanges();
+    store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
   const streamInfoStatusTemplateInput = [
     {
-      station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.LoadingAudio,
       streamInfoStatus: StreamInfoStatus.NotInitialized,
       expected: 'Loading Audio...'
     },
     {
-      station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.NotInitialized,
       expected: ''
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
       expected: ''
     },
     {
-      station: new Station(),
-      streamInfo: new StreamInfo('Valid Title', null),
+      nowPlaying: new NowPlaying('Valid Title', null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.Valid,
       expected: 'Valid Title'
     },
     {
-      station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.Error,
       expected: ''
@@ -76,8 +74,7 @@ describe('PlayerBarStationInfoComponent', () => {
       expected: 'Loading Stream Info...'
     },
     {
-      station: new Station(),
-      streamInfo: null,
+      nowPlaying: null,
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.Error,
       expected: 'Metadata Unavailable'
@@ -85,17 +82,11 @@ describe('PlayerBarStationInfoComponent', () => {
   ];
   theoretically.it('should reflect the various streamInfoStatus states properly in the template',
     streamInfoStatusTemplateInput, (input) => {
-    // Act: Bind this iteration's NowPlaying entry and detect changes
-    store.setState({
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: input.station,
-        streamInfo: input.streamInfo,
-        streamInfoStatus: input.streamInfoStatus,
-        playerStatus: input.playerStatus
-      }
-    });
+    // Arrange & Act
+    store.overrideSelector(PlayerSelectors.selectPlayerStatus, input.playerStatus);
+    store.overrideSelector(PlayerSelectors.selectCurrentNowPlaying, input.nowPlaying);
+    store.overrideSelector(PlayerSelectors.selectCurrentStreamInfoStatus, input.streamInfoStatus);
+    store.refreshState();
     fixture.detectChanges();
 
     // Assert: Ensure that the text of the title element conveys the current stream status

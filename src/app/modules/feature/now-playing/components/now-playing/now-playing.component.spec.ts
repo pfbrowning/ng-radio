@@ -13,9 +13,10 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { PlayerStatus, initialPlayerState, Station, StreamInfo, StreamInfoStatus } from '@core/models/player';
+import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus } from '@core/models/player';
 import isBlank from 'is-blank';
 import theoretically from 'jasmine-theories';
+import { NowPlaying } from 'src/app/modules/core/models/player/now-playing';
 
 
 describe('NowPlayingComponent', () => {
@@ -63,22 +64,22 @@ describe('NowPlayingComponent', () => {
   const nowPlayingTemplateInput = [
     {
       station: new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
-      streamInfo: new StreamInfo('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
+      nowPlaying: new NowPlaying('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
       streamInfoStatus: StreamInfoStatus.Valid
     },
     {
       station: new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
-      streamInfo: new StreamInfo('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
+      nowPlaying: new NowPlaying('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
       streamInfoStatus: StreamInfoStatus.Valid
     },
     {
       station: new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
-      streamInfo: new StreamInfo('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
+      nowPlaying: new NowPlaying('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
       streamInfoStatus: StreamInfoStatus.Valid
     },
     {
       station: new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
-      streamInfo: new StreamInfo(
+      nowPlaying: new NowPlaying(
         'Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'
       ),
       streamInfoStatus: StreamInfoStatus.Valid
@@ -91,8 +92,13 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: input.station,
-        streamInfo: input.streamInfo,
-        streamInfoStatus: input.streamInfoStatus,
+        streamInfo: {
+          ...initialPlayerState.streamInfo,
+          current: {
+            nowPlaying: input.nowPlaying,
+            status: input.streamInfoStatus
+          },
+        },
         playerStatus: PlayerStatus.Playing
       }
     });
@@ -101,56 +107,56 @@ describe('NowPlayingComponent', () => {
     // Assert: Ensure that the important NowPlaying properties were properly bound to the template
     expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(input.station.iconUrl);
     expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(input.station.title);
-    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.streamInfo.title);
-    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.streamInfo.bitrate}`);
+    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.nowPlaying.title);
+    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.nowPlaying.bitrate}`);
   });
 
   const streamInfoStatusTemplateInput = [
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.LoadingAudio,
       streamInfoStatus: StreamInfoStatus.NotInitialized,
       expected: 'Loading Audio...'
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.NotInitialized,
       expected: ''
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
       expected: ''
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo('Valid Title', null),
+      nowPlaying: new NowPlaying('Valid Title', null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.Valid,
       expected: 'Valid Title'
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.Error,
       expected: ''
     },
     {
       station: new Station(),
-      streamInfo: null,
+      nowPlaying: null,
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
       expected: 'Loading Stream Info...'
     },
     {
       station: new Station(),
-      streamInfo: null,
+      nowPlaying: null,
       playerStatus: PlayerStatus.Playing,
       streamInfoStatus: StreamInfoStatus.Error,
       expected: 'Metadata Unavailable'
@@ -164,8 +170,13 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: input.station,
-        streamInfo: input.streamInfo,
-        streamInfoStatus: input.streamInfoStatus,
+        streamInfo: {
+          ...initialPlayerState.streamInfo,
+          current: {
+            nowPlaying: input.nowPlaying,
+            status: input.streamInfoStatus
+          },
+        },
         playerStatus: input.playerStatus
       }
     });
@@ -178,17 +189,17 @@ describe('NowPlayingComponent', () => {
   const nonEmptyBitrateInput = [
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null),
+      nowPlaying: new NowPlaying(null, null),
       streamInfoStatus: StreamInfoStatus.Valid
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null, ''),
+      nowPlaying: new NowPlaying(null, null, ''),
       streamInfoStatus: StreamInfoStatus.Valid
     },
     {
       station: new Station(),
-      streamInfo: new StreamInfo(null, null, '128'),
+      nowPlaying: new NowPlaying(null, null, '128'),
       streamInfoStatus: StreamInfoStatus.Valid
     }
   ];
@@ -199,15 +210,21 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: input.station,
-        streamInfo: input.streamInfo,
-        streamInfoStatus: input.streamInfoStatus
+        streamInfo: {
+          ...initialPlayerState.streamInfo,
+          current: {
+            nowPlaying: input.nowPlaying,
+            status: input.streamInfoStatus
+          },
+        },
+        playerStatus: PlayerStatus.Playing
       }
     });
     fixture.detectChanges();
 
     // Assert: Ensure that the bitrate is displayed if not blank and not shown at all if it is blank
-    if (!isBlank(input.streamInfo.bitrate)) {
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.streamInfo.bitrate}`);
+    if (!isBlank(input.nowPlaying.bitrate)) {
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.nowPlaying.bitrate}`);
     } else {
       expect(getElementBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBeNull();
     }
@@ -220,8 +237,13 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: new Station(),
-        streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid
+        streamInfo: {
+          ...initialPlayerState.streamInfo,
+          current: {
+            nowPlaying: new NowPlaying(null, null),
+            status: StreamInfoStatus.Valid
+          },
+        },
       }
     };
     store.setState(state);
@@ -262,8 +284,13 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: new Station(),
-        streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid
+        streamInfo: {
+          ...initialPlayerState.streamInfo,
+          current: {
+            nowPlaying: new NowPlaying(null, null),
+            status: StreamInfoStatus.Valid
+          },
+        },
       }
     });
     // Set up a sequence of dummy boolean $enabled values to iterate through
@@ -297,8 +324,13 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: new Station(),
-        streamInfo: new StreamInfo(null, null),
-        streamInfoStatus: StreamInfoStatus.Valid
+        streamInfo: {
+          ...initialPlayerState.streamInfo,
+          current: {
+            nowPlaying: new NowPlaying(null, null),
+            status: StreamInfoStatus.Valid
+          },
+        },
       }
     };
     store.setState(state);
