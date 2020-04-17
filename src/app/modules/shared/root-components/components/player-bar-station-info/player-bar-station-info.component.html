@@ -4,10 +4,10 @@
         <ng-container *ngIf="validatingCurrent$ | async">Validating Stream...</ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="playerStatus.Playing">
-        <ng-container *ngIf="streamInfoPresent$ | async; else noStreamInfo">
-            {{ streamInfoTitle$ | async }}
+        <ng-container *ngIf="nowPlaying$ | async; else noNowPlaying; let nowPlaying">
+            {{ nowPlaying.title }}
         </ng-container>
-        <ng-template #noStreamInfo>
+        <ng-template #noNowPlaying>
             <ng-container [ngSwitch]="streamInfoStatus$ | async">
                 <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
                     Loading Stream Info...
@@ -19,4 +19,4 @@
         </ng-template>
     </ng-container>
 </div>
-<div #station class="station" [class.marquee]="stationMarquee">{{ currentStationTitle$ | async }}</div>
+<div #station class="station" [class.marquee]="stationMarquee">{{ (currentStation$ | async).title }}</div>

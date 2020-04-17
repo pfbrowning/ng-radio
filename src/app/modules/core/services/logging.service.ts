@@ -39,7 +39,7 @@ export class LoggingService {
    * @param input Object to convert to a string dictionary
    */
   private static objectToLoggingDictionary(input: Object) {
-    const output: {[name: string]: string; } = {};
+    const output: { [name: string]: string; } = {};
     for (const key in input) {
       if (input.hasOwnProperty(key)) {
         const value = input[key];

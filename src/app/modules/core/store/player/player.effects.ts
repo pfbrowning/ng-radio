@@ -1,20 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StreamInfoService } from '../../services/stream-info.service';
-import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, take } from 'rxjs/operators';
+import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, take, mergeMap } from 'rxjs/operators';
 import { from, of, timer } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
-import { Store, select } from '@ngrx/store';
+import { Store, select, Action } from '@ngrx/store';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import {
-  selectCurrentStationUrl,
-  selectCurrentStationAndStreamInfo,
-  selectStreamInfo,
   selectCurrentStationValidationState,
   selectCurrentStationUrlAndItsValidationState,
-  selectCurrentStation
+  selectCurrentStation,
 } from './player.selectors';
 import {
   selectStation,
@@ -22,14 +19,15 @@ import {
   playAudioSucceeded,
   playAudioFailed,
   pauseAudioSubmit,
-  fetchStreamInfoStart,
-  fetchStreamInfoSucceeded,
   audioPaused,
-  fetchStreamInfoFailed,
   validateStreamStart,
   validateStreamSucceeded,
   validateStreamFailed,
-  validateStreamSubmit
+  validateStreamSubmit,
+  fetchIntervalStart,
+  fetchNowPlayingStart,
+  fetchNowPlayingSucceeded,
+  fetchNowPlayingFailed,
 } from './player-actions';
 import { RootState } from '../../models/root-state';
 import { goToSleep } from '../sleep-timer/sleep-timer.actions';
@@ -39,6 +37,8 @@ import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import { StreamValidatorService } from '../../services/player/stream-validator.service';
 import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
 import { LoggingService } from '../../services/logging.service';
+import { PlayerActions, PlayerSelectors } from './index';
+import { PlayerStatus } from '../../models/player/player-status';
 import isBlank from 'is-blank';
 import isEqual from 'lodash/isEqual';
 
@@ -168,52 +168,91 @@ export class PlayerEffects {
 
   fetchOnPlaySucceeded$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioSucceeded),
-    withLatestFrom(this.store.pipe(select(selectCurrentStationUrl))),
-    map(([action, streamUrl]) => fetchStreamInfoStart({streamUrl}))
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.currentUrlAndFetchInProgressUrls))),
+    filter(([action, {current, fetching}]) => !fetching.includes(current)),
+    map(([action, {current}]) => fetchNowPlayingStart({streamUrl: current}))
   ));
 
-  fetchOnInterval$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStreamInfoSucceeded, fetchStreamInfoFailed),
-    withLatestFrom(this.store.pipe(select(selectCurrentStationUrl))),
-    switchMap(([action, streamUrl]) => timer(this.configService.appConfig.metadataRefreshInterval).pipe(
-        takeUntil(this.actions$.pipe(ofType(selectStation, audioPaused))),
-        mapTo(fetchStreamInfoStart({streamUrl})
+  fetchOnListSelected$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.selectStreamInfoUrls),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.nonIntervalOrFetchingStreamInfoUrls))),
+    switchMap(([action, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({streamUrl})))
+  ));
+
+  startFetchInterval$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.fetchNowPlayingSucceeded, PlayerActions.fetchNowPlayingFailed),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.currentAndStreamInfoUrls))),
+    filter(([{streamUrl}, {current, streamInfoUrls}]) => streamInfoUrls.concat(current).includes(streamUrl)),
+    mergeMap(([action, selected]) => this.configService.appConfig$.pipe(
+      map(config => ({ action, selected, config }))
+    )),
+    map(({ action, selected, config }) => fetchIntervalStart({
+      streamUrl: action.streamUrl,
+      duration: selected.current === action.streamUrl
+        ? config.currentStationRefreshInterval
+        : config.listedStationRefreshInterval
+    }))
+  ));
+
+  fetchInterval$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.fetchIntervalStart),
+    mergeMap(({streamUrl, duration}) => timer(duration).pipe(
+      takeUntil(this.actions$.pipe(
+        ofType(PlayerActions.fetchNowPlayingStart),
+        filter(action => action.streamUrl === streamUrl)
+      )),
+      mapTo(PlayerActions.fetchIntervalCompleted({streamUrl})
     )),
   )));
 
+  onFetchIntervalComplete$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.fetchIntervalCompleted),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.intervalCompletedParams))),
+    filter(([{streamUrl}, {listed, current, status}]) =>
+      listed.includes(streamUrl) || (current === streamUrl && status === PlayerStatus.Playing)
+    ),
+    map(([{streamUrl}, selected]) => PlayerActions.fetchNowPlayingStart({streamUrl}))
+  ));
+
   fetchStreamInfo$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStreamInfoStart),
-    switchMap(action => this.streamInfoService.getMetadata(action.streamUrl).pipe(
-      takeUntil(this.actions$.pipe(ofType(selectStation, audioPaused))),
-      withLatestFrom(this.store.pipe(select(selectStreamInfo))),
-      map(([fetched, selected]) => fetchStreamInfoSucceeded({
-        streamUrl: action.streamUrl,
-        streamInfo: fetched,
-        streamInfoChanged: !isEqual(fetched, selected)
-      })),
-      catchError(error => of(fetchStreamInfoFailed({streamUrl: action.streamUrl, error})))
+    ofType(PlayerActions.fetchNowPlayingStart),
+    mergeMap(({streamUrl}) => this.streamInfoService.getMetadata(streamUrl).pipe(
+      withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStationAndNowPlaying))),
+      switchMap(([fetched, selected]) => {
+        const actions: Array<Action> = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
+        if (selected.station && streamUrl === selected.station.url && !isEqual(fetched, selected.nowPlaying)) {
+          actions.push(PlayerActions.currentNowPlayingChanged({nowPlaying:fetched}));
+        }
+        return actions;
+      }),
+      catchError(error => {
+        return of(fetchNowPlayingFailed({streamUrl: streamUrl, error}));
+      })
     ))
   ));
 
   notifyStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStreamInfoSucceeded),
-    filter(action => action.streamInfoChanged),
-    withLatestFrom(this.store.pipe(select(selectCurrentStationAndStreamInfo))),
-    tap(([action, selected]) => {
-      this.notificationService.notify(Severities.Info, 'Now Playing', !isBlank(selected.streamInfo.title) ?
-      `${selected.streamInfo.title} - ${selected.station.title}` : selected.station.title);
+    ofType(PlayerActions.currentNowPlayingChanged),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
+    tap(([{nowPlaying}, station]) => {
+      this.notificationService.notify(Severities.Info, 'Now Playing', !isBlank(nowPlaying.title) ?
+      `${nowPlaying.title} - ${station.title}` : station.title);
     })
   ), { dispatch: false });
 
+  logFetchNowPlayingFailed$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.fetchNowPlayingFailed),
+    tap(({error, streamUrl}) => this.loggingService.logWarning('Fetch Now Playing Failed', { streamUrl, error }))
+  ), { dispatch: false });
+
   updateTitleOnStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStreamInfoSucceeded),
-    filter(action => action.streamInfoChanged),
-    withLatestFrom(this.store.pipe(select(selectCurrentStationAndStreamInfo))),
-    tap(([action, selected]) => {
-      if (!isBlank(selected.streamInfo.title)) {
-        this.titleService.setTitle(selected.streamInfo.title);
-      } else if (!isBlank(selected.station.title)) {
-        this.titleService.setTitle(selected.station.title);
+    ofType(PlayerActions.currentNowPlayingChanged),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
+    tap(([{nowPlaying}, station]) => {
+      if (!isBlank(nowPlaying.title)) {
+        this.titleService.setTitle(nowPlaying.title);
+      } else if (!isBlank(station.title)) {
+        this.titleService.setTitle(station.title);
       } else {
         this.titleService.setTitle('Browninglogic Radio');
       }
@@ -221,7 +260,7 @@ export class PlayerEffects {
   ), { dispatch: false });
 
   clearTitle$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStreamInfoFailed, audioPaused),
+    ofType(fetchNowPlayingFailed, audioPaused),
     tap(() => this.titleService.setTitle('Browninglogic Radio'))
   ), { dispatch: false });
 }

@@ -27,10 +27,9 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked {
   public titleMarquee = false;
   public stationMarquee = false;
   public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
-  public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoStatus));
-  public streamInfoTitle$ = this.store.pipe(select(PlayerSelectors.selectStreamInfoTitle));
-  public currentStationTitle$ = this.store.pipe(select(PlayerSelectors.selectCurrentStationTitle));
-  public streamInfoPresent$ = this.store.pipe(select(PlayerSelectors.selectIsStreamInfoPresent));
+  public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectCurrentStreamInfoStatus));
+  public nowPlaying$ = this.store.pipe(select(PlayerSelectors.selectCurrentNowPlaying));
+  public currentStation$ = this.store.pipe(select(PlayerSelectors.selectCurrentStation));
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 
   ngAfterViewChecked() {

@@ -5,7 +5,8 @@ export interface AppConfig {
     radioBrowserApiUrl: string;
     favoriteStationsApiUrl: string;
     corsProxyUrl: string;
-    metadataRefreshInterval: number;
+    currentStationRefreshInterval: number;
+    listedStationRefreshInterval: number;
     metadataFetchTimeout: number;
     appInsightsInstrumentationKey: string;
     authConfig: AuthConfig;

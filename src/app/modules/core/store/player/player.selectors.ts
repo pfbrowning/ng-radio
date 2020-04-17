@@ -1,5 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
+import { StreamInfo } from '../../models/player/stream-info';
 
 export const selectPlayerState = (state: RootState) => state.player;
 
@@ -23,19 +24,14 @@ export const selectPlayerStatus = createSelector(
     (state) => state.playerStatus
 );
 
-export const selectStreamInfo = createSelector(
+export const selectCurrentNowPlaying = createSelector(
     selectPlayerState,
-    (state) => state.streamInfo
+    state => state.streamInfo.current.nowPlaying
 );
 
-export const selectIsStreamInfoPresent = createSelector(
-    selectStreamInfo,
-    (streamInfo) => streamInfo != null
-);
-
-export const selectStreamInfoStatus = createSelector(
+export const selectCurrentStreamInfoStatus = createSelector(
     selectPlayerState,
-    (state) => state.streamInfoStatus
+    state => state.streamInfo.current.status
 );
 
 export const selectCurrentStationTitle = createSelector(
@@ -43,21 +39,10 @@ export const selectCurrentStationTitle = createSelector(
     (station) => station != null ? station.title : null
 );
 
-export const selectStreamInfoTitle = createSelector(
-    selectStreamInfo,
-    (streamInfo) => streamInfo != null ? streamInfo.title : null
-);
-
-export const selectCurrentStationUrlAndStreamInfo = createSelector(
-    selectCurrentStationUrl,
-    selectStreamInfo,
-    (url, streamInfo) => ({url, streamInfo})
-);
-
-export const selectCurrentStationAndStreamInfo = createSelector(
+export const selectCurrentStationAndNowPlaying = createSelector(
     selectCurrentStation,
-    selectStreamInfo,
-    (station, streamInfo) => ({station, streamInfo})
+    selectCurrentNowPlaying,
+    (station, nowPlaying) => ({station, nowPlaying})
 );
 
 export const selectValidatedStreams = createSelector(
@@ -81,3 +66,50 @@ export const selectIsValidationInProgressForCurrentStation = createSelector(
     selectCurrentStationValidationState,
     vs => vs != null && vs.inProgress
 );
+
+export const nowPlayingFetchInProgressUrls = createSelector(
+    selectPlayerState,
+    state => state.streamInfo.fetchInProgressUrls
+)
+
+export const nowPlayingIntervalInProgressUrls = createSelector(
+    selectPlayerState,
+    state => state.streamInfo.intervalInProgressUrls
+)
+
+export const currentUrlAndFetchInProgressUrls = createSelector(
+    selectCurrentStationUrl,
+    nowPlayingFetchInProgressUrls,
+    (current, fetching) => ({current, fetching})
+)
+
+export const streamInfoUrls = createSelector(
+    selectPlayerState,
+    state => Object.keys(state.streamInfo.streams)
+)
+
+export const streamInfo = createSelector(
+    selectPlayerState,
+    streamInfoUrls,
+    (state, urls) => new Map<string, StreamInfo>(urls.map(url => [url, state.streamInfo.streams[url]]))
+)
+
+export const nonIntervalOrFetchingStreamInfoUrls = createSelector(
+    streamInfoUrls,
+    nowPlayingFetchInProgressUrls,
+    nowPlayingIntervalInProgressUrls,
+    (urls, fetching, intervals) => urls.filter(u => !fetching.concat(intervals).includes(u))
+)
+
+export const currentAndStreamInfoUrls = createSelector(
+    selectCurrentStationUrl,
+    streamInfoUrls,
+    (current, streamInfoUrls) => ({current, streamInfoUrls})
+)
+
+export const intervalCompletedParams = createSelector(
+    selectCurrentStationUrl,
+    streamInfoUrls,
+    selectPlayerStatus,
+    (current, listed, status) => ({current, listed, status})
+)

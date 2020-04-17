@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout } from 'rxjs/operators';
 import { ConfigService } from './config.service';
-import { StreamInfo } from '../models/player/stream-info';
+import { NowPlaying } from '../models/player/now-playing';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
  * the configured radio metadata API */
@@ -25,7 +25,7 @@ export class StreamInfoService {
    * https://github.com/pfbrowning/radio-metadata-api
    * @param url Stream URL to get the metadata for
    */
-  public getMetadata(url: string): Observable<StreamInfo> {
+  public getMetadata(url: string): Observable<NowPlaying> {
     // Encode the URL before sending it via query param
     const encodedUrl = encodeURIComponent(url);
     let params = new HttpParams();
@@ -47,10 +47,10 @@ export class StreamInfoService {
         map(response => {
           switch (response.fetchsource) {
             case 'STREAM':
-              return new StreamInfo(response.title, response.fetchsource, response.headers['icy-br'],
+              return new NowPlaying(response.title, response.fetchsource, response.headers['icy-br'],
                 response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
             default:
-              return new StreamInfo(response.title, response.fetchsource, response.bitrate);
+              return new NowPlaying(response.title, response.fetchsource, response.bitrate);
           }
         })
     );

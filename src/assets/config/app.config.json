@@ -3,7 +3,8 @@
     "corsProxyUrl": "http://localhost:3001",
     "radioBrowserApiUrl": "https://www.radio-browser.info/webservice/json",
     "favoriteStationsApiUrl": "https://localhost:5001",
-    "metadataRefreshInterval": 20000,
+    "currentStationRefreshInterval": 20000,
+    "listedStationRefreshInterval": 60000,
     "metadataFetchTimeout": 15000,
     "appInsightsInstrumentationKey": null,
     "authConfig": {

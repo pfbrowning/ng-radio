@@ -60,15 +60,19 @@ ng serve --open
 * Bugs
   * Favorite button not showing in mat-menu
 * Chores
-  * Prevent accidental audio streaming through CORS proxy
+  * Fine-tune the mobile favorite stations table view
+  * Consolidate the 'display now playing title based on status' template logic into a component
   * Show a loading spinner in place of the main app content while waiting for the config to load
-  * Turn off sleep timer on audio pause
   * Wait until after initial change detection to show notifications
-  * Config observable
+  * Turn off sleep timer on audio pause
   * Flex styling of player bar: grow to take up available with for song & station title
+  * Store only what we need in NGRX authentication store
+  * Use PKCE authentication in place of implicit flow
+  * Prevent accidental audio streaming through CORS proxy
   * Partition core/services directory
   * Either type for stream validator logic
   * Refactor selector import / export logic
+  * Config observable
   * Package up reusable things and deploy to npm
     * setAltSrc
     * Either

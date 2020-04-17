@@ -1,10 +1,12 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
 import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
-import { Station } from '@core/models/player';
+import { Station, StreamInfoStatus } from '@core/models/player';
 import { selectStation } from '@core/store/player';
+import { take } from 'rxjs/operators';
+import { PlayerActions, PlayerSelectors } from '@core/store/player';
 
 @Component({
   selector: 'blr-favorite-stations',
@@ -12,12 +14,24 @@ import { selectStation } from '@core/store/player';
   styleUrls: ['./favorite-stations.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FavoriteStationsComponent {
+export class FavoriteStationsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<RootState>, private confirmationService: ConfirmationService) { }
 
-  public columns = ['spinner', 'name', 'icon', 'actions'];
+  public columns = ['name', 'now-playing', 'icon', 'actions'];
+  public streamInfoStatus = StreamInfoStatus;
 
   public stationRows$ = this.store.pipe(select(selectFavoriteStationRows));
+  public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
+
+  public ngOnInit(): void {
+    this.stationRows$.pipe(take(1)).subscribe(rows => 
+      this.store.dispatch(PlayerActions.selectStreamInfoUrls({streamUrls: rows.map(r => r.station.url)})
+    ));
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(PlayerActions.clearStreamInfoUrls());
+  }
 
   public onRowClicked(station: Station): void {
     this.store.dispatch(selectStation({station}));
