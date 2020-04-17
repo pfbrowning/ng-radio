@@ -60,12 +60,4 @@ export class NowPlayingComponent {
   public onRemoveFromFavoritesClicked(): void {
     this.store.dispatch(removeCurrentStationFromFavoritesRequested());
   }
-
-  public onPlayClicked(): void {
-    this.store.dispatch(playAudioStart());
-  }
-
-  public onPauseClicked(): void {
-    this.store.dispatch(pauseAudioSubmit());
-  }
 }

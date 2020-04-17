@@ -12,16 +12,16 @@
     class="indicator-icon selectable large-screen-only keep-awake">
     <mat-icon>settings_cell</mat-icon>
   </div>
-  <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessed">
+  <ng-container *ngIf="(processingFavorites$ | async); else favoritesProcessedIcon">
     <div class="indicator-icon large-screen-only" [matTooltip]="decideFavoritesProcessingTooltipText(favoritesProcessingState$ | async)">
       <mat-spinner diameter="25"></mat-spinner>
     </div>
   </ng-container>
-  <ng-template #favoritesProcessed>
-    <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
+  <ng-template #favoritesProcessedIcon>
+    <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavoritesIcon" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
       <mat-icon>favorite</mat-icon>
     </div>
-    <ng-template #notInFavorites>
+    <ng-template #notInFavoritesIcon>
       <div (click)="onAddToFavoritesClicked()" class="indicator-icon selectable large-screen-only off-white" matTooltip="Add To Favorites">
         <mat-icon>favorite</mat-icon>
       </div>
@@ -56,18 +56,18 @@
     <mat-icon>settings_cell</mat-icon>
     <span>Toggle Keep Awake</span>
   </button>
-  <button *ngIf="processingFavorites$ | async; else favoritesProcessed" mat-menu-item>
+  <button *ngIf="processingFavorites$ | async; else favoritesProcessedMenuItem" mat-menu-item>
     <span class="spinner-container">
       <mat-spinner diameter="25"></mat-spinner>
     </span>
     <span>{{ favoritesProcessingState$ | async }}</span>
   </button>
-  <ng-template #favoritesProcessed>
-    <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
+  <ng-template #favoritesProcessedMenuItem>
+    <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavoritesMenuItem" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
       <mat-icon>favorite</mat-icon>
       <span>Remove From Favorites</span>
     </button>
-    <ng-template #notInFavorites>
+    <ng-template #notInFavoritesMenuItem>
       <button mat-menu-item (click)="onAddToFavoritesClicked()">
         <mat-icon>favorite</mat-icon>
         <span>Add To Favorites</span>

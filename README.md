@@ -63,6 +63,7 @@ ng serve --open
   * Favorite station tags
 * Chores
   * Split "Now Playing" into its own root store slice
+  * Show cursor pointer for now playing bottom toolbar
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Wait until after initial change detection to show notifications
   * Turn off sleep timer on audio pause
@@ -74,6 +75,7 @@ ng serve --open
   * Either type for stream validator logic
   * Refactor selector import / export logic
   * Config observable
+  * Minimum icon size
   * Fix warnings in tests
   * Package up reusable things and deploy to npm
     * setAltSrc

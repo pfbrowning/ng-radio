@@ -221,7 +221,7 @@ export class PlayerEffects {
       switchMap(([fetched, selected]) => {
         const actions: Action[] = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
         if (selected.station && streamUrl === selected.station.url && !isEqual(fetched, selected.nowPlaying)) {
-          actions.push(PlayerActions.currentNowPlayingChanged({nowPlaying: fetched}));
+          actions.push(PlayerActions.currentNowPlayingChanged({streamUrl, nowPlaying: fetched}));
         }
         return actions;
       }),

@@ -106,5 +106,5 @@ export const fetchIntervalCompleted = createAction(
 
 export const currentNowPlayingChanged = createAction(
     PlayerActions.CurrentNowPlayingChanged,
-    props<{ nowPlaying: NowPlaying }>()
+    props<{ streamUrl: string, nowPlaying: NowPlaying }>()
 );

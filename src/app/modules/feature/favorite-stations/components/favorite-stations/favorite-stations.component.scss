@@ -1,3 +1,33 @@
+@import 'variables';
+
+// Special styles for small screens
+@media (max-width:$smallScreenCutoff - 1) {
+    /* We want the Station title to take up a little bit less
+    space than the now playing text. */
+    .mat-column-name {
+        width:40%;
+    }
+
+    /* We don't have room for actions in small screen mode.  Any
+    important actions should be accessible via the player bar or
+    now-playing component. */
+    .mat-column-actions {
+        display:none;
+    }
+
+    /* Use less padding on small screens, and use a consistent
+    amount of padding for all cells to account for some columns
+    being hidden on small screens. */
+    th.mat-header-cell,
+    th.mat-header-cell:first-of-type,
+    th.mat-header-cell:last-of-type,
+    td.mat-cell,
+    td.mat-cell:first-of-type,
+    td.mat-cell:last-of-type {
+        padding: 0 8px;
+    }
+}
+
 .delete-in-progress {
     opacity: 0.4;
 }
