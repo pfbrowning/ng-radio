@@ -12,7 +12,6 @@
     "importHelpers": true,
     "target": "es2015",
     "esModuleInterop": true,
-    "noUnusedParameters": true,
     "typeRoots": [
       "node_modules/@types"
     ],

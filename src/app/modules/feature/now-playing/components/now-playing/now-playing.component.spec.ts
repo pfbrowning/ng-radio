@@ -13,10 +13,10 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus } from '@core/models/player';
+import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus, NowPlaying } from '@core/models/player';
+import { PlayerSelectors } from '@core/store/player';
 import isBlank from 'is-blank';
 import theoretically from 'jasmine-theories';
-import { NowPlaying } from 'src/app/modules/core/models/player/now-playing';
 
 
 describe('NowPlayingComponent', () => {
@@ -54,10 +54,14 @@ describe('NowPlayingComponent', () => {
     fixture = TestBed.createComponent(NowPlayingComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
-    fixture.detectChanges();
   });
 
+  afterEach(() => {
+    store.resetSelectors();
+  })
+
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
@@ -111,75 +115,40 @@ describe('NowPlayingComponent', () => {
     expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.nowPlaying.bitrate}`);
   });
 
-  const streamInfoStatusTemplateInput = [
+
+  const playerStatusTemplateInput = [
     {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.LoadingAudio,
-      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      validating: false,
       expected: 'Loading Audio...'
     },
     {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null),
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      playerStatus: PlayerStatus.Stopped,
+      validating: false,
       expected: ''
     },
     {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null),
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
-      expected: ''
+      playerStatus: PlayerStatus.Stopped,
+      validating: true,
+      expected: 'Validating Stream...'
     },
     {
-      station: new Station(),
-      nowPlaying: new NowPlaying('Valid Title', null),
+      streamInfo: {
+        nowPlaying: new NowPlaying('Valid Title', null),
+        status: StreamInfoStatus.Valid
+      },
       playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.Valid,
       expected: 'Valid Title'
     },
-    {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null),
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.Error,
-      expected: ''
-    },
-    {
-      station: new Station(),
-      nowPlaying: null,
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
-      expected: 'Loading Stream Info...'
-    },
-    {
-      station: new Station(),
-      nowPlaying: null,
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.Error,
-      expected: 'Metadata Unavailable'
-    },
   ];
-  theoretically.it('should reflect the various streamInfoStatus states properly in the template',
-    streamInfoStatusTemplateInput, (input) => {
-    // Act
-    store.setState({
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: input.station,
-        streamInfo: {
-          ...initialPlayerState.streamInfo,
-          current: {
-            nowPlaying: input.nowPlaying,
-            status: input.streamInfoStatus
-          },
-        },
-        playerStatus: input.playerStatus
-      }
-    });
+  theoretically.it('should reflect the various player states properly in the template',
+    playerStatusTemplateInput, (input) => {
+    // Arrange & Act
+    store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
+    store.overrideSelector(PlayerSelectors.currentStreamInfo, input.streamInfo);
+    store.overrideSelector(PlayerSelectors.selectPlayerStatus, input.playerStatus);
+    store.overrideSelector(PlayerSelectors.selectIsValidationInProgressForCurrentStation, input.validating);
+    store.refreshState();
     fixture.detectChanges();
 
     // Assert: Ensure that the text of the title element conveys the current stream status

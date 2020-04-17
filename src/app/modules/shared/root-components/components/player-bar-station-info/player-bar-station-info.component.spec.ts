@@ -5,6 +5,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RootState, initialRootState } from '@core';
 import { Station, StreamInfoStatus, PlayerStatus, NowPlaying } from '@core/models/player';
 import { PlayerSelectors } from '@core/store/player';
+import { SharedModule } from '@shared';
 import theoretically from 'jasmine-theories';
 
 describe('PlayerBarStationInfoComponent', () => {
@@ -15,6 +16,9 @@ describe('PlayerBarStationInfoComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlayerBarStationInfoComponent ],
+      imports: [
+        SharedModule
+      ],
       providers: [
         provideMockStore({initialState: initialRootState})
       ]
@@ -38,58 +42,37 @@ describe('PlayerBarStationInfoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  const streamInfoStatusTemplateInput = [
+  const playerStatusTemplateInput = [
     {
-      nowPlaying: new NowPlaying(null, null),
       playerStatus: PlayerStatus.LoadingAudio,
-      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      validating: false,
       expected: 'Loading Audio...'
     },
     {
-      nowPlaying: new NowPlaying(null, null),
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.NotInitialized,
+      playerStatus: PlayerStatus.Stopped,
+      validating: false,
       expected: ''
     },
     {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null),
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
-      expected: ''
+      playerStatus: PlayerStatus.Stopped,
+      validating: true,
+      expected: 'Validating Stream...'
     },
     {
-      nowPlaying: new NowPlaying('Valid Title', null),
+      streamInfo: {
+        nowPlaying: new NowPlaying('Valid Title', null),
+        status: StreamInfoStatus.Valid
+      },
       playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.Valid,
       expected: 'Valid Title'
     },
-    {
-      nowPlaying: new NowPlaying(null, null),
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.Error,
-      expected: ''
-    },
-    {
-      station: new Station(),
-      streamInfo: null,
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.LoadingStreamInfo,
-      expected: 'Loading Stream Info...'
-    },
-    {
-      nowPlaying: null,
-      playerStatus: PlayerStatus.Playing,
-      streamInfoStatus: StreamInfoStatus.Error,
-      expected: 'Metadata Unavailable'
-    },
   ];
-  theoretically.it('should reflect the various streamInfoStatus states properly in the template',
-    streamInfoStatusTemplateInput, (input) => {
+  theoretically.it('should reflect the various player states properly in the template',
+    playerStatusTemplateInput, (input) => {
     // Arrange & Act
     component.currentPlayerStatus = input.playerStatus;
-    store.overrideSelector(PlayerSelectors.selectCurrentNowPlaying, input.nowPlaying);
-    store.overrideSelector(PlayerSelectors.selectCurrentStreamInfoStatus, input.streamInfoStatus);
+    component.validatingCurrent = input.validating;
+    store.overrideSelector(PlayerSelectors.currentStreamInfo, input.streamInfo);
     store.refreshState();
     fixture.detectChanges();
 

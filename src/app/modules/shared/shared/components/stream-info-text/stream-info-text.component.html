@@ -1,8 +1,8 @@
-<ng-container *ngIf="streamInfo.nowPlaying; else noNowPlaying; let nowPlaying">
+<ng-container *ngIf="streamInfo?.nowPlaying; else noNowPlaying; let nowPlaying">
     {{ nowPlaying.title || nowPlaying.description }}
 </ng-container>
 <ng-template #noNowPlaying>
-    <ng-container [ngSwitch]="streamInfo.status">
+    <ng-container [ngSwitch]="streamInfo?.status">
         <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
             Loading Stream Info...
         </ng-container>
