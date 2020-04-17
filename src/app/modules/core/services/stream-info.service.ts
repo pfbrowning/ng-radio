@@ -37,7 +37,7 @@ export class StreamInfoService {
     // GET now-playing data from the API
     return this.httpClient.get<any>(
       `${this.configService.appConfig.metadataApiUrl}/now-playing`,
-      { params: params }).pipe(
+      { params }).pipe(
         // Time out after a configured amount of time
         timeout(this.configService.appConfig.metadataFetchTimeout),
         /* Upon success, store the returned fetchsource so that we can pass it on for subsequent

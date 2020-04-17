@@ -5,6 +5,6 @@ export class Station {
         public url: string = null,
         public genre: string = null,
         public iconUrl: string = null,
-        public tags: Array<string> = null
+        public tags: string[] = null
     ) {}
 }

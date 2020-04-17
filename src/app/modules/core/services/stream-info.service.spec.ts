@@ -30,7 +30,7 @@ describe('StreamInfoService', () => {
     getMetadataSpy = jasmine.createSpyObj('getMetadata', ['emit', 'error', 'complete']);
   });
 
-  const testEntries: Array<{rawResponse: object, expectedMapping: NowPlaying }> = [
+  const testEntries: {rawResponse: object, expectedMapping: NowPlaying }[] = [
     {
       rawResponse: {
         'title': 'HammerFall - Life Is Now',

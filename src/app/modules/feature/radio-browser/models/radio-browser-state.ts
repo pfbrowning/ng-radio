@@ -4,5 +4,5 @@ export interface RadioBrowserState {
     nameTerm: string;
     tagTerm: string;
     searchInProgress: boolean;
-    results: Array<Station>;
+    results: Station[];
 }

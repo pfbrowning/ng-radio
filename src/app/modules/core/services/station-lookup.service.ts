@@ -18,7 +18,7 @@ export class StationLookupService {
    * @param tag Station tag to search for
    * @param limit Max number of results to request from the radio browser API.  Defaults to 100.
    */
-  public search(name: string = null, tag: string = null, limit: number = 100): Observable<Array<Station>> {
+  public search(name: string = null, tag: string = null, limit: number = 100): Observable<Station[]> {
     let body = new HttpParams();
     // Add name param if it's not blank
     if (!isBlank(name)) {
@@ -31,7 +31,7 @@ export class StationLookupService {
     // Limit the results based on the provided param
     body = body.set('limit', limit.toString());
     // Perform the search against the configured radioBrowserUrl
-    return this.httpClient.post<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`,
+    return this.httpClient.post<any[]>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`,
       body, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).pipe(
         // Map the results to our own station format
         map(stations => stations.map(station => this.mapStation(station)))
@@ -42,8 +42,8 @@ export class StationLookupService {
    * Retrieves the 'Top Clicked' stations from the radio browser API
    * @param count Number of stations to request
    */
-  public fetchTopClicked(count: number = 15): Observable<Array<Station>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topclick/${count}`).pipe(
+  public fetchTopClicked(count: number = 15): Observable<Station[]> {
+    return this.httpClient.get<any[]>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topclick/${count}`).pipe(
       map(stations => stations.map(station => this.mapStation(station)))
     );
   }
@@ -52,8 +52,8 @@ export class StationLookupService {
    * Retrieves the 'Top Voted' stations from the Radio Browser API
    * @param count Number of stations to request
    */
-  public fetchTopVoted(count: number = 15): Observable<Array<Station>> {
-    return this.httpClient.get<Array<any>>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topvote/${count}`).pipe(
+  public fetchTopVoted(count: number = 15): Observable<Station[]> {
+    return this.httpClient.get<any[]>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topvote/${count}`).pipe(
       map(stations => stations.map(station => this.mapStation(station)))
     );
   }
@@ -70,7 +70,7 @@ export class StationLookupService {
   }
 
   /** Retrieves the 'Developer-Suggested' stations from the JSON file stored in 'assets' */
-  public fetchDeveloperSuggestions(): Observable<Array<Station>> {
-    return this.httpClient.get<Array<Station>>('/assets/data/suggested-stations.json');
+  public fetchDeveloperSuggestions(): Observable<Station[]> {
+    return this.httpClient.get<Station[]>('/assets/data/suggested-stations.json');
   }
 }

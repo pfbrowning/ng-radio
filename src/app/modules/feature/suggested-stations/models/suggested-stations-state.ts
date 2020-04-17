@@ -1,13 +1,13 @@
 import { Station } from '@core/models/player';
 
 export interface SuggestedStationsState {
-    developerSuggested: Array<Station>;
+    developerSuggested: Station[];
     developerSuggestedFetchInProgress: boolean;
     developerSuggestedFetchFailed: boolean;
-    topClicked: Array<Station>;
+    topClicked: Station[];
     topClickedFetchInProgress: boolean;
     topClickedFetchFailed: boolean;
-    topVoted: Array<Station>;
+    topVoted: Station[];
     topVotedFetchInProgress: boolean;
     topVotedFetchFailed: boolean;
 }

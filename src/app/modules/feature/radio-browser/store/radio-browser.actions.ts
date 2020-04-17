@@ -25,7 +25,7 @@ export const searchStart = createAction(
 
 export const searchSucceeded = createAction(
   RadioBrowserActions.SearchSucceeded,
-  props<{ results: Array<Station> }>()
+  props<{ results: Station[] }>()
 );
 
 export const searchFailed = createAction(

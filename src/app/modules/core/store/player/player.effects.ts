@@ -219,14 +219,14 @@ export class PlayerEffects {
     mergeMap(({streamUrl}) => this.streamInfoService.getMetadata(streamUrl).pipe(
       withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStationAndNowPlaying))),
       switchMap(([fetched, selected]) => {
-        const actions: Array<Action> = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
+        const actions: Action[] = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
         if (selected.station && streamUrl === selected.station.url && !isEqual(fetched, selected.nowPlaying)) {
           actions.push(PlayerActions.currentNowPlayingChanged({nowPlaying: fetched}));
         }
         return actions;
       }),
       catchError(error => {
-        return of(fetchNowPlayingFailed({streamUrl: streamUrl, error}));
+        return of(fetchNowPlayingFailed({streamUrl, error}));
       })
     ))
   ));

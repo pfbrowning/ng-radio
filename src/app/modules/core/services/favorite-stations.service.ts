@@ -12,8 +12,8 @@ export class FavoriteStationsService {
     return `${this.configService.appConfig.favoriteStationsApiUrl}/userstations`;
   }
 
-  public fetchAll(): Observable<Array<Station>> {
-    return this.httpClient.get<Array<Station>>(this.stationsResource);
+  public fetchAll(): Observable<Station[]> {
+    return this.httpClient.get<Station[]>(this.stationsResource);
   }
 
   public addFavorite(station: Station): Observable<Station> {

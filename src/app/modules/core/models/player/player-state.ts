@@ -11,8 +11,8 @@ export interface PlayerState {
         streams: {
             [name: string]: StreamInfo;
         }
-        intervalInProgressUrls: Array<string>;
-        fetchInProgressUrls: Array<string>;
+        intervalInProgressUrls: string[];
+        fetchInProgressUrls: string[];
     };
     validatedStreams: Map<string, StreamValidityState>;
 }

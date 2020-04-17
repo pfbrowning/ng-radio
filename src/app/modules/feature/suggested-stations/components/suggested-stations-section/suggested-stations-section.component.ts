@@ -8,7 +8,7 @@ import { Station } from '@core/models/player';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SuggestedStationsSectionComponent {
-  @Input() stations: Array<Station>;
+  @Input() stations: Station[];
   @Input() header: string;
   @Output() stationSelected = new EventEmitter<Station>();
 

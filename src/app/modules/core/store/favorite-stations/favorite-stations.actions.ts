@@ -21,7 +21,7 @@ export const fetchStationsStart = createAction(
 
 export const fetchStationsSucceeded = createAction(
     FavoriteStationsActions.FetchStationsSucceeded,
-    props<{ stations: Array<Station> }>()
+    props<{ stations: Station[] }>()
 );
 
 export const fetchStationsFailed = createAction(

@@ -87,7 +87,7 @@ export const validateStreamFailed = createAction(
 
 export const selectStreamInfoUrls = createAction(
     PlayerActions.SelectStreamInfoUrls,
-    props<{ streamUrls: Array<string> }>()
+    props<{ streamUrls: string[] }>()
 );
 
 export const clearStreamInfoUrls = createAction(

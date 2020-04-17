@@ -14,7 +14,7 @@ describe('ResponsiveSidenavComponent', () => {
   let windowService: WindowServiceStub;
   let router: Router;
 
-  const dummyTestingRoutes: Array<Route> = [
+  const dummyTestingRoutes: Route[] = [
     { path: '', component: ResponsiveSidenavComponent },
     { path: 'route2', component: ResponsiveSidenavComponent }
   ];

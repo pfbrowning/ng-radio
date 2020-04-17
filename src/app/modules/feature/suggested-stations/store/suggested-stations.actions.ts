@@ -24,7 +24,7 @@ export const developerSuggestedFetchStart = createAction(
 
 export const developerSuggestedFetchSucceeded = createAction(
   SuggestedStationsActions.DeveloperSuggestedFetchSucceeded,
-  props<{ stations: Array<Station> }>()
+  props<{ stations: Station[] }>()
 );
 
 export const developerSuggestedFetchFailed = createAction(
@@ -38,7 +38,7 @@ export const topClickedFetchStart = createAction(
 
 export const topClickedFetchSucceeded = createAction(
   SuggestedStationsActions.TopClickedFetchSucceeded,
-  props<{ stations: Array<Station> }>()
+  props<{ stations: Station[] }>()
 );
 
 export const topClickedFetchFailed = createAction(
@@ -52,7 +52,7 @@ export const topVotedFetchStart = createAction(
 
 export const topVotedFetchSucceeded = createAction(
   SuggestedStationsActions.TopVotedFetchSucceeded,
-  props<{ stations: Array<Station> }>()
+  props<{ stations: Station[] }>()
 );
 
 export const topVotedFetchFailed = createAction(
