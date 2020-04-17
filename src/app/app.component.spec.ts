@@ -4,13 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { ToastModule } from 'primeng/toast';
 import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MessageService } from 'primeng/api';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { initialRootState, RootState } from '@core';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let store: MockStore<RootState>;
 
   beforeEach(async(() => {
 
@@ -33,7 +32,6 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    store = TestBed.inject(MockStore);
   });
 
   it('should create the app', () => {

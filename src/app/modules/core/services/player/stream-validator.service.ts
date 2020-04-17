@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
 import { TryPlayStreamService } from './try-play-stream.service';
 import { PlaylistReaderService } from './playlist-reader.service';

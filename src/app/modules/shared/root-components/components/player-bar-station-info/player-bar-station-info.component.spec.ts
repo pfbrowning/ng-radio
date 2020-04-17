@@ -3,7 +3,7 @@ import { PlayerBarStationInfoComponent } from './player-bar-station-info.compone
 import { getElementTextBySelector } from '@utilities/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RootState, initialRootState } from '@core';
-import { initialPlayerState, Station, StreamInfoStatus, PlayerStatus, NowPlaying } from '@core/models/player';
+import { Station, StreamInfoStatus, PlayerStatus, NowPlaying } from '@core/models/player';
 import { PlayerSelectors } from '@core/store/player';
 import theoretically from 'jasmine-theories';
 

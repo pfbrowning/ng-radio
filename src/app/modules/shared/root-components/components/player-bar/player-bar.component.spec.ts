@@ -18,12 +18,9 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { initialPlayerState, PlayerStatus, Station, StreamInfoStatus } from '@core/models/player';
-import { NowPlaying } from 'src/app/modules/core/models/player/now-playing';
-import { selectMinutesUntilSleep, SleepTimerSelectors } from '@core/store/sleep-timer';
-import { selectIsProcessingFavoritesForCurrentStation, FavoriteStationsSelectors } from '@core/store/favorite-stations';
+import { PlayerStatus, Station } from '@core/models/player';
+import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerSelectors } from '@core/store/player';
-import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 
 
 describe('PlayerBarComponent', () => {
