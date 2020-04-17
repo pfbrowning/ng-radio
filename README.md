@@ -49,12 +49,10 @@ Once you've got the aforementioned dependencies configured, running, and in a ha
 npm install
 ng serve --open
 ```
-  
+
 ## Backlog
 * High Priority Chores & Bugs
-  * Fine-tune the mobile favorite stations table view
   * Consolidate the 'display now playing title based on status' template logic into a component
-  * Favorite button not showing in mat-menu
 * Features
   * Show stream info for favorites, search results, and suggested
   * Browser-based audio recording

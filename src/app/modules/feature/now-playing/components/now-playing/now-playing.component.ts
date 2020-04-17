@@ -11,10 +11,6 @@ import {
 } from '@core/store/favorite-stations';
 import { KeepAwakeService } from '@core';
 import { setSleepTimerSubmit, clearSleepTimer, selectMinutesUntilSleep } from '@core/store/sleep-timer';
-import {
-  playAudioStart,
-  pauseAudioSubmit,
-} from '@core/store/player';
 import { PlayerStatus, StreamInfoStatus } from '@core/models/player';
 import * as PlayerSelectors from '@core/store/player/selectors';
 
