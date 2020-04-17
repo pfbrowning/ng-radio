@@ -217,7 +217,7 @@ export class PlayerEffects {
   fetchStreamInfo$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchNowPlayingStart),
     mergeMap(({streamUrl}) => this.streamInfoService.getMetadata(streamUrl).pipe(
-      withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStationAndNowPlaying))),
+      withLatestFrom(this.store.pipe(select(PlayerSelectors.currentStationAndNowPlaying))),
       switchMap(([fetched, selected]) => {
         const actions: Action[] = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
         if (selected.station && streamUrl === selected.station.url && !isEqual(fetched, selected.nowPlaying)) {

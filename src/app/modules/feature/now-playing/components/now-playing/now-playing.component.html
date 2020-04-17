@@ -15,23 +15,11 @@
               <ng-container *ngIf="validatingCurrent$ | async">Validating Stream...</ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="playerStatus.Playing">
-              <ng-container *ngIf="nowPlaying$ | async; else noNowPlaying">
-                  {{ (nowPlaying$ | async).title }}
-              </ng-container>
-              <ng-template #noNowPlaying>
-                  <ng-container [ngSwitch]="streamInfoStatus$ | async">
-                      <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
-                          Loading Stream Info...
-                      </ng-container>
-                      <ng-container *ngSwitchCase="streamInfoStatus.Error">
-                          Metadata Unavailable
-                      </ng-container>
-                  </ng-container>
-              </ng-template>
+            <blr-stream-info-text [streamInfo]="currentStreamInfo$ | async"></blr-stream-info-text>
           </ng-container>
         </div>
         <div class="station-title">{{ (currentStation$ | async).title }}</div>
-        <div *ngIf="(nowPlaying$ | async)?.bitrate" class="bitrate">Bitrate: {{ (nowPlaying$ | async)?.bitrate }}</div>
+        <div *ngIf="(currentStreamInfo$ | async).nowPlaying.bitrate; let bitrate" class="bitrate">Bitrate: {{ bitrate }}</div>
         <div *ngIf="(minutesUntilSleep$ | async) != null" class="minutes-until-sleep">
           Sleeping in {{minutesUntilSleep$ | async}} minutes
         </div>
@@ -42,27 +30,9 @@
     </div>
     <div class="flex-column-third">
       <ul class="bulletless-list action-items">
-        <li>
-          <button mat-raised-button color="primary" [matMenuTriggerFor]="sleepTimerMenu.menu">Sleep Timer</button>
-        </li>
         <li class="keep-awake">
           <button *ngIf="(keepAwakeService.enabled$ | async) == false" (click)="keepAwakeService.enable()" mat-raised-button color="primary" matTooltip="This will attempt to keep the screen from locking on mobile devices.">Enable Keep Awake</button>
           <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
-        </li>
-        <li>
-          <button *ngIf="processingFavorites$ | async; else favoritesProcessed" disabled mat-raised-button type="button" color="primary">
-            {{ favoritesProcessingState$ | async }}
-          </button>
-          <ng-template #favoritesProcessed>
-            <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavorites" (click)="onRemoveFromFavoritesClicked()" mat-raised-button type="button" color="primary">
-              Remove From Favorites
-            </button>
-            <ng-template #notInFavorites>
-              <button (click)="onAddToFavoritesClicked()" mat-raised-button type="button" color="primary">
-                Add To Favorites
-              </button>
-            </ng-template>
-          </ng-template>
         </li>
       </ul>
     </div>
@@ -76,5 +46,3 @@
     <a [routerLink]="['../custom-station']">enter a custom URL</a>.
   </p>
 </ng-template>
-
-<blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>

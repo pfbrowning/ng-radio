@@ -4,19 +4,7 @@
         <ng-container *ngIf="validatingCurrent">Validating Stream...</ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="playerStatus.Playing">
-        <ng-container *ngIf="nowPlaying$ | async; else noNowPlaying; let nowPlaying">
-            {{ nowPlaying.title }}
-        </ng-container>
-        <ng-template #noNowPlaying>
-            <ng-container [ngSwitch]="streamInfoStatus$ | async">
-                <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
-                    Loading Stream Info...
-                </ng-container>
-                <ng-container *ngSwitchCase="streamInfoStatus.Error">
-                    Metadata Unavailable
-                </ng-container>
-            </ng-container>
-        </ng-template>
+        <blr-stream-info-text [streamInfo]="currentStreaminfo$ | async"></blr-stream-info-text>
     </ng-container>
 </div>
 <div #station class="station" [class.marquee]="stationMarquee">{{ currentStation.title }}</div>

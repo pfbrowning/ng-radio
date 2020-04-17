@@ -30,8 +30,7 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked {
   public playerStatus = PlayerStatus;
   public titleMarquee = false;
   public stationMarquee = false;
-  public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectCurrentStreamInfoStatus));
-  public nowPlaying$ = this.store.pipe(select(PlayerSelectors.selectCurrentNowPlaying));
+  public currentStreaminfo$ = this.store.pipe(select(PlayerSelectors.currentStreamInfo));
 
   ngAfterViewChecked() {
     /* Check and apply marquee classes immediately after each change detection operation because

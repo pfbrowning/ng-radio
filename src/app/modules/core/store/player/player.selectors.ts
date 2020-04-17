@@ -24,14 +24,14 @@ export const selectPlayerStatus = createSelector(
     (state) => state.playerStatus
 );
 
-export const selectCurrentNowPlaying = createSelector(
+export const currentStreamInfo = createSelector(
     selectPlayerState,
-    state => state.streamInfo.current.nowPlaying
+    state => state.streamInfo.current
 );
 
-export const selectCurrentStreamInfoStatus = createSelector(
-    selectPlayerState,
-    state => state.streamInfo.current.status
+export const currentNowPlaying = createSelector(
+    currentStreamInfo,
+    streamInfo => streamInfo.nowPlaying
 );
 
 export const selectCurrentStationTitle = createSelector(
@@ -39,9 +39,9 @@ export const selectCurrentStationTitle = createSelector(
     (station) => station != null ? station.title : null
 );
 
-export const selectCurrentStationAndNowPlaying = createSelector(
+export const currentStationAndNowPlaying = createSelector(
     selectCurrentStation,
-    selectCurrentNowPlaying,
+    currentNowPlaying,
     (station, nowPlaying) => ({station, nowPlaying})
 );
 

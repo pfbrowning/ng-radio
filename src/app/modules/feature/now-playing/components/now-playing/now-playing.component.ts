@@ -27,33 +27,13 @@ export class NowPlayingComponent {
 
   public streamInfoStatus = StreamInfoStatus;
   public playerStatus = PlayerStatus;
-  public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
-  public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
-  public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
   public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(PlayerSelectors.selectCurrentStation));
-  public nowPlaying$ = this.store.pipe(select(PlayerSelectors.selectCurrentNowPlaying));
-  public streamInfoStatus$ = this.store.pipe(select(PlayerSelectors.selectCurrentStreamInfoStatus));
+  public currentStreamInfo$ = this.store.pipe(select(PlayerSelectors.currentStreamInfo));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 
   public onImgError(img: HTMLImageElement, altSrc: string) {
     setAltSrc(img, altSrc);
-  }
-
-  public onTimerSelected(minutes: number) {
-    if (minutes != null) {
-      this.store.dispatch(setSleepTimerSubmit({minutes}));
-    } else {
-      this.store.dispatch(clearSleepTimer());
-    }
-  }
-
-  public onAddToFavoritesClicked(): void {
-    this.store.dispatch(addCurrentStationToFavoritesRequested());
-  }
-
-  public onRemoveFromFavoritesClicked(): void {
-    this.store.dispatch(removeCurrentStationFromFavoritesRequested());
   }
 }
