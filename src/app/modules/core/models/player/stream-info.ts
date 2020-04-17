@@ -3,5 +3,5 @@ import { StreamInfoStatus } from './stream-info-status';
 
 export interface StreamInfo {
     nowPlaying: NowPlaying;
-    status: StreamInfoStatus
+    status: StreamInfoStatus;
 }

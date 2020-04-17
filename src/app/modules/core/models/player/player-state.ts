@@ -12,7 +12,7 @@ export interface PlayerState {
             [name: string]: StreamInfo;
         }
         intervalInProgressUrls: Array<string>;
-        fetchInProgressUrls: Array<string>; 
-    }
+        fetchInProgressUrls: Array<string>;
+    };
     validatedStreams: Map<string, StreamValidityState>;
 }

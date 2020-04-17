@@ -115,7 +115,7 @@ const reducer = createReducer(
           ...state.streamInfo.streams,
           [streamUrl]: {
             nowPlaying: null,
-            status: StreamInfoStatus.Error            
+            status: StreamInfoStatus.Error
           }
         }
         : state.streamInfo.streams,
@@ -178,7 +178,7 @@ const reducer = createReducer(
           : {
             nowPlaying: null,
             status: StreamInfoStatus.NotInitialized
-          }
+          };
         return accumulator;
       }, {})
     }

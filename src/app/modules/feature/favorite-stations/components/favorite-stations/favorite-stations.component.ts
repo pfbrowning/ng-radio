@@ -24,7 +24,7 @@ export class FavoriteStationsComponent implements OnInit, OnDestroy {
   public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
 
   public ngOnInit(): void {
-    this.stationRows$.pipe(take(1)).subscribe(rows => 
+    this.stationRows$.pipe(take(1)).subscribe(rows =>
       this.store.dispatch(PlayerActions.selectStreamInfoUrls({streamUrls: rows.map(r => r.station.url)})
     ));
   }

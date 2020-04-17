@@ -70,46 +70,46 @@ export const selectIsValidationInProgressForCurrentStation = createSelector(
 export const nowPlayingFetchInProgressUrls = createSelector(
     selectPlayerState,
     state => state.streamInfo.fetchInProgressUrls
-)
+);
 
 export const nowPlayingIntervalInProgressUrls = createSelector(
     selectPlayerState,
     state => state.streamInfo.intervalInProgressUrls
-)
+);
 
 export const currentUrlAndFetchInProgressUrls = createSelector(
     selectCurrentStationUrl,
     nowPlayingFetchInProgressUrls,
     (current, fetching) => ({current, fetching})
-)
+);
 
 export const streamInfoUrls = createSelector(
     selectPlayerState,
     state => Object.keys(state.streamInfo.streams)
-)
+);
 
 export const streamInfo = createSelector(
     selectPlayerState,
     streamInfoUrls,
     (state, urls) => new Map<string, StreamInfo>(urls.map(url => [url, state.streamInfo.streams[url]]))
-)
+);
 
 export const nonIntervalOrFetchingStreamInfoUrls = createSelector(
     streamInfoUrls,
     nowPlayingFetchInProgressUrls,
     nowPlayingIntervalInProgressUrls,
     (urls, fetching, intervals) => urls.filter(u => !fetching.concat(intervals).includes(u))
-)
+);
 
 export const currentAndStreamInfoUrls = createSelector(
     selectCurrentStationUrl,
     streamInfoUrls,
-    (current, streamInfoUrls) => ({current, streamInfoUrls})
-)
+    (current, listed) => ({current, listed})
+);
 
 export const intervalCompletedParams = createSelector(
     selectCurrentStationUrl,
     streamInfoUrls,
     selectPlayerStatus,
     (current, listed, status) => ({current, listed, status})
-)
+);

@@ -182,7 +182,7 @@ export class PlayerEffects {
   startFetchInterval$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchNowPlayingSucceeded, PlayerActions.fetchNowPlayingFailed),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.currentAndStreamInfoUrls))),
-    filter(([{streamUrl}, {current, streamInfoUrls}]) => streamInfoUrls.concat(current).includes(streamUrl)),
+    filter(([{streamUrl}, {current, listed}]) => listed.concat(current).includes(streamUrl)),
     mergeMap(([action, selected]) => this.configService.appConfig$.pipe(
       map(config => ({ action, selected, config }))
     )),
@@ -221,7 +221,7 @@ export class PlayerEffects {
       switchMap(([fetched, selected]) => {
         const actions: Array<Action> = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
         if (selected.station && streamUrl === selected.station.url && !isEqual(fetched, selected.nowPlaying)) {
-          actions.push(PlayerActions.currentNowPlayingChanged({nowPlaying:fetched}));
+          actions.push(PlayerActions.currentNowPlayingChanged({nowPlaying: fetched}));
         }
         return actions;
       }),
