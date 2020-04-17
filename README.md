@@ -62,7 +62,6 @@ ng serve --open
   * Search by country and any other Radio Browser API criteria which makes sense
   * Favorite station tags
 * Chores
-  * Use tslint-ext to remove unused imports
   * Split "Now Playing" into its own root store slice
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Wait until after initial change detection to show notifications
@@ -75,6 +74,7 @@ ng serve --open
   * Either type for stream validator logic
   * Refactor selector import / export logic
   * Config observable
+  * Fix warnings in tests
   * Package up reusable things and deploy to npm
     * setAltSrc
     * Either
