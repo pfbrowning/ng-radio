@@ -45,7 +45,7 @@ describe('StationLookupService', () => {
 
     /* We want to check the body params in the same way so we'll just wrap that logic
     into a function because DRY */
-    const checkBodyParam = function(paramKey: string, paramValue: string, body: HttpParams) {
+    const checkBodyParam = (paramKey: string, paramValue: string, body: HttpParams) => {
       if (!isBlank(paramValue)) {
         expect(body.get(paramKey)).toBe(paramValue);
       } else {

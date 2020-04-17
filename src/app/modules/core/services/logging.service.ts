@@ -38,7 +38,7 @@ export class LoggingService {
    * that the App Insights library expects.
    * @param input Object to convert to a string dictionary
    */
-  private static objectToLoggingDictionary(input: Object) {
+  private static objectToLoggingDictionary(input: object) {
     const output: { [name: string]: string; } = {};
     for (const key in input) {
       if (input.hasOwnProperty(key)) {
@@ -81,7 +81,7 @@ export class LoggingService {
    * @param severityLevel Severity level to log the message as
    * @param properties JS object mapping extra information to log as key/value pairs
    */
-  private logException(error: Error, severityLevel: SeverityLevel, properties: Object = null) {
+  private logException(error: Error, severityLevel: SeverityLevel, properties: object = null) {
     this.initialized.pipe(take(1)).subscribe(() => {
       const exceptionTelementry: IExceptionTelemetry = {
         exception: error,
@@ -130,7 +130,7 @@ export class LoggingService {
    * @param error Error to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logError(error: Error, properties: Object = null) {
+  public logError(error: Error, properties: object = null) {
     this.logException(error, SeverityLevel.Error, properties);
   }
 
@@ -139,7 +139,7 @@ export class LoggingService {
    * @param error Error to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logCritical(error: Error, properties: Object = null) {
+  public logCritical(error: Error, properties: object = null) {
     this.logException(error, SeverityLevel.Critical, properties);
   }
 }

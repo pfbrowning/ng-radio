@@ -6,7 +6,8 @@ import { SubSink } from 'subsink';
 
 /** Component which abstracts away the logic of showing and hiding an
  * Angular Material sidenav in a responsive manner based on a specified
- * screen size cutoff. */
+ * screen size cutoff.
+ */
 @Component({
   selector: 'blr-responsive-sidenav-container',
   templateUrl: './responsive-sidenav.component.html',
@@ -17,7 +18,8 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   /** The minimum screen width that we consider to be a large screen.
    * For example, if you set screenSizeCutoff to 800, then the sidenav
    * will be in smallScreen mode while the screen is 799 pixels wide
-   * and smaller. */
+   * and smaller.
+   */
   @Input() screenSizeCutoff = 800;
   /** Internal ViewChild hook for interacting with the MatSideNav component. */
   @ViewChild('sideNav', { static: true }) sideNav: MatSidenav;
@@ -50,7 +52,8 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   }
 
   /** We're in smallScreen mode if the current window width is less than
-   * the specified screenSizeCutoff. */
+   * the specified screenSizeCutoff.
+   */
   public get smallScreen(): boolean {
     return this.windowService.innerWidth < this.screenSizeCutoff;
   }

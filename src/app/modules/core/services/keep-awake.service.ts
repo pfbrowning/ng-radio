@@ -8,7 +8,8 @@ import { audioPaused } from '../store/player/player-actions';
 import * as NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
- * video in the background. */
+ * video in the background.
+ */
 @Injectable()
 export class KeepAwakeService {
   constructor(
@@ -21,11 +22,13 @@ export class KeepAwakeService {
 
   private enabled = new BehaviorSubject<boolean>(false);
   /** Reports to subscribers the state of whether noSleep.js is
-   * enabled or not at any given time. */
+   * enabled or not at any given time.
+   */
   public enabled$ = this.enabled.asObservable();
 
   /** Enables NoSleep.js in order to keep the mobile screen
-   * from going to sleep. */
+   * from going to sleep.
+   */
   public enable(): void {
     // Enable the nosleep object itself
     this.noSleep.enable();
@@ -36,7 +39,8 @@ export class KeepAwakeService {
   }
 
   /** Disables NoSleep.js in order to allow the mobile screen
-   * to go to sleep regularly. */
+   * to go to sleep regularly.
+   */
   public disable(): void {
     // If the nosleep object is currently enabled
     if (this.enabled.value === true) {

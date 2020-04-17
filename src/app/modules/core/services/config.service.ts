@@ -9,9 +9,9 @@ import { RootState } from '../models/root-state';
 import { selectConfig } from '@core/store/config/selectors';
 import merge from 'lodash/merge';
 
-/** Abstraction layer for configuration.  Fetches any necessary configuration files
- * before the app bootstraps and then stores the corresponding config info to be
- * injected by anybody who needs it. */
+/** Abstraction layer for configuration.  Fetches the app config for the store and
+ * provides an observable to access it from the store once it's been loaded.
+ */
 @Injectable()
 export class ConfigService {
   constructor(private httpClient: HttpClient, private store: Store<RootState>) {}

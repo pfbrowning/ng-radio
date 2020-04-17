@@ -7,7 +7,8 @@ import { Station } from '../models/player/station';
 import isBlank from 'is-blank';
 
 /** Service which searches for and retrieves station data from the radio browser
- * API and any relevant JSON files. */
+ * API and any relevant JSON files.
+ */
 @Injectable()
 export class StationLookupService {
   constructor(private configService: ConfigService, private httpClient: HttpClient) {}

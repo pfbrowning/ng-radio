@@ -6,7 +6,8 @@ import { ConfigService } from './config.service';
 import { NowPlaying } from '../models/player/now-playing';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
- * the configured radio metadata API */
+ * the configured radio metadata API
+ */
 @Injectable()
 export class StreamInfoService {
   constructor(

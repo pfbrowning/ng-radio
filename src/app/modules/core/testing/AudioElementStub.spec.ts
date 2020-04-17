@@ -7,8 +7,8 @@ export class AudioElementStub {
     public paused = new EventEmitter<void>();
     public source: string;
 
-    private playResolver: Function;
-    private playRejector: Function;
+    private playResolver: () => void;
+    private playRejector: (error: any) => void;
 
     public pauseSpy = spyOn(AudioElementStub.prototype, 'pause').and.callThrough();
     public playSpy = spyOn(AudioElementStub.prototype, 'play').and.callThrough();
