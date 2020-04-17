@@ -1,9 +1,10 @@
 {
-  "extends": [ "tslint:recommended" ],
+  "extends": [ "tslint:recommended", "tslint-etc" ],
   "rulesDirectory": [
     "codelyzer"
   ],
   "rules": {
+    "no-unused-declaration": true, // Use tslint-etc to check for unused imports
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
