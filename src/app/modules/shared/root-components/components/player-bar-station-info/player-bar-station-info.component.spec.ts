@@ -24,9 +24,13 @@ describe('PlayerBarStationInfoComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerBarStationInfoComponent);
-    component = fixture.componentInstance;
     store = TestBed.inject(MockStore);
-    store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
+    component = fixture.componentInstance;
+    component.currentStation = new Station();
+  });
+
+  afterEach(() => {
+    store.resetSelectors();
   });
 
   it('should create', () => {
@@ -83,7 +87,7 @@ describe('PlayerBarStationInfoComponent', () => {
   theoretically.it('should reflect the various streamInfoStatus states properly in the template',
     streamInfoStatusTemplateInput, (input) => {
     // Arrange & Act
-    store.overrideSelector(PlayerSelectors.selectPlayerStatus, input.playerStatus);
+    component.currentPlayerStatus = input.playerStatus;
     store.overrideSelector(PlayerSelectors.selectCurrentNowPlaying, input.nowPlaying);
     store.overrideSelector(PlayerSelectors.selectCurrentStreamInfoStatus, input.streamInfoStatus);
     store.refreshState();

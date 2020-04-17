@@ -1,7 +1,7 @@
-<div #title [ngSwitch]="playerStatus$ | async" class="title" [class.marquee]="titleMarquee">
+<div #title [ngSwitch]="currentPlayerStatus" class="title" [class.marquee]="titleMarquee">
     <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
     <ng-container *ngSwitchCase="playerStatus.Stopped">
-        <ng-container *ngIf="validatingCurrent$ | async">Validating Stream...</ng-container>
+        <ng-container *ngIf="validatingCurrent">Validating Stream...</ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="playerStatus.Playing">
         <ng-container *ngIf="nowPlaying$ | async; else noNowPlaying; let nowPlaying">
@@ -19,4 +19,4 @@
         </ng-template>
     </ng-container>
 </div>
-<div #station class="station" [class.marquee]="stationMarquee">{{ (currentStation$ | async).title }}</div>
+<div #station class="station" [class.marquee]="stationMarquee">{{ currentStation.title }}</div>
