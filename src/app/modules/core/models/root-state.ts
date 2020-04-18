@@ -3,6 +3,7 @@ import { ConfigState } from './config/config-state';
 import { FavoriteStationsState } from './favorite-stations/favorite-stations-state';
 import { PlayerState } from './player/player-state';
 import { SleepTimerState } from './sleep-timer/sleep-timer-state';
+import { ApplicationState } from './application/application-state';
 
 export interface RootState {
     favoriteStations: FavoriteStationsState;
@@ -10,4 +11,5 @@ export interface RootState {
     sleepTimer: SleepTimerState;
     authentication: AuthenticationState;
     config: ConfigState;
+    application: ApplicationState;
 }

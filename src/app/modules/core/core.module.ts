@@ -32,6 +32,8 @@ import { ConfigEffects } from './store/config/config.effects';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './services/notification.service';
+import { applicationReducer } from './store/application/application.reducer';
+import { ApplicationEffects } from './store/application/application.effects';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -46,7 +48,8 @@ import * as NoSleep from 'nosleep.js';
       player: playerReducer,
       sleepTimer: sleepTimerReducer,
       authentication: authenticationReducer,
-      config: configReducer
+      config: configReducer,
+      application: applicationReducer
     }, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -59,7 +62,8 @@ import * as NoSleep from 'nosleep.js';
       SleepTimerEffects,
       AuthenticationEffects,
       RouterExtendedEffects,
-      ConfigEffects
+      ConfigEffects,
+      ApplicationEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),

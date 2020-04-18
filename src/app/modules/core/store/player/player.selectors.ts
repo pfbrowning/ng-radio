@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
 import { StreamInfo } from '../../models/player/stream-info';
+import { ApplicationSelectors } from '../application/.';
 
 export const selectPlayerState = (state: RootState) => state.player;
 
@@ -111,5 +112,6 @@ export const intervalCompletedParams = createSelector(
     selectCurrentStationUrl,
     streamInfoUrls,
     selectPlayerStatus,
-    (current, listed, status) => ({current, listed, status})
+    ApplicationSelectors.windowHasFocus,
+    (current, listed, status, focused) => ({current, listed, status, focused})
 );

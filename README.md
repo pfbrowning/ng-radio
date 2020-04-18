@@ -58,11 +58,13 @@ ng serve --open
   * Search by country and any other Radio Browser API criteria which makes sense
   * Favorite station tags
 * Chores
+  * Use long refresh interval for current station when the window isn't focused
   * Remove mat-menu from now-playing component and move the player-bar mat menu into its own component
   * Split "Now Playing" into its own root store slice
   * Show cursor pointer for now playing bottom toolbar
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Wait until after initial change detection to show notifications
+  * Configure a proper reducer map for the root store
   * Turn off sleep timer on audio pause
   * Flex styling of player bar: grow to take up available with for song & station title
   * Store only what we need in NGRX authentication store

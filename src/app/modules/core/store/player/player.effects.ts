@@ -37,7 +37,8 @@ import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import { StreamValidatorService } from '../../services/player/stream-validator.service';
 import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
 import { LoggingService } from '../../services/logging.service';
-import { PlayerActions, PlayerSelectors } from './index';
+import { PlayerActions, PlayerSelectors } from '.';
+import { ApplicationActions } from '../application/.';
 import { PlayerStatus } from '../../models/player/player-status';
 import isBlank from 'is-blank';
 import isEqual from 'lodash/isEqual';
@@ -173,8 +174,8 @@ export class PlayerEffects {
     map(([, {current}]) => fetchNowPlayingStart({streamUrl: current}))
   ));
 
-  fetchOnListSelected$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.selectStreamInfoUrls),
+  fetchListedStreamInfo$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.selectStreamInfoUrls, ApplicationActions.windowFocus),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.nonIntervalOrFetchingStreamInfoUrls))),
     switchMap(([, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({streamUrl})))
   ));
@@ -208,8 +209,9 @@ export class PlayerEffects {
   onFetchIntervalComplete$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchIntervalCompleted),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.intervalCompletedParams))),
-    filter(([{streamUrl}, {listed, current, status}]) =>
-      listed.includes(streamUrl) || (current === streamUrl && status === PlayerStatus.Playing)
+    // Fetch listed streams only if the window is focused, but fetch the current playing stream regardless
+    filter(([{streamUrl}, {listed, current, status, focused}]) =>
+      (listed.includes(streamUrl) && focused) || (current === streamUrl && status === PlayerStatus.Playing)
     ),
     map(([{streamUrl}]) => PlayerActions.fetchNowPlayingStart({streamUrl}))
   ));

@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, NavigationStart, Event } from '@angular/router';
-import { WindowService } from '@core';
+import { WindowService } from '@core/services/application';
 import { SubSink } from 'subsink';
 
 /** Component which abstracts away the logic of showing and hiding an
