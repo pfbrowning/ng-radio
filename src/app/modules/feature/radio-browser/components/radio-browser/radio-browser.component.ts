@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, take, filter } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
 import { Store, select } from '@ngrx/store';
-import { selectStation } from '@core/store/player';
+import { selectStation, PlayerActions, PlayerSelectors } from '@core/store/player';
 import { Station } from '@core/models/player';
 import { nameTermUpdated, tagTermUpdated } from '../../store/radio-browser.actions';
 import { SubSink } from 'subsink';
@@ -20,10 +20,11 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   @ViewChild('nameSearchInput', { static: true }) nameSearchInput: MatInput;
 
-  public columns = ['name', 'tags', 'icon'];
+  public columns = ['name', 'now-playing', 'tags', 'icon'];
 
   public searchResults$ = this.store.pipe(select(selectSearchResults));
   public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
+  public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
   public nameSearch$ = new Subject<string>();
   public tagSearch$ = new Subject<string>();
   public nameSearch: string;
@@ -43,12 +44,18 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     this.store.pipe(select(selectNameTerm), take(1)).subscribe(term => this.nameSearch = term);
     this.store.pipe(select(selectTagTerm), take(1)).subscribe(term => this.tagSearch = term);
 
+    // On init set any existing search results as listed stream info urls
+    this.searchResults$.pipe(take(1), filter(results => results != null)).subscribe(results =>
+      this.store.dispatch(PlayerActions.selectStreamInfoUrls({streamUrls: results.map(s => s.url)})
+    ));
+
     // Focus on the name input
     this.nameSearchInput.focus();
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
+    this.store.dispatch(PlayerActions.clearStreamInfoUrls());
   }
 
   onRowClicked(station: Station) {

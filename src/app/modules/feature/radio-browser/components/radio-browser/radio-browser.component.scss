@@ -1,5 +1,19 @@
 @import 'variables';
 
+// Special styles for small screens
+@media (max-width:$smallScreenCutoff - 1) {
+    /* We want the Station title to take up a little bit less
+    space than the now playing text. */
+    .mat-column-name {
+        width:40%;
+    }
+
+    .mat-column-tags,
+    .mat-column-icon {
+        display:none;
+    }
+}
+
 .tag-list {
     padding:0;
     margin:0;

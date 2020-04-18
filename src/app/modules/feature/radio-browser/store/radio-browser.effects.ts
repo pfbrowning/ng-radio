@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, withLatestFrom, map, catchError, tap } from 'rxjs/operators';
+import { switchMap, withLatestFrom, map, catchError, tap, filter } from 'rxjs/operators';
 import { StationLookupService } from '@core';
-import { selectSearchCriteria } from './radio-browser.selectors';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserRootState } from '../models/radio-browser-root-state';
 import { NotificationService, Severities } from '@core';
-import * as RadioBrowserActions from './radio-browser.actions';
+import { RadioBrowserActions, RadioBrowserSelectors } from '.';
+import { Router } from '@angular/router';
+import { PlayerActions } from '@core/store/player';
 
 @Injectable()
 export class RadioBrowserEffects {
@@ -18,11 +19,18 @@ export class RadioBrowserEffects {
 
   performSearch$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchStart),
-    withLatestFrom(this.store.pipe(select(selectSearchCriteria))),
+    withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.selectSearchCriteria))),
     switchMap(([, criteria]) => this.stationLookupService.search(criteria.nameTerm, criteria.tagTerm).pipe(
         map(results => RadioBrowserActions.searchSucceeded({results})),
         catchError(error => of(RadioBrowserActions.searchFailed({error})))
     ))
+  ));
+
+  updateListedStations$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.searchSucceeded),
+    filter(() => this.router.url === '/radio-browser'),
+    map(({results}) => results.map(r => r.url)),
+    map(streamUrls => PlayerActions.selectStreamInfoUrls({streamUrls}))
   ));
 
   notifySearchFailed$ = createEffect(() => this.actions$.pipe(
@@ -33,6 +41,7 @@ export class RadioBrowserEffects {
   constructor(
     private actions$: Actions,
     private store: Store<RadioBrowserRootState>,
+    private router: Router,
     private stationLookupService: StationLookupService,
     private notificationService: NotificationService
   ) {}

@@ -5,6 +5,7 @@ import { RadioBrowserEffects } from './radio-browser.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState, StationLookupService, NotificationService } from '@core';
 import { createStationLookupServiceSpy, createNotificationServiceSpy } from '@core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RadioBrowserEffects', () => {
   const actions$: Observable<any> = null;
@@ -12,6 +13,9 @@ describe('RadioBrowserEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       providers: [
         RadioBrowserEffects,
         provideMockActions(() => actions$),

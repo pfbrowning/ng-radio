@@ -63,8 +63,8 @@ describe('StationLookupService', () => {
       // Name & tag should be present on the request body if non-blank values were provided
       checkBodyParam('name', testEntry.name, request.request.body);
       checkBodyParam('tag', testEntry.tag, request.request.body);
-      // Limit should be 100 regardless of what was passed in
-      checkBodyParam('limit', '100', request.request.body);
+      // Limit should be 25 regardless of what was passed in
+      checkBodyParam('limit', '25', request.request.body);
 
       // Flush a dummy response
       request.flush([{

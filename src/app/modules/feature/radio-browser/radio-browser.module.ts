@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { radioBrowserReducer, radioBrowserFeatureKey } from './store/radio-browser.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { RadioBrowserEffects } from './store/radio-browser.effects';
+import { SharedModule } from '@shared';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RadioBrowserEffects } from './store/radio-browser.effects';
     CommonModule,
     FormsModule,
     RadioBrowserRoutingModule,
+    SharedModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,

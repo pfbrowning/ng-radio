@@ -90,3 +90,23 @@ fieldset {
 .off-white {
     color: $offWhite;
 }
+
+/* Show a bit of padding between cells because text runs
+too closely together otherwise. */
+.mat-table th.mat-header-cell,
+.mat-table td.mat-cell {
+    padding: 0 8px;
+}
+
+/* On small screens use the same padding for all columns
+so that:
+1) Padding isn't inconsistent when columns are hidden
+2) We're not taking up quite so much width when width is limited. */
+@media (max-width:$smallScreenCutoff - 1) {
+    .mat-table th.mat-header-cell:first-of-type,
+    .mat-table th.mat-header-cell:last-of-type,
+    .mat-table td.mat-cell:first-of-type,
+    .mat-table td.mat-cell:last-of-type {
+        padding: 0 8px;
+    }
+}

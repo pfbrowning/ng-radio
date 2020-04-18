@@ -17,9 +17,9 @@ export class StationLookupService {
    * Searches the Radio Browser API for stations matching the provided name and / or title.
    * @param name Station name / title to search for
    * @param tag Station tag to search for
-   * @param limit Max number of results to request from the radio browser API.  Defaults to 100.
+   * @param limit Max number of results to request from the radio browser API.  Defaults to 25.
    */
-  public search(name: string = null, tag: string = null, limit: number = 100): Observable<Station[]> {
+  public search(name: string = null, tag: string = null, limit: number = 25): Observable<Station[]> {
     let body = new HttpParams();
     // Add name param if it's not blank
     if (!isBlank(name)) {

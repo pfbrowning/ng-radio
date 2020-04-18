@@ -14,18 +14,6 @@
     .mat-column-actions {
         display:none;
     }
-
-    /* Use less padding on small screens, and use a consistent
-    amount of padding for all cells to account for some columns
-    being hidden on small screens. */
-    th.mat-header-cell,
-    th.mat-header-cell:first-of-type,
-    th.mat-header-cell:last-of-type,
-    td.mat-cell,
-    td.mat-cell:first-of-type,
-    td.mat-cell:last-of-type {
-        padding: 0 8px;
-    }
 }
 
 .delete-in-progress {
