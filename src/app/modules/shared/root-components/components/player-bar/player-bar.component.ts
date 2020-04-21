@@ -6,16 +6,15 @@ import { Store, select } from '@ngrx/store';
 import { KeepAwakeService, RootState } from '@core';
 import { PlayerStatus } from '@core/models/player';
 import {
-  selectIsCurrentStationInFavorites,
   selectCurrentStationFavoritesProcessingState,
   selectIsProcessingFavoritesForCurrentStation,
   addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested
+  removeCurrentStationFromFavoritesRequested,
+  FavoriteStationsSelectors
 } from '@core/store/favorite-stations';
 import { selectMinutesUntilSleep, setSleepTimerSubmit, clearSleepTimer } from '@core/store/sleep-timer';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
-import * as PlayerActions from '@core/store/player/actions';
-import * as PlayerSelectors from '@core/store/player/selectors';
+import { PlayerActions, PlayerSelectors } from '@core/store/player';
 
 @Component({
   selector: 'blr-player-bar',
@@ -34,9 +33,8 @@ export class PlayerBarComponent {
   public playerStatus = PlayerStatus;
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
-  public isCurrentStationInFavorites$ = this.store.pipe(select(selectIsCurrentStationInFavorites));
   public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
-  public currentStation$ = this.store.pipe(select(PlayerSelectors.selectCurrentStation));
+  public currentStation$ = this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 

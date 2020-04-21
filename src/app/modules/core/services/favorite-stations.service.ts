@@ -20,6 +20,10 @@ export class FavoriteStationsService {
     return this.httpClient.post<Station>(this.stationsResource, station);
   }
 
+  public updateFavorite(stationId: number, station: Station): Observable<Station> {
+    return this.httpClient.put<Station>(`${this.stationsResource}/${stationId}`, station);
+  }
+
   public removeFavorite(stationId: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.stationsResource}/${stationId}`);
   }

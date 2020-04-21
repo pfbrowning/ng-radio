@@ -52,10 +52,12 @@ ng serve --open
 
 ## Backlog
 * Features
-  * Browser-based audio recording
-  * Favorite station edits
+  * Favorite station edit button from the favorites grid
+  * Station URL Async form Validator
   * Search by country and any other Radio Browser API criteria which makes sense
+  * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy
   * Favorite station tags
+  * Browser-based audio recording (pending CORS proxy for audio stream)
 * Chores
   * Flex styling of player bar: grow to take up available with for song & station title
   * Show cursor pointer for now playing bottom toolbar
@@ -66,17 +68,16 @@ ng serve --open
   * Wait until after initial change detection to show notifications
   * Remove mat-menu from now-playing component and move the player-bar mat menu into its own component
   * Show a loading spinner in place of the main app content while waiting for the config to load
+  * Write about browser support in the readme
   * Split "Now Playing" into its own root store slice
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store
   * Partition core/services directory
   * Fix warnings in tests
   * Move build pipeline to Github actions
-  * Socket.IO-based now playing listener / stream proxy
   * Either type for stream validator logic
+  * Find a better alternative to the mat spinner button package
   * Package up reusable things and deploy to npm
-    * setAltSrc
-    * Either
   * Prevent accidental audio streaming through CORS proxy
   * Refactor selector import / export logic
   * Config observable

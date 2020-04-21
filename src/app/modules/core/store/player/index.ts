@@ -3,7 +3,6 @@ export { playAudioStart, pauseAudioSubmit, selectStation } from './player-action
 export {
     selectPlayerStatus,
     selectCurrentStation,
-    selectCurrentStationTitle,
     selectIsStationSelected
 } from './player.selectors';
 

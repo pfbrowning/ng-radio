@@ -14,11 +14,6 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/feature/now-playing/now-playing.module').then(m => m.NowPlayingModule)
   },
   {
-    path: 'custom-station',
-    canActivate: [ AuthGuard ],
-    loadChildren: () => import('../app/modules/feature/custom-station/custom-station.module').then(m => m.CustomStationModule)
-  },
-  {
     path: 'radio-browser',
     canActivate: [ AuthGuard ],
     loadChildren: () => import('../app/modules/feature/radio-browser/radio-browser.module').then(m => m.RadioBrowserModule)

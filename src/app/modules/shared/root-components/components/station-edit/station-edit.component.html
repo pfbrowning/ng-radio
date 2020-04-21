@@ -1,0 +1,24 @@
+<p-dialog [header]="existingStation ? 'Edit ' + existingStation.title :  'Open Custom URL'" [visible]="true" (visibleChange)="onVisibleChanged($event)" [draggable]="false" [modal]="true">
+  <form #form="ngForm">
+    <fieldset class="flex-grid">
+      <mat-form-field class="flex-column-half">
+        <input matInput [(ngModel)]="stationPending.title" [disabled]="saving$ | async" #titleInput="matInput" #title="ngModel" required name="title" placeholder="Station Title">
+        <mat-error *ngIf="title.hasError('required')">Title is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-column-half">
+        <input matInput [(ngModel)]="stationPending.url" [disabled]="saving$ | async" #url="ngModel" required name="url" placeholder="Stream URL" pattern="https?://.+">
+        <mat-error *ngIf="url.hasError('required')">Stream URL is required.</mat-error>
+        <mat-error *ngIf="url.hasError('pattern')">Stream URL must be a valid URL.</mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-column-half">
+        <input matInput [(ngModel)]="stationPending.iconUrl" [disabled]="saving$ | async" #iconUrl="ngModel" name="icon-url" placeholder="Icon URL" pattern="https?://.+">
+        <mat-error *ngIf="iconUrl.hasError('pattern')">Icon URL must be a valid URL.</mat-error>
+      </mat-form-field>
+    </fieldset>
+  </form>
+  <p-footer>
+    <mat-spinner-button *ngIf="!existingStation" (btnClick)="onOpenClicked()" [options]="openBtnOptions" [disabled]="saving$ | async"></mat-spinner-button>
+    <mat-spinner-button (btnClick)="onSaveClicked()" [options]="saveBtnOptions" [active]="(saving$ | async) || (fetchingFavorites$ | async)"></mat-spinner-button>
+    <mat-spinner-button (btnClick)="closeEditor()" [options]="cancelBtnOptions" [disabled]="saving$ | async"></mat-spinner-button>
+  </p-footer>
+</p-dialog>

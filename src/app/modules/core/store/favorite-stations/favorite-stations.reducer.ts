@@ -12,8 +12,9 @@ import {
 } from './favorite-stations.actions';
 import { initialFavoriteStationsState } from '../../models/favorite-stations/initial-favorite-stations-state';
 import { FavoriteStationsState } from '../../models/favorite-stations/favorite-stations-state';
+import { FavoriteStationsActions } from '.';
 
-const reducer = createReducer(
+const reducer = createReducer<FavoriteStationsState>(
   initialFavoriteStationsState,
   on(fetchStationsStart, state => ({ ...state, fetchInProgress: true})),
   on(fetchStationsSucceeded, (state, {stations}) => ({
@@ -33,7 +34,8 @@ const reducer = createReducer(
   on(addToFavoritesSucceeded, (state, {station}) => ({
     ...state,
     addInProgressUrls: state.addInProgressUrls.filter(p => p !== station.url),
-    favoriteStations: state.favoriteStations.concat(station)
+    favoriteStations: state.favoriteStations.concat(station),
+    editingNew: false
   })),
   on(addToFavoritesFailed, (state, {station}) => ({
     ...state,
@@ -51,6 +53,35 @@ const reducer = createReducer(
   on(removeFromFavoritesFailed, (state, {stationId}) => ({
     ...state,
     removeInProgressIds: state.removeInProgressIds.filter(ip => ip !== stationId),
+  })),
+  on(FavoriteStationsActions.openStationEditNew, state => ({
+    ...state,
+    editingNew: true,
+    editingStationId: null
+  })),
+  on(FavoriteStationsActions.openStationEditExisting, (state, {stationId}) => ({
+    ...state,
+    editingNew: false,
+    editingStationId: stationId
+  })),
+  on(FavoriteStationsActions.closeStationEdit, state => ({
+    ...state,
+    editingNew: false,
+    editingStationId: null
+  })),
+  on(FavoriteStationsActions.stationUpdateStart, (state, {station}) => ({
+    ...state,
+    updateInProgressIds: state.updateInProgressIds.concat(station.stationId)
+  })),
+  on(FavoriteStationsActions.stationUpdateFailed, (state, {station}) => ({
+    ...state,
+    updateInProgressIds: state.updateInProgressIds.filter(s => s !== station.stationId)
+  })),
+  on(FavoriteStationsActions.stationUpdateSucceeded, (state, {updated}) => ({
+    ...state,
+    updateInProgressIds: state.updateInProgressIds.filter(s => s !== updated.stationId),
+    favoriteStations: state.favoriteStations.map(f => f.stationId === updated.stationId ? updated : f),
+    editingStationId: null
   })),
 );
 

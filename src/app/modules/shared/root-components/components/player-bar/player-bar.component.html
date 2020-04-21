@@ -21,7 +21,7 @@
     </div>
   </ng-container>
   <ng-template #favoritesProcessedIcon>
-    <div *ngIf="isCurrentStationInFavorites$ | async; else notInFavoritesIcon" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
+    <div *ngIf="(currentStation$ | async).stationId; else notInFavoritesIcon" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
       <mat-icon>favorite</mat-icon>
     </div>
     <ng-template #notInFavoritesIcon>
@@ -66,7 +66,7 @@
     <span>{{ favoritesProcessingState$ | async }}</span>
   </button>
   <ng-template #favoritesProcessedMenuItem>
-    <button *ngIf="isCurrentStationInFavorites$ | async; else notInFavoritesMenuItem" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
+    <button *ngIf="(currentStation$ | async).stationId; else notInFavoritesMenuItem" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
       <mat-icon>favorite</mat-icon>
       <span>Remove From Favorites</span>
     </button>

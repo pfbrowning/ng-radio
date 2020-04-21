@@ -5,7 +5,7 @@
 <ng-template #selected>
   <div class="flex-grid">
     <div class="flex-column-third">
-      <img [src]="(currentStation$ | async).iconUrl" class="station-icon" (error)="onImgError($event.target, '/assets/images/radio.svg')" >
+      <img *ngIf="currentStation$ | async; let currentStation" [src]="getImageSrc(currentStation.iconUrl)" class="station-icon" (error)="onImgError(currentStation.iconUrl)" >
     </div>
     <div class="flex-column-third">
       <div class="now-playing">
@@ -33,6 +33,9 @@
         <li class="keep-awake">
           <button *ngIf="(keepAwakeService.enabled$ | async) == false" (click)="keepAwakeService.enable()" mat-raised-button color="primary" matTooltip="This will attempt to keep the screen from locking on mobile devices.">Enable Keep Awake</button>
           <button *ngIf="(keepAwakeService.enabled$ | async) == true" (click)="keepAwakeService.disable()" mat-raised-button color="primary">Disable Keep Awake</button>
+        </li>
+        <li>
+          <button *ngIf="(currentStation$ | async).stationId" (click)="onEditFavoriteClicked()" mat-raised-button color="primary">Edit Favorite</button>
         </li>
       </ul>
     </div>

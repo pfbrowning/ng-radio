@@ -8,7 +8,6 @@ export {
 export {
     selectIsProcessingFavoritesForCurrentStation,
     selectCurrentStationFavoritesProcessingState,
-    selectIsCurrentStationInFavorites,
     selectFavoriteStationsLoadingStatus,
     selectFavoriteStationRows
 } from './favorite-stations.selectors';

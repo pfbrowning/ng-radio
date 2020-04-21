@@ -4,6 +4,9 @@ export const initialFavoriteStationsState: FavoriteStationsState = {
     favoriteStations: null,
     fetchInProgress: false,
     fetchFailed: false,
+    editingNew: false,
+    editingStationId: null,
     addInProgressUrls: [],
+    updateInProgressIds: [],
     removeInProgressIds: []
 };

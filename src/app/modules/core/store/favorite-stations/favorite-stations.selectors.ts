@@ -3,12 +3,18 @@ import { RootState } from '../../models/root-state';
 import { FavoriteStationRow } from '../../models/favorite-stations/favorite-station-row';
 import { selectCurrentStation } from '../player/player.selectors';
 import { CurrentStationFavoritesProcessingState } from '../../models/favorite-stations/current-station-favorites-processing-state';
+import { Station } from '../../models/player/station';
 
 export const selectFavoriteStationsState = (state: RootState) => state.favoriteStations;
 
 export const selectFavoriteStations = createSelector(
     selectFavoriteStationsState,
     (state) => state.favoriteStations
+);
+
+export const selectFavoriteStationsMap = createSelector(
+    selectFavoriteStations,
+    (favorites) => favorites && new Map<number, Station>(favorites.map(f => [f.stationId, f]))
 );
 
 export const selectAreFavoriteStationsLoaded = createSelector(
@@ -24,6 +30,11 @@ export const selectAddInProgressUrls = createSelector(
 export const selectRemoveInProgressIds = createSelector(
     selectFavoriteStationsState,
     (state) => state.removeInProgressIds
+);
+
+export const updateInProgressIds = createSelector(
+    selectFavoriteStationsState,
+    state => state.updateInProgressIds
 );
 
 export const selectFavoriteStationRows = createSelector(
@@ -53,20 +64,19 @@ export const selectIsAddCurrentStationToFavoritesInProgress = createSelector(
 export const selectCurrentFavoriteStation = createSelector(
     selectFavoriteStations,
     selectCurrentStation,
-    (favorites, current) => favorites != null && current != null
-        ? favorites.find(f => f.stationId === current.stationId || f.url === current.url)
-        : null
+    (favorites, current) => favorites && current && favorites.find(f => f.stationId === current.stationId || f.url === current.url)
 );
 
-export const selectCurrentFavoriteStationId = createSelector(
+export const selectCurrentStationOrMatchingFavorite = createSelector(
+    selectCurrentStation,
     selectCurrentFavoriteStation,
-    favorite => favorite != null ? favorite.stationId : null
+    (current, match) => match || current
 );
 
 export const selectIsRemoveCurrentStationFromFavoritesInProgress = createSelector(
     selectRemoveInProgressIds,
-    selectCurrentFavoriteStationId,
-    (inProgress, current) => inProgress.includes(current)
+    selectCurrentFavoriteStation,
+    (inProgress, current) => current && inProgress.includes(current.stationId)
 );
 
 export const selectIsProcessingFavoritesForCurrentStation = createSelector(
@@ -101,7 +111,21 @@ export const selectFavoriteStationsLoadingStatus = createSelector(
     (loaded, inProgress, failed) => ({loaded, inProgress, failed})
 );
 
-export const selectIsCurrentStationInFavorites = createSelector(
-    selectCurrentFavoriteStation,
-    favorite => favorite != null
+export const editStationExisting = createSelector(
+    selectFavoriteStationsState,
+    selectFavoriteStationsMap,
+    (state, favorites) => favorites && state.editingStationId && favorites.get(state.editingStationId)
+);
+
+export const editingNewStation = createSelector(
+    selectFavoriteStationsState,
+    state => state.editingNew
+);
+
+export const editStationSaveInProgress = createSelector(
+    editStationExisting,
+    editingNewStation,
+    selectAddInProgressUrls,
+    updateInProgressIds,
+    (existing, editingNew, adds, updates) => (existing && updates.includes(existing.stationId)) || (editingNew && adds.length > 0)
 );

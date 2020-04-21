@@ -15,11 +15,18 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ToasterContainerComponent } from './components/toaster-container/toaster-container.component';
 import { ToastModule } from 'primeng/toast';
+import { StationEditComponent } from './components/station-edit/station-edit.component';
+import { DialogModule } from 'primeng/dialog';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     SharedModule,
     MatSidenavModule,
     MatMenuModule,
@@ -28,21 +35,27 @@ import { ToastModule } from 'primeng/toast';
     MatToolbarModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    ToastModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressButtonsModule.forRoot(),
+    ToastModule,
+    DialogModule
   ],
   declarations: [
     ResponsiveSidenavComponent,
     PlayerBarComponent,
     PlayerBarStationInfoComponent,
     SidenavComponent,
-    ToasterContainerComponent
+    ToasterContainerComponent,
+    StationEditComponent
   ],
   exports: [
     ResponsiveSidenavComponent,
     PlayerBarComponent,
     PlayerBarStationInfoComponent,
     SidenavComponent,
-    ToasterContainerComponent
+    ToasterContainerComponent,
+    StationEditComponent
   ]
 })
 export class RootComponentsModule { }

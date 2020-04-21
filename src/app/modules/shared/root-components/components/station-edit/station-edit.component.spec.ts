@@ -1,27 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CustomStationComponent } from './custom-station.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { StationEditComponent } from './station-edit.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('CustomStationComponent', () => {
-  let component: CustomStationComponent;
-  let fixture: ComponentFixture<CustomStationComponent>;
+describe('StationEditComponent', () => {
+  let component: StationEditComponent;
+  let fixture: ComponentFixture<StationEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [ StationEditComponent ],
       imports: [
-        FormsModule,
         RouterTestingModule,
-        NoopAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule
+        FormsModule,
+        MatInputModule,
+        NoopAnimationsModule
       ],
-      declarations: [ CustomStationComponent ],
       providers: [
         provideMockStore({initialState: initialRootState})
       ]
@@ -30,7 +28,7 @@ describe('CustomStationComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomStationComponent);
+    fixture = TestBed.createComponent(StationEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

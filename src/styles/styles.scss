@@ -64,12 +64,10 @@ table.mat-table {
 @media (min-width:$smallScreenCutoff) {
     .flex-column-third {
         flex-basis: 33%;
-        max-width: 33%;
     }
 
     .flex-column-half {
         flex-basis: 50%;
-        max-width: 50%;
     }
 }
 

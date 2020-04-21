@@ -17,6 +17,7 @@
     <blr-player-bar *ngIf="stationSelected$ | async" class="bottom-toolbar"></blr-player-bar>
 </div>
 
+<blr-station-edit *ngIf="(editStationExisting$ | async) || (editingNewStation$ | async)" [existingStation]="editStationExisting$ | async"></blr-station-edit>
 <nli-loading-indicator></nli-loading-indicator>
 <blr-toaster-container></blr-toaster-container>
 <p-confirmDialog header="Are You Sure?" [closeOnEscape]="false" [closable]="false"></p-confirmDialog>
