@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
-import { selectFavoriteStationRows, removeFromFavoritesStart } from '@core/store/favorite-stations';
+import { selectFavoriteStationRows, removeFromFavoritesStart, FavoriteStationsActions } from '@core/store/favorite-stations';
 import { Station } from '@core/models/player';
 import { selectStation } from '@core/store/player';
 import { take } from 'rxjs/operators';
@@ -43,5 +43,11 @@ export class FavoriteStationsComponent implements OnInit, OnDestroy {
       message: `Are you sure you want to delete ${station.title}?`,
       accept: () => this.store.dispatch(removeFromFavoritesStart({stationId: station.stationId}))
     });
+  }
+
+  public onEditClicked(station: Station, event): void {
+    // Don't propagate up to row click
+    event.stopPropagation();
+    this.store.dispatch(FavoriteStationsActions.openStationEditExisting({stationId: station.stationId}));
   }
 }

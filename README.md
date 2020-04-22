@@ -52,7 +52,6 @@ ng serve --open
 
 ## Backlog
 * Features
-  * Favorite station edit button from the favorites grid
   * Station URL Async form Validator
   * Search by country and any other Radio Browser API criteria which makes sense
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy

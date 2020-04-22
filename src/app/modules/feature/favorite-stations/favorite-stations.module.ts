@@ -6,6 +6,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from '@shared';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [FavoriteStationsComponent],
@@ -15,6 +17,8 @@ import { SharedModule } from '@shared';
     SharedModule,
     MatTableModule,
     MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
     MatProgressSpinnerModule
   ]
 })
