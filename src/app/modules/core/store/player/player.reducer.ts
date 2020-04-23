@@ -5,17 +5,13 @@ import {
   playAudioSucceeded,
   playAudioFailed,
   audioPaused,
-  validateStreamStart,
-  validateStreamSucceeded,
-  validateStreamFailed,
-  validateStreamSubmit
 } from './player-actions';
 import { initialPlayerState } from '../../models/player/initial-player-state';
 import { StreamInfoStatus } from '../../models/player/stream-info-status';
 import { PlayerStatus } from '../../models/player/player-status';
 import { PlayerState } from '../../models/player/player-state';
-import { StreamValidityState } from '../../models/player/stream-validity-state';
 import { PlayerActions } from './index';
+import { StreamPreprocessingState } from '../../models/player/stream-preprocessing-state';
 
 const reducer = createReducer(
   initialPlayerState,
@@ -123,44 +119,27 @@ const reducer = createReducer(
     },
     streamInfoStatus: StreamInfoStatus.Error
   })),
-  on(validateStreamSubmit, (state, { streamUrl }) => ({
+  on(PlayerActions.preprocessStreamStart, (state, { streamUrl }) => ({
     ...state,
-    validatedStreams: new Map([
-      ...state.validatedStreams, [
-        streamUrl,
-        new StreamValidityState(
-          state.validatedStreams.has(streamUrl)
-            ? state.validatedStreams.get(streamUrl).inProgress
-            : false,
-          state.validatedStreams.has(streamUrl)
-            ? state.validatedStreams.get(streamUrl).validatedUrl
-            : null,
-          null
-        )
-      ]
-    ])
+    checkedStreams: {
+      ...state.checkedStreams,
+      [streamUrl]: new StreamPreprocessingState(true, null, null)
+    }
   })),
-  on(validateStreamStart, (state, { streamUrl }) => ({
+  on(PlayerActions.preprocessStreamSucceeded, (state, { streamUrl, validatedUrl }) => ({
     ...state,
-    validatedStreams: new Map([
-      ...state.validatedStreams,
-      [ streamUrl, new StreamValidityState(true, null, null) ]
-    ])
+    checkedStreams: {
+      ...state.checkedStreams,
+      [streamUrl]: new StreamPreprocessingState(false, validatedUrl, null),
+      [validatedUrl]: new StreamPreprocessingState(false, validatedUrl, null)
+    }
   })),
-  on(validateStreamSucceeded, (state, { streamUrl, validatedUrl }) => ({
+  on(PlayerActions.preprocessStreamFailed, (state, { streamUrl, reason }) => ({
     ...state,
-    validatedStreams: new Map([
-      ...state.validatedStreams,
-      [ streamUrl, new StreamValidityState(false, validatedUrl, null) ],
-      [ validatedUrl, new StreamValidityState(false, validatedUrl, null) ]
-    ])
-  })),
-  on(validateStreamFailed, (state, { streamUrl, reason }) => ({
-    ...state,
-    validatedStreams: new Map([
-      ...state.validatedStreams,
-      [ streamUrl, new StreamValidityState(false, null, reason)]
-    ])
+    checkedStreams: {
+      ...state.checkedStreams,
+      [streamUrl]: new StreamPreprocessingState(false, null, reason)
+    }
   })),
   on(PlayerActions.selectStreamInfoUrls, (state, { streamUrls }) => ({
     ...state,

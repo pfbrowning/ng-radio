@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { StreamValidatorService } from './stream-validator.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigService } from '../config.service';
 import { createConfigServiceSpy } from '../../testing/core-spy-factories.spec';
+import { StreamPreprocessorService } from './stream-preprocessor.service';
 
-describe('StreamValidatorService', () => {
-  let service: StreamValidatorService;
+describe('StreamPreprocessorService', () => {
+  let service: StreamPreprocessorService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,7 +16,7 @@ describe('StreamValidatorService', () => {
         { provide: ConfigService, useValue: createConfigServiceSpy() }
       ]
     });
-    service = TestBed.inject(StreamValidatorService);
+    service = TestBed.inject(StreamPreprocessorService);
   });
 
   it('should be created', () => {

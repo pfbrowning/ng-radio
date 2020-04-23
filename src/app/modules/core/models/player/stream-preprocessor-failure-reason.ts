@@ -1,4 +1,4 @@
-export enum StreamValidationFailureReason {
+export enum StreamPreprocessorFailureReason {
     FailedToLoadStream = 'Failed To Load Stream',
     ShoutcastRetryFailed = 'Shoutcast Retry Failed',
     FailedToLoadPls = 'Failed To Load Pls',

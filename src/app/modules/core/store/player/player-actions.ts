@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Station } from '../../models/player/station';
-import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
 import { NowPlaying } from '../../models/player/now-playing';
+import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 
 export enum PlayerActions {
     SelectStation = '[Radio Player] Select Station',
@@ -13,10 +13,9 @@ export enum PlayerActions {
     FetchNowPlayingStart = '[Stream Info] Fetch Now Playing Start',
     FetchNowPlayingSucceeded = '[Stream Info] Fetch Now Playing Succeeded',
     FetchNowPlayingFailed = '[Stream Info] Fetch Now Playing Failed',
-    ValidateStreamSubmit = '[Radio Player] Validate Stream Submit',
-    ValidateStreamStart = '[Radio Player] Validate Stream Start',
-    ValidateStreamSucceeded = '[Radio Player] Validate Stream Succeeded',
-    ValidateStreamFailed = '[Radio Player] Validate Stream Failed',
+    PreprocessStreamStart = '[Radio Player] Preprocess Stream Start',
+    PreprocessStreamSucceeded = '[Radio Player] Preprocess Stream Succeeded',
+    PreprocessStreamFailed = '[Radio Player] Preprocess Stream Failed',
     SelectStreamInfoUrls = '[Radio Player] Select Stream Info Urls',
     ClearStreamInfoUrls = '[Radio Player] Clear Stream Info Urls',
     FetchIntervalStart = '[Radio Player] Fetch Interval Start',
@@ -65,24 +64,19 @@ export const fetchNowPlayingFailed = createAction(
     props<{ streamUrl: string, error: any }>()
 );
 
-export const validateStreamSubmit = createAction(
-    PlayerActions.ValidateStreamSubmit,
+export const preprocessStreamStart = createAction(
+    PlayerActions.PreprocessStreamStart,
     props<{ streamUrl: string }>()
 );
 
-export const validateStreamStart = createAction(
-    PlayerActions.ValidateStreamStart,
-    props<{ streamUrl: string }>()
-);
-
-export const validateStreamSucceeded = createAction(
-    PlayerActions.ValidateStreamSucceeded,
+export const preprocessStreamSucceeded = createAction(
+    PlayerActions.PreprocessStreamSucceeded,
     props<{ streamUrl: string, validatedUrl: string }>()
 );
 
-export const validateStreamFailed = createAction(
-    PlayerActions.ValidateStreamFailed,
-    props<{ streamUrl: string, reason: StreamValidationFailureReason, error: any, details: object }>()
+export const preprocessStreamFailed = createAction(
+    PlayerActions.PreprocessStreamFailed,
+    props<{ streamUrl: string, reason: StreamPreprocessorFailureReason, error: any, details: object }>()
 );
 
 export const selectStreamInfoUrls = createAction(

@@ -5,7 +5,7 @@ import { OAuthEvent } from 'angular-oauth2-oidc';
 import { LoggingService } from '../services/logging.service';
 import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
-import { StreamValidatorService } from '../services/player/stream-validator.service';
+import { StreamPreprocessorService } from '../services/player/stream-preprocessor.service';
 
 export function createStationLookupServiceSpy(): any {
   const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
@@ -86,6 +86,6 @@ export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
   return spy;
 }
 
-export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
-  return jasmine.createSpyObj('streamValidatorService', ['validate']);
+export function createStreamPreprocessorServiceSpy(): jasmine.SpyObj<StreamPreprocessorService> {
+  return jasmine.createSpyObj('streamPreprocessorService', ['preprocess']);
 }

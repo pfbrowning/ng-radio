@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
-import { StreamValidationFailureReason } from '../../models/player/stream-validation-failure-reason';
 import { TryPlayStreamService } from './try-play-stream.service';
 import { PlaylistReaderService } from './playlist-reader.service';
+import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
-export class StreamValidatorService {
+export class StreamPreprocessorService {
   constructor(
     private tryPlayStreamService: TryPlayStreamService,
     private playlistReaderService: PlaylistReaderService
   ) { }
 
-  public validateStream(streamUrl: string): Observable<string> {
+  public preprocessStream(streamUrl: string): Observable<string> {
     // First read the playlist if it's a pls, m3u, or m3u8
     return this.readPlaylistIfNecessary(streamUrl).pipe(
       // Attempt to load the provided or playlist-read stream
@@ -55,7 +55,7 @@ export class StreamValidatorService {
                     retryUrl,
                     error: tryPlayResult.error,
                     retryError: retryResult.error,
-                    reason: StreamValidationFailureReason.ShoutcastRetryFailed
+                    reason: StreamPreprocessorFailureReason.ShoutcastRetryFailed
                   });
                 }
               })
@@ -65,7 +65,7 @@ export class StreamValidatorService {
           return throwError({
             streamUrl,
             error: tryPlayResult.error,
-            reason: StreamValidationFailureReason.FailedToLoadStream
+            reason: StreamPreprocessorFailureReason.FailedToLoadStream
           });
         }
       })
@@ -83,7 +83,7 @@ export class StreamValidatorService {
           streamUrl,
           originWithPath,
           error,
-          reason: StreamValidationFailureReason.FailedToLoadPls
+          reason: StreamPreprocessorFailureReason.FailedToLoadPls
         }))
       );
     }
@@ -94,7 +94,7 @@ export class StreamValidatorService {
           streamUrl,
           originWithPath,
           error,
-          reason: StreamValidationFailureReason.FailedToLoadM3uLike
+          reason: StreamPreprocessorFailureReason.FailedToLoadM3uLike
         }))
       );
     }

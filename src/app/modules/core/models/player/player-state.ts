@@ -1,7 +1,7 @@
 import { Station } from './station';
 import { PlayerStatus } from './player-status';
-import { StreamValidityState } from './stream-validity-state';
 import { StreamInfo } from './stream-info';
+import { StreamPreprocessingState } from './stream-preprocessing-state';
 
 export interface PlayerState {
     currentStation: Station;
@@ -14,5 +14,7 @@ export interface PlayerState {
         intervalInProgressUrls: string[];
         fetchInProgressUrls: string[];
     };
-    validatedStreams: Map<string, StreamValidityState>;
+    checkedStreams: {
+        [url: string]: StreamPreprocessingState;
+    };
 }

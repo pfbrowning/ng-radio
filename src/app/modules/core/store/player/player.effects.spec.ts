@@ -15,8 +15,8 @@ import {
 } from '@core/testing';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { LoggingService } from '../../services/logging.service';
-import { createLoggingServiceSpy, createStreamValidatorServiceSpy } from '../../testing/core-spy-factories.spec';
-import { StreamValidatorService } from '../../services/player/stream-validator.service';
+import { createLoggingServiceSpy, createStreamPreprocessorServiceSpy } from '../../testing/core-spy-factories.spec';
+import { StreamPreprocessorService } from '../../services/player/stream-preprocessor.service';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
@@ -37,7 +37,7 @@ describe('PlayerEffects', () => {
         { provide: AudioElementToken, useValue: audioElement },
         { provide: CurrentTimeService, useValue: createCurrentTimeServiceSpy() },
         { provide: LoggingService, useValue: createLoggingServiceSpy() },
-        { provide: StreamValidatorService, useValue: createStreamValidatorServiceSpy() }
+        { provide: StreamPreprocessorService, useValue: createStreamPreprocessorServiceSpy() }
       ]
     });
 

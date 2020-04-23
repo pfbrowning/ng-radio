@@ -46,15 +46,15 @@ export const currentStationAndNowPlaying = createSelector(
     (station, nowPlaying) => ({station, nowPlaying})
 );
 
-export const selectValidatedStreams = createSelector(
+export const selectCheckedStreams = createSelector(
     selectPlayerState,
-    state => state.validatedStreams
+    state => state.checkedStreams
 );
 
 export const selectCurrentStationValidationState = createSelector(
     selectCurrentStationUrl,
-    selectValidatedStreams,
-    (current, validatedStreams) => validatedStreams.get(current)
+    selectCheckedStreams,
+    (current, checked) => checked[current]
 );
 
 export const selectCurrentStationUrlAndItsValidationState = createSelector(
@@ -65,7 +65,7 @@ export const selectCurrentStationUrlAndItsValidationState = createSelector(
 
 export const selectIsValidationInProgressForCurrentStation = createSelector(
     selectCurrentStationValidationState,
-    vs => vs != null && vs.inProgress
+    vs => vs && vs.inProgress
 );
 
 export const nowPlayingFetchInProgressUrls = createSelector(
