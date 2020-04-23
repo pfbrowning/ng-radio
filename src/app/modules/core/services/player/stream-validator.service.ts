@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { map, catchError, tap, switchMap, concatMap } from 'rxjs/operators';
+import { map, catchError, tap, switchMap, concatMap, timeout } from 'rxjs/operators';
 import { AudioElementFactoryService } from '../audio-element-factory.service';
-import { TryPlayStreamResult } from '../../models/player/try-play-stream-result';
 import { AudioElement } from '../../models/player/audio-element';
+import { ValidateStreamResult } from '../../models/player/validate-stream-result';
 
 @Injectable({providedIn: 'root'})
-export class TryPlayStreamService {
+export class StreamValidatorService {
   constructor(audioElementFactoryService: AudioElementFactoryService) {
     /* The validator service gets its own audio element so that it can validate streams
     independently of the currently-playing audio. */
@@ -21,8 +21,9 @@ export class TryPlayStreamService {
       .subscribe();
   }
 
-  private tryPlayQueueSource = new Subject<{streamUrl: string, completed: Subject<TryPlayStreamResult>}>();
+  private tryPlayQueueSource = new Subject<{streamUrl: string, completed: Subject<ValidateStreamResult>}>();
   private audio: AudioElement;
+  private validStreams = new Array<string>();
 
   /**
    * Attempts to open the specified audio stream and reports whether it was
@@ -30,13 +31,14 @@ export class TryPlayStreamService {
    * be run sequentially because we're using a single audio element.
    * @param streamUrl The stream to try to open
    */
-  private tryPlayStream(streamUrl: string): Observable<TryPlayStreamResult> {
+  private tryPlayStream(streamUrl: string): Observable<ValidateStreamResult> {
     return of(null).pipe(
       // Set the stream URL and attempt to play
       tap(() => this.audio.src = streamUrl),
       switchMap(() => this.audio.play()),
-      map(() => new TryPlayStreamResult(true)),
-      catchError(err => of(new TryPlayStreamResult(false, err))),
+      timeout(10000),
+      map(() => new ValidateStreamResult(true)),
+      catchError(err => of(new ValidateStreamResult(false, err))),
       // Pause and unload the audio
       tap(() => {
         this.audio.pause();
@@ -49,12 +51,24 @@ export class TryPlayStreamService {
    * Queues a stream for sequential try play and waits for it to be validated
    * @param streamUrl The stream to try to open
    */
-  public queueStreamForTryPlay(streamUrl: string): Observable<TryPlayStreamResult> {
-    const completed = new Subject<TryPlayStreamResult>();
+  private queueStreamForTryPlay(streamUrl: string): Observable<ValidateStreamResult> {
+    const completed = new Subject<ValidateStreamResult>();
 
     return of(null).pipe(
       tap(() => this.tryPlayQueueSource.next({streamUrl, completed})),
       switchMap(() => completed),
     );
+  }
+
+  /**
+   * Queues a stream for sequential try play if it hasn't already been successfully
+   * validated, returns a success otherwise
+   * @param streamUrl The stream to try to open
+   */
+  public validateStream(streamUrl: string): Observable<ValidateStreamResult> {
+    if (this.validStreams.includes(streamUrl)) {
+      return of(new ValidateStreamResult(true));
+    }
+    return this.queueStreamForTryPlay(streamUrl);
   }
 }

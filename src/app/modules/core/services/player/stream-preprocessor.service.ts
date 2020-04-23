@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
 import { map, switchMap, catchError } from 'rxjs/operators';
-import { TryPlayStreamService } from './try-play-stream.service';
 import { PlaylistReaderService } from './playlist-reader.service';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
+import { StreamValidatorService } from './stream-validator.service';
 import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class StreamPreprocessorService {
   constructor(
-    private tryPlayStreamService: TryPlayStreamService,
+    private streamValidatorService: StreamValidatorService,
     private playlistReaderService: PlaylistReaderService
   ) { }
 
@@ -17,7 +17,7 @@ export class StreamPreprocessorService {
     // First read the playlist if it's a pls, m3u, or m3u8
     return this.readPlaylistIfNecessary(streamUrl).pipe(
       // Attempt to load the provided or playlist-read stream
-      switchMap(postPlaylistUrl => this.tryPlayStreamService.queueStreamForTryPlay(postPlaylistUrl)
+      switchMap(postPlaylistUrl => this.streamValidatorService.validateStream(postPlaylistUrl)
         .pipe(map(tryPlayResult => ({postPlaylistUrl, tryPlayResult})))
       ),
       switchMap(({tryPlayResult, postPlaylistUrl}) => {
@@ -26,7 +26,7 @@ export class StreamPreprocessorService {
           a corresponding valid HTTPS stream to upgrade to. */
           if (postPlaylistUrl.startsWith('http://')) {
             const retryUrl = postPlaylistUrl.replace('http://', 'https://');
-            return this.tryPlayStreamService.queueStreamForTryPlay(retryUrl).pipe(
+            return this.streamValidatorService.validateStream(retryUrl).pipe(
               map(retryResult => retryResult.success ? retryUrl : postPlaylistUrl)
             );
           }
@@ -44,7 +44,7 @@ export class StreamPreprocessorService {
             retryUrl = `${postPlaylistUrl}/;`;
           }
           if (retryUrl != null) {
-            return this.tryPlayStreamService.queueStreamForTryPlay(retryUrl).pipe(
+            return this.streamValidatorService.validateStream(retryUrl).pipe(
               switchMap(retryResult => {
                 if (retryResult.success) {
                   return of(retryUrl);
