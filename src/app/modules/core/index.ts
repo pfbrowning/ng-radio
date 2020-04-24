@@ -13,6 +13,7 @@ export { ConfigService } from './services/config.service';
 export { UnhandledErrorService } from './services/unhandled-error.service';
 export { NotificationService } from './services/notification.service';
 export { LoggingService } from './services/logging.service';
+export { StreamValidatorService } from './services/player/stream-validator.service';
 
 export { AuthGuard } from './guards/auth.guard';
 

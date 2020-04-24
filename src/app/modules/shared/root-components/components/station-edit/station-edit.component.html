@@ -1,15 +1,19 @@
-<p-dialog [header]="existingStation ? 'Edit ' + existingStation.title :  'Open Custom URL'" [visible]="true" (visibleChange)="onVisibleChanged($event)" [draggable]="false" [modal]="true">
+<p-dialog [header]="existingStation ? 'Edit ' + existingStation.title :  'Open Custom URL'" [visible]="true" (visibleChange)="onVisibleChanged($event)" [draggable]="false" [modal]="true" styleClass="station-modal">
   <form #form="ngForm">
     <fieldset class="flex-grid">
       <mat-form-field class="flex-column-half">
         <input matInput [(ngModel)]="stationPending.title" [disabled]="saving$ | async" #titleInput="matInput" #title="ngModel" required name="title" placeholder="Station Title">
         <mat-error *ngIf="title.hasError('required')">Title is required.</mat-error>
       </mat-form-field>
-      <mat-form-field class="flex-column-half">
-        <input matInput [(ngModel)]="stationPending.url" [disabled]="saving$ | async" #url="ngModel" required name="url" placeholder="Stream URL" pattern="https?://.+">
-        <mat-error *ngIf="url.hasError('required')">Stream URL is required.</mat-error>
-        <mat-error *ngIf="url.hasError('pattern')">Stream URL must be a valid URL.</mat-error>
-      </mat-form-field>
+      <div class="flex-column-half form-field-spinner-container">
+        <mat-form-field>
+          <input matInput [(ngModel)]="stationPending.url" [disabled]="saving$ | async" #url="ngModel" required blrStreamUrlValidator name="url" placeholder="Stream URL" pattern="https?://.+">
+          <mat-error *ngIf="url.hasError('required')">Stream URL is required.</mat-error>
+          <mat-error *ngIf="url.hasError('pattern')">Stream URL must be a valid URL.</mat-error>
+          <mat-error *ngIf="url.hasError('invalidStream')">Failed to load the stream.  Please double-check the URL.</mat-error>
+        </mat-form-field>
+        <mat-spinner *ngIf="url.pending" diameter="25"></mat-spinner>
+      </div>
       <mat-form-field class="flex-column-half">
         <input matInput [(ngModel)]="stationPending.iconUrl" [disabled]="saving$ | async" #iconUrl="ngModel" name="icon-url" placeholder="Icon URL" pattern="https?://.+">
         <mat-error *ngIf="iconUrl.hasError('pattern')">Icon URL must be a valid URL.</mat-error>

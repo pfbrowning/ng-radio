@@ -6,6 +6,7 @@ import { LoggingService } from '../services/logging.service';
 import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
 import { StreamPreprocessorService } from '../services/player/stream-preprocessor.service';
+import { StreamValidatorService } from '../services/player/stream-validator.service';
 
 export function createStationLookupServiceSpy(): any {
   const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
@@ -88,4 +89,8 @@ export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
 
 export function createStreamPreprocessorServiceSpy(): jasmine.SpyObj<StreamPreprocessorService> {
   return jasmine.createSpyObj('streamPreprocessorService', ['preprocess']);
+}
+
+export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
+  return jasmine.createSpyObj('streamValidatorService', [ 'validate' ]);
 }

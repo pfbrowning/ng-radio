@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { map, catchError, tap, switchMap, concatMap, timeout } from 'rxjs/operators';
+import { map, catchError, tap, switchMap, concatMap, timeout, take } from 'rxjs/operators';
 import { AudioElementFactoryService } from '../audio-element-factory.service';
 import { AudioElement } from '../../models/player/audio-element';
 import { ValidateStreamResult } from '../../models/player/validate-stream-result';
@@ -69,6 +69,6 @@ export class StreamValidatorService {
     if (this.validStreams.includes(streamUrl)) {
       return of(new ValidateStreamResult(true));
     }
-    return this.queueStreamForTryPlay(streamUrl);
+    return this.queueStreamForTryPlay(streamUrl).pipe(take(1));
   }
 }

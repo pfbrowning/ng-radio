@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Station } from '@core/models/player';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,7 +13,8 @@ import cloneDeep from 'lodash/cloneDeep';
 @Component({
   selector: 'blr-station-edit',
   templateUrl: './station-edit.component.html',
-  styleUrls: ['./station-edit.component.scss']
+  styleUrls: ['./station-edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StationEditComponent implements OnInit {
   constructor(private store: Store<RootState>, private router: Router) { }
