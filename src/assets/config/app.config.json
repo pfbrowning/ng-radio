@@ -1,7 +1,7 @@
 {
     "metadataApiUrl": "http://localhost:3000",
     "corsProxyUrl": "http://localhost:3001",
-    "radioBrowserApiUrl": "https://www.radio-browser.info/webservice/json",
+    "radioBrowserApiUrl": "https://de1.api.radio-browser.info/json",
     "favoriteStationsApiUrl": "https://localhost:5001",
     "currentStationRefreshInterval": 20000,
     "listedStationRefreshInterval": 60000,
