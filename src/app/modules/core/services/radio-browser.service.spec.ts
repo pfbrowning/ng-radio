@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { createConfigServiceSpy } from '../testing/core-spy-factories.spec';
 import { Station } from '../models/player/station';
+import theoretically from 'jasmine-theories';
 import isBlank from 'is-blank';
 
 describe('RadioBrowserService', () => {
@@ -33,18 +34,33 @@ describe('RadioBrowserService', () => {
     expect(radioBrowserService).toBeTruthy();
   });
 
-  it('should properly form requests', () => {
+  const shouldFormRequestsInput = [
+    {
+      name: 'test name',
+      country: 'US',
+      tag: 'test tag'
+    },
+    {
+      name: null,
+      country: null,
+      tag: 'tag 2'
+    },
+    {
+      name: '',
+      country: 'some other country',
+      tag: 'tag 3'
+    },
+    {
+      name: 'name 2',
+      'tag': null
+    },
+    {
+      name: 'name 3',
+      tag: ''
+    }
+  ];
+  theoretically.it('should properly form requests', shouldFormRequestsInput, (input, done: DoneFn) => {
     // Arrange
-    const testEntries = [
-      { 'name': 'test name', 'tag': 'test tag' },
-      { 'name': null, 'tag': 'tag 2' },
-      { 'name': '', 'tag': 'tag 3' },
-      { 'name': 'name 2', 'tag': null },
-      { 'name': 'name 3', 'tag': '' }
-    ];
-
-    /* We want to check the body params in the same way so we'll just wrap that logic
-    into a function because DRY */
     const checkBodyParam = (paramKey: string, paramValue: string, body: HttpParams) => {
       if (!isBlank(paramValue)) {
         expect(body.get(paramKey)).toBe(paramValue);
@@ -53,21 +69,40 @@ describe('RadioBrowserService', () => {
       }
     };
 
-    // For each test entry
-    testEntries.forEach(testEntry => {
-      // Act: Initiate a station search operation based on the test name & tag
-      radioBrowserService.search(testEntry.name, testEntry.tag).subscribe();
-      // Assert: Set up expectations for what we expect the generated HTTP request to look like
-      const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
-      expect(request.request.method).toBe('POST');
-      // Name & tag should be present on the request body if non-blank values were provided
-      checkBodyParam('name', testEntry.name, request.request.body);
-      checkBodyParam('tag', testEntry.tag, request.request.body);
+    // Act
+    radioBrowserService.search(input.name, input.country, input.tag).subscribe(response => {
+      // Assert
+      checkBodyParam('name', input.name, request.request.body);
+      checkBodyParam('countrycode', input.country, request.request.body);
+      checkBodyParam('tag', input.tag, request.request.body);
       // Limit should be 25 regardless of what was passed in
       checkBodyParam('limit', '25', request.request.body);
 
-      // Flush a dummy response
-      request.flush([{
+      done();
+    });
+
+
+    const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
+    expect(request.request.method).toBe('POST');
+
+    // Flush a dummy response
+    request.flush([{
+      'id': 'test',
+      'name': 'name',
+      'url': 'someplace.com',
+      'homepage': 'somewhereelse.com',
+      'favicon': 'icon.com',
+      'tags': null,
+      'country': 'US',
+      'language': 'English',
+      'bitrate': '48'
+    }]);
+  });
+
+
+  const shouldMapResponsesInput = [
+    {
+      response: {
         'id': 'test',
         'name': 'name',
         'url': 'someplace.com',
@@ -77,76 +112,51 @@ describe('RadioBrowserService', () => {
         'country': 'US',
         'language': 'English',
         'bitrate': '48'
-      }]);
-    });
-  });
-
-  it('should properly map responses', () => {
-    // Arrange: Set up a spy  and a few test entries
-    const stationCheckedSpy = jasmine.createSpy('stationChecked');
-    const testEntries = [
-      {
-        response: {
-          'id': 'test',
-          'name': 'name',
-          'url': 'someplace.com',
-          'homepage': 'somewhereelse.com',
-          'favicon': 'icon.com',
-          'tags': null,
-          'country': 'US',
-          'language': 'English',
-          'bitrate': '48'
-        },
-        expected: new Station(null, 'name', 'someplace.com', null, 'icon.com')
       },
-      {
-        response: {
-          'id': 'id 2',
-          'name': 'name 2',
-          'url': 'url 2',
-          'homepage': 'homepage 2',
-          'favicon': 'favicon 2',
-          'tags': 'tag1,tag2,tag3',
-          'country': 'US',
-          'language': 'English',
-          'bitrate': '48'
-        },
-        expected: new Station(null, 'name 2', 'url 2', null, 'favicon 2', ['tag1', 'tag2', 'tag3'])
+      expected: new Station(null, 'name', 'someplace.com', null, 'icon.com')
+    },
+    {
+      response: {
+        'id': 'id 2',
+        'name': 'name 2',
+        'url': 'url 2',
+        'homepage': 'homepage 2',
+        'favicon': 'favicon 2',
+        'tags': 'tag1,tag2,tag3',
+        'country': 'US',
+        'language': 'English',
+        'bitrate': '48'
       },
-      {
-        response: {
-          'id': 'id 3',
-          'name': 'name 3',
-          'url': 'url 3',
-          'homepage': 'homepage 3',
-          'favicon': 'favicon 3',
-          'tags': '',
-          'country': 'US',
-          'language': 'English',
-          'bitrate': '48'
-        },
-        expected: new Station(null, 'name 3', 'url 3', null, 'favicon 3')
-      }
-    ];
+      expected: new Station(null, 'name 2', 'url 2', null, 'favicon 2', ['tag1', 'tag2', 'tag3'])
+    },
+    {
+      response: {
+        'id': 'id 3',
+        'name': 'name 3',
+        'url': 'url 3',
+        'homepage': 'homepage 3',
+        'favicon': 'favicon 3',
+        'tags': '',
+        'country': 'US',
+        'language': 'English',
+        'bitrate': '48'
+      },
+      expected: new Station(null, 'name 3', 'url 3', null, 'favicon 3')
+    }
+  ];
+  theoretically.it('should properly map responses', shouldMapResponsesInput, (input, done: DoneFn) => {
+    // Act: Initiate a dummy request.  We don't care about what's passed in or how the request is formed.
+    radioBrowserService.search('name', 'country', 'tag').subscribe(stations => {
+      // Assert
+      // The expected test entry should have been returned
+      expect(stations.length).toBe(1);
+      expect(stations[0]).toEqual(input.expected);
 
-    // For each test entry
-    testEntries.forEach(testEntry => {
-      // Act: Initiate a dummy request.  We don't care about what's passed in or how the request is formed.
-      radioBrowserService.search('name', 'tag').subscribe(stations => {
-        // Assert
-        // The expected test entry should have been returned
-        expect(stations.length).toBe(1);
-        expect(stations[0]).toEqual(testEntry.expected);
-        /* Call the stationCheckedSpy so that we can ensure that this callback
-        was hit once for each test entry before the test ended. */
-        stationCheckedSpy();
-      });
-      // Expect and flush the test response from the http testing controller
-      const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
-      request.flush([testEntry.response]);
+      done();
     });
-    /* We expect that stationCheckedSpy was called once per test entry so that we know
-    that the test isn't completing before each subscribe callback has been processed. */
-    expect(stationCheckedSpy).toHaveBeenCalledTimes(testEntries.length);
+
+    // Expect and flush the test response from the http testing controller
+    const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
+    request.flush([input.response]);
   });
 });

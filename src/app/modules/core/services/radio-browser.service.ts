@@ -1,39 +1,74 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { Station } from '../models/player/station';
+import { Country } from '../models/country';
+import sortBy from 'lodash/sortBy';
 import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class RadioBrowserService {
   constructor(private configService: ConfigService, private httpClient: HttpClient) {}
 
+  private radioBrowserUrl$ = this.configService.appConfig$.pipe(map(config => config.radioBrowserApiUrl));
+
+  private fetchAllCountries(): Observable<Country[]> {
+    return this.httpClient.get<Country[]>('/assets/data/countries.json').pipe(
+      map(countries => sortBy(countries, [
+        c => c.code !== 'US',
+        c => c.name
+      ])),
+    );
+  }
+
+  private fetchListedCountryCodes(): Observable<string[]> {
+    return this.radioBrowserUrl$.pipe(
+      switchMap(url => this.httpClient.get<object[]>(`${url}/countrycodes`)),
+      map(response => response.map(o => o['name']))
+    );
+  }
+
+  public fetchListedCountries(): Observable<Country[]> {
+    return forkJoin([this.fetchAllCountries(), this.fetchListedCountryCodes()]).pipe(
+      map(forkData => {
+        const countries = forkData[0];
+        const listed = forkData[1].map(c => c.toLowerCase());
+
+        return countries.filter(country => listed.includes(country.code.toLowerCase()));
+      })
+    );
+  }
+
   /**
-   * Searches the Radio Browser API for stations matching the provided name and / or title.
+   * Searches the Radio Browser API for stations matching the provided criteria
    * @param name Station name / title to search for
+   * @param countryCode Country code to search for
    * @param tag Station tag to search for
    * @param limit Max number of results to request from the radio browser API.  Defaults to 25.
    */
-  public search(name: string = null, tag: string = null, limit: number = 25): Observable<Station[]> {
+  public search(name: string = null, countryCode: string = null, tag: string = null, limit: number = 25): Observable<Station[]> {
     let body = new HttpParams();
-    // Add name param if it's not blank
     if (!isBlank(name)) {
       body = body.set('name', name);
     }
-    // Add tag param if it's not blank
+    if (!isBlank(countryCode)) {
+      body = body.set('countrycode', countryCode);
+    }
     if (!isBlank(tag)) {
       body = body.set('tag', tag);
     }
     // Limit the results based on the provided param
     body = body.set('limit', limit.toString());
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
     // Perform the search against the configured radioBrowserUrl
-    return this.httpClient.post<any[]>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/search`,
-      body, { headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded') }).pipe(
-        // Map the results to our own station format
-        map(stations => stations.map(station => this.mapStation(station)))
-      );
+    return this.radioBrowserUrl$.pipe(
+      switchMap(url => this.httpClient.post<any[]>(`${url}/stations/search`, body, { headers })),
+      // Map the results to our own station format
+      map(stations => stations.map(station => this.mapStation(station)))
+    );
   }
 
   /**
@@ -41,7 +76,8 @@ export class RadioBrowserService {
    * @param count Number of stations to request
    */
   public fetchTopClicked(count: number = 15): Observable<Station[]> {
-    return this.httpClient.get<any[]>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topclick/${count}`).pipe(
+    return this.radioBrowserUrl$.pipe(
+      switchMap(url => this.httpClient.get<any[]>(`${url}/stations/topclick/${count}`)),
       map(stations => stations.map(station => this.mapStation(station)))
     );
   }
@@ -51,7 +87,8 @@ export class RadioBrowserService {
    * @param count Number of stations to request
    */
   public fetchTopVoted(count: number = 15): Observable<Station[]> {
-    return this.httpClient.get<any[]>(`${this.configService.appConfig.radioBrowserApiUrl}/stations/topvote/${count}`).pipe(
+    return this.radioBrowserUrl$.pipe(
+      switchMap(url => this.httpClient.get<any[]>(`${url}/stations/topvote/${count}`)),
       map(stations => stations.map(station => this.mapStation(station)))
     );
   }

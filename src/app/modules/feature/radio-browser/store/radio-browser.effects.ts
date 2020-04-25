@@ -9,18 +9,34 @@ import { RadioBrowserActions, RadioBrowserSelectors } from '.';
 import { Router } from '@angular/router';
 import { PlayerActions } from '@core/store/player';
 import { RadioBrowserService } from '@core';
+import { resolverParams } from './radio-browser.selectors';
 
 @Injectable()
 export class RadioBrowserEffects {
+  resolveInit$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.resolveSubmit),
+    withLatestFrom(this.store.pipe(select(resolverParams))),
+    filter(([, selected]) => selected.countries == null && !selected.fetching),
+    map(() => RadioBrowserActions.countriesFetchStart())
+  ));
+
+  fetchCountries$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.countriesFetchStart),
+    switchMap(() => this.radioBrowserService.fetchListedCountries().pipe(
+      map(countries => RadioBrowserActions.countriesFetchSucceeded({countries})),
+      catchError(error => of(RadioBrowserActions.countriesFetchFailed({error})))
+    ))
+  ));
+
   searchOnTermsUpdated$ = createEffect(() => this.actions$.pipe(
-    ofType(RadioBrowserActions.nameTermUpdated, RadioBrowserActions.tagTermUpdated),
+    ofType(RadioBrowserActions.nameTermUpdated, RadioBrowserActions.tagTermUpdated, RadioBrowserActions.countrySelected),
     map(() => RadioBrowserActions.searchStart())
   ));
 
   performSearch$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchStart),
-    withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.selectSearchCriteria))),
-    switchMap(([, criteria]) => this.radioBrowserService.search(criteria.nameTerm, criteria.tagTerm).pipe(
+    withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.searchCriteria))),
+    switchMap(([, criteria]) => this.radioBrowserService.search(criteria.nameTerm, criteria.country, criteria.tagTerm).pipe(
       map(results => RadioBrowserActions.searchSucceeded({results})),
       catchError(error => of(RadioBrowserActions.searchFailed({error})))
     ))

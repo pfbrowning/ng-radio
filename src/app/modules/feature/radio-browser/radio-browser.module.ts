@@ -14,6 +14,7 @@ import { radioBrowserReducer, radioBrowserFeatureKey } from './store/radio-brows
 import { EffectsModule } from '@ngrx/effects';
 import { RadioBrowserEffects } from './store/radio-browser.effects';
 import { SharedModule } from '@shared';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SharedModule } from '@shared';
     MatTableModule,
     MatTooltipModule,
     MatCardModule,
+    MatSelectModule,
     MatProgressSpinnerModule,
     StoreModule.forFeature(radioBrowserFeatureKey, radioBrowserReducer),
     EffectsModule.forFeature([RadioBrowserEffects])

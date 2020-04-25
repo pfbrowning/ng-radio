@@ -52,7 +52,7 @@ ng serve --open
 
 ## Backlog
 * Features
-  * Search by country and any other Radio Browser API criteria which makes sense
+  * Radio Browser tag search autocomplete
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy
   * Favorite station tags
   * Browser-based audio recording (pending CORS proxy for audio stream)

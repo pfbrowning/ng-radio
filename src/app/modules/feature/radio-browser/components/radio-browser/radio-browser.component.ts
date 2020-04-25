@@ -7,8 +7,9 @@ import { selectStation, PlayerActions, PlayerSelectors } from '@core/store/playe
 import { Station } from '@core/models/player';
 import { nameTermUpdated, tagTermUpdated } from '../../store/radio-browser.actions';
 import { SubSink } from 'subsink';
-import { selectNameTerm, selectTagTerm, selectSearchResults, selectIsSearchInProgress } from '../../store/radio-browser.selectors';
+import { selectSearchResults, selectIsSearchInProgress } from '../../store/radio-browser.selectors';
 import { RadioBrowserRootState } from '../../models/radio-browser-root-state';
+import { RadioBrowserSelectors, RadioBrowserActions } from '../../store';
 
 @Component({
   templateUrl: './radio-browser.component.html',
@@ -25,10 +26,12 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   public searchResults$ = this.store.pipe(select(selectSearchResults));
   public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
   public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
+  public countries$ = this.store.pipe(select(RadioBrowserSelectors.listedCountries));
   public nameSearch$ = new Subject<string>();
   public tagSearch$ = new Subject<string>();
   public nameSearch: string;
   public tagSearch: string;
+  public country: string;
   private debounceTime = 300;
   private subs = new SubSink();
 
@@ -40,9 +43,12 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(this.debounceTime), distinctUntilChanged())
       .subscribe(term => this.store.dispatch(tagTermUpdated({term})));
 
-    // Load any pre-existing terms from state on init
-    this.store.pipe(select(selectNameTerm), take(1)).subscribe(term => this.nameSearch = term);
-    this.store.pipe(select(selectTagTerm), take(1)).subscribe(term => this.tagSearch = term);
+    // Load any pre-existing search criteria from state on init
+    this.store.pipe(select(RadioBrowserSelectors.searchCriteria), take(1)).subscribe(criteria => {
+      this.nameSearch = criteria.nameTerm;
+      this.tagSearch = criteria.tagTerm;
+      this.country = criteria.country;
+    });
 
     // On init set any existing search results as listed stream info urls
     this.searchResults$.pipe(take(1), filter(results => results != null)).subscribe(results =>
@@ -68,5 +74,9 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   onNameTermChanged(term: string) {
     this.nameSearch$.next(term);
+  }
+
+  public onCountryChanged(country: string): void {
+    this.store.dispatch(RadioBrowserActions.countrySelected({country}));
   }
 }

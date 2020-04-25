@@ -22,6 +22,8 @@
     "paths": {
       "@environment": [ "src/environments/environment"],
       "@core": ["src/app/modules/core/index"],
+      "@core/models": ["src/app/modules/core/models/index"],
+      "@core/store": ["src/app/modules/core/store/index"],
       "@core/services/application": ["src/app/modules/core/services/application"],
       "@core/models/player": ["src/app/modules/core/models/player/index"],
       "@core/store/application": ["src/app/modules/core/store/application/index"],

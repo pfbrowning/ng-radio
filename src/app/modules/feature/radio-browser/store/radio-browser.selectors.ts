@@ -4,20 +4,13 @@ import { radioBrowserFeatureKey } from './radio-browser.reducer';
 
 export const selectRadioBrowserState = createFeatureSelector<RadioBrowserState>(radioBrowserFeatureKey);
 
-export const selectNameTerm = createSelector(
+export const searchCriteria = createSelector(
   selectRadioBrowserState,
-  (state) => state.nameTerm
-);
-
-export const selectTagTerm = createSelector(
-  selectRadioBrowserState,
-  (state) => state.tagTerm
-);
-
-export const selectSearchCriteria = createSelector(
-  selectNameTerm,
-  selectTagTerm,
-  (nameTerm, tagTerm) => ({nameTerm, tagTerm})
+  state => ({
+    nameTerm: state.nameTerm,
+    tagTerm: state.tagTerm,
+    country: state.country
+  })
 );
 
 export const selectSearchResults = createSelector(
@@ -28,4 +21,19 @@ export const selectSearchResults = createSelector(
 export const selectIsSearchInProgress = createSelector(
   selectRadioBrowserState,
   (state) => state.searchInProgress
+);
+
+export const listedCountries = createSelector(
+  selectRadioBrowserState,
+  (state) => state.countries
+);
+
+export const resolverParams = createSelector(
+  selectRadioBrowserState,
+  listedCountries,
+  (state, countries) => ({
+    countries,
+    fetching: state.countriesFetchInProgress,
+    failed: state.countriesFetchFailed
+  })
 );

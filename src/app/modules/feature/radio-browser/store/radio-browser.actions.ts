@@ -1,13 +1,23 @@
 import { createAction, props } from '@ngrx/store';
 import { Station } from '@core/models/player';
+import { Country } from '@core/models';
 
 export enum RadioBrowserActions {
+  ResolveSubmit = '[Radio Browser] Resolve Submit',
   NameTermUpdated = '[Radio Browser] Name Term Updated',
   TagTermUpdated = '[Radio Browser] Tag Term Updated',
+  CountrySelected = '[Radio Browser] Country Selected',
   SearchStart = '[Radio Browser] Search Start',
   SearchSucceeded = '[Radio Browser] Search Succeeded',
   SearchFailed = '[Radio Browser] Search Failed',
+  CountriesFetchStart = '[Radio Browser] Countries Fetch Start',
+  CountriesFetchSucceeded = '[Radio Browser] Countries Fetch Succeeded',
+  CountriesFetchFailed = '[Radio Browser] Countries Fetch Failed',
 }
+
+export const resolveSubmit = createAction(
+  RadioBrowserActions.ResolveSubmit
+);
 
 export const nameTermUpdated = createAction(
   RadioBrowserActions.NameTermUpdated,
@@ -17,6 +27,11 @@ export const nameTermUpdated = createAction(
 export const tagTermUpdated = createAction(
   RadioBrowserActions.TagTermUpdated,
   props<{ term: string }>()
+);
+
+export const countrySelected = createAction(
+  RadioBrowserActions.CountrySelected,
+  props<{ country: string }>()
 );
 
 export const searchStart = createAction(
@@ -30,5 +45,19 @@ export const searchSucceeded = createAction(
 
 export const searchFailed = createAction(
   RadioBrowserActions.SearchFailed,
+  props<{ error: any }>()
+);
+
+export const countriesFetchStart = createAction(
+  RadioBrowserActions.CountriesFetchStart
+);
+
+export const countriesFetchSucceeded = createAction(
+  RadioBrowserActions.CountriesFetchSucceeded,
+  props<{ countries: Country[] }>()
+);
+
+export const countriesFetchFailed = createAction(
+  RadioBrowserActions.CountriesFetchFailed,
   props<{ error: any }>()
 );
