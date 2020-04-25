@@ -6,11 +6,8 @@ import { ConfigService } from './config.service';
 import { Station } from '../models/player/station';
 import isBlank from 'is-blank';
 
-/** Service which searches for and retrieves station data from the radio browser
- * API and any relevant JSON files.
- */
-@Injectable()
-export class StationLookupService {
+@Injectable({providedIn: 'root'})
+export class RadioBrowserService {
   constructor(private configService: ConfigService, private httpClient: HttpClient) {}
 
   /**
@@ -68,10 +65,5 @@ export class StationLookupService {
     // If a non-empty tags string was provided, then split it into an array by the comma delimiter
     const tags = !isBlank(station.tags) ? station.tags.split(',') : null;
     return new Station(null, station.name, station.url, null, station.favicon, tags);
-  }
-
-  /** Retrieves the 'Developer-Suggested' stations from the JSON file stored in 'assets' */
-  public fetchDeveloperSuggestions(): Observable<Station[]> {
-    return this.httpClient.get<Station[]>('/assets/data/suggested-stations.json');
   }
 }

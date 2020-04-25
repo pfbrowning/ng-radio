@@ -5,17 +5,16 @@ import { OAuthEvent } from 'angular-oauth2-oidc';
 import { LoggingService } from '../services/logging.service';
 import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
-import { StreamPreprocessorService } from '../services/player/stream-preprocessor.service';
-import { StreamValidatorService } from '../services/player/stream-validator.service';
+import { StreamPreprocessorService } from '../services/preprocessing/stream-preprocessor.service';
+import { StreamValidatorService } from '../services/preprocessing/stream-validator.service';
+import { RadioBrowserService } from '../services/radio-browser.service';
 
-export function createStationLookupServiceSpy(): any {
-  const spy = jasmine.createSpyObj('stationLookupServiceSpy', [
+export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
+  return jasmine.createSpyObj('radioBrowserService', [
     'searchStations',
-    'getDeveloperSuggestions',
     'getTopClicked',
     'getTopVoted'
   ]);
-  return spy;
 }
 
 export function createFavoriteStationsServiceSpy(): any {

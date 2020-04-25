@@ -1,17 +1,17 @@
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { StationLookupService } from './station-lookup.service';
+import { RadioBrowserService } from './radio-browser.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ConfigService } from '@core';
-import { createConfigServiceSpy } from '@core/testing';
+import { Type } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { ConfigService } from './config.service';
+import { createConfigServiceSpy } from '../testing/core-spy-factories.spec';
 import { Station } from '../models/player/station';
 import isBlank from 'is-blank';
 
-describe('StationLookupService', () => {
+describe('RadioBrowserService', () => {
+  let radioBrowserService: RadioBrowserService;
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
-  let stationLookupService: StationLookupService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,18 +19,18 @@ describe('StationLookupService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        StationLookupService,
+        RadioBrowserService,
         { provide: ConfigService, useValue: createConfigServiceSpy() }
       ]
     });
 
     configService = TestBed.inject(ConfigService);
-    stationLookupService = TestBed.inject(StationLookupService);
+    radioBrowserService = TestBed.inject(RadioBrowserService);
     httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   });
 
   it('should be created', () => {
-    expect(stationLookupService).toBeTruthy();
+    expect(radioBrowserService).toBeTruthy();
   });
 
   it('should properly form requests', () => {
@@ -56,7 +56,7 @@ describe('StationLookupService', () => {
     // For each test entry
     testEntries.forEach(testEntry => {
       // Act: Initiate a station search operation based on the test name & tag
-      stationLookupService.search(testEntry.name, testEntry.tag).subscribe();
+      radioBrowserService.search(testEntry.name, testEntry.tag).subscribe();
       // Assert: Set up expectations for what we expect the generated HTTP request to look like
       const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
       expect(request.request.method).toBe('POST');
@@ -132,7 +132,7 @@ describe('StationLookupService', () => {
     // For each test entry
     testEntries.forEach(testEntry => {
       // Act: Initiate a dummy request.  We don't care about what's passed in or how the request is formed.
-      stationLookupService.search('name', 'tag').subscribe(stations => {
+      radioBrowserService.search('name', 'tag').subscribe(stations => {
         // Assert
         // The expected test entry should have been returned
         expect(stations.length).toBe(1);

@@ -3,8 +3,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { RadioBrowserEffects } from './radio-browser.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState, StationLookupService, NotificationService } from '@core';
-import { createStationLookupServiceSpy, createNotificationServiceSpy } from '@core/testing';
+import { initialRootState, NotificationService, RadioBrowserService } from '@core';
+import { createNotificationServiceSpy, createRadioBrowserServiceSpy } from '@core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RadioBrowserEffects', () => {
@@ -20,7 +20,7 @@ describe('RadioBrowserEffects', () => {
         RadioBrowserEffects,
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialRootState}),
-        { provide: StationLookupService, useValue: createStationLookupServiceSpy() },
+        { provide: RadioBrowserService, useValue: createRadioBrowserServiceSpy() },
         { provide: NotificationService, useValue: createNotificationServiceSpy() },
       ]
     });

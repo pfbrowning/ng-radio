@@ -1,6 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StationLookupService } from './services/station-lookup.service';
 import { StreamInfoService } from './services/stream-info.service';
 import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -69,7 +68,6 @@ import * as NoSleep from 'nosleep.js';
     StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
-    StationLookupService,
     StreamInfoService,
     KeepAwakeService,
     CurrentTimeService,

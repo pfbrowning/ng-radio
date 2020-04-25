@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { map, catchError, switchMap, filter, take, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { StationLookupService } from '@core';
 import { Action, Store, select } from '@ngrx/store';
-import { NotificationService, Severities } from '@core';
+import { NotificationService, Severities, RadioBrowserService } from '@core';
 import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
 import { selectConfig } from '@core/store/config/selectors';
+import { SuggestedStationsService } from '../services/suggested-stations.service';
 import * as SuggestedStationsActions from './suggested-stations.actions';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
 
   fetchDeveloperSuggested$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.developerSuggestedFetchStart),
-    switchMap(() => this.stationLookupService.fetchDeveloperSuggestions().pipe(
+    switchMap(() => this.suggestedStationsService.fetchDeveloperSuggestions().pipe(
       map(stations => SuggestedStationsActions.developerSuggestedFetchSucceeded({stations})),
       catchError(error => of(SuggestedStationsActions.developerSuggestedFetchFailed({error})))
     ))
@@ -35,7 +35,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
 
   fetchTopClicked$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.topClickedFetchStart),
-    switchMap(() => this.stationLookupService.fetchTopClicked().pipe(
+    switchMap(() => this.radioBrowserService.fetchTopClicked().pipe(
       map(stations => SuggestedStationsActions.topClickedFetchSucceeded({stations})),
       catchError(error => of(SuggestedStationsActions.topClickedFetchFailed({error})))
     ))
@@ -43,7 +43,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
 
   fetchTopVoted$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.topVotedFetchStart),
-    switchMap(() => this.stationLookupService.fetchTopVoted().pipe(
+    switchMap(() => this.radioBrowserService.fetchTopVoted().pipe(
       map(stations => SuggestedStationsActions.topVotedFetchSucceeded({stations})),
       catchError(error => of(SuggestedStationsActions.topVotedFetchFailed({error})))
     ))
@@ -71,7 +71,8 @@ export class SuggestedStationsEffects implements OnInitEffects {
   constructor(
     private actions$: Actions,
     private store: Store<SuggestedStationsRootState>,
-    private stationLookupService: StationLookupService,
+    private suggestedStationsService: SuggestedStationsService,
+    private radioBrowserService: RadioBrowserService,
     private notificationService: NotificationService
   ) {}
 }

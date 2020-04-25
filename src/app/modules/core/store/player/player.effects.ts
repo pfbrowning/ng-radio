@@ -33,8 +33,8 @@ import { LoggingService } from '../../services/logging.service';
 import { PlayerActions, PlayerSelectors } from '.';
 import { ApplicationActions } from '../application/.';
 import { PlayerStatus } from '../../models/player/player-status';
-import { StreamPreprocessorService } from '../../services/player/stream-preprocessor.service';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
+import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import isBlank from 'is-blank';
 import isEqual from 'lodash/isEqual';
 

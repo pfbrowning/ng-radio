@@ -16,7 +16,7 @@ import {
 import { CurrentTimeService } from '../../services/current-time.service';
 import { LoggingService } from '../../services/logging.service';
 import { createLoggingServiceSpy, createStreamPreprocessorServiceSpy } from '../../testing/core-spy-factories.spec';
-import { StreamPreprocessorService } from '../../services/player/stream-preprocessor.service';
+import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
