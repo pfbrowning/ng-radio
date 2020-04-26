@@ -13,6 +13,10 @@ export enum RadioBrowserActions {
   CountriesFetchStart = '[Radio Browser] Countries Fetch Start',
   CountriesFetchSucceeded = '[Radio Browser] Countries Fetch Succeeded',
   CountriesFetchFailed = '[Radio Browser] Countries Fetch Failed',
+  TagInputFocused = '[Radio Browser] Tag Input Focused',
+  TagSuggestionsFetchStart = '[Radio Browser] Tag Suggestions Fetch Start',
+  TagSuggestionsFetchSucceeded = '[Radio Browser] Tag Suggestions Fetch Succeeded',
+  TagSuggestionsFetchFailed = '[Radio Browser] Tag Suggestions Fetch Failed',
 }
 
 export const resolveSubmit = createAction(
@@ -59,5 +63,23 @@ export const countriesFetchSucceeded = createAction(
 
 export const countriesFetchFailed = createAction(
   RadioBrowserActions.CountriesFetchFailed,
+  props<{ error: any }>()
+);
+
+export const tagInputFocused = createAction(
+  RadioBrowserActions.TagInputFocused
+);
+
+export const tagSuggestionsFetchStart = createAction(
+  RadioBrowserActions.TagSuggestionsFetchStart
+);
+
+export const tagSuggestionsFetchSucceeded = createAction(
+  RadioBrowserActions.TagSuggestionsFetchSucceeded,
+  props<{ tagSuggestions: string[] }>()
+);
+
+export const tagSuggestionsFetchFailed = createAction(
+  RadioBrowserActions.TagSuggestionsFetchFailed,
   props<{ error: any }>()
 );

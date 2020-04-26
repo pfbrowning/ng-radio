@@ -28,7 +28,12 @@
     }
 }
 
-.mat-table-spinner {
-    display: flex;
+.mat-table-spinner,
+::ng-deep .mat-autocomplete .loading .mat-option-text {
+    display:flex;
     justify-content: center;
+}
+
+::ng-deep .mat-option.loading {
+    height:60px;
 }

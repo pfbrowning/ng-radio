@@ -10,6 +10,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRadioBrowserRootState } from '../../models/initial-radio-browser-root-state';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('RadioBrowserComponent', () => {
   let component: RadioBrowserComponent;
@@ -26,6 +27,7 @@ describe('RadioBrowserComponent', () => {
         MatProgressSpinnerModule,
         MatCardModule,
         MatSelectModule,
+        MatAutocompleteModule,
         FormsModule,
         NoopAnimationsModule
       ],

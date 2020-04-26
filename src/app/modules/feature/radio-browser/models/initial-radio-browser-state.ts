@@ -8,5 +8,7 @@ export const initialRadioBrowserState: RadioBrowserState = {
     results: null,
     countries: null,
     countriesFetchInProgress: false,
-    countriesFetchFailed: false
+    countriesFetchFailed: false,
+    tagSuggestions: null,
+    tagSuggestionsFetchInProgress: false
 };

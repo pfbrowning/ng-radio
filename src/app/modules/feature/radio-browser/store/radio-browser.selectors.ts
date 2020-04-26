@@ -37,3 +37,13 @@ export const resolverParams = createSelector(
     failed: state.countriesFetchFailed
   })
 );
+
+export const tagSuggestions = createSelector(
+  selectRadioBrowserState,
+  (state) => state.tagSuggestions
+);
+
+export const fetchingTagSuggestions = createSelector(
+  selectRadioBrowserState,
+  (state) => state.tagSuggestionsFetchInProgress
+);

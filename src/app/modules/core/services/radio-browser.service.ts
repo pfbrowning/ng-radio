@@ -41,6 +41,19 @@ export class RadioBrowserService {
     );
   }
 
+  public fetchTags(filter: string = null): Observable<string[]> {
+    let params = new HttpParams();
+    params = params.append('order', 'stationcount');
+    params = params.append('reverse', 'true');
+
+    return this.radioBrowserUrl$.pipe(
+      // All tags in the API appear to be lowercase
+      map(url => !isBlank(filter) ? `${url}/tags/${filter.toLowerCase()}` : `${url}/tags`),
+      switchMap(url => this.httpClient.get<object[]>(url, { params })),
+      map(response => response.map(o => o['name']))
+    );
+  }
+
   /**
    * Searches the Radio Browser API for stations matching the provided criteria
    * @param name Station name / title to search for

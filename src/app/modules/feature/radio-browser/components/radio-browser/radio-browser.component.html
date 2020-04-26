@@ -13,9 +13,18 @@
     <input matInput #nameSearchInput="matInput" [ngModel]="nameSearch" (ngModelChange)="onNameTermChanged($event)" placeholder="Station Name" matTooltip="Search Stations by name">
   </mat-form-field>
   <mat-form-field class="flex-column-third">
-    <input matInput [ngModel]="tagSearch" (ngModelChange)="onTagTermChanged($event)" placeholder="Tag" matTooltip="Search Stations by tag">
+    <input matInput [ngModel]="tagSearch" (ngModelChange)="onTagTermChanged($event)" [matAutocomplete]="tagAutocomplete" (focus)="onTagFocused()" placeholder="Tag" matTooltip="Search Stations by tag">
   </mat-form-field>
 </div>
+
+<mat-autocomplete #tagAutocomplete="matAutocomplete" (optionSelected)="onTagTermSelected($event.option.value)">
+  <mat-option *ngIf="fetchingTagSuggestions$ | async; else notFetchingTagSuggestions" disabled class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </mat-option>
+  <ng-template #notFetchingTagSuggestions>
+    <mat-option *ngFor="let tag of (tagSuggestions$ | async)" [value]="tag">{{tag}}</mat-option>
+  </ng-template>
+</mat-autocomplete>
   
 <table mat-table [dataSource]="searchResults$ | async" class="selectable-rows mat-elevation-z2">
   <ng-container matColumnDef="name">

@@ -28,9 +28,30 @@ export class RadioBrowserEffects {
     ))
   ));
 
+  fetchTagSuggestions$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.tagSuggestionsFetchStart),
+    withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.searchCriteria))),
+    switchMap(([, {tagTerm}]) => this.radioBrowserService.fetchTags(tagTerm).pipe(
+      map(tagSuggestions => RadioBrowserActions.tagSuggestionsFetchSucceeded({tagSuggestions})),
+      catchError(error => of(RadioBrowserActions.tagSuggestionsFetchFailed({error})))
+    ))
+  ));
+
   searchOnTermsUpdated$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.nameTermUpdated, RadioBrowserActions.tagTermUpdated, RadioBrowserActions.countrySelected),
     map(() => RadioBrowserActions.searchStart())
+  ));
+
+  fetchTagSuggestionsOnTermUpdated$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.tagTermUpdated),
+    map(() => RadioBrowserActions.tagSuggestionsFetchStart())
+  ));
+
+  fetchTagSuggestionsOnInitialFocus$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.tagInputFocused),
+    withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.tagSuggestions))),
+    filter(([, suggestions]) => suggestions == null),
+    map(() => RadioBrowserActions.tagSuggestionsFetchStart())
   ));
 
   performSearch$ = createEffect(() => this.actions$.pipe(
@@ -52,6 +73,11 @@ export class RadioBrowserEffects {
   notifySearchFailed$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchFailed),
     tap(() => this.notificationService.notify(Severities.Error, 'Search Failed'))
+  ), { dispatch: false });
+
+  notifyTagSuggestionsFetchFailed$ = createEffect(() => this.actions$.pipe(
+    ofType(RadioBrowserActions.tagSuggestionsFetchFailed),
+    tap(() => this.notificationService.notify(Severities.Error, 'Failed To Fetch Tag Suggestions'))
   ), { dispatch: false });
 
   constructor(

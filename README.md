@@ -52,11 +52,15 @@ ng serve --open
 
 ## Backlog
 * Features
-  * Radio Browser tag search autocomplete
+  * Radio Browser country combobox
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy
   * Favorite station tags
   * Browser-based audio recording (pending CORS proxy for audio stream)
 * Chores
+  * Improve mat table loading spinner logic
+  * Show "Limited to X results" text
+  * Update readme
+  * Upgrade dependencies
   * Flex styling of player bar: grow to take up available with for song & station title
   * Show cursor pointer for now playing bottom toolbar
   * Minimum icon size

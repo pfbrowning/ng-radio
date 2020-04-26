@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, take, filter } from 'rxjs/operators';
+import { Subject, timer, EMPTY } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take, filter, debounce, map } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
 import { Store, select } from '@ngrx/store';
 import { selectStation, PlayerActions, PlayerSelectors } from '@core/store/player';
@@ -27,21 +27,26 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
   public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
   public countries$ = this.store.pipe(select(RadioBrowserSelectors.listedCountries));
+  public tagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.tagSuggestions));
+  public fetchingTagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.fetchingTagSuggestions));
   public nameSearch$ = new Subject<string>();
-  public tagSearch$ = new Subject<string>();
+  public tagSearch$ = new Subject<{tag: string, debounce: boolean}>();
   public nameSearch: string;
   public tagSearch: string;
   public country: string;
-  private debounceTime = 300;
+  private debounceTime = 500;
   private subs = new SubSink();
 
   ngOnInit() {
     this.subs.sink = this.nameSearch$
       .pipe(debounceTime(this.debounceTime), distinctUntilChanged())
       .subscribe(term => this.store.dispatch(nameTermUpdated({term})));
-    this.subs.sink = this.tagSearch$
-      .pipe(debounceTime(this.debounceTime), distinctUntilChanged())
-      .subscribe(term => this.store.dispatch(tagTermUpdated({term})));
+    this.subs.sink = this.tagSearch$.pipe(
+      // Debounce conditionally
+      debounce(t => t.debounce ? timer(this.debounceTime) : EMPTY),
+      map(t => t.tag.toLowerCase()),
+      distinctUntilChanged()
+    ).subscribe(term => this.store.dispatch(tagTermUpdated({term})));
 
     // Load any pre-existing search criteria from state on init
     this.store.pipe(select(RadioBrowserSelectors.searchCriteria), take(1)).subscribe(criteria => {
@@ -69,7 +74,12 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   }
 
   onTagTermChanged(term: string) {
-    this.tagSearch$.next(term);
+    this.tagSearch$.next({tag: term, debounce: true});
+  }
+
+  onTagTermSelected(term: string) {
+    // Don't debounce if a value was selected via autocomplete
+    this.tagSearch$.next({tag: term, debounce: false});
   }
 
   onNameTermChanged(term: string) {
@@ -78,5 +88,9 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   public onCountryChanged(country: string): void {
     this.store.dispatch(RadioBrowserActions.countrySelected({country}));
+  }
+
+  public onTagFocused(): void {
+    this.store.dispatch(RadioBrowserActions.tagInputFocused());
   }
 }

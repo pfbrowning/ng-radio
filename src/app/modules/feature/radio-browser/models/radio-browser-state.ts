@@ -10,4 +10,6 @@ export interface RadioBrowserState {
     countries: Country[];
     countriesFetchInProgress: boolean;
     countriesFetchFailed: boolean;
+    tagSuggestions: string[];
+    tagSuggestionsFetchInProgress: boolean;
 }
