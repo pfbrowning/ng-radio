@@ -6,6 +6,7 @@ export enum RadioBrowserActions {
   ResolveSubmit = '[Radio Browser] Resolve Submit',
   NameTermUpdated = '[Radio Browser] Name Term Updated',
   TagTermUpdated = '[Radio Browser] Tag Term Updated',
+  CountryFilterChanged = '[Radio Browser] Country Filter Changed',
   CountrySelected = '[Radio Browser] Country Selected',
   SearchStart = '[Radio Browser] Search Start',
   SearchSucceeded = '[Radio Browser] Search Succeeded',
@@ -50,6 +51,11 @@ export const searchSucceeded = createAction(
 export const searchFailed = createAction(
   RadioBrowserActions.SearchFailed,
   props<{ error: any }>()
+);
+
+export const countryFilterChanged = createAction(
+  RadioBrowserActions.CountryFilterChanged,
+  props<{ text: string }>()
 );
 
 export const countriesFetchStart = createAction(

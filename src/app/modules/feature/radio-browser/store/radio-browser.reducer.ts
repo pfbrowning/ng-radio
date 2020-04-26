@@ -15,6 +15,10 @@ const reducer = createReducer<RadioBrowserState>(
     ...state,
     tagTerm: term
   })),
+  on(RadioBrowserActions.countryFilterChanged, (state, { text }) => ({
+    ...state,
+    countryFilter: text
+  })),
   on(RadioBrowserActions.countrySelected, (state, {country}) => ({
     ...state,
     country

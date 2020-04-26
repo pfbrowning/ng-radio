@@ -11,6 +11,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { initialRadioBrowserRootState } from '../../models/initial-radio-browser-root-state';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 describe('RadioBrowserComponent', () => {
   let component: RadioBrowserComponent;
@@ -28,6 +29,7 @@ describe('RadioBrowserComponent', () => {
         MatCardModule,
         MatSelectModule,
         MatAutocompleteModule,
+        NgxMatSelectSearchModule,
         FormsModule,
         NoopAnimationsModule
       ],

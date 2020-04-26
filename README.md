@@ -10,9 +10,10 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 
 ## Current Features
 * Display of the current "Now Playing" stream info as provided by [node-internet-radio](https://github.com/gabek/node-internet-radio) and fetched via [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api)
-* Integration with the [Radio Browser API](http://www.radio-browser.info) as a backend data source to easily search for internet radio stations
-* Support for opening and playing custom station URLs
+* Integration with the [Radio Browser API](https://de1.api.radio-browser.info/) as a backend data source to easily search for internet radio stations
 * Sleep timer
+* Support for opening and playing custom station URLs
+* Saving of "Favorite" stations
 * Experimental mobile browser keep-awake via [nosleep.js](https://github.com/richtr/NoSleep.js/)
 * Responsive & mobile-friendly
 * Logging to Azure Application Insights
@@ -51,16 +52,12 @@ ng serve --open
 ```
 
 ## Backlog
-* Features
-  * Radio Browser country combobox
-  * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy
-  * Favorite station tags
-  * Browser-based audio recording (pending CORS proxy for audio stream)
 * Chores
+  * Update readme
+  * Write about browser support in the readme
+  * Upgrade dependencies
   * Improve mat table loading spinner logic
   * Show "Limited to X results" text
-  * Update readme
-  * Upgrade dependencies
   * Flex styling of player bar: grow to take up available with for song & station title
   * Show cursor pointer for now playing bottom toolbar
   * Minimum icon size
@@ -70,17 +67,21 @@ ng serve --open
   * Wait until after initial change detection to show notifications
   * Remove mat-menu from now-playing component and move the player-bar mat menu into its own component
   * Show a loading spinner in place of the main app content while waiting for the config to load
-  * Write about browser support in the readme
-  * Split "Now Playing" into its own root store slice
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store
+  * Move build pipeline to Github actions
+* Features
+  * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy
+  * Favorite station tags
+  * Browser-based audio recording (pending CORS proxy for audio stream)
+  * HTML5 Notifications
+* More Chores
+  * Either type for stream validator logic
+  * Prevent accidental audio streaming through CORS proxy
+  * Config observable
   * Partition core/services directory
   * Fix warnings in tests
-  * Move build pipeline to Github actions
-  * Either type for stream validator logic
   * Find a better alternative to the mat spinner button package
   * Package up reusable things and deploy to npm
-  * Prevent accidental audio streaming through CORS proxy
   * Refactor selector import / export logic
-  * Config observable
   * Improve test coverage

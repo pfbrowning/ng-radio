@@ -3,7 +3,10 @@
 <div class="flex-grid">
   <mat-form-field class="flex-column-third">
     <mat-label>Country</mat-label>
-    <mat-select [ngModel]="country" (ngModelChange)="onCountryChanged($event)">
+    <mat-select [ngModel]="selectedCountry$ | async" (ngModelChange)="onCountryChanged($event)">
+      <mat-option>
+        <ngx-mat-select-search [ngModel]="countryFilter$ | async" (ngModelChange)="onCountryFilterChanged($event)" placeholderLabel="Find country..." noEntriesFoundLabel="No matches found"></ngx-mat-select-search>
+      </mat-option>
       <mat-option *ngFor="let country of (countries$ | async)" [value]="country.code">
         {{country.name}}
       </mat-option>

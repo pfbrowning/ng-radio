@@ -7,6 +7,7 @@ export interface RadioBrowserState {
     country: string;
     searchInProgress: boolean;
     results: Station[];
+    countryFilter: string;
     countries: Country[];
     countriesFetchInProgress: boolean;
     countriesFetchFailed: boolean;

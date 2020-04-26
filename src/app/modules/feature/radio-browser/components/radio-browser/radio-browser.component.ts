@@ -26,14 +26,15 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   public searchResults$ = this.store.pipe(select(selectSearchResults));
   public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
   public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
-  public countries$ = this.store.pipe(select(RadioBrowserSelectors.listedCountries));
+  public selectedCountry$ = this.store.pipe(select(RadioBrowserSelectors.selectedCountry));
+  public countryFilter$ = this.store.pipe(select(RadioBrowserSelectors.countryFilter));
+  public countries$ = this.store.pipe(select(RadioBrowserSelectors.filteredCountries));
   public tagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.tagSuggestions));
   public fetchingTagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.fetchingTagSuggestions));
   public nameSearch$ = new Subject<string>();
   public tagSearch$ = new Subject<{tag: string, debounce: boolean}>();
   public nameSearch: string;
   public tagSearch: string;
-  public country: string;
   private debounceTime = 500;
   private subs = new SubSink();
 
@@ -52,7 +53,6 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     this.store.pipe(select(RadioBrowserSelectors.searchCriteria), take(1)).subscribe(criteria => {
       this.nameSearch = criteria.nameTerm;
       this.tagSearch = criteria.tagTerm;
-      this.country = criteria.country;
     });
 
     // On init set any existing search results as listed stream info urls
@@ -88,6 +88,10 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   public onCountryChanged(country: string): void {
     this.store.dispatch(RadioBrowserActions.countrySelected({country}));
+  }
+
+  public onCountryFilterChanged(text: string): void {
+    this.store.dispatch(RadioBrowserActions.countryFilterChanged({text}));
   }
 
   public onTagFocused(): void {

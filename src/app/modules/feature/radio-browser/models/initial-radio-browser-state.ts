@@ -6,6 +6,7 @@ export const initialRadioBrowserState: RadioBrowserState = {
     country: null,
     searchInProgress: false,
     results: null,
+    countryFilter: null,
     countries: null,
     countriesFetchInProgress: false,
     countriesFetchFailed: false,

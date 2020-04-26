@@ -1,15 +1,22 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { RadioBrowserState } from '../models/radio-browser-state';
 import { radioBrowserFeatureKey } from './radio-browser.reducer';
+import isBlank from 'is-blank';
 
 export const selectRadioBrowserState = createFeatureSelector<RadioBrowserState>(radioBrowserFeatureKey);
 
+export const selectedCountry = createSelector(
+  selectRadioBrowserState,
+  state => state.country
+);
+
 export const searchCriteria = createSelector(
   selectRadioBrowserState,
-  state => ({
+  selectedCountry,
+  (state, country) => ({
     nameTerm: state.nameTerm,
     tagTerm: state.tagTerm,
-    country: state.country
+    country
   })
 );
 
@@ -26,6 +33,17 @@ export const selectIsSearchInProgress = createSelector(
 export const listedCountries = createSelector(
   selectRadioBrowserState,
   (state) => state.countries
+);
+
+export const countryFilter = createSelector(
+  selectRadioBrowserState,
+  state => state.countryFilter
+);
+
+export const filteredCountries = createSelector(
+  countryFilter,
+  listedCountries,
+  (filter, countries) => isBlank(filter) ? countries : countries.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
 );
 
 export const resolverParams = createSelector(
