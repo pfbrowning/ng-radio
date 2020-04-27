@@ -25,6 +25,7 @@ const reducer = createReducer<RadioBrowserState>(
   })),
   on(RadioBrowserActions.searchStart, state => ({
     ...state,
+    results: null,
     searchInProgress: true
   })),
   on(RadioBrowserActions.searchSucceeded, (state, { results }) => ({
