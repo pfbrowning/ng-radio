@@ -1,16 +1,10 @@
 @import 'variables';
 
-.station-info {
+blr-player-bar-station-info {
     font-size:12px;
     line-height:18px;
     overflow: hidden;
-    
-    @media (max-width:$smallScreenCutoff - 1) {
-        width:calc(100% - 125px);
-    }
-    @media (min-width:$smallScreenCutoff) {
-        width:50%;
-    }
+    flex: 1 1 auto;
 }
 
 .indicator-icon {
@@ -27,7 +21,7 @@
 }
 
 .play-pause-button {
-    margin-left:8px;
+    flex: 0 0 auto;
     overflow: hidden;
 }
 

@@ -1,10 +1,12 @@
-<div #title [ngSwitch]="currentPlayerStatus" class="title" [class.marquee]="titleMarquee">
-    <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
-    <ng-container *ngSwitchCase="playerStatus.Stopped">
-        <ng-container *ngIf="validatingCurrent">Validating Stream...</ng-container>
-    </ng-container>
-    <ng-container *ngSwitchCase="playerStatus.Playing">
-        <blr-stream-info-text [streamInfo]="currentStreaminfo$ | async"></blr-stream-info-text>
-    </ng-container>
+<div class="station-info-container">
+    <div #title [ngSwitch]="currentPlayerStatus" class="title" [class.marquee]="titleMarquee">
+        <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
+        <ng-container *ngSwitchCase="playerStatus.Stopped">
+            <ng-container *ngIf="validatingCurrent">Validating Stream...</ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="playerStatus.Playing">
+            <blr-stream-info-text [streamInfo]="currentStreaminfo$ | async"></blr-stream-info-text>
+        </ng-container>
+    </div>
+    <div #station class="station" [class.marquee]="stationMarquee">{{ currentStation.title }}</div>
 </div>
-<div #station class="station" [class.marquee]="stationMarquee">{{ currentStation.title }}</div>

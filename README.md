@@ -57,8 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Flex styling of player bar: grow to take up available width for song & station title
-  * Show cursor pointer for now playing bottom toolbar
   * Minimum icon size
   * Configure a proper reducer map for the root store
   * Turn off sleep timer on audio pause

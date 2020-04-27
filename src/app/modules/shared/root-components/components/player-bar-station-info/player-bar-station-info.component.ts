@@ -7,9 +7,13 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   Input,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
+import { SubSink } from 'subsink';
+import { WindowService } from '@core/services/application';
 import * as PlayerSelectors from '@core/store/player/selectors';
 
 @Component({
@@ -18,8 +22,12 @@ import * as PlayerSelectors from '@core/store/player/selectors';
   styleUrls: ['./player-bar-station-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlayerBarStationInfoComponent implements AfterViewChecked {
-  constructor(private store: Store<RootState>, private changeDetectorRef: ChangeDetectorRef) {}
+export class PlayerBarStationInfoComponent implements OnInit, OnDestroy, AfterViewChecked {
+  constructor(
+    private store: Store<RootState>,
+    private changeDetectorRef: ChangeDetectorRef,
+    private windowService: WindowService
+  ) {}
 
   @Input() currentPlayerStatus: PlayerStatus;
   @Input() currentStation: Station;
@@ -31,13 +39,21 @@ export class PlayerBarStationInfoComponent implements AfterViewChecked {
   public titleMarquee = false;
   public stationMarquee = false;
   public currentStreaminfo$ = this.store.pipe(select(PlayerSelectors.currentStreamInfo));
+  private subs = new SubSink();
+
+  public ngOnInit(): void {
+    this.subs.sink = this.windowService.resize.subscribe(() => this.changeDetectorRef.markForCheck());
+  }
+
+  public ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
   ngAfterViewChecked() {
     /* Check and apply marquee classes immediately after each change detection operation because
     we won't know whether the content is overflowing until it's been bound to the template. */
     this.checkApplyMarquees();
   }
-
   /** Checks and updates the marquee properties for title and station
    * based on whether the title or station content is overflowing.
    */
