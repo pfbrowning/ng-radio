@@ -1,23 +1,23 @@
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="timerSelected.emit(null)">
+  <button mat-menu-item (click)="onCancelTimerClicked()">
     <span>Cancel Timer</span>
   </button>
-  <button mat-menu-item (click)="timerSelected.emit(1)">
+  <button mat-menu-item (click)="onTimerSelected(1)">
     <span>1 Minute</span>
   </button>
-  <button mat-menu-item (click)="timerSelected.emit(5)">
+  <button mat-menu-item (click)="onTimerSelected(5)">
     <span>5 Minutes</span>
   </button>
-  <button mat-menu-item (click)="timerSelected.emit(15)">
+  <button mat-menu-item (click)="onTimerSelected(15)">
     <span>15 Minutes</span>
   </button>
-  <button mat-menu-item (click)="timerSelected.emit(30)">
+  <button mat-menu-item (click)="onTimerSelected(30)">
     <span>30 Minutes</span>
   </button>
-  <button mat-menu-item (click)="timerSelected.emit(60)">
+  <button mat-menu-item (click)="onTimerSelected(60)">
     <span>60 Minutes</span>
   </button>
-  <button mat-menu-item (click)="timerSelected.emit(120)">
+  <button mat-menu-item (click)="onTimerSelected(120)">
     <span>120 Minutes</span>
   </button>
 </mat-menu>

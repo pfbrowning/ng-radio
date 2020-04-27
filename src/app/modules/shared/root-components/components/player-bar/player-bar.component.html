@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
-  <blr-player-bar-station-info #stationInfo class="station-info" (click)="onNowPlayingClicked()"
+  <blr-player-bar-station-info class="station-info" (click)="onNowPlayingClicked()"
     [currentPlayerStatus]="playerStatus$ | async" [currentStation]="currentStation$ | async"
     [validatingCurrent]="validatingCurrent$ | async">
   </blr-player-bar-station-info>
@@ -74,4 +74,4 @@
   </ng-template>
 </mat-menu>
 
-<blr-sleep-timer-menu #sleepTimerMenu (timerSelected)="onTimerSelected($event)"></blr-sleep-timer-menu>
+<blr-sleep-timer-menu #sleepTimerMenu></blr-sleep-timer-menu>

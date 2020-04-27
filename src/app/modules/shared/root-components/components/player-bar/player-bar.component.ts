@@ -1,7 +1,6 @@
-import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { setAltSrc } from '@utilities';
-import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { Store, select } from '@ngrx/store';
 import { KeepAwakeService, RootState } from '@core';
 import { PlayerStatus } from '@core/models/player';
@@ -12,7 +11,7 @@ import {
   removeCurrentStationFromFavoritesRequested,
   FavoriteStationsSelectors
 } from '@core/store/favorite-stations';
-import { selectMinutesUntilSleep, setSleepTimerSubmit, clearSleepTimer } from '@core/store/sleep-timer';
+import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 import { PlayerActions, PlayerSelectors } from '@core/store/player';
 import { matProgressButtonDefaults } from '@core/constants';
@@ -31,7 +30,6 @@ export class PlayerBarComponent {
     private store: Store<RootState>
   ) {}
 
-  @ViewChild('stationInfo') stationInfo: PlayerBarStationInfoComponent;
   public playerStatus = PlayerStatus;
   public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
@@ -44,7 +42,7 @@ export class PlayerBarComponent {
     ...matProgressButtonDefaults,
     fab: true,
     buttonColor: 'accent'
-  }
+  };
   public playBtnOptions: MatProgressButtonOptions = {
     ...this.circleButtonDefaults,
     icon: {
@@ -61,14 +59,6 @@ export class PlayerBarComponent {
 
   public onImgError(img: HTMLImageElement) {
     setAltSrc(img, '/assets/images/radio.svg');
-  }
-
-  public onTimerSelected(minutes: number) {
-    if (minutes != null) {
-      this.store.dispatch(setSleepTimerSubmit({minutes}));
-    } else {
-      this.store.dispatch(clearSleepTimer());
-    }
   }
 
   public onNowPlayingClicked(): void {

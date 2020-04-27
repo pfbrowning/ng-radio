@@ -7,7 +7,6 @@ import { Store, select } from '@ngrx/store';
 import { PlayerActions } from '@core/store/player';
 import { FavoriteStationsActions, FavoriteStationsSelectors } from '@core/store/favorite-stations';
 import { MatInput } from '@angular/material/input';
-import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import cloneDeep from 'lodash/cloneDeep';
 import { matProgressButtonDefaults } from '@core/constants';
 

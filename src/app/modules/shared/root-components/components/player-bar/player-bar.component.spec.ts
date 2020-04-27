@@ -18,7 +18,7 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { PlayerStatus, Station } from '@core/models/player';
+import { Station } from '@core/models/player';
 import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerSelectors } from '@core/store/player';
 
@@ -108,27 +108,5 @@ describe('PlayerBarComponent', () => {
       // The keep awake element should have the off-white class if it's disabled and vice-versa
       expect(keepAwakeElement.classList.contains('off-white')).toBe(!enabled);
     });
-  });
-
-  it('should update the pause button on global play & pause', () => {
-    // Arrange
-    fixture.detectChanges();
-    const getPlayPauseBtnText = () => getElementTextBySelector<PlayerBarComponent>(fixture, '.play-pause-button');
-    // The 'Play' button should be drawn initially before we start to play something
-    expect(getPlayPauseBtnText()).toBe('play_arrow');
-
-    /* Act & Assert: Simulate a play & pause action and ensure that the correct button
-    is rendered in the template accordingly. */
-    store.overrideSelector(PlayerSelectors.selectPlayerStatus, PlayerStatus.Playing);
-    store.refreshState();
-    fixture.detectChanges();
-
-    expect(getPlayPauseBtnText()).toBe('pause');
-
-    store.overrideSelector(PlayerSelectors.selectPlayerStatus, PlayerStatus.Stopped);
-    store.refreshState();
-    fixture.detectChanges();
-
-    expect(getPlayPauseBtnText()).toBe('play_arrow');
   });
 });
