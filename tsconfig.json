@@ -22,6 +22,7 @@
     "paths": {
       "@environment": [ "src/environments/environment"],
       "@core": ["src/app/modules/core/index"],
+      "@core/constants": ["src/app/modules/core/constants/index"],
       "@core/models": ["src/app/modules/core/models/index"],
       "@core/store": ["src/app/modules/core/store/index"],
       "@core/services/application": ["src/app/modules/core/services/application"],

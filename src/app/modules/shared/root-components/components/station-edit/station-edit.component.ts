@@ -9,6 +9,7 @@ import { FavoriteStationsActions, FavoriteStationsSelectors } from '@core/store/
 import { MatInput } from '@angular/material/input';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import cloneDeep from 'lodash/cloneDeep';
+import { matProgressButtonDefaults } from '@core/constants';
 
 @Component({
   selector: 'blr-station-edit',
@@ -27,30 +28,18 @@ export class StationEditComponent implements OnInit {
   public saving$ = this.store.pipe(select(FavoriteStationsSelectors.editStationSaveInProgress));
   public stationPending: Station;
 
-  /* This should move to a central location when and if we need to start using the spinner button
-  elsewhere, but for the time being it's only used in this component. */
-  btnOpts: MatProgressButtonOptions = {
-    active: false,
-    text: null,
-    spinnerSize: 19,
-    raised: true,
-    buttonColor: 'primary',
-    spinnerColor: 'accent',
-    mode: 'indeterminate',
-  };
-
   public openBtnOptions = {
-    ...this.btnOpts,
+    ...matProgressButtonDefaults,
     text: 'Open'
   };
 
   public saveBtnOptions = {
-    ...this.btnOpts,
+    ...matProgressButtonDefaults,
     text: 'Save'
   };
 
   public cancelBtnOptions = {
-    ...this.btnOpts,
+    ...matProgressButtonDefaults,
     text: 'Cancel'
   };
 

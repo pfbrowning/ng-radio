@@ -59,11 +59,11 @@ ng serve --open
 * Chores
   * Flex styling of player bar: grow to take up available width for song & station title
   * Show cursor pointer for now playing bottom toolbar
+  * Remove mat-menu from now-playing component and move the player-bar mat menu into its own component
   * Minimum icon size
   * Configure a proper reducer map for the root store
   * Turn off sleep timer on audio pause
   * Wait until after initial change detection to show notifications
-  * Remove mat-menu from now-playing component and move the player-bar mat menu into its own component
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store

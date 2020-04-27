@@ -15,6 +15,8 @@ import {
 import { selectMinutesUntilSleep, setSleepTimerSubmit, clearSleepTimer } from '@core/store/sleep-timer';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 import { PlayerActions, PlayerSelectors } from '@core/store/player';
+import { matProgressButtonDefaults } from '@core/constants';
+import { MatProgressButtonOptions } from 'mat-progress-buttons';
 
 @Component({
   selector: 'blr-player-bar',
@@ -37,6 +39,25 @@ export class PlayerBarComponent {
   public currentStation$ = this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite));
   public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
+
+  private circleButtonDefaults: MatProgressButtonOptions = {
+    ...matProgressButtonDefaults,
+    fab: true,
+    buttonColor: 'accent'
+  }
+  public playBtnOptions: MatProgressButtonOptions = {
+    ...this.circleButtonDefaults,
+    icon: {
+      fontIcon: 'play_arrow'
+    }
+  };
+
+  public pauseBtnOptions: MatProgressButtonOptions = {
+    ...this.circleButtonDefaults,
+    icon: {
+      fontIcon: 'pause'
+    }
+  };
 
   public onImgError(img: HTMLImageElement) {
     setAltSrc(img, '/assets/images/radio.svg');

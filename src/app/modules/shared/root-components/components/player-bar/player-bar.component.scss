@@ -28,6 +28,7 @@
 
 .play-pause-button {
     margin-left:8px;
+    overflow: hidden;
 }
 
 :host ::ng-deep .mat-spinner circle {
@@ -38,11 +39,6 @@
     display: inline-block;
     margin-right: 16px;
     vertical-align: middle;
-}
-
-.loading-audio-spinner {
-    width:64px;
-    justify-content: center;
 }
 
 mat-toolbar {
