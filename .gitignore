@@ -44,3 +44,4 @@ Thumbs.db
 
 src/assets/config/local.config.json
 TESTS-HeadlessChrome_*
+TESTS-Chrome_Headless_*
