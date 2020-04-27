@@ -33,10 +33,11 @@ describe('ConfigService', () => {
     const dummyConfig: AppConfig = {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
+      radioBrowserSearchResultsLimit: 25,
       favoriteStationsApiUrl: 'testFavoritesApi',
       corsProxyUrl: 'corsProxyApi',
-      currentStationRefreshInterval: 1,
-      listedStationRefreshInterval: 3,
+      refreshIntervalShort: 1,
+      refreshIntervalLong: 3,
       metadataFetchTimeout: 2,
       appInsightsInstrumentationKey: null,
       authConfig: {}
@@ -80,33 +81,35 @@ describe('ConfigService', () => {
   it('should merge local config with app config', (done: DoneFn) => {
     // Arrange
     const appConfig = {
-      'metadataApiUrl': 'testapi',
-      'radioBrowserApiUrl': 'testradiobrowserapi',
-      'favoriteStationsApiUrl': 'testFavoritesApi',
-      'listedStationRefreshInterval': 1,
-      'currentStationRefreshInterval': 2,
-      'metadataFetchTimeout': 3,
-      'authConfig': {
-        'issuer': 'app issuer',
-        'clientId': 'app client',
-        'logoutUrl': null
+      metadataApiUrl: 'testapi',
+      radioBrowserApiUrl: 'testradiobrowserapi',
+      radioBrowserSearchResultsLimit: 25,
+      favoriteStationsApiUrl: 'testFavoritesApi',
+      refreshIntervalLong: 1,
+      refreshIntervalShort: 2,
+      metadataFetchTimeout: 3,
+      authConfig: {
+        issuer: 'app issuer',
+        clientId: 'app client',
+        logoutUrl: null
       }
     };
     const localConfig = {
-      'appInsightsInstrumentationKey': 'app insights key value',
-      'corsProxyUrl': 'testCorsProxy',
-      'authConfig': {
-        'logoutUrl': 'some place',
-        'clientId': 'local client'
+      appInsightsInstrumentationKey: 'app insights key value',
+      corsProxyUrl: 'testCorsProxy',
+      authConfig: {
+        logoutUrl: 'some place',
+        clientId: 'local client'
       }
     };
     const mergedConfig: AppConfig = {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
+      radioBrowserSearchResultsLimit: 25,
       favoriteStationsApiUrl: 'testFavoritesApi',
       corsProxyUrl: 'testCorsProxy',
-      listedStationRefreshInterval: 1,
-      currentStationRefreshInterval: 2,
+      refreshIntervalLong: 1,
+      refreshIntervalShort: 2,
       metadataFetchTimeout: 3,
       appInsightsInstrumentationKey: 'app insights key value',
       authConfig: {
@@ -138,10 +141,11 @@ describe('ConfigService', () => {
       metadataApiUrl: 'testapi',
       appInsightsInstrumentationKey: 'app insights key value',
       radioBrowserApiUrl: 'testradiobrowserapi',
+      radioBrowserSearchResultsLimit: 25,
       favoriteStationsApiUrl: 'testFavoritesApi',
       corsProxyUrl: 'testCorsProxy',
-      currentStationRefreshInterval: 1,
-      listedStationRefreshInterval: 2,
+      refreshIntervalShort: 1,
+      refreshIntervalLong: 2,
       metadataFetchTimeout: 3,
       authConfig: {}
     };

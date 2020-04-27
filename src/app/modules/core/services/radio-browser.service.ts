@@ -74,6 +74,8 @@ export class RadioBrowserService {
     }
     // Limit the results based on the provided param
     body = body.set('limit', limit.toString());
+    body = body.set('order', 'votes');
+    body = body.set('reverse', 'true');
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
     // Perform the search against the configured radioBrowserUrl

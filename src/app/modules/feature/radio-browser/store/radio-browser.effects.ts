@@ -4,7 +4,7 @@ import { switchMap, withLatestFrom, map, catchError, tap, filter } from 'rxjs/op
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserRootState } from '../models/radio-browser-root-state';
-import { NotificationService, Severities } from '@core';
+import { NotificationService, Severities, ConfigService } from '@core';
 import { RadioBrowserActions, RadioBrowserSelectors } from '.';
 import { Router } from '@angular/router';
 import { PlayerActions } from '@core/store/player';
@@ -57,7 +57,12 @@ export class RadioBrowserEffects {
   performSearch$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchStart),
     withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.searchCriteria))),
-    switchMap(([, criteria]) => this.radioBrowserService.search(criteria.nameTerm, criteria.country, criteria.tagTerm).pipe(
+    switchMap(([, criteria]) => this.radioBrowserService.search(
+      criteria.nameTerm,
+      criteria.country,
+      criteria.tagTerm,
+      this.configService.appConfig.radioBrowserSearchResultsLimit
+    ).pipe(
       map(results => RadioBrowserActions.searchSucceeded({results})),
       catchError(error => of(RadioBrowserActions.searchFailed({error})))
     ))
@@ -83,6 +88,7 @@ export class RadioBrowserEffects {
   constructor(
     private actions$: Actions,
     private store: Store<RadioBrowserRootState>,
+    private configService: ConfigService,
     private router: Router,
     private radioBrowserService: RadioBrowserService,
     private notificationService: NotificationService

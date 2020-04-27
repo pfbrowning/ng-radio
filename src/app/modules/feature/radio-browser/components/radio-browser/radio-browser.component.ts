@@ -10,6 +10,7 @@ import { SubSink } from 'subsink';
 import { selectSearchResults, selectIsSearchInProgress } from '../../store/radio-browser.selectors';
 import { RadioBrowserRootState } from '../../models/radio-browser-root-state';
 import { RadioBrowserSelectors, RadioBrowserActions } from '../../store';
+import { ConfigService } from '@core';
 
 @Component({
   templateUrl: './radio-browser.component.html',
@@ -17,7 +18,7 @@ import { RadioBrowserSelectors, RadioBrowserActions } from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<RadioBrowserRootState>) {}
+  constructor(private store: Store<RadioBrowserRootState>, private configService: ConfigService) {}
 
   @ViewChild('nameSearchInput', { static: true }) nameSearchInput: MatInput;
 
@@ -96,5 +97,9 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   public onTagFocused(): void {
     this.store.dispatch(RadioBrowserActions.tagInputFocused());
+  }
+
+  public get resultsLimit(): number {
+    return this.configService.appConfig.radioBrowserSearchResultsLimit;
   }
 }

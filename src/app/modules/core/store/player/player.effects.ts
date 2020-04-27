@@ -163,16 +163,13 @@ export class PlayerEffects {
 
   startFetchInterval$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchNowPlayingSucceeded, PlayerActions.fetchNowPlayingFailed),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.currentAndStreamInfoUrls))),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.fetchIntervalParams))),
     filter(([{streamUrl}, {current, listed}]) => listed.concat(current).includes(streamUrl)),
-    mergeMap(([action, selected]) => this.configService.appConfig$.pipe(
-      map(config => ({ action, selected, config }))
-    )),
-    map(({ action, selected, config }) => fetchIntervalStart({
+    map(([action, selected]) => fetchIntervalStart({
       streamUrl: action.streamUrl,
-      duration: selected.current === action.streamUrl
-        ? config.currentStationRefreshInterval
-        : config.listedStationRefreshInterval
+      duration: selected.current === action.streamUrl && selected.focused
+        ? this.configService.appConfig.refreshIntervalShort
+        : this.configService.appConfig.refreshIntervalLong
     }))
   ));
 
@@ -189,7 +186,7 @@ export class PlayerEffects {
 
   onFetchIntervalComplete$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchIntervalCompleted),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.intervalCompletedParams))),
+    withLatestFrom(this.store.pipe(select(PlayerSelectors.fetchIntervalParams))),
     // Fetch listed streams only if the window is focused, but fetch the current playing stream regardless
     filter(([{streamUrl}, {listed, current, status, focused}]) =>
       (listed.includes(streamUrl) && focused) || (current === streamUrl && status === PlayerStatus.Playing)

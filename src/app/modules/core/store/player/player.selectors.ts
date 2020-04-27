@@ -102,13 +102,7 @@ export const nonIntervalOrFetchingStreamInfoUrls = createSelector(
     (urls, fetching, intervals) => urls.filter(u => !fetching.concat(intervals).includes(u))
 );
 
-export const currentAndStreamInfoUrls = createSelector(
-    selectCurrentStationUrl,
-    streamInfoUrls,
-    (current, listed) => ({current, listed})
-);
-
-export const intervalCompletedParams = createSelector(
+export const fetchIntervalParams = createSelector(
     selectCurrentStationUrl,
     streamInfoUrls,
     selectPlayerStatus,
