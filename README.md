@@ -57,7 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Action button mobile column width
   * Minimum icon size
   * Configure a proper reducer map for the root store
   * Turn off sleep timer on audio pause

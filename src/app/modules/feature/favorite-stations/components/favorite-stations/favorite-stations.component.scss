@@ -1,5 +1,13 @@
 @import 'variables';
 
+.mat-column-actions {
+    width:115px;
+}
+
+.delete-in-progress {
+    opacity: 0.4;
+}
+
 // Special styles for small screens
 @media (max-width:$smallScreenCutoff - 1) {
     /* We want the Station title to take up a little bit less
@@ -14,8 +22,4 @@
     .mat-column-actions {
         display:none;
     }
-}
-
-.delete-in-progress {
-    opacity: 0.4;
 }
