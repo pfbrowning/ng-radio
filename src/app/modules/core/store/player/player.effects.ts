@@ -55,6 +55,9 @@ export class PlayerEffects {
   ) { }
 
   listenForAudioPaused$ = createEffect(() => this.audio.paused.pipe(
+    /* We have to explicitly dispatch this within the Angular zone in order for change detection
+    to work properly because the HTML5 audio element which the event originated from was not in
+    the Angular Zone. */
     tap(() => this.ngZone.run(() => this.store.dispatch(audioPaused())))
   ), { dispatch: false });
 

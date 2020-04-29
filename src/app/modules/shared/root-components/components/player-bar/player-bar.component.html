@@ -1,8 +1,10 @@
 <mat-toolbar color="primary">
   <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
-  <blr-player-bar-station-info (click)="onNowPlayingClicked()" [currentPlayerStatus]="playerStatus$ | async"
-    [currentStation]="currentStation$ | async" [validatingCurrent]="validatingCurrent$ | async">
-  </blr-player-bar-station-info>
+  <div class="station-info-container">
+    <blr-player-bar-station-info (click)="onNowPlayingClicked()" [currentPlayerStatus]="playerStatus$ | async"
+      [currentStation]="currentStation$ | async" [validatingCurrent]="validatingCurrent$ | async">
+    </blr-player-bar-station-info>
+  </div>
   <div [class.off-white]="(minutesUntilSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
     [matTooltip]="(minutesUntilSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
     class="indicator-icon selectable large-screen-only" >
@@ -32,12 +34,12 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <div class="play-pause-button">
-    <mat-spinner-button *ngIf="[playerStatus.LoadingAudio, playerStatus.Stopped].includes(playerStatus$ | async) || (validatingCurrent$ | async); else pauseBtn"
-      [active]="(playerStatus$ | async) == playerStatus.LoadingAudio || (validatingCurrent$ | async)"
-      (btnClick)="onPlayClicked()" [options]="playBtnOptions">
+    <mat-spinner-button *ngIf="(playerStatus$ | async) === playerStatus.Playing && (validatingCurrent$ | async) == false; else pauseBtn"
+      (btnClick)="onPauseClicked()" [options]="pauseBtnOptions">
     </mat-spinner-button>
     <ng-template #pauseBtn>
-      <mat-spinner-button (btnClick)="onPauseClicked()" [options]="pauseBtnOptions">
+      <mat-spinner-button [active]="(playerStatus$ | async) === playerStatus.LoadingAudio || (validatingCurrent$ | async)"
+        (btnClick)="onPlayClicked()" [options]="playBtnOptions">
       </mat-spinner-button>
     </ng-template>
   </div>
