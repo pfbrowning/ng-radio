@@ -57,6 +57,9 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Fix Play / Pause button change detection
+  * Navigate to Now Playing on text click only
+  * Action button mobile column width
   * Minimum icon size
   * Configure a proper reducer map for the root store
   * Turn off sleep timer on audio pause

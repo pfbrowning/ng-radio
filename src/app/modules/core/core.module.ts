@@ -53,6 +53,7 @@ import * as NoSleep from 'nosleep.js';
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
+        strictActionWithinNgZone: true
       }
     }),
     EffectsModule.forRoot([

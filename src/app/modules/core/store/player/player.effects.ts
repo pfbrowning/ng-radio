@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, NgZone } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StreamInfoService } from '../../services/stream-info.service';
 import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap } from 'rxjs/operators';
@@ -50,12 +50,13 @@ export class PlayerEffects {
     private titleService: Title,
     private streamPreprocessorService: StreamPreprocessorService,
     private currentTimeService: CurrentTimeService,
+    private ngZone: NgZone,
     @Inject(AudioElementToken) private audio: AudioElement
   ) { }
 
-  listenForAudioPaused$ = createEffect(() =>
-    this.audio.paused.pipe(map(() => audioPaused()))
-  );
+  listenForAudioPaused$ = createEffect(() => this.audio.paused.pipe(
+    tap(() => this.ngZone.run(() => this.store.dispatch(audioPaused())))
+  ), { dispatch: false });
 
   selectStation$ = createEffect(() => this.actions$.pipe(
     ofType(selectStation),
