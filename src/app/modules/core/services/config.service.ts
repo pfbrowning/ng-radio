@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError, map, filter, take } from 'rxjs/operators';
 import { forkJoin, throwError, of, Observable } from 'rxjs';
 import { AppConfig } from '../models/config/app-config';
+import { environment } from '@environment';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../models/root-state';
 import { selectConfig } from '@core/store/config/selectors';
@@ -40,7 +41,7 @@ export class ConfigService {
       // Always load the regular app.config.json
       this.httpClient.get<AppConfig>('/assets/config/app.config.json', { headers }),
       // If we're not in prod mode, attempt to load a local configuration
-      this.httpClient.get<AppConfig>('/assets/config/local.config.json', { headers }).pipe(
+      environment.production ? of(null) : this.httpClient.get<AppConfig>('/assets/config/local.config.json', { headers }).pipe(
         catchError(error => {
           // If local config doesn't exist, then continue silently.  This isn't an error condition.
           if (error.status === 404) {
