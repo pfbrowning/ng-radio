@@ -5,7 +5,7 @@
 <ng-template #selected>
   <div class="flex-grid">
     <div class="flex-column-third">
-      <img *ngIf="currentStation$ | async; let currentStation" [src]="getImageSrc(currentStation.iconUrl)" class="station-icon" (error)="onImgError(currentStation.iconUrl)" >
+      <img [iconUrl]="(currentStation$ | async)?.iconUrl" blrStationIcon class="station-icon">
     </div>
     <div class="flex-column-third">
       <div class="now-playing">

@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <img class="station-icon-thumb" [src]="(currentStation$ | async).iconUrl" (click)="onNowPlayingClicked()" (error)="onImgError($event.target)" >
+  <img [iconUrl]="(currentStation$ | async).iconUrl" blrStationIcon (click)="onNowPlayingClicked()" class="station-icon-thumb" >
   <div class="station-info-container">
     <blr-player-bar-station-info (click)="onNowPlayingClicked()" [currentPlayerStatus]="playerStatus$ | async"
       [currentStation]="currentStation$ | async" [validatingCurrent]="validatingCurrent$ | async">

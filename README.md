@@ -57,7 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Minimum icon size
   * Configure a proper reducer map for the root store
   * Turn off sleep timer on audio pause
   * Wait until after initial change detection to show notifications

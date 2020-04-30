@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { suggestedStationsFeatureKey, suggestedStationsReducer } from './store/suggested-stations.reducer';
 import { SuggestedStationsEffects } from './store/suggested-stations.effects';
+import { SharedModule } from '@shared';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SuggestedStationsEffects } from './store/suggested-stations.effects';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     SuggestedStationsRoutingModule,
     StoreModule.forFeature(suggestedStationsFeatureKey, suggestedStationsReducer),
     EffectsModule.forFeature([SuggestedStationsEffects])

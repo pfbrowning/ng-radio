@@ -25,17 +25,6 @@ export class NowPlayingComponent {
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
   public streamInfoStatus = StreamInfoStatus;
   public playerStatus = PlayerStatus;
-  private invalidImageUrls = new Array<string>();
-
-  public getImageSrc(stationIconUrl: string): string {
-    return stationIconUrl != null && !this.invalidImageUrls.includes(stationIconUrl) ? stationIconUrl : '/assets/images/radio.svg';
-  }
-
-  public onImgError(stationIconUrl: string): void {
-    if (stationIconUrl != null && !this.invalidImageUrls.includes(stationIconUrl)) {
-      this.invalidImageUrls.push(stationIconUrl);
-    }
-  }
 
   public onEditFavoriteClicked(): void {
     this.store.dispatch(FavoriteStationsActions.openStationEditCurrent());

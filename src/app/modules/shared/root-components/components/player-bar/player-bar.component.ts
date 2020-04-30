@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { setAltSrc } from '@utilities';
 import { Store, select } from '@ngrx/store';
 import { KeepAwakeService, RootState } from '@core';
 import { PlayerStatus } from '@core/models/player';
@@ -56,10 +55,6 @@ export class PlayerBarComponent {
       fontIcon: 'pause'
     }
   };
-
-  public onImgError(img: HTMLImageElement) {
-    setAltSrc(img, '/assets/images/radio.svg');
-  }
 
   public onNowPlayingClicked(): void {
     /* When the user clicks on the now playing info in the player bar,

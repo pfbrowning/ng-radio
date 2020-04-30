@@ -1,6 +1,6 @@
 <div class="thumb-container-outer">
   <div class="thumb-container-inner">
-    <img [src]="station?.iconUrl"  (error)="onImgError($event.target)" (load)="onImgLoad($event.target)" class="thumb-image">
+    <img [iconUrl]="station?.iconUrl" blrStationIcon class="thumb-image">
   </div>
 </div>
 <div class="station-title">
