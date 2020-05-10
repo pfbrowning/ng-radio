@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [12.x, 14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,6 +28,10 @@ jobs:
       name: Install
     - run: npm run test-single-headless
       name: Test
+    - run: npm run test:coveralls
+      name: Publish Test Coverage
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.coveralls }}
     - run: npm run lint
       name: Lint
     - run: npm run build
