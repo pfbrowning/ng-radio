@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -36,3 +36,12 @@ jobs:
       name: Lint
     - run: npm run build
       name: Build
+    - name: FTP Deploy
+      uses: kevinpainchaud/simple-ftp-deploy-action@v1
+      with:
+        ftp_host: ${{ secrets.ftp_host }}
+        ftp_username: ${{ secrets.ftp_username }}
+        ftp_password: ${{ secrets.ftp_password }}
+        local_source_dir: dist
+        dist_target_dir: "/"
+        delete: "true"
