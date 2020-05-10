@@ -5,8 +5,11 @@ import { initialFavoriteStationsState } from './favorite-stations/initial-favori
 import { initialPlayerState } from './player/initial-player-state';
 import { initialSleepTimerState } from './sleep-timer/initial-sleep-timer-state';
 import { initialApplicationState } from './application/initial-application-state';
+import { initialRouterExtendedState } from './router-extended/initial-router-extended-state';
 
 export const initialRootState: RootState = {
+    router: null,
+    routerExtended: initialRouterExtendedState,
     favoriteStations: initialFavoriteStationsState,
     player: initialPlayerState,
     sleepTimer: initialSleepTimerState,

@@ -6,33 +6,27 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { CurrentTimeService } from './services/current-time.service';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
-import { favoriteStationsReducer } from './store/favorite-stations/favorite-stations.reducer';
-import { playerReducer } from './store/player/player.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@environment';
 import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stations.effects';
 import { PlayerEffects } from './store/player/player.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { sleepTimerReducer } from './store/sleep-timer/sleep-timer.reducer';
 import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
 import { AudioElement } from './models/player/audio-element';
-import { authenticationReducer } from './store/authentication/authentication.reducer';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthGuard } from './guards/auth.guard';
-import { routerExtendedReducer } from './store/router-extended/router-extended.reducer';
 import { RouterExtendedEffects } from './store/router-extended/router-extended.effects';
 import { BearerTokenService } from './services/bearer-token.service';
-import { configReducer } from './store/config/config.reducer';
 import { ConfigService } from './services/config.service';
 import { ConfigEffects } from './store/config/config.effects';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './services/notification.service';
-import { applicationReducer } from './store/application/application.reducer';
 import { ApplicationEffects } from './store/application/application.effects';
+import { reducers } from './store/reducers';
 import * as NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -40,16 +34,7 @@ import * as NoSleep from 'nosleep.js';
     CommonModule,
     HttpClientModule,
     OAuthModule.forRoot(),
-    StoreModule.forRoot({
-      router: routerReducer,
-      routerExtended: routerExtendedReducer,
-      favoriteStations: favoriteStationsReducer,
-      player: playerReducer,
-      sleepTimer: sleepTimerReducer,
-      authentication: authenticationReducer,
-      config: configReducer,
-      application: applicationReducer
-    }, {
+    StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,

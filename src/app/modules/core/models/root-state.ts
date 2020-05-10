@@ -4,8 +4,12 @@ import { FavoriteStationsState } from './favorite-stations/favorite-stations-sta
 import { PlayerState } from './player/player-state';
 import { SleepTimerState } from './sleep-timer/sleep-timer-state';
 import { ApplicationState } from './application/application-state';
+import { RouterReducerState } from '@ngrx/router-store';
+import { RouterExtendedState } from './router-extended/router-extended-state';
 
 export interface RootState {
+    router: RouterReducerState;
+    routerExtended: RouterExtendedState;
     favoriteStations: FavoriteStationsState;
     player: PlayerState;
     sleepTimer: SleepTimerState;
