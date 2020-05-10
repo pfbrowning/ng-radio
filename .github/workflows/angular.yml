@@ -50,5 +50,5 @@ jobs:
         ftp_password: ${{ secrets.ftp_password }}
         local_source_dir: "dist/ng-radio"
         dist_target_dir: "/"
-        disable_ssl_certificate_verification: "true"
-        delete: "true"
+        disable_ssl_certificate_verification: true
+        delete: true
