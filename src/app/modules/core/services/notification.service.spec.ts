@@ -3,10 +3,16 @@ import { NotificationService } from '../services/notification.service';
 import { Severities } from '../models/notifications/severities';
 import { MessageService } from 'primeng/api';
 import { createMessageServiceSpy } from '../testing/core-spy-factories.spec';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { initialRootState } from '../models/initial-root-state';
+import { RootState } from '../models/root-state';
+import { ApplicationSelectors } from '../store/application';
+import theoretically from 'jasmine-theories';
 
 describe('NotificationService', () => {
   let notificationService: NotificationService;
   let messageServiceSpy: any;
+  let store: MockStore<RootState>;
 
   beforeEach(() => {
     messageServiceSpy = createMessageServiceSpy();
@@ -14,36 +20,54 @@ describe('NotificationService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: MessageService, useValue: messageServiceSpy },
+        provideMockStore({initialState: initialRootState}),
       ]
     });
 
     notificationService = TestBed.inject(NotificationService);
+    store = TestBed.inject(MockStore);
   });
 
-  const testEntries = [
-    { severity: Severities.Error, summary: 'summary 1', detail: 'detail 1', life: 5 },
-    { severity: Severities.Info, summary: 'second summary', detail: 'second detail', life: 32 },
-    { severity: Severities.Success, summary: 'another summary', detail: 'another detail', life: 3587 },
-    { severity: Severities.Warn, summary: 'summary 4', detail: 'detail 4', life: 9001 }
-  ];
+  afterEach(() => {
+    store.resetSelectors();
+  });
+
 
   it('should be created', () => {
     expect(notificationService).toBeTruthy();
   });
 
-  it('should pass on a few different notifications', () => {
-    let iteration = 1;
-    /* For each test entry, pass it on to the notify method and ensure that it was properly passed on
-    to the PrimeNG MessageService's add method. */
-    testEntries.forEach(testEntry => {
-      notificationService.notify(testEntry.severity, testEntry.summary, testEntry.detail, testEntry.life);
-      expect(messageServiceSpy.add).toHaveBeenCalledTimes(iteration);
-      expect(messageServiceSpy.add.calls.mostRecent().args).toEqual([
-        { severity: testEntry.severity.toString(), summary: testEntry.summary, detail: testEntry.detail, life: testEntry.life }
-      ]);
-      iteration++;
-    });
+  const testNotifications = [
+    { severity: Severities.Error, summary: 'summary 1', detail: 'detail 1', life: 5 },
+    { severity: Severities.Info, summary: 'second summary', detail: 'second detail', life: 32 },
+    { severity: Severities.Success, summary: 'another summary', detail: 'another detail', life: 3587 },
+    { severity: Severities.Warn, summary: 'summary 4', detail: 'detail 4', life: 9001 }
+  ];
+  theoretically.it('Should pass notifications to messageService', testNotifications, (notification) => {
+    // Arrange
+    store.overrideSelector(ApplicationSelectors.toasterInitialized, true);
 
-    expect(messageServiceSpy.add).toHaveBeenCalledTimes(testEntries.length);
+    // Act
+    notificationService.notify(notification.severity, notification.summary, notification.detail, notification.life);
+
+    // Assert
+    expect(messageServiceSpy.add).toHaveBeenCalledTimes(1);
+    expect(messageServiceSpy.add.calls.mostRecent().args).toEqual([
+      { severity: notification.severity.toString(), summary: notification.summary, detail: notification.detail, life: notification.life }
+    ]);
+  });
+
+  it('Should wait for toaster initialization before passing a message', () => {
+    // Arrange
+    const initialized = store.overrideSelector(ApplicationSelectors.toasterInitialized, false);
+    notificationService.notify(Severities.Info, 'Summary', 'Detail');
+    expect(messageServiceSpy.add).not.toHaveBeenCalled();
+
+    // Act
+    initialized.setResult(true);
+    store.refreshState();
+
+    // Assert
+    expect(messageServiceSpy.add).toHaveBeenCalledTimes(1);
   });
 });

@@ -27,7 +27,6 @@
       "@core/store": ["src/app/modules/core/store/index"],
       "@core/services/application": ["src/app/modules/core/services/application"],
       "@core/models/player": ["src/app/modules/core/models/player/index"],
-      "@core/store/application": ["src/app/modules/core/store/application/index"],
       "@core/store/config/selectors": ["src/app/modules/core/store/config/config.selectors"],
       "@core/store/player": ["src/app/modules/core/store/player/index"],
       "@core/store/player/actions": ["src/app/modules/core/store/player/player-actions"],

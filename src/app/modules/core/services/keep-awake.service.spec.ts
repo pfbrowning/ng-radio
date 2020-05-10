@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
 import { createKeepAwakeServiceSpy } from '@core/testing';
-import { MessageService } from 'primeng/api';
-import { createMessageServiceSpy } from '@core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { audioPaused } from '../store/player/player-actions';
+import { NotificationService } from './notification.service';
+import { createNotificationServiceSpy } from '../testing/core-spy-factories.spec';
 import * as NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
@@ -23,7 +23,7 @@ describe('KeepAwakeService', () => {
       providers: [
         provideMockActions(() => actions$),
         { provide: NoSleepToken, useValue: noSleepSpy },
-        { provide: MessageService, useValue: createMessageServiceSpy() },
+        { provide: NotificationService, useValue: createNotificationServiceSpy() },
         KeepAwakeService
       ]
     });

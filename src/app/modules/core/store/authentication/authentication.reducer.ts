@@ -9,7 +9,7 @@ import {
 import { initialAuthenticationState } from '../../models/authentication/initial-authentication-state';
 import { AuthenticationState } from '../../models/authentication/authentication-state';
 
-const reducer = createReducer(
+const reducer = createReducer<AuthenticationState>(
   initialAuthenticationState,
   on(initializeSucceeded, (state, { idToken, accessToken, idTokenExpiration, accessTokenExpiration, authenticated, email }) => ({
     ...state,
