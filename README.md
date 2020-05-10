@@ -57,7 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Turn off sleep timer on audio pause
   * Wait until after initial change detection to show notifications
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Use PKCE authentication in place of implicit flow

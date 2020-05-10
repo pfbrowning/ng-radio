@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { CurrentTimeService } from '../../services/current-time.service';
-import { tap, map, switchMap, takeUntil, mapTo, withLatestFrom } from 'rxjs/operators';
+import { tap, map, switchMap, takeUntil, mapTo, withLatestFrom, filter } from 'rxjs/operators';
 import { timer } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
@@ -9,6 +9,8 @@ import { Store, select } from '@ngrx/store';
 import { selectSleepTime } from './sleep-timer.selectors';
 import { setSleepTimerSubmit, sleepTimerSet, clearSleepTimer, goToSleep, setMinutesUntilSleep, countMinutesUntilSleep } from './sleep-timer.actions';
 import { RootState } from '../../models/root-state';
+import { PlayerActions } from '../player';
+import { SleepTimerActions, SleepTimerSelectors } from '..';
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -24,6 +26,13 @@ export class SleepTimerEffects {
     ofType(setSleepTimerSubmit),
     map(action => this.currentTimeService.unix() + (action.minutes * 60000)),
     map(sleepTime => sleepTimerSet({sleepTime}))
+  ));
+
+  disableOnPause$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerActions.audioPaused),
+    withLatestFrom(this.store.pipe(select(SleepTimerSelectors.selectSleepTime))),
+    filter(([, sleepTime]) => sleepTime != null),
+    map(() => SleepTimerActions.clearSleepTimer())
   ));
 
   waitForSleep$ = createEffect(() => this.actions$.pipe(
