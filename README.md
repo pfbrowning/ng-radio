@@ -57,10 +57,10 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Move build pipeline to Github actions
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store
-  * Move build pipeline to Github actions
   * Partition core/services directory
   * Fix warnings in tests
   * Find a better alternative to the mat spinner button package
