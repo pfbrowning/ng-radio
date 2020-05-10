@@ -36,12 +36,19 @@ jobs:
       name: Lint
     - run: npm run build
       name: Build
+    - name: Write Configuration
+      uses: microsoft/variable-substitution@v1 
+      with:
+        files: 'dist/ng-radio/assets/config/app.config.json'
+      env:
+        appInsightsInstrumentationKey: ${{ secrets.appinsights_instrumentation_key }}
     - name: FTP Deploy
       uses: kevinpainchaud/simple-ftp-deploy-action@v1
       with:
         ftp_host: ${{ secrets.ftp_host }}
         ftp_username: ${{ secrets.ftp_username }}
         ftp_password: ${{ secrets.ftp_password }}
-        local_source_dir: dist
+        local_source_dir: "dist/ng-radio"
         dist_target_dir: "/"
+        disable_ssl_certificate_verification: "true"
         delete: "true"
