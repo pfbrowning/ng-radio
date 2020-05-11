@@ -1,6 +1,6 @@
 # Browninglogic Radio
 
-[![Build Status](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_apis/build/status/Browninglogic%20Radio%20UI%20-%20YAML?branchName=master)](https://toxicbard.visualstudio.com/Browninglogic%20Radio/_build/latest?definitionId=4&branchName=master)
+![Build Status](https://github.com/pfbrowning/ng-radio/workflows/Angular%20CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/pfbrowning/ng-radio/badge.svg?branch=master)](https://coveralls.io/github/pfbrowning/ng-radio?branch=master)
 
 ## Introduction
@@ -57,7 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Move build pipeline to Github actions
   * Show a loading spinner in place of the main app content while waiting for the config to load
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store
