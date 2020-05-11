@@ -57,6 +57,7 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Configure non-sensitive config variables as yml variables rather than secrets
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store
   * Fix warnings in tests

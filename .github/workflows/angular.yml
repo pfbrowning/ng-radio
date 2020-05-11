@@ -46,7 +46,8 @@ jobs:
         authConfig.customQueryParams.audience: ${{ secrets.authconfig_audience }}
         authConfig.issuer: ${{ secrets.authconfig_issuer }}
         authConfig.logoutUrl: ${{ secrets.authconfig_logouturl }}
-        authConfig.postLogoutRedirectUri: ${{ secrets.authconfig_logouturl }}
+        authConfig.redirectUri: ${{ secrets.authconfig_redirecturi }}
+        authConfig.postLogoutRedirectUri: ${{ secrets.authconfig_redirecturi }}
         authConfig.silentRefreshRedirectUri: ${{ secrets.authconfig_silentrefreshredirecturi }}
         corsProxyUrl: ${{ secrets.cors_proxy_url }}
         favoriteStationsApiUrl: ${{ secrets. favorite_stations_api_url }}
