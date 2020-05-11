@@ -57,13 +57,12 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Show a loading spinner in place of the main app content while waiting for the config to load
   * Use PKCE authentication in place of implicit flow
   * Store only what we need in NGRX authentication store
-  * Partition core/services directory
   * Fix warnings in tests
-  * Find a better alternative to the mat spinner button package
+  * Partition core/services directory
   * Refactor selector import / export logic
+  * Find a better alternative to the mat spinner button package
 * Features
   * Non-logged-in experience: Require login only for favorites
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy

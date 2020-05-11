@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { selectStation } from '@core/store/player';
+import { PlayerActions } from '@core/store';
 import { Station } from '@core/models/player';
 import { selectDeveloperSuggested, selectTopClicked, selectTopVoted } from '../../store/suggested-stations.selectors';
 import { SuggestedStationsRootState } from '../../models/suggested-stations-root-state';
@@ -19,6 +19,6 @@ export class SuggestedStationsComponent {
   public topVoted$ = this.store.pipe(select(selectTopVoted));
 
   onStationSelected(station: Station) {
-    this.store.dispatch(selectStation({station}));
+    this.store.dispatch(PlayerActions.selectStation({station}));
   }
 }

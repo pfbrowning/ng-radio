@@ -2,7 +2,6 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastModule } from 'primeng/toast';
-import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MessageService } from 'primeng/api';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
@@ -16,7 +15,6 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
-        ModalManagerModule,
         ToastModule
       ],
       declarations: [

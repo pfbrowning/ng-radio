@@ -4,11 +4,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RootState } from '@core';
 import { Store, select } from '@ngrx/store';
-import { PlayerActions } from '@core/store/player';
+import { PlayerActions } from '@core/store';
 import { FavoriteStationsActions, FavoriteStationsSelectors } from '@core/store/favorite-stations';
 import { MatInput } from '@angular/material/input';
-import cloneDeep from 'lodash/cloneDeep';
 import { matProgressButtonDefaults } from '@core/constants';
+import cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'blr-station-edit',

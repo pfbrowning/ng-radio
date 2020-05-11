@@ -18,7 +18,6 @@ import { AudioElement } from './models/player/audio-element';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthGuard } from './guards/auth.guard';
-import { RouterExtendedEffects } from './store/router-extended/router-extended.effects';
 import { BearerTokenService } from './services/bearer-token.service';
 import { ConfigService } from './services/config.service';
 import { ConfigEffects } from './store/config/config.effects';
@@ -46,7 +45,6 @@ import * as NoSleep from 'nosleep.js';
       PlayerEffects,
       SleepTimerEffects,
       AuthenticationEffects,
-      RouterExtendedEffects,
       ConfigEffects,
       ApplicationEffects
     ]),

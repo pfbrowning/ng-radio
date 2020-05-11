@@ -1,0 +1,18 @@
+<mat-toolbar color="primary" class="small-screen-only top-toolbar">
+    <span class="title">Browninglogic Radio</span>
+    <span class="fill-remaining"></span>
+    <button mat-icon-button (click)="sideNavContainer.toggle()"><mat-icon>menu</mat-icon></button>
+</mat-toolbar>
+
+<div class="app-container">
+    <blr-responsive-sidenav-container #sideNavContainer>
+        <blr-side-nav sidenav></blr-side-nav>
+        <div content class="app-content">
+            <router-outlet></router-outlet>
+        </div>
+    </blr-responsive-sidenav-container>
+</div>
+
+<blr-player-bar *ngIf="stationSelected$ | async" class="bottom-toolbar"></blr-player-bar>
+
+<blr-station-edit *ngIf="(editStationExisting$ | async) || (editingNewStation$ | async)" [existingStation]="editStationExisting$ | async"></blr-station-edit>

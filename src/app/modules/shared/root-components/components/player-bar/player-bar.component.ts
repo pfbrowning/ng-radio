@@ -12,7 +12,7 @@ import {
 } from '@core/store/favorite-stations';
 import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
-import { PlayerActions, PlayerSelectors } from '@core/store/player';
+import { PlayerActions, PlayerSelectors } from '@core/store';
 import { matProgressButtonDefaults } from '@core/constants';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 

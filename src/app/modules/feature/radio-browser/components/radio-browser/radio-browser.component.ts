@@ -3,7 +3,7 @@ import { Subject, timer, EMPTY } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take, filter, debounce, map } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
 import { Store, select } from '@ngrx/store';
-import { selectStation, PlayerActions, PlayerSelectors } from '@core/store/player';
+import { PlayerActions, PlayerSelectors } from '@core/store';
 import { Station } from '@core/models/player';
 import { nameTermUpdated, tagTermUpdated } from '../../store/radio-browser.actions';
 import { SubSink } from 'subsink';
@@ -71,7 +71,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   }
 
   onRowClicked(station: Station) {
-    this.store.dispatch(selectStation({station}));
+    this.store.dispatch(PlayerActions.selectStation({station}));
   }
 
   onTagTermChanged(term: string) {

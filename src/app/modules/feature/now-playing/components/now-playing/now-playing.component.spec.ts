@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { KeepAwakeService } from '@core';
 import { createKeepAwakeServiceSpy } from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
-import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,7 +13,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
 import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus, NowPlaying } from '@core/models/player';
-import { PlayerSelectors } from '@core/store/player';
+import { PlayerSelectors } from '@core/store';
 import isBlank from 'is-blank';
 import theoretically from 'jasmine-theories';
 
@@ -35,7 +34,6 @@ describe('NowPlayingComponent', () => {
       imports: [
         RouterTestingModule,
         MatMenuModule,
-        ModalManagerModule,
         MatFormFieldModule,
         MatInputModule,
         NoopAnimationsModule,

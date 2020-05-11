@@ -4,9 +4,8 @@ import { RootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
 import { selectFavoriteStationRows, removeFromFavoritesStart, FavoriteStationsActions } from '@core/store/favorite-stations';
 import { Station } from '@core/models/player';
-import { selectStation } from '@core/store/player';
 import { take } from 'rxjs/operators';
-import { PlayerActions, PlayerSelectors } from '@core/store/player';
+import { PlayerActions, PlayerSelectors } from '@core/store';
 
 @Component({
   selector: 'blr-favorite-stations',
@@ -33,7 +32,7 @@ export class FavoriteStationsComponent implements OnInit, OnDestroy {
   }
 
   public onRowClicked(station: Station): void {
-    this.store.dispatch(selectStation({station}));
+    this.store.dispatch(PlayerActions.selectStation({station}));
   }
 
   public onDeleteClicked(station: Station, event): void {

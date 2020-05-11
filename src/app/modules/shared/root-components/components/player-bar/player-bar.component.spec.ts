@@ -11,7 +11,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { KeepAwakeService } from '@core';
 import { createKeepAwakeServiceSpy } from '@core/testing';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
-import { ModalManagerModule } from '@browninglogic/ng-modal';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
@@ -20,7 +19,7 @@ import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
 import { Station } from '@core/models/player';
 import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
-import { PlayerSelectors } from '@core/store/player';
+import { PlayerSelectors } from '@core/store';
 
 
 describe('PlayerBarComponent', () => {
@@ -46,7 +45,6 @@ describe('PlayerBarComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatTooltipModule,
-        ModalManagerModule,
         FormsModule,
         NoopAnimationsModule,
         SharedModule

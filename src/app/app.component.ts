@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
-import { selectIsStationSelected } from '@core/store/player';
-import { FavoriteStationsSelectors } from '@core/store/favorite-stations';
+import { AuthenticationSelectors } from './modules/core/store/authentication';
+import { RouterExtendedSelectors } from './modules/core/store/router-extended';
 
 @Component({
   selector: 'blr-root',
@@ -13,7 +13,6 @@ import { FavoriteStationsSelectors } from '@core/store/favorite-stations';
 export class AppComponent {
   constructor(private store: Store<RootState>) {}
 
-  public stationSelected$ = this.store.pipe(select(selectIsStationSelected));
-  public editStationExisting$ = this.store.pipe(select(FavoriteStationsSelectors.editStationExisting));
-  public editingNewStation$ = this.store.pipe(select(FavoriteStationsSelectors.editingNewStation));
+  public authInitialized$ = this.store.pipe(select(AuthenticationSelectors.isInitialized));
+  public routeResolving$ = this.store.pipe(select(RouterExtendedSelectors.isResolving));
 }

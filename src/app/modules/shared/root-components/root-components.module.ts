@@ -21,6 +21,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
+import { GlobalSpinnerComponent } from './components/global-spinner/global-spinner.component';
+import { AppShellComponent } from './components/app-shell/app-shell.component';
 
 @NgModule({
   imports: [
@@ -47,7 +49,9 @@ import { MatProgressButtonsModule } from 'mat-progress-buttons';
     PlayerBarStationInfoComponent,
     SidenavComponent,
     ToasterContainerComponent,
-    StationEditComponent
+    StationEditComponent,
+    GlobalSpinnerComponent,
+    AppShellComponent
   ],
   exports: [
     ResponsiveSidenavComponent,
@@ -55,7 +59,9 @@ import { MatProgressButtonsModule } from 'mat-progress-buttons';
     PlayerBarStationInfoComponent,
     SidenavComponent,
     ToasterContainerComponent,
-    StationEditComponent
+    StationEditComponent,
+    GlobalSpinnerComponent,
+    AppShellComponent
   ]
 })
 export class RootComponentsModule { }

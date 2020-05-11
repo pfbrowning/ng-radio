@@ -7,7 +7,7 @@ import { RadioBrowserRootState } from '../models/radio-browser-root-state';
 import { NotificationService, Severities, ConfigService } from '@core';
 import { RadioBrowserActions, RadioBrowserSelectors } from '.';
 import { Router } from '@angular/router';
-import { PlayerActions } from '@core/store/player';
+import { PlayerActions } from '@core/store';
 import { RadioBrowserService } from '@core';
 import { resolverParams } from './radio-browser.selectors';
 

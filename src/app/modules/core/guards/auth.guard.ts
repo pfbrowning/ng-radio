@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { tap, filter, switchMap } from 'rxjs/operators';
 import { RootState } from '@core';
 import { Store, select } from '@ngrx/store';
-import { selectIsAuthenticationInitialized, selectIsAuthenticated } from '../store/authentication/authentication.selectors';
+import { AuthenticationSelectors } from '../store/authentication/.';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
@@ -13,10 +13,10 @@ export class AuthGuard implements CanActivate {
 
     canActivate(): Observable<boolean> {
         return this.store.pipe(
-            select(selectIsAuthenticationInitialized),
+            select(AuthenticationSelectors.isInitialized),
             filter(initialized => initialized),
             switchMap(() => this.store.pipe(
-                select(selectIsAuthenticated),
+                select(AuthenticationSelectors.selectIsAuthenticated),
                 tap(authenticated => {
                     if (!authenticated) {
                         this.oauthService.initImplicitFlow();

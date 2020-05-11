@@ -1,11 +1,3 @@
-export { playAudioStart, pauseAudioSubmit, selectStation } from './player-actions';
-
-export {
-    selectPlayerStatus,
-    selectCurrentStation,
-    selectIsStationSelected
-} from './player.selectors';
-
 import * as PlayerActions from './player-actions';
 import * as PlayerSelectors from './player.selectors';
 

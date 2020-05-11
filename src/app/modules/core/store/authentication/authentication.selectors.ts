@@ -3,7 +3,7 @@ import { RootState } from '../../models/root-state';
 
 export const selectAuthenticationState = (state: RootState) => state.authentication;
 
-export const selectIsAuthenticationInitialized = createSelector(
+export const isInitialized = createSelector(
     selectAuthenticationState,
     state => state.initialized
 );
@@ -19,7 +19,7 @@ export const selectAccessToken = createSelector(
 );
 
 export const selectInitializedAndAccessToken = createSelector(
-    selectIsAuthenticationInitialized,
+    isInitialized,
     selectAccessToken,
     (initialized, accessToken) => ({initialized, accessToken})
 );

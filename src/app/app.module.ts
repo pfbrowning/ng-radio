@@ -5,8 +5,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { ModalManagerModule } from '@browninglogic/ng-modal';
-import { NgLoadingIndicatorModule } from '@browninglogic/ng-loading-indicator';
 import { CoreModule } from '@core';
 import { ConfirmationService } from 'primeng/api';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -27,8 +25,6 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     ToastModule,
     ConfirmDialogModule,
-    ModalManagerModule,
-    NgLoadingIndicatorModule,
     SharedModule,
     RootComponentsModule,
     MatToolbarModule,

@@ -5,7 +5,7 @@ import { KeepAwakeService } from '@core';
 import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerStatus, StreamInfoStatus } from '@core/models/player';
 import { FavoriteStationsSelectors, FavoriteStationsActions } from '@core/store/favorite-stations';
-import * as PlayerSelectors from '@core/store/player/selectors';
+import { PlayerSelectors } from '@core/store';
 
 @Component({
   templateUrl: './now-playing.component.html',

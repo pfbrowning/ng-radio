@@ -4,7 +4,7 @@ import { getElementTextBySelector } from '@utilities/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { RootState, initialRootState } from '@core';
 import { Station, StreamInfoStatus, PlayerStatus, NowPlaying } from '@core/models/player';
-import { PlayerSelectors } from '@core/store/player';
+import { PlayerSelectors } from '@core/store';
 import { SharedModule } from '@shared';
 import theoretically from 'jasmine-theories';
 

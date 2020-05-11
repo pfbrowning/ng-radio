@@ -14,7 +14,7 @@ import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { SubSink } from 'subsink';
 import { WindowService } from '@core/services/application';
-import * as PlayerSelectors from '@core/store/player/selectors';
+import { PlayerSelectors } from '@core/store';
 
 @Component({
   selector: 'blr-player-bar-station-info',
