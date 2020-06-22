@@ -50,8 +50,8 @@ jobs:
         authConfig.postLogoutRedirectUri: ${{ secrets.authconfig_redirecturi }}
         authConfig.silentRefreshRedirectUri: ${{ secrets.authconfig_silentrefreshredirecturi }}
         corsProxyUrl: ${{ secrets.cors_proxy_url }}
-        favoriteStationsApiUrl: ${{ secrets. favorite_stations_api_url }}
-        metadataApiUrl: ${{ secrets. metadata_api_url }}
+        favoriteStationsApiUrl: ${{ secrets.favorite_stations_api_url }}
+        metadataApiUrl: https://obscure-tundra-59475.herokuapp.com
     - name: FTP Deploy
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
       with:
