@@ -59,8 +59,10 @@ ng serve --open
 * Chores
   * Configure non-sensitive config variables as yml variables rather than secrets
   * Use PKCE authentication in place of implicit flow
+  * Configure AuthGuard to return NEVER when redirecting to the IDP
   * Store only what we need in NGRX authentication store
   * Fix warnings in tests
+  * Refactor logging service
   * Partition core/services directory
   * Refactor selector import / export logic
   * Find a better alternative to the mat spinner button package
@@ -71,6 +73,7 @@ ng serve --open
   * Browser-based audio recording (pending CORS proxy for audio stream)
   * HTML5 Notifications
 * More Chores
+  * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
   * Either type for stream validator logic
   * Prevent accidental audio streaming through CORS proxy
   * Package up reusable things and deploy to npm

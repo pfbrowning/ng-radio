@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, take, withLatestFrom } from 'rxjs/operators';
+import { switchMap, catchError, map, filter, tap, takeUntil, mapTo, withLatestFrom } from 'rxjs/operators';
 import { of, from, timer } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '../../services/config.service';
@@ -8,20 +8,10 @@ import { CurrentTimeService } from '../../services/current-time.service';
 import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { Action, Store, select } from '@ngrx/store';
-import {
-  effectsInit,
-  initializeStart,
-  initializeSucceeded,
-  initializeFailed,
-  silentRefreshSucceeded,
-  idTokenExpired,
-  accessTokenExpired,
-  silentRefreshFailed
-} from './authentication.actions';
 import { RootState } from '../../models/root-state';
-import { selectConfig } from '@core/store/config/selectors';
 import { LoggingService } from '../../services/logging.service';
 import { selectEmail } from './authentication.selectors';
+import { AuthenticationActions } from '.';
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -37,21 +27,17 @@ export class AuthenticationEffects implements OnInitEffects {
   ) { }
 
   initAuthOnConfigLoad$ = createEffect(() => this.actions$.pipe(
-    ofType(effectsInit),
-    switchMap(() => this.store.pipe(
-      select(selectConfig),
-      filter(config => config != null),
-      take(1),
-      map(() => initializeStart())
-    ))
+    ofType(AuthenticationActions.effectsInit),
+    switchMap(() => this.configService.appConfig$),
+    map(() => AuthenticationActions.initializeStart())
   ));
 
   initialize$ = createEffect(() => this.actions$.pipe(
-    ofType(initializeStart),
+    ofType(AuthenticationActions.initializeStart),
     tap(() => this.oauthService.configure(this.configService.appConfig.authConfig)),
     switchMap(() => from(this.oauthService.loadDiscoveryDocumentAndTryLogin()).pipe(
       tap(() => this.oauthService.setupAutomaticSilentRefresh()),
-      map(() => initializeSucceeded({
+      map(() => AuthenticationActions.initializeSucceeded({
         idToken: this.oauthService.getIdToken(),
         accessToken: this.oauthService.getAccessToken(),
         idTokenExpiration: this.oauthService.getIdTokenExpiration(),
@@ -64,18 +50,18 @@ export class AuthenticationEffects implements OnInitEffects {
         console.log('id token expiration', dayjs(action.idTokenExpiration).format('h:mm:ssa'));
         console.log('access token expiration', dayjs(action.accessTokenExpiration).format('h:mm:ssa'));
       }),
-      catchError(error => of(initializeFailed({error})))
+      catchError(error => of(AuthenticationActions.initializeFailed({error})))
     ))
   ));
 
   silentRefreshFailed$ = createEffect(() => this.oauthService.events.pipe(
     filter(event => ['silent_refresh_timeout', 'silent_refresh_error'].includes(event.type)),
-    map(event => silentRefreshFailed({error: event}))
+    map(event => AuthenticationActions.silentRefreshFailed({error: event}))
   ));
 
   silentRefreshSucceeded$ = createEffect(() => this.oauthService.events.pipe(
     filter(event => event.type === 'silently_refreshed'),
-    map(() => silentRefreshSucceeded({
+    map(() => AuthenticationActions.silentRefreshSucceeded({
       idToken: this.oauthService.getIdToken(),
       accessToken: this.oauthService.getAccessToken(),
       idTokenExpiration: this.oauthService.getIdTokenExpiration(),
@@ -84,32 +70,32 @@ export class AuthenticationEffects implements OnInitEffects {
   ));
 
   idTokenExpiration$ = createEffect(() => this.actions$.pipe(
-    ofType(initializeSucceeded, silentRefreshSucceeded),
+    ofType(AuthenticationActions.initializeSucceeded, AuthenticationActions.silentRefreshSucceeded),
     filter(action => action.idTokenExpiration != null),
     map(action => action.idTokenExpiration - this.currentTimeService.unix()),
     switchMap(timeToExpiration => timer(timeToExpiration).pipe(
-      takeUntil(this.actions$.pipe(ofType(silentRefreshSucceeded))),
-      mapTo(idTokenExpired())
+      takeUntil(this.actions$.pipe(ofType(AuthenticationActions.silentRefreshSucceeded))),
+      mapTo(AuthenticationActions.idTokenExpired())
     ))
   ));
 
   accessTokenExpiration$ = createEffect(() => this.actions$.pipe(
-    ofType(initializeSucceeded, silentRefreshSucceeded),
+    ofType(AuthenticationActions.initializeSucceeded, AuthenticationActions.silentRefreshSucceeded),
     filter(action => action.accessTokenExpiration != null),
     map(action => action.accessTokenExpiration - this.currentTimeService.unix()),
     switchMap(timeToExpiration => timer(timeToExpiration).pipe(
-      takeUntil(this.actions$.pipe(ofType(silentRefreshSucceeded))),
-      mapTo(accessTokenExpired())
+      takeUntil(this.actions$.pipe(ofType(AuthenticationActions.silentRefreshSucceeded))),
+      mapTo(AuthenticationActions.accessTokenExpired())
     ))
   ));
 
   notifyTokenExpired$ = createEffect(() => this.actions$.pipe(
-    ofType(idTokenExpired, accessTokenExpired),
+    ofType(AuthenticationActions.idTokenExpired, AuthenticationActions.accessTokenExpired),
     tap(() => this.notificationService.notify(Severities.Error, 'Tokens Expired', 'Tokens expired.  This should not happen regularly.'))
   ), { dispatch: false });
 
   logUserInit$ = createEffect(() => this.actions$.pipe(
-    ofType(initializeSucceeded),
+    ofType(AuthenticationActions.initializeSucceeded),
     filter(action => action.authenticated && action.email != null),
     tap(action => {
       this.loggingService.setAuthenticatedUserContext(action.email, this.oauthService.getIdentityClaims()['sub']);
@@ -118,7 +104,7 @@ export class AuthenticationEffects implements OnInitEffects {
   ), { dispatch: false });
 
   logInitializeFailed$ = createEffect(() => this.actions$.pipe(
-    ofType(initializeFailed),
+    ofType(AuthenticationActions.initializeFailed),
     tap(action => this.loggingService.logCritical(action.error, {
       'event': 'Failed To Initialize Authentication',
       'details': action.error
@@ -126,7 +112,7 @@ export class AuthenticationEffects implements OnInitEffects {
   ), { dispatch: false });
 
   logSilentRefreshFailed$ = createEffect(() => this.actions$.pipe(
-    ofType(silentRefreshFailed),
+    ofType(AuthenticationActions.silentRefreshFailed),
     withLatestFrom(this.store.pipe(select(selectEmail))),
     tap(([action, email]) => this.loggingService.logError(action.error, {
       event: 'Silent Refresh Failed',
@@ -136,6 +122,6 @@ export class AuthenticationEffects implements OnInitEffects {
   ), { dispatch: false });
 
   ngrxOnInitEffects(): Action {
-    return effectsInit();
+    return AuthenticationActions.effectsInit();
   }
 }
