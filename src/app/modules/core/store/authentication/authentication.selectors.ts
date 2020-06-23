@@ -8,23 +8,18 @@ export const isInitialized = createSelector(
     state => state.initialized
 );
 
-export const selectIsAuthenticated = createSelector(
+export const isAuthenticated = createSelector(
     selectAuthenticationState,
     state => state.authenticated
 );
 
-export const selectAccessToken = createSelector(
-    selectAuthenticationState,
-    state => state.accessToken
-);
-
-export const selectInitializedAndAccessToken = createSelector(
+export const initializationState = createSelector(
     isInitialized,
-    selectAccessToken,
-    (initialized, accessToken) => ({initialized, accessToken})
+    isAuthenticated,
+    (initialized, authenticated) => ({initialized, authenticated})
 );
 
-export const selectEmail = createSelector(
+export const currentUserEmail = createSelector(
     selectAuthenticationState,
-    state => state.email
+    state => state.authenticated && state.email
 );

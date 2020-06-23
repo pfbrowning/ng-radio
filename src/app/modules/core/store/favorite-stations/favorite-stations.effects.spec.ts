@@ -3,9 +3,9 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { FavoriteStationsEffects } from './favorite-stations.effects';
 import { FavoriteStationsService, NotificationService } from '@core';
-import { createFavoriteStationsServiceSpy, createNotificationServiceSpy } from '@core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '../../models/initial-root-state';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('FavoriteStationsEffects', () => {
   const actions$: Observable<any> = null;
@@ -17,8 +17,8 @@ describe('FavoriteStationsEffects', () => {
         FavoriteStationsEffects,
         provideMockActions(() => actions$),
         provideMockStore({ initialState: initialRootState }),
-        { provide: FavoriteStationsService, useValue: createFavoriteStationsServiceSpy() },
-        { provide: NotificationService, useValue: createNotificationServiceSpy() }
+        { provide: FavoriteStationsService, useValue: CoreSpyFactories.createFavoriteStationsServiceSpy() },
+        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() }
       ]
     });
 

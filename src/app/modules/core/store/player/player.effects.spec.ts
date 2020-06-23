@@ -6,17 +6,12 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { StreamInfoService, NotificationService, ConfigService } from '@core';
 import { initialRootState } from '../../models/initial-root-state';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
-import {
-  createStreamInfoServiceSpy,
-  AudioElementStub,
-  createConfigServiceSpy,
-  createNotificationServiceSpy,
-  createCurrentTimeServiceSpy
-} from '@core/testing';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { LoggingService } from '../../services/logging.service';
 import { createLoggingServiceSpy, createStreamPreprocessorServiceSpy } from '../../testing/core-spy-factories.spec';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
+import { CoreSpyFactories } from '@core/testing';
+import { AudioElementStub } from '../../testing/AudioElementStub.spec';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
@@ -31,11 +26,11 @@ describe('PlayerEffects', () => {
         PlayerEffects,
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialRootState}),
-        { provide: NotificationService, useValue: createNotificationServiceSpy() },
-        { provide: StreamInfoService, useValue: createStreamInfoServiceSpy() },
-        { provide: ConfigService, useValue: createConfigServiceSpy() },
+        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
+        { provide: StreamInfoService, useValue: CoreSpyFactories.createStreamInfoServiceSpy() },
+        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
         { provide: AudioElementToken, useValue: audioElement },
-        { provide: CurrentTimeService, useValue: createCurrentTimeServiceSpy() },
+        { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
         { provide: LoggingService, useValue: createLoggingServiceSpy() },
         { provide: StreamPreprocessorService, useValue: createStreamPreprocessorServiceSpy() }
       ]

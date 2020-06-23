@@ -3,16 +3,14 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { AuthenticationEffects } from './authentication.effects';
 import { CurrentTimeService } from '@core';
-import { createCurrentTimeServiceSpy } from '@core/testing';
 import { NotificationService, ConfigService, LoggingService } from '@core';
-import { createNotificationServiceSpy, createConfigServiceSpy, createLoggingServiceSpy } from '@core/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy } from '../../testing/core-spy-factories.spec';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RootState } from '../../models/root-state';
 import { AuthenticationActions } from '.';
 import { hot, cold } from 'jasmine-marbles';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('AuthenticationEffects', () => {
   let actions$: Observable<any> = null;
@@ -21,7 +19,7 @@ describe('AuthenticationEffects', () => {
   let configService: jasmine.SpyObj<ConfigService>;
 
   beforeEach(() => {
-    configService = createConfigServiceSpy();
+    configService = CoreSpyFactories.createConfigServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [
@@ -29,10 +27,10 @@ describe('AuthenticationEffects', () => {
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialRootState}),
         { provide: ConfigService, useValue: configService },
-        { provide: CurrentTimeService, useValue: createCurrentTimeServiceSpy() },
-        { provide: NotificationService, useValue: createNotificationServiceSpy() },
-        { provide: OAuthService, useValue: createOAuthServiceSpy() },
-        { provide: LoggingService, useValue: createLoggingServiceSpy() },
+        { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
+        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
+        { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() },
+        { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() },
       ]
     });
 

@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject, of } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
-import { OAuthEvent } from 'angular-oauth2-oidc';
+import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { LoggingService } from '../services/logging.service';
 import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
@@ -35,11 +35,11 @@ export function createStreamInfoServiceSpy(): jasmine.SpyObj<StreamInfoService> 
   return jasmine.createSpyObj('streamInfoService', ['getMetadata']);
 }
 
-export function createOAuthServiceSpy(): any {
+export function createOAuthServiceSpy(): jasmine.SpyObj<OAuthService> {
   const spy = jasmine.createSpyObj('oAuthService', [
       'configure',
       'loadDiscoveryDocumentAndTryLogin',
-      'initImplicitFlow',
+      'initCodeFlow',
       'logOut',
       'setupAutomaticSilentRefresh',
       'silentRefresh',

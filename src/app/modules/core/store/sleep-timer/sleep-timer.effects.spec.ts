@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { SleepTimerEffects } from './sleep-timer.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { CurrentTimeService, NotificationService } from '@core';
-import { createCurrentTimeServiceSpy, createNotificationServiceSpy } from '@core/testing';
 import { initialRootState } from '../../models/initial-root-state';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('SleepTimerEffects', () => {
   const actions$: Observable<any> = null;
@@ -17,8 +17,8 @@ describe('SleepTimerEffects', () => {
         SleepTimerEffects,
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialRootState }),
-        { provide: NotificationService, useValue: createNotificationServiceSpy() },
-        { provide: CurrentTimeService, useValue: createCurrentTimeServiceSpy() }
+        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
+        { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() }
       ]
     });
 

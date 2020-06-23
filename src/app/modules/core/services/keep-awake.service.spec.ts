@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { KeepAwakeService } from './keep-awake.service';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { createKeepAwakeServiceSpy } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { audioPaused } from '../store/player/player-actions';
 import { NotificationService } from './notification.service';
-import { createNotificationServiceSpy } from '../testing/core-spy-factories.spec';
 import * as NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
@@ -17,13 +16,13 @@ describe('KeepAwakeService', () => {
   let noSleepSpy: jasmine.SpyObj<NoSleep>;
 
   beforeEach(() => {
-    noSleepSpy = createKeepAwakeServiceSpy();
+    noSleepSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
       providers: [
         provideMockActions(() => actions$),
         { provide: NoSleepToken, useValue: noSleepSpy },
-        { provide: NotificationService, useValue: createNotificationServiceSpy() },
+        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
         KeepAwakeService
       ]
     });

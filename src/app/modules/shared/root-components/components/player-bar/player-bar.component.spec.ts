@@ -9,7 +9,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { KeepAwakeService } from '@core';
-import { createKeepAwakeServiceSpy } from '@core/testing';
 import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +19,7 @@ import { SharedModule } from '@shared';
 import { Station } from '@core/models/player';
 import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerSelectors } from '@core/store';
+import { CoreSpyFactories } from '@core/testing';
 
 
 describe('PlayerBarComponent', () => {
@@ -29,7 +29,7 @@ describe('PlayerBarComponent', () => {
   let store: MockStore<RootState>;
 
   beforeEach(async(() => {
-    keepAwakeServiceSpy = createKeepAwakeServiceSpy();
+    keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
       declarations: [

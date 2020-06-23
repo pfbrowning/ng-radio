@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ToasterContainerComponent } from './toaster-container.component';
 import { MessageService } from 'primeng/api';
-import { createMessageServiceSpy } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 
@@ -13,7 +13,7 @@ describe('ToasterContainerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ToasterContainerComponent ],
       providers: [
-        { provide: MessageService, useValue: createMessageServiceSpy() },
+        { provide: MessageService, useValue: CoreSpyFactories.createMessageServiceSpy() },
         provideMockStore({initialState: initialRootState}),
       ]
     })

@@ -4,8 +4,8 @@ import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from '@core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { createOAuthServiceSpy, createConfigServiceSpy } from '@core/testing';
 import { NowPlaying } from '../models/player/now-playing';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;
@@ -20,8 +20,8 @@ describe('StreamInfoService', () => {
       ],
       providers: [
         StreamInfoService,
-        { provide: ConfigService, useValue: createConfigServiceSpy() },
-        { provide: OAuthService, useValue: createOAuthServiceSpy() }
+        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
+        { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() }
       ]
     });
     metadataService = TestBed.inject(StreamInfoService);

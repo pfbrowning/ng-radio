@@ -17,14 +17,13 @@ import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
 import { AudioElement } from './models/player/audio-element';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { OAuthModule } from 'angular-oauth2-oidc';
-import { AuthGuard } from './guards/auth.guard';
-import { BearerTokenService } from './services/bearer-token.service';
 import { ConfigService } from './services/config.service';
 import { ConfigEffects } from './store/config/config.effects';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './services/notification.service';
 import { ApplicationEffects } from './store/application/application.effects';
+import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
 import * as NoSleep from 'nosleep.js';
 
@@ -55,7 +54,6 @@ import * as NoSleep from 'nosleep.js';
     StreamInfoService,
     KeepAwakeService,
     CurrentTimeService,
-    AuthGuard,
     ConfigService,
     MessageService,
     NotificationService,

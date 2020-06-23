@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ConfigService } from '@core';
-import { createConfigServiceSpy } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('RadioBrowserComponent', () => {
   let component: RadioBrowserComponent;
@@ -37,7 +37,7 @@ describe('RadioBrowserComponent', () => {
       ],
       providers: [
         provideMockStore({initialState: initialRadioBrowserRootState}),
-        { provide: ConfigService, useValue: createConfigServiceSpy() },
+        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
       ]
     })
     .compileComponents();

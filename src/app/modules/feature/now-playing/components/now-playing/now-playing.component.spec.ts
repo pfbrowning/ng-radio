@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { KeepAwakeService } from '@core';
-import { createKeepAwakeServiceSpy } from '@core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +13,7 @@ import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
 import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus, NowPlaying } from '@core/models/player';
 import { PlayerSelectors } from '@core/store';
+import { CoreSpyFactories } from '@core/testing';
 import isBlank from 'is-blank';
 import theoretically from 'jasmine-theories';
 
@@ -25,7 +25,7 @@ describe('NowPlayingComponent', () => {
   let store: MockStore<RootState>;
 
   beforeEach(async(() => {
-    keepAwakeServiceSpy = createKeepAwakeServiceSpy();
+    keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
 
     TestBed.configureTestingModule({
       declarations: [

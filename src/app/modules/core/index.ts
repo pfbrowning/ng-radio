@@ -14,7 +14,6 @@ export { NotificationService } from './services/notification.service';
 export { LoggingService } from './services/logging.service';
 export { StreamValidatorService } from './services/preprocessing/stream-validator.service';
 export { RadioBrowserService } from './services/radio-browser.service';
-
-export { AuthGuard } from './guards/auth.guard';
+export { AuthGuardService } from './services/authentication/auth-guard.service';
 
 export { CoreModule } from './core.module';

@@ -3,9 +3,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { ConfigEffects } from './config.effects';
 import { ConfigService } from '../../services/config.service';
-import { createConfigServiceSpy } from '../../testing/core-spy-factories.spec';
 import { NotificationService } from '@core';
-import { createNotificationServiceSpy } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('ConfigEffects', () => {
   const actions$: Observable<any> = null;
@@ -16,8 +15,8 @@ describe('ConfigEffects', () => {
       providers: [
         ConfigEffects,
         provideMockActions(() => actions$),
-        { provide: ConfigService, useValue: createConfigServiceSpy() },
-        { provide: NotificationService, useValue: createNotificationServiceSpy() }
+        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
+        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() }
       ]
     });
 

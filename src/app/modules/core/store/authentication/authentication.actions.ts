@@ -23,12 +23,10 @@ export const initializeStart = createAction(
 export const initializeSucceeded = createAction(
     AuthenticationActions.InitializeSucceeded,
     props<{
-        idToken: string,
+        idClaims: { [name: string]: any };
         idTokenExpiration: number,
-        accessToken: string,
         accessTokenExpiration: number,
         authenticated: boolean,
-        email: string
     }>()
 );
 
@@ -39,7 +37,7 @@ export const initializeFailed = createAction(
 
 export const silentRefreshSucceeded = createAction(
     AuthenticationActions.SilentRefreshSucceeded,
-    props<{ idToken: string, idTokenExpiration: number, accessToken: string, accessTokenExpiration: number }>()
+    props<{ idTokenExpiration: number, accessTokenExpiration: number }>()
 );
 
 export const silentRefreshFailed = createAction(
