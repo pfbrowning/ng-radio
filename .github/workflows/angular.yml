@@ -42,15 +42,15 @@ jobs:
         files: 'dist/ng-radio/assets/config/app.config.json'
       env:
         appInsightsInstrumentationKey: ${{ secrets.appinsights_instrumentation_key }}
-        authConfig.clientId: ${{ secrets.authconfig_clientid }}
-        authConfig.customQueryParams.audience: ${{ secrets.authconfig_audience }}
-        authConfig.issuer: ${{ secrets.authconfig_issuer }}
-        authConfig.logoutUrl: ${{ secrets.authconfig_logouturl }}
-        authConfig.redirectUri: ${{ secrets.authconfig_redirecturi }}
-        authConfig.postLogoutRedirectUri: ${{ secrets.authconfig_redirecturi }}
-        authConfig.silentRefreshRedirectUri: ${{ secrets.authconfig_silentrefreshredirecturi }}
-        corsProxyUrl: ${{ secrets.cors_proxy_url }}
-        favoriteStationsApiUrl: ${{ secrets.favorite_stations_api_url }}
+        authConfig.clientId: OUO72IMzQPFkpXz5IkVMAnaDM0iKtK3t
+        authConfig.customQueryParams.audience: browninglogic-radio
+        authConfig.issuer: https://browninglogic.auth0.com/
+        authConfig.logoutUrl: https://browninglogic.auth0.com/v2/logout?returnTo=http%3A%2F%2Fradio.browninglogic.com
+        authConfig.redirectUri: http://radio.browninglogic.com
+        authConfig.postLogoutRedirectUri: http://radio.browninglogic.com
+        authConfig.silentRefreshRedirectUri: http://radio.browninglogic.com/silent-refresh.html
+        corsProxyUrl: https://sheltered-spire-83395.herokuapp.com
+        favoriteStationsApiUrl: https://favorite-stations-api.azurewebsites.net
         metadataApiUrl: https://obscure-tundra-59475.herokuapp.com
     - name: FTP Deploy
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
