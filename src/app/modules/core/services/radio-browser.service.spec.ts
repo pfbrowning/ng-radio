@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RadioBrowserService } from './radio-browser.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Type } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { createConfigServiceSpy } from '../testing/core-spy-factories.spec';
@@ -27,7 +26,7 @@ describe('RadioBrowserService', () => {
 
     configService = TestBed.inject(ConfigService);
     radioBrowserService = TestBed.inject(RadioBrowserService);
-    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {

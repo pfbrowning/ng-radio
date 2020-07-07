@@ -57,9 +57,11 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Upgrade to Angular 10
   * Fix warnings in tests
   * Refactor logging service
   * Partition core/services directory
+  * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
   * Refactor selector import / export logic
   * Find a better alternative to the mat spinner button package
 * Features

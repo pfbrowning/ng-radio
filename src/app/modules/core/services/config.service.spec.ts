@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -22,7 +21,7 @@ describe('ConfigService', () => {
     });
 
     configService = TestBed.inject(ConfigService);
-    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {

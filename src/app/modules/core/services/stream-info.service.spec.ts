@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -26,7 +25,7 @@ describe('StreamInfoService', () => {
     });
     metadataService = TestBed.inject(StreamInfoService);
     configService = TestBed.inject(ConfigService);
-    httpTestingController = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
+    httpTestingController = TestBed.inject(HttpTestingController);
     getMetadataSpy = jasmine.createSpyObj('getMetadata', ['emit', 'error', 'complete']);
   });
 
