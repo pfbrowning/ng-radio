@@ -57,7 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Fix warnings in tests
   * Fix optimization bailout warnings
   * NGRX-agnostic config load
   * Refactor logging service

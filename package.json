@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "lint-fix": "tslint -c tslint.json \"src/**/*.ts\" --fix --project .",
+    "lint-fix": "ng lint --fix",
     "test-single-headless": "ng test --watch=false --code-coverage --browsers=ChromeHeadless --reporters=progress,junit",
     "test-chrome": "ng test --browsers=Chrome",
     "test-firefox": "ng test --browsers=Firefox",
