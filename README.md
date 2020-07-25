@@ -57,7 +57,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Upgrade to Angular 10
   * Fix warnings in tests
   * Fix optimization bailout warnings
   * Refactor logging service
