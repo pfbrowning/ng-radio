@@ -8,7 +8,7 @@ import { PlayerActions } from '@core/store';
 import { FavoriteStationsActions, FavoriteStationsSelectors } from '@core/store/favorite-stations';
 import { MatInput } from '@angular/material/input';
 import { matProgressButtonDefaults } from '@core/constants';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 
 @Component({
   selector: 'blr-station-edit',

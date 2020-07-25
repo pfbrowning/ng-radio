@@ -35,8 +35,8 @@ import { ApplicationActions } from '../application/.';
 import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
+import { isEqual } from 'lodash-es';
 import isBlank from 'is-blank';
-import isEqual from 'lodash/isEqual';
 
 @Injectable()
 export class PlayerEffects {

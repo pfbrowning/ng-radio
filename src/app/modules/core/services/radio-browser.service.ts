@@ -5,7 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { Station } from '../models/player/station';
 import { Country } from '../models/country';
-import sortBy from 'lodash/sortBy';
+import { sortBy } from 'lodash-es';
 import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})

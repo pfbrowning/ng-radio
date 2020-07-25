@@ -7,7 +7,7 @@ import { environment } from '@environment';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../models/root-state';
 import { selectConfig } from '@core/store/config/selectors';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 
 /** Abstraction layer for configuration.  Fetches the app config for the store and
  * provides an observable to access it from the store once it's been loaded.
