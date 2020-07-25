@@ -59,18 +59,19 @@ ng serve --open
 * Chores
   * Upgrade to Angular 10
   * Fix warnings in tests
+  * Fix optimization bailout warnings
   * Refactor logging service
   * Partition core/services directory
   * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
   * Refactor selector import / export logic
-  * Find a better alternative to the mat spinner button package
 * Features
+  * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy - use [icecast-parser](https://github.com/ghaiklor/icecast-parser) or [node-icy](https://github.com/TooTallNate/node-icy)
   * Non-logged-in experience: Require login only for favorites
-  * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy
   * Favorite station tags
   * Browser-based audio recording (pending CORS proxy for audio stream)
   * HTML5 Notifications
 * More Chores
+  * Find a better alternative to the mat spinner button package
   * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
   * Either type for stream validator logic
   * Prevent accidental audio streaming through CORS proxy
