@@ -5,7 +5,7 @@ import { NotificationService } from '../services/notification.service';
 import { Severities } from '../models/notifications/severities';
 import { Actions, ofType } from '@ngrx/effects';
 import { audioPaused } from '../store/player/player-actions';
-import * as NoSleep from 'nosleep.js';
+import NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
  * video in the background.

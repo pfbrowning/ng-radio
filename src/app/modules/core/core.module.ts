@@ -25,7 +25,7 @@ import { NotificationService } from './services/notification.service';
 import { ApplicationEffects } from './store/application/application.effects';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
-import * as NoSleep from 'nosleep.js';
+import NoSleep from 'nosleep.js';
 
 @NgModule({
   imports: [

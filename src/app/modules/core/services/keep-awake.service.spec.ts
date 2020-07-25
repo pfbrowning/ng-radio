@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { audioPaused } from '../store/player/player-actions';
 import { NotificationService } from './notification.service';
-import * as NoSleep from 'nosleep.js';
+import NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
   const actions$ = new Subject<Action>();
