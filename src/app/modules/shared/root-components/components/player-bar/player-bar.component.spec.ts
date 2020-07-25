@@ -20,6 +20,9 @@ import { Station } from '@core/models/player';
 import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerSelectors } from '@core/store';
 import { CoreSpyFactories } from '@core/testing';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StationIconStubDirective } from '@shared/testing';
 
 
 describe('PlayerBarComponent', () => {
@@ -34,7 +37,8 @@ describe('PlayerBarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         PlayerBarComponent,
-        PlayerBarStationInfoComponent
+        PlayerBarStationInfoComponent,
+        StationIconStubDirective
       ],
       imports: [
         RouterTestingModule,
@@ -47,7 +51,9 @@ describe('PlayerBarComponent', () => {
         MatTooltipModule,
         FormsModule,
         NoopAnimationsModule,
-        SharedModule
+        SharedModule,
+        MatProgressSpinnerModule,
+        MatProgressButtonsModule.forRoot()
       ],
       providers: [
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },

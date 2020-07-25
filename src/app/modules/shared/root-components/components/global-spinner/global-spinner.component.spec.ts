@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GlobalSpinnerComponent } from './global-spinner.component';
+import { DialogModule } from 'primeng/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('GlobalSpinnerComponent', () => {
   let component: GlobalSpinnerComponent;
@@ -8,7 +10,12 @@ describe('GlobalSpinnerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GlobalSpinnerComponent ]
+      declarations: [ GlobalSpinnerComponent ],
+      imports: [
+        DialogModule,
+        NoopAnimationsModule,
+        MatProgressSpinnerModule,
+      ]
     })
     .compileComponents();
   }));

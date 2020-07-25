@@ -14,6 +14,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { ConfigService } from '@core';
 import { CoreSpyFactories } from '@core/testing';
+import { StationIconStubDirective } from '@shared/testing';
 
 describe('RadioBrowserComponent', () => {
   let component: RadioBrowserComponent;
@@ -21,7 +22,10 @@ describe('RadioBrowserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RadioBrowserComponent ],
+      declarations: [
+        RadioBrowserComponent,
+        StationIconStubDirective
+      ],
       imports: [
         MatFormFieldModule,
         MatTableModule,

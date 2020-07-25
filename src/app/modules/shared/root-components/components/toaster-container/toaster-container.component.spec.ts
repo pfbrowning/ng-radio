@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { CoreSpyFactories } from '@core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
+import { ToastModule } from 'primeng/toast';
 
 describe('ToasterContainerComponent', () => {
   let component: ToasterContainerComponent;
@@ -12,6 +13,9 @@ describe('ToasterContainerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ToasterContainerComponent ],
+      imports: [
+        ToastModule,
+      ],
       providers: [
         { provide: MessageService, useValue: CoreSpyFactories.createMessageServiceSpy() },
         provideMockStore({initialState: initialRootState}),

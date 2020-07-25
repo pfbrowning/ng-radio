@@ -126,30 +126,34 @@ describe('ResponsiveSidenavComponent', () => {
   });
 
   it('should close the sidenav on navigation on small screens', () => {
-    // Arrange: Set a small screen width, init the component, and show the sideNav
-    windowService.innerWidth = 600;
-    fixture.detectChanges();
-    component.toggle();
-    expect(component.sideNav.opened).toBe(true);
+    // https://github.com/angular/angular/issues/25837#issuecomment-434355538
+    fixture.ngZone.run(() => {
+      // Arrange: Set a small screen width, init the component, and show the sideNav
+      windowService.innerWidth = 600;
+      fixture.detectChanges();
+      component.toggle();
+      expect(component.sideNav.opened).toBe(true);
 
-    // Act: Perform a dummy navigation
-    router.navigate(['/route2']);
+      // Act: Perform a dummy navigation
+      router.navigate(['/route2']);
 
-    // Assert that the sideNav closed appropriately
-    expect(component.sideNav.opened).toBe(false);
-
+      // Assert that the sideNav closed appropriately
+      expect(component.sideNav.opened).toBe(false);
+    });
   });
 
   it('should not close the sidenav on navigation on large screens', () => {
-    // Arrange: Set a large screen width & init the component
-    windowService.innerWidth = 900;
-    fixture.detectChanges();
-    expect(component.sideNav.opened).toBe(true);
+    fixture.ngZone.run(() => {
+      // Arrange: Set a large screen width & init the component
+      windowService.innerWidth = 900;
+      fixture.detectChanges();
+      expect(component.sideNav.opened).toBe(true);
 
-    // Act: Perform a dummy route navigation
-    router.navigate(['/route2']);
+      // Act: Perform a dummy route navigation
+      router.navigate(['/route2']);
 
-    // Assert that the sideNav closed appropriately
-    expect(component.sideNav.opened).toBe(true);
+      // Assert that the sideNav closed appropriately
+      expect(component.sideNav.opened).toBe(true);
+    });
   });
 });

@@ -56,6 +56,7 @@ describe('BearerTokenService', () => {
   shouldAddTokenCases.forEach(url => {
     it(`should add a bearer token if the request is for an API url specified in the config: ${url}`, (done: DoneFn) => {
       // Arrange
+      const expectedHeader = 'Bearer mockAccessToken';
       oauthService.getAccessToken.and.returnValue('mockAccessToken');
       authenticationService.authenticated$ = of(true);
 
@@ -69,8 +70,10 @@ describe('BearerTokenService', () => {
       });
 
       // Assert
-      const request = httpTestingController.expectOne(req => req.headers.get('Authorization') === 'Bearer mockAccessToken');
+      const request = httpTestingController.expectOne(req => req.headers.get('Authorization') === expectedHeader);
       request.flush({data: 'test'});
+
+      expect(request.request.headers.get('Authorization')).toBe(expectedHeader);
     });
   });
 
@@ -96,6 +99,8 @@ describe('BearerTokenService', () => {
       // Assert
       const request = httpTestingController.expectOne(req => !req.headers.has('Authorization'));
       request.flush({data: 'test'});
+
+      expect(request.request.headers.has('Authorization')).toBeFalse();
     });
   });
 
@@ -120,6 +125,8 @@ describe('BearerTokenService', () => {
       // Assert
       const request = httpTestingController.expectOne(req => !req.headers.has('Authorization'));
       request.flush({data: 'test'});
+
+      expect(request.request.headers.has('Authorization')).toBeFalse();
     });
   });
 });

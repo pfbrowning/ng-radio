@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StationThumbnailComponent } from './station-thumbnail.component';
+import { StationIconStubDirective } from '@shared/testing';
 
 describe('StationThumbnailComponent', () => {
   let component: StationThumbnailComponent;
@@ -7,7 +8,10 @@ describe('StationThumbnailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StationThumbnailComponent ]
+      declarations: [
+        StationThumbnailComponent,
+        StationIconStubDirective
+      ]
     })
     .compileComponents();
   }));

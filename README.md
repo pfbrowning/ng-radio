@@ -59,6 +59,7 @@ ng serve --open
 * Chores
   * Fix warnings in tests
   * Fix optimization bailout warnings
+  * NGRX-agnostic config load
   * Refactor logging service
   * Partition core/services directory
   * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern

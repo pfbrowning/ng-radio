@@ -5,6 +5,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { GlobalSpinnerStubComponent, ToasterContainerStubComponent } from '@root-components/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -15,14 +18,18 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
-        ToastModule
+        ToastModule,
+        ConfirmDialogModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        GlobalSpinnerStubComponent,
+        ToasterContainerStubComponent
       ],
       providers: [
         provideMockStore({initialState: initialRootState}),
-        MessageService
+        MessageService,
+        ConfirmationService
       ]
     }).compileComponents();
   }));

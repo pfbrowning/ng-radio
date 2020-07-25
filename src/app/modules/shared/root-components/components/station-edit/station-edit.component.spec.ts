@@ -6,6 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
+import { DialogModule } from 'primeng/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('StationEditComponent', () => {
   let component: StationEditComponent;
@@ -18,7 +21,10 @@ describe('StationEditComponent', () => {
         RouterTestingModule,
         FormsModule,
         MatInputModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        MatProgressSpinnerModule,
+        MatProgressButtonsModule.forRoot(),
+        DialogModule
       ],
       providers: [
         provideMockStore({initialState: initialRootState})
