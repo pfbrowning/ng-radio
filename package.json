@@ -41,7 +41,7 @@
     "lodash": "^4.17.19",
     "mat-progress-buttons": "^9.1.1",
     "material-design-icons": "^3.0.1",
-    "ngx-mat-select-search": "^2.1.2",
+    "ngx-mat-select-search": "^3.0.1",
     "nosleep.js": "^0.9.0",
     "primeicons": "^2.0.0",
     "primeng": "^9.0.6",
