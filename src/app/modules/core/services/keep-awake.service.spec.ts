@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { audioPaused } from '../store/player/player-actions';
 import { NotificationService } from './notification.service';
+import { LoggingService } from './logging.service';
 import NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
@@ -20,10 +21,11 @@ describe('KeepAwakeService', () => {
 
     TestBed.configureTestingModule({
       providers: [
+        KeepAwakeService,
         provideMockActions(() => actions$),
         { provide: NoSleepToken, useValue: noSleepSpy },
         { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
-        KeepAwakeService
+        { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() }
       ]
     });
 

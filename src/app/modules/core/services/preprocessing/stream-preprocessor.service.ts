@@ -4,7 +4,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import { PlaylistReaderService } from './playlist-reader.service';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamValidatorService } from './stream-validator.service';
-import isBlank from 'is-blank';
+import { isFalsyOrWhitespace } from '@utilities';
 
 @Injectable({providedIn: 'root'})
 export class StreamPreprocessorService {
@@ -78,7 +78,7 @@ export class StreamPreprocessorService {
     const originWithPath = url.origin + url.pathname;
     if (originWithPath.endsWith('.pls')) {
       return this.playlistReaderService.readPls(originWithPath).pipe(
-        switchMap(response => isBlank(response) ? throwError('Couldn\'t process pls file') : of(response)),
+        switchMap(response => isFalsyOrWhitespace(response) ? throwError('Couldn\'t process pls file') : of(response)),
         catchError(error => throwError({
           streamUrl,
           originWithPath,
@@ -89,7 +89,7 @@ export class StreamPreprocessorService {
     }
     if (originWithPath.endsWith('.m3u') || originWithPath.endsWith('m3u8')) {
       return this.playlistReaderService.readM3uLike(originWithPath).pipe(
-        switchMap(response => isBlank(response) ? throwError('Couldn\'t process m3u-like file') : of(response)),
+        switchMap(response => isFalsyOrWhitespace(response) ? throwError('Couldn\'t process m3u-like file') : of(response)),
         catchError(error => throwError({
           streamUrl,
           originWithPath,

@@ -14,7 +14,7 @@ import { SharedModule } from '@shared';
 import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus, NowPlaying } from '@core/models/player';
 import { PlayerSelectors } from '@core/store';
 import { CoreSpyFactories } from '@core/testing';
-import isBlank from 'is-blank';
+import { isFalsyOrWhitespace } from '@utilities';
 import theoretically from 'jasmine-theories';
 
 
@@ -190,7 +190,7 @@ describe('NowPlayingComponent', () => {
     fixture.detectChanges();
 
     // Assert: Ensure that the bitrate is displayed if not blank and not shown at all if it is blank
-    if (!isBlank(input.nowPlaying.bitrate)) {
+    if (!isFalsyOrWhitespace(input.nowPlaying.bitrate)) {
       expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.nowPlaying.bitrate}`);
     } else {
       expect(getElementBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBeNull();

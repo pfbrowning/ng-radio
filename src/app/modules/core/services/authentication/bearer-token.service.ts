@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '../config.service';
-import isBlank from 'is-blank';
+import { isFalsyOrWhitespace } from '@utilities';
 
 @Injectable()
 export class BearerTokenService implements HttpInterceptor {
@@ -27,7 +27,7 @@ export class BearerTokenService implements HttpInterceptor {
         if (req.url.startsWith(config.favoriteStationsApiUrl) || req.url.startsWith(config.metadataApiUrl)) {
           // Wait for authentication to initialize, regardless of whether the user is authenticated
           return this.authenticationService.authenticated$.pipe(
-            switchMap(authenticated => authenticated && !isBlank(this.oauthService.getAccessToken())
+            switchMap(authenticated => authenticated && !isFalsyOrWhitespace(this.oauthService.getAccessToken())
               // If an access token is present, then append it to the Authorization header
               ? next.handle(req.clone({ headers: req.headers.append('Authorization', `Bearer ${this.oauthService.getAccessToken()}`) }))
               // If no access token is present, pass the unmodified request to the next handler

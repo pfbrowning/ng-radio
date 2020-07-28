@@ -5,8 +5,8 @@ import { HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { createConfigServiceSpy } from '../testing/core-spy-factories.spec';
 import { Station } from '../models/player/station';
+import { isFalsyOrWhitespace } from '@utilities';
 import theoretically from 'jasmine-theories';
-import isBlank from 'is-blank';
 
 describe('RadioBrowserService', () => {
   let radioBrowserService: RadioBrowserService;
@@ -61,7 +61,7 @@ describe('RadioBrowserService', () => {
   theoretically.it('should properly form requests', shouldFormRequestsInput, (input, done: DoneFn) => {
     // Arrange
     const checkBodyParam = (paramKey: string, paramValue: string, body: HttpParams) => {
-      if (!isBlank(paramValue)) {
+      if (!isFalsyOrWhitespace(paramValue)) {
         expect(body.get(paramKey)).toBe(paramValue);
       } else {
         expect(body.get(paramKey)).toBeNull();

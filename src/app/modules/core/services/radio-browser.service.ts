@@ -5,8 +5,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { Station } from '../models/player/station';
 import { Country } from '../models/country';
+import { isFalsyOrWhitespace } from '@utilities';
 import { sortBy } from 'lodash-es';
-import isBlank from 'is-blank';
 
 @Injectable({providedIn: 'root'})
 export class RadioBrowserService {
@@ -48,7 +48,7 @@ export class RadioBrowserService {
 
     return this.radioBrowserUrl$.pipe(
       // All tags in the API appear to be lowercase
-      map(url => !isBlank(filter) ? `${url}/tags/${filter.toLowerCase()}` : `${url}/tags`),
+      map(url => !isFalsyOrWhitespace(filter) ? `${url}/tags/${filter.toLowerCase()}` : `${url}/tags`),
       switchMap(url => this.httpClient.get<object[]>(url, { params })),
       map(response => response.map(o => o['name']))
     );
@@ -63,13 +63,13 @@ export class RadioBrowserService {
    */
   public search(name: string = null, countryCode: string = null, tag: string = null, limit: number = 25): Observable<Station[]> {
     let body = new HttpParams();
-    if (!isBlank(name)) {
+    if (!isFalsyOrWhitespace(name)) {
       body = body.set('name', name);
     }
-    if (!isBlank(countryCode)) {
+    if (!isFalsyOrWhitespace(countryCode)) {
       body = body.set('countrycode', countryCode);
     }
-    if (!isBlank(tag)) {
+    if (!isFalsyOrWhitespace(tag)) {
       body = body.set('tag', tag);
     }
     // Limit the results based on the provided param
@@ -115,7 +115,7 @@ export class RadioBrowserService {
    */
   private mapStation(station: any) {
     // If a non-empty tags string was provided, then split it into an array by the comma delimiter
-    const tags = !isBlank(station.tags) ? station.tags.split(',') : null;
+    const tags = !isFalsyOrWhitespace(station.tags) ? station.tags.split(',') : null;
     return new Station(null, station.name, station.url, null, station.favicon, tags);
   }
 }

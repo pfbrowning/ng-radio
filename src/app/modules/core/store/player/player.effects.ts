@@ -36,7 +36,7 @@ import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { isEqual } from 'lodash-es';
-import isBlank from 'is-blank';
+import { isFalsyOrWhitespace } from '@utilities';
 
 @Injectable()
 export class PlayerEffects {
@@ -73,7 +73,7 @@ export class PlayerEffects {
       url.searchParams.append('t', this.currentTimeService.unix().toString());
       this.audio.src = url.toString();
 
-      if (!isBlank(action.station.title)) {
+      if (!isFalsyOrWhitespace(action.station.title)) {
         this.titleService.setTitle(action.station.title);
       } else {
         this.titleService.setTitle('Browninglogic Radio');
@@ -219,7 +219,7 @@ export class PlayerEffects {
     ofType(PlayerActions.currentNowPlayingChanged),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
     tap(([{nowPlaying}, station]) => {
-      this.notificationService.notify(Severities.Info, 'Now Playing', !isBlank(nowPlaying.title) ?
+      this.notificationService.notify(Severities.Info, 'Now Playing', !isFalsyOrWhitespace(nowPlaying.title) ?
       `${nowPlaying.title} - ${station.title}` : station.title);
     })
   ), { dispatch: false });
@@ -233,9 +233,9 @@ export class PlayerEffects {
     ofType(PlayerActions.currentNowPlayingChanged),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
     tap(([{nowPlaying}, station]) => {
-      if (!isBlank(nowPlaying.title)) {
+      if (!isFalsyOrWhitespace(nowPlaying.title)) {
         this.titleService.setTitle(nowPlaying.title);
-      } else if (!isBlank(station.title)) {
+      } else if (!isFalsyOrWhitespace(station.title)) {
         this.titleService.setTitle(station.title);
       } else {
         this.titleService.setTitle('Browninglogic Radio');

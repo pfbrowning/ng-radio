@@ -1,5 +1,4 @@
 import { Directive, Input, OnChanges, HostBinding, SimpleChanges, HostListener } from '@angular/core';
-import isBlank from 'is-blank';
 
 @Directive({
   selector: '[blrStationIcon]',
@@ -41,9 +40,9 @@ export class StationIconDirective implements OnChanges {
   private checkUpdateSource(): void {
     // Use this image if the provided iconUrl is invalid for whatever reason
     const fallbackImage = '/assets/images/radio.svg';
-    /* The icon is valid if it's a non-null-or-empty string which hasn't already been marked as invalid
+    /* The icon is valid if it's a non-falsy string which hasn't already been marked as invalid
     as a result of failing to load or being too small. */
-    const iconValid = !isBlank(this.iconUrl) && !this.invalidImageUrls.includes(this.iconUrl);
+    const iconValid = this.iconUrl && !this.invalidImageUrls.includes(this.iconUrl);
     const intendedSource = iconValid ? this.iconUrl : fallbackImage;
     // Update the image src if it isn't already what we decided that it should be
     if (this.src !== intendedSource) {
