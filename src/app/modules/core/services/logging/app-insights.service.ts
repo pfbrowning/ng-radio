@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../config.service';
 import { ApplicationInsights, SeverityLevel as MicrosoftSeverity, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
 import { ReplaySubject } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -18,10 +17,6 @@ export class AppInsightsService {
     [ BrowningSeverity.Error, MicrosoftSeverity.Error ],
     [ BrowningSeverity.Fatal, MicrosoftSeverity.Critical ],
   ]);
-
-  constructor(private configService: ConfigService) {
-    this.configService.appConfig$.subscribe(config => this.initialize(config.logging.appInsightsInstrumentationKey));
-  }
 
   public initialize(appInsightsInstrumentationKey: string) {
     this.appInsights = new ApplicationInsights({
