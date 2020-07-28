@@ -88,7 +88,7 @@ export class AuthenticationEffects implements OnInitEffects {
     withLatestFrom(this.store.pipe(select(AuthenticationSelectors.currentUserEmail))),
     filter(([{ authenticated } , email ]) => authenticated && email != null),
     tap(([, email ]) => {
-      this.loggingService.setAuthenticatedUserContext(email, this.oauthService.getIdentityClaims()['sub']);
+      this.loggingService.setAuthenticatedUserContext(email);
       this.loggingService.logInformation('userInitialized', { 'email': email });
     })
   ), { dispatch: false });

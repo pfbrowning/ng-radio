@@ -64,7 +64,7 @@ export class LoggingService {
    * @param severityLevel Severity level to log the message as
    * @param properties JS object mapping extra information to log as key/value pairs
    */
-  private logTrace(message: string, severityLevel: SeverityLevel, properties: object = null) {
+  public logTrace(message: string, severityLevel: SeverityLevel, properties: object = null) {
     this.initialized.pipe(take(1)).subscribe(() => {
       const traceTelemetry: ITraceTelemetry = {
         message,
@@ -92,9 +92,10 @@ export class LoggingService {
     });
   }
 
-  public setAuthenticatedUserContext(userId: string, accountId: string) {
+  public setAuthenticatedUserContext(userId: string) {
     this.initialized.pipe(take(1)).subscribe(() => {
-      this.appInsights.setAuthenticatedUserContext(userId, accountId);
+      this.appInsights.clearAuthenticatedUserContext();
+      this.appInsights.setAuthenticatedUserContext(userId, undefined, true);
     });
   }
 

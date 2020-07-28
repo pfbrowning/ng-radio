@@ -5,6 +5,7 @@ import { NotificationService } from '../services/notification.service';
 import { Severities } from '../models/notifications/severities';
 import { Actions, ofType } from '@ngrx/effects';
 import { audioPaused } from '../store/player/player-actions';
+import { LoggingService } from './logging.service';
 import NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
@@ -14,6 +15,7 @@ import NoSleep from 'nosleep.js';
 export class KeepAwakeService {
   constructor(
     private actions$: Actions,
+    private loggingService: LoggingService,
     private notificationService: NotificationService,
     @Inject(NoSleepToken) private noSleep: NoSleep) {
     // Disable nosleep when the audio stops
@@ -34,8 +36,8 @@ export class KeepAwakeService {
     this.noSleep.enable();
     // Notify any subscribers
     this.enabled.next(true);
-    this.notificationService.notify(Severities.Success, 'Keep Awake Enabled',
-      'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
+    this.notificationService.notify(Severities.Success, 'Keep Awake Enabled', 'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
+    this.loggingService.logInformation('Keep Awake Enabled');
   }
 
   /** Disables NoSleep.js in order to allow the mobile screen
