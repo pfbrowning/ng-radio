@@ -11,15 +11,16 @@ import { RootState } from '../../models/root-state';
 import { AuthenticationActions } from '.';
 import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
+import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 
 describe('AuthenticationEffects', () => {
   let actions$: Observable<any> = null;
   let effects: AuthenticationEffects;
   let store: MockStore<RootState>;
-  let configService: jasmine.SpyObj<ConfigService>;
+  let configService: ConfigStubService;
 
   beforeEach(() => {
-    configService = CoreSpyFactories.createConfigServiceSpy();
+    configService = new ConfigStubService();
 
     TestBed.configureTestingModule({
       providers: [

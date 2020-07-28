@@ -32,7 +32,8 @@ export class AuthenticationEffects implements OnInitEffects {
 
   initialize$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.initializeStart),
-    tap(() => this.oauthService.configure(this.configService.appConfig.authConfig)),
+    withLatestFrom(this.configService.appConfig$),
+    tap(([, config]) => this.oauthService.configure(config.authConfig)),
     switchMap(() => from(this.oauthService.loadDiscoveryDocumentAndTryLogin()).pipe(
       tap(() => this.oauthService.setupAutomaticSilentRefresh()),
       map(() => AuthenticationActions.initializeSucceeded({

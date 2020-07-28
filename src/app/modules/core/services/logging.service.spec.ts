@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LoggingService } from './logging.service';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@core';
+import { ConfigService } from './config.service';
+import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
 
 describe('LoggingService', () => {
   let loggingService: LoggingService;
@@ -9,7 +9,7 @@ describe('LoggingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        provideMockStore({initialState: initialRootState})
+        { provide: ConfigService, useClass: ConfigStubService }
       ]
     });
 

@@ -18,7 +18,6 @@ import { AudioElement } from './models/player/audio-element';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ConfigService } from './services/config.service';
-import { ConfigEffects } from './store/config/config.effects';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './services/notification.service';
@@ -44,7 +43,6 @@ import NoSleep from 'nosleep.js';
       PlayerEffects,
       SleepTimerEffects,
       AuthenticationEffects,
-      ConfigEffects,
       ApplicationEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

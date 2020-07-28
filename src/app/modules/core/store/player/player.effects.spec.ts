@@ -12,6 +12,7 @@ import { createLoggingServiceSpy, createStreamPreprocessorServiceSpy } from '../
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { CoreSpyFactories } from '@core/testing';
 import { AudioElementStub } from '../../testing/AudioElementStub.spec';
+import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
@@ -28,7 +29,7 @@ describe('PlayerEffects', () => {
         provideMockStore({initialState: initialRootState}),
         { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
         { provide: StreamInfoService, useValue: CoreSpyFactories.createStreamInfoServiceSpy() },
-        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
+        { provide: ConfigService, useClass: ConfigStubService },
         { provide: AudioElementToken, useValue: audioElement },
         { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
         { provide: LoggingService, useValue: createLoggingServiceSpy() },

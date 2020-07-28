@@ -4,6 +4,7 @@ import { ConfigService } from '@core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { CoreSpyFactories } from '@core/testing';
+import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
 
 describe('FavoriteStationsService', () => {
   let service: FavoriteStationsService;
@@ -14,7 +15,7 @@ describe('FavoriteStationsService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
+        { provide: ConfigService, useClass: ConfigStubService },
         { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() }
       ]
     });

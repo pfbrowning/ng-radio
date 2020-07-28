@@ -5,10 +5,11 @@ import { ConfigService } from '@core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { NowPlaying } from '../models/player/now-playing';
 import { CoreSpyFactories } from '@core/testing';
+import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;
-  let configService: ConfigService;
+  let configService: ConfigStubService;
   let httpTestingController: HttpTestingController;
   let getMetadataSpy: any;
 
@@ -19,12 +20,12 @@ describe('StreamInfoService', () => {
       ],
       providers: [
         StreamInfoService,
-        { provide: ConfigService, useValue: CoreSpyFactories.createConfigServiceSpy() },
+        { provide: ConfigService, useClass: ConfigStubService },
         { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() }
       ]
     });
     metadataService = TestBed.inject(StreamInfoService);
-    configService = TestBed.inject(ConfigService);
+    configService = TestBed.inject(ConfigService) as any;
     httpTestingController = TestBed.inject(HttpTestingController);
     getMetadataSpy = jasmine.createSpyObj('getMetadata', ['emit', 'error', 'complete']);
   });
@@ -100,7 +101,7 @@ describe('StreamInfoService', () => {
       // Ensure that it hasn't emitted any new values yet
       expect(getMetadataSpy.emit).toHaveBeenCalledTimes(iteration);
       // Set up a test HTTP request at the expected URL and flush the specified response
-      const metaDataRequest = httpTestingController.expectOne(`${configService.appConfig.metadataApiUrl}/now-playing?url=${iteration}`);
+      const metaDataRequest = httpTestingController.expectOne(`test.com/now-playing?url=${iteration}`);
       metaDataRequest.flush(testEntry.rawResponse);
       // Ensure that the subscription emitted one new value which matches the provided expecting mapping
       expect(getMetadataSpy.emit).toHaveBeenCalledTimes(iteration + 1);
@@ -127,7 +128,7 @@ describe('StreamInfoService', () => {
       /* Expect an request at the API URL for the specified station URL without the method querystring parameter.
       Flush a dummy response which contains a unique fetch source based on the dummy station url. */
       const dummyFetchSource = `${i}_fetchsource`;
-      const firstRequest = httpTestingController.expectOne(`${configService.appConfig.metadataApiUrl}/now-playing?url=${i}`);
+      const firstRequest = httpTestingController.expectOne(`test.com/now-playing?url=${i}`);
       firstRequest.flush({fetchsource: dummyFetchSource});
       // Make a subsequent request to the same station
       metadataService.getMetadata(i.toString()).subscribe(
@@ -138,7 +139,7 @@ describe('StreamInfoService', () => {
       /* We expect that the subsequent requested URL will be similar to the first, but with the dummy fetch source
       appended to the querystring. */
       const subsequentRequest = httpTestingController.expectOne(
-        `${configService.appConfig.metadataApiUrl}/now-playing?url=${i}&method=${dummyFetchSource}`
+        `test.com/now-playing?url=${i}&method=${dummyFetchSource}`
         );
       subsequentRequest.flush({fetchsource: dummyFetchSource});
     }

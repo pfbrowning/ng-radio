@@ -8,11 +8,12 @@ import { AuthenticationServiceStub } from '../../testing/stubs/authentication-se
 import { of, NEVER } from 'rxjs';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 
 describe('BearerTokenService', () => {
   let bearerTokenService: BearerTokenService;
   let oauthService: jasmine.SpyObj<OAuthService>;
-  let configService: jasmine.SpyObj<ConfigService>;
+  let configService: ConfigStubService;
   let authenticationService: AuthenticationServiceStub;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
@@ -20,7 +21,7 @@ describe('BearerTokenService', () => {
 
   beforeEach(() => {
     oauthService = CoreSpyFactories.createOAuthServiceSpy();
-    configService = CoreSpyFactories.createConfigServiceSpy();
+    configService = new ConfigStubService();
 
     TestBed.configureTestingModule({
       imports: [

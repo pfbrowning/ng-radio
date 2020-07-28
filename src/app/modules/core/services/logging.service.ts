@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { RootState } from '@core';
-import { selectConfig } from '@core/store/config/selectors';
-import { filter, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { ApplicationInsights, SeverityLevel, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
 import { ReplaySubject } from 'rxjs';
-import isBlank from 'is-blank';
+import { ConfigService } from './config.service';
 
 /**
  * This service handles the responsibility of logging errors, events, and
@@ -13,11 +10,11 @@ import isBlank from 'is-blank';
  */
 @Injectable({providedIn: 'root'})
 export class LoggingService {
-  constructor(private store: Store<RootState>) {
+  constructor(private configService: ConfigService) {
     // Once the app config has loaded
-    this.store.pipe(select(selectConfig), filter(config => config != null), take(1)).subscribe(config => {
+    this.configService.appConfig$.subscribe(config => {
       // If an app insights key was provided
-      if (!isBlank(config.appInsightsInstrumentationKey)) {
+      if (config.appInsightsInstrumentationKey) {
         this.appInsights = new ApplicationInsights({
           config: {
             instrumentationKey: config.appInsightsInstrumentationKey,
@@ -94,8 +91,8 @@ export class LoggingService {
 
   public setAuthenticatedUserContext(userId: string) {
     this.initialized.pipe(take(1)).subscribe(() => {
-      this.appInsights.clearAuthenticatedUserContext();
-      this.appInsights.setAuthenticatedUserContext(userId, undefined, true);
+      this.appInsights.context.user.id =  userId;
+      this.appInsights.context.user.authenticatedId = userId;
     });
   }
 

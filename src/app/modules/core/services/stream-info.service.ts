@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, map, timeout } from 'rxjs/operators';
+import { tap, map, timeout, switchMap } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { NowPlaying } from '../models/player/now-playing';
 
@@ -36,24 +36,23 @@ export class StreamInfoService {
       params = params.append('method', this.streamTypes.get(encodedUrl));
     }
     // GET now-playing data from the API
-    return this.httpClient.get<any>(
-      `${this.configService.appConfig.metadataApiUrl}/now-playing`,
-      { params }).pipe(
-        // Time out after a configured amount of time
-        timeout(this.configService.appConfig.metadataFetchTimeout),
-        /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
-        calls for the same URL. */
-        tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),
-        // Map the returned response to a cleaner metadata model
-        map(response => {
-          switch (response.fetchsource) {
-            case 'STREAM':
-              return new NowPlaying(response.title, response.fetchsource, response.headers['icy-br'],
-                response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
-            default:
-              return new NowPlaying(response.title, response.fetchsource, response.bitrate);
-          }
-        })
+    return this.configService.appConfig$.pipe(
+      switchMap(config => this.httpClient.get<any>(`${config.metadataApiUrl}/now-playing`, { params }).pipe(
+        timeout(config.metadataFetchTimeout)
+      )),
+      /* Upon success, store the returned fetchsource so that we can pass it on for subsequent
+      calls for the same URL. */
+      tap(nowPlaying => this.streamTypes.set(encodedUrl, nowPlaying.fetchsource)),
+      // Map the returned response to a cleaner metadata model
+      map(response => {
+        switch (response.fetchsource) {
+          case 'STREAM':
+            return new NowPlaying(response.title, response.fetchsource, response.headers['icy-br'],
+              response.headers['icy-name'], response.headers['icy-description'], response.headers['icy-genre']);
+          default:
+            return new NowPlaying(response.title, response.fetchsource, response.bitrate);
+        }
+      })
     );
   }
 }

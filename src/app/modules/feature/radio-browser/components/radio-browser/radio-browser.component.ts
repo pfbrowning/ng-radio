@@ -24,6 +24,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   public columns = ['name', 'now-playing', 'tags', 'icon'];
 
+  public resultsLimit$ = this.configService.appConfig$.pipe(map(config => config.radioBrowserSearchResultsLimit));
   public searchResults$ = this.store.pipe(select(selectSearchResults));
   public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
   public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
@@ -97,9 +98,5 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   public onTagFocused(): void {
     this.store.dispatch(RadioBrowserActions.tagInputFocused());
-  }
-
-  public get resultsLimit(): number {
-    return this.configService.appConfig.radioBrowserSearchResultsLimit;
   }
 }

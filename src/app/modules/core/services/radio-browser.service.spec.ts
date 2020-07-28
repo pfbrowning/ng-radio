@@ -3,14 +3,13 @@ import { RadioBrowserService } from './radio-browser.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { createConfigServiceSpy } from '../testing/core-spy-factories.spec';
 import { Station } from '../models/player/station';
 import { isFalsyOrWhitespace } from '@utilities';
 import theoretically from 'jasmine-theories';
+import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
 
 describe('RadioBrowserService', () => {
   let radioBrowserService: RadioBrowserService;
-  let configService: ConfigService;
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
@@ -20,11 +19,10 @@ describe('RadioBrowserService', () => {
       ],
       providers: [
         RadioBrowserService,
-        { provide: ConfigService, useValue: createConfigServiceSpy() }
+        { provide: ConfigService, useClass: ConfigStubService }
       ]
     });
 
-    configService = TestBed.inject(ConfigService);
     radioBrowserService = TestBed.inject(RadioBrowserService);
     httpTestingController = TestBed.inject(HttpTestingController);
   });
@@ -81,7 +79,7 @@ describe('RadioBrowserService', () => {
     });
 
 
-    const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
+    const request = httpTestingController.expectOne(`test.com/stations/search`);
     expect(request.request.method).toBe('POST');
 
     // Flush a dummy response
@@ -155,7 +153,7 @@ describe('RadioBrowserService', () => {
     });
 
     // Expect and flush the test response from the http testing controller
-    const request = httpTestingController.expectOne(`${configService.appConfig.radioBrowserApiUrl}/stations/search`);
+    const request = httpTestingController.expectOne(`test.com/stations/search`);
     request.flush([input.response]);
   });
 });

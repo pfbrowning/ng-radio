@@ -6,7 +6,6 @@ import { favoriteStationsReducer } from './favorite-stations/favorite-stations.r
 import { playerReducer } from './player/player.reducer';
 import { sleepTimerReducer } from './sleep-timer/sleep-timer.reducer';
 import { authenticationReducer } from './authentication/authentication.reducer';
-import { configReducer } from './config/config.reducer';
 import { applicationReducer } from './application/application.reducer';
 
 export const reducers: ActionReducerMap<RootState> = {
@@ -16,6 +15,5 @@ export const reducers: ActionReducerMap<RootState> = {
     player: playerReducer,
     sleepTimer: sleepTimerReducer,
     authentication: authenticationReducer,
-    config: configReducer,
     application: applicationReducer
 };

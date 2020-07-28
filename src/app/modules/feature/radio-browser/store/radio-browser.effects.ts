@@ -56,12 +56,15 @@ export class RadioBrowserEffects {
 
   performSearch$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchStart),
-    withLatestFrom(this.store.pipe(select(RadioBrowserSelectors.searchCriteria))),
-    switchMap(([, criteria]) => this.radioBrowserService.search(
+    withLatestFrom(
+      this.store.pipe(select(RadioBrowserSelectors.searchCriteria)),
+      this.configService.appConfig$
+    ),
+    switchMap(([, criteria, config]) => this.radioBrowserService.search(
       criteria.nameTerm,
       criteria.country,
       criteria.tagTerm,
-      this.configService.appConfig.radioBrowserSearchResultsLimit
+      config.radioBrowserSearchResultsLimit
     ).pipe(
       map(results => RadioBrowserActions.searchSucceeded({results})),
       catchError(error => of(RadioBrowserActions.searchFailed({error})))

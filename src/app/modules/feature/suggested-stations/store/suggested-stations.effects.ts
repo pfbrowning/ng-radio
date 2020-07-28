@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { map, catchError, switchMap, filter, take, tap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Action, Store, select } from '@ngrx/store';
-import { NotificationService, Severities, RadioBrowserService } from '@core';
+import { Action, Store } from '@ngrx/store';
+import { NotificationService, Severities, RadioBrowserService, ConfigService } from '@core';
 import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
-import { selectConfig } from '@core/store/config/selectors';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
 import * as SuggestedStationsActions from './suggested-stations.actions';
 
@@ -13,16 +12,12 @@ import * as SuggestedStationsActions from './suggested-stations.actions';
 export class SuggestedStationsEffects implements OnInitEffects {
   onEffectsInit$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.effectsInit),
-    switchMap(() => this.store.pipe(
-      select(selectConfig),
-      filter(config => config != null),
-      take(1),
-      switchMap(() => [
-        SuggestedStationsActions.developerSuggestedFetchStart(),
-        SuggestedStationsActions.topClickedFetchStart(),
-        SuggestedStationsActions.topVotedFetchStart(),
-      ])
-    ))
+    switchMap(() => this.configService.appConfig$),
+    switchMap(() => [
+      SuggestedStationsActions.developerSuggestedFetchStart(),
+      SuggestedStationsActions.topClickedFetchStart(),
+      SuggestedStationsActions.topVotedFetchStart(),
+    ])
   ));
 
   fetchDeveloperSuggested$ = createEffect(() => this.actions$.pipe(
@@ -71,6 +66,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
   constructor(
     private actions$: Actions,
     private store: Store<SuggestedStationsRootState>,
+    private configService: ConfigService,
     private suggestedStationsService: SuggestedStationsService,
     private radioBrowserService: RadioBrowserService,
     private notificationService: NotificationService

@@ -167,13 +167,16 @@ export class PlayerEffects {
 
   startFetchInterval$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchNowPlayingSucceeded, PlayerActions.fetchNowPlayingFailed),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.fetchIntervalParams))),
+    withLatestFrom(
+      this.store.pipe(select(PlayerSelectors.fetchIntervalParams)),
+      this.configService.appConfig$
+    ),
     filter(([{streamUrl}, {current, listed}]) => listed.concat(current).includes(streamUrl)),
-    map(([action, selected]) => fetchIntervalStart({
+    map(([action, selected, config]) => fetchIntervalStart({
       streamUrl: action.streamUrl,
       duration: selected.current === action.streamUrl && selected.focused
-        ? this.configService.appConfig.refreshIntervalShort
-        : this.configService.appConfig.refreshIntervalLong
+        ? config.refreshIntervalShort
+        : config.refreshIntervalLong
     }))
   ));
 

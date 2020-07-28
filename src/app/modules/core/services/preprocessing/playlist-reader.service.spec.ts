@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { PlaylistReaderService } from './playlist-reader.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigService } from '../config.service';
-import { createConfigServiceSpy } from '../../testing/core-spy-factories.spec';
+import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 
 describe('PlaylistReaderService', () => {
   let service: PlaylistReaderService;
@@ -13,7 +13,7 @@ describe('PlaylistReaderService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: ConfigService, useValue: createConfigServiceSpy() }
+        { provide: ConfigService, useClass: ConfigStubService }
       ]
     });
     service = TestBed.inject(PlaylistReaderService);

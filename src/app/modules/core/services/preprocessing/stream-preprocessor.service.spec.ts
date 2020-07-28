@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigService } from '../config.service';
-import { createConfigServiceSpy } from '../../testing/core-spy-factories.spec';
 import { StreamPreprocessorService } from './stream-preprocessor.service';
+import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 
 describe('StreamPreprocessorService', () => {
   let service: StreamPreprocessorService;
@@ -13,7 +13,7 @@ describe('StreamPreprocessorService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: ConfigService, useValue: createConfigServiceSpy() }
+        { provide: ConfigService, useClass: ConfigStubService }
       ]
     });
     service = TestBed.inject(StreamPreprocessorService);

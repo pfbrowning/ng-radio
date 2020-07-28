@@ -5,7 +5,7 @@ import { initialRootState } from '@core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ResponsiveSidenavStubComponent, SidenavStubComponent } from '@root-components/testing'
+import { ResponsiveSidenavStubComponent, SidenavStubComponent } from '@root-components/testing';
 
 describe('AppShellComponent', () => {
   let component: AppShellComponent;

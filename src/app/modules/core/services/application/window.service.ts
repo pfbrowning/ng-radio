@@ -15,4 +15,8 @@ export class WindowService {
   public get innerWidth(): number {
     return window.innerWidth;
   }
+
+  public getLocationOrigin() {
+    return window.location.origin;
+  }
 }

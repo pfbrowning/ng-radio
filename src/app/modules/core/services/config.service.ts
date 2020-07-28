@@ -1,60 +1,61 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap, catchError, map, filter, take } from 'rxjs/operators';
-import { forkJoin, throwError, of, Observable } from 'rxjs';
+import { catchError, map, take, shareReplay } from 'rxjs/operators';
+import { forkJoin, throwError, of, Observable, defer } from 'rxjs';
 import { AppConfig } from '../models/config/app-config';
-import { environment } from '@environment';
-import { Store, select } from '@ngrx/store';
-import { RootState } from '../models/root-state';
-import { selectConfig } from '@core/store/config/selectors';
 import { merge } from 'lodash-es';
+import { WindowService } from './application';
 
 /** Abstraction layer for configuration.  Fetches the app config for the store and
  * provides an observable to access it from the store once it's been loaded.
  */
 @Injectable()
 export class ConfigService {
-  constructor(private httpClient: HttpClient, private store: Store<RootState>) {}
+  constructor(
+    private httpClient: HttpClient,
+    private windowService: WindowService
+  ) {}
 
-  private _appConfig: AppConfig;
-
-  /** Public accessor for app config */
-  public get appConfig(): AppConfig {
-    return this._appConfig;
-  }
-
-  public appConfig$ = this.store.pipe(
-    select(selectConfig),
-    filter(config => config != null),
+  public appConfig$ = defer(() => this.fetch()).pipe(
+    shareReplay(1),
     take(1)
   );
 
-  public fetch(): Observable<AppConfig> {
-    // Set headers to disable caching: We always want clients to fetch the latest config values
-    const headers = new HttpHeaders({
+  private fetch(): Observable<AppConfig> {
+    return forkJoin([
+      this.fetchAppConfig(),
+      this.windowService.getLocationOrigin().startsWith('http://localhost')
+        ? this.fetchLocalConfig()
+        : of(null)
+    ]).pipe(
+      // Use lodash to deep merge local config into app config
+      map(forkData => merge({}, forkData[0], forkData[1]))
+    );
+  }
+
+  // Set headers to disable caching: We always want clients to fetch the latest config values
+  private noCacheHeaders() {
+    return new HttpHeaders({
       'Cache-Control':  'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       'Pragma': 'no-cache',
       'Expires': '0'
     });
-    // Fetch and store the config
-    return forkJoin([
-      // Always load the regular app.config.json
-      this.httpClient.get<AppConfig>('/assets/config/app.config.json', { headers }),
-      // If we're not in prod mode, attempt to load a local configuration
-      environment.production ? of(null) : this.httpClient.get<AppConfig>('/assets/config/local.config.json', { headers }).pipe(
-        catchError(error => {
-          // If local config doesn't exist, then continue silently.  This isn't an error condition.
-          if (error.status === 404) {
-            return of(null);
-          }
-          // If localconfig fails for some reason other than 404, then that is an error.
-          return throwError(error);
-        })
-      )
-    ]).pipe(
-      // Use lodash to deep merge local config into app config
-      map(forkData => merge({}, forkData[0], forkData[1])),
-      tap(config => this._appConfig = config)
+  }
+
+  private fetchAppConfig(): Observable<AppConfig> {
+    return this.httpClient.get<AppConfig>('/assets/config/app.config.json', { headers: this.noCacheHeaders() });
+  }
+
+  private fetchLocalConfig(): Observable<AppConfig> {
+    return this.httpClient.get<AppConfig>('/assets/config/local.config.json', { headers: this.noCacheHeaders() }).pipe(
+      catchError(error => {
+        // If local config doesn't exist, then continue silently.  This isn't an error condition.
+        if (error.status === 404) {
+          return of(null);
+        }
+        // If localconfig fails for some reason other than 404, then that is an error.
+        return throwError(error);
+      })
     );
   }
 }

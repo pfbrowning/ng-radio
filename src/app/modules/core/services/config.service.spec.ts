@@ -2,26 +2,35 @@ import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfig } from '../models/config/app-config';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '../models/initial-root-state';
+import { WindowService } from './application';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('ConfigService', () => {
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
+  let fetchNextSpy: jasmine.Spy;
+  let windowService: jasmine.SpyObj<WindowService>;
 
   beforeEach(() => {
+    windowService = CoreSpyFactories.createWindowServiceSpy();
+
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
       ],
       providers: [
         ConfigService,
-        provideMockStore({initialState: initialRootState})
+        { provide: WindowService, useValue: windowService }
       ]
     });
 
+
     configService = TestBed.inject(ConfigService);
     httpTestingController = TestBed.inject(HttpTestingController);
+
+    fetchNextSpy = jasmine.createSpy('fetchNext');
+
+    windowService.getLocationOrigin.and.returnValue('http://localhost:4200/dummypath');
   });
 
   it('should be created', () => {
@@ -43,14 +52,16 @@ describe('ConfigService', () => {
     };
 
     // Listen to the initialize observable
-    configService.fetch().subscribe(config => {
-      /* The exposed appConfig should match the one flushed
-      by the http testing controller */
-      expect(configService.appConfig).toEqual(dummyConfig);
-      expect(config).toEqual(dummyConfig);
-      // Lastly, verify that there are no outstanding http requests
-      httpTestingController.verify();
-      done();
+    configService.appConfig$.subscribe({
+      next: config => {
+        expect(config).toEqual(dummyConfig);
+        fetchNextSpy(config);
+      },
+      complete: () => {
+        expect(fetchNextSpy).toHaveBeenCalledTimes(1);
+        httpTestingController.verify();
+        done();
+      }
     });
 
     // Expect one app.config.json request & flush our dummy config object
@@ -61,9 +72,9 @@ describe('ConfigService', () => {
   });
 
   it('should properly handle failed config fetch', (done: DoneFn) => {
-    configService.fetch().subscribe({
+    configService.appConfig$.subscribe({
       error: error => {
-        expect(configService.appConfig).toBeUndefined();
+        expect(error).toBeTruthy();
         // Lastly, verify that there are no outstanding http requests
         httpTestingController.verify();
         done();
@@ -118,13 +129,19 @@ describe('ConfigService', () => {
       }
     };
 
-    configService.fetch().subscribe(config => {
-      // Assert
-      expect(config).toEqual(mergedConfig);
+    configService.appConfig$.subscribe({
+      next: config => {
+        // Assert
+        expect(config).toEqual(mergedConfig);
+        fetchNextSpy(config);
+      },
+      complete: () => {
+        // Assert
+        expect(fetchNextSpy).toHaveBeenCalledTimes(1);
 
-      // Lastly, verify that there are no outstanding http requests
-      httpTestingController.verify();
-      done();
+        httpTestingController.verify();
+        done();
+      }
     });
 
     // Act
@@ -135,33 +152,121 @@ describe('ConfigService', () => {
   });
 
   it('should resolve app config if no local config is found', (done: DoneFn) => {
-    // Arrange
-    const appConfig: AppConfig = {
-      metadataApiUrl: 'testapi',
-      appInsightsInstrumentationKey: 'app insights key value',
-      radioBrowserApiUrl: 'testradiobrowserapi',
-      radioBrowserSearchResultsLimit: 25,
-      favoriteStationsApiUrl: 'testFavoritesApi',
-      corsProxyUrl: 'testCorsProxy',
-      refreshIntervalShort: 1,
-      refreshIntervalLong: 2,
-      metadataFetchTimeout: 3,
-      authConfig: {}
-    };
+    configService.appConfig$.subscribe({
+      next: config => {
+        // Assert
+        expect(config).toEqual({} as AppConfig);
+        fetchNextSpy(config);
+      },
+      complete: () => {
+        expect(fetchNextSpy).toHaveBeenCalledTimes(1);
 
-    configService.fetch().subscribe(config => {
-      // Assert
-      expect(config).toEqual(appConfig);
-
-      // Lastly, verify that there are no outstanding http requests
-      httpTestingController.verify();
-      done();
+        httpTestingController.verify();
+        done();
+      }
     });
 
     // Act
     const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
     const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
-    appConfigRequest.flush(appConfig);
+    appConfigRequest.flush({} as AppConfig);
     localConfigRequest.flush(null, { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should fail if local config fetch failed with anything other than a 404', (done: DoneFn) => {
+    configService.appConfig$.subscribe({
+      next: config => fetchNextSpy(config),
+      error: () => {
+        expect(fetchNextSpy).not.toHaveBeenCalled();
+
+        httpTestingController.verify();
+        done();
+      }
+    });
+
+    // Act
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
+    appConfigRequest.flush({} as AppConfig);
+    localConfigRequest.flush(null, { status: 403, statusText: 'Can Not Has' });
+  });
+
+  it('should fetch local config if running the app on localhost', (done: DoneFn) => {
+    // Arrange
+    windowService.getLocationOrigin.and.returnValue('http://localhost:4200/somepath');
+
+    // Listen to the initialize observable
+    configService.appConfig$.subscribe({
+      next: config => {
+        fetchNextSpy(config);
+      },
+      complete: () => {
+        expect(fetchNextSpy).toHaveBeenCalledTimes(1);
+
+        httpTestingController.verify();
+        done();
+      }
+    });
+
+    // Expect one app.config.json request & flush our dummy config object
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    const localConfigRequest = httpTestingController.expectOne('/assets/config/local.config.json');
+    appConfigRequest.flush({});
+    localConfigRequest.flush({});
+  });
+
+  it('should not fetch local config if not running the app on localhost', (done: DoneFn) => {
+    // Arrange
+    windowService.getLocationOrigin.and.returnValue('http://radio.browninglogic.com');
+
+    // Listen to the initialize observable
+    configService.appConfig$.subscribe({
+      next: config => {
+        fetchNextSpy(config);
+      },
+      complete: () => {
+        expect(fetchNextSpy).toHaveBeenCalledTimes(1);
+
+        httpTestingController.expectNone('/assets/config/local.config.json');
+        httpTestingController.verify();
+        done();
+      }
+    });
+
+    // Expect one app.config.json request & flush our dummy config object
+    expect(windowService.getLocationOrigin).toHaveBeenCalledTimes(1);
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    appConfigRequest.flush({});
+  });
+
+  it('should only request the config once even if there are multiple concurrent and subsequent requests', () => {
+    // Arrange
+    windowService.getLocationOrigin.and.returnValue('http://radio.browninglogic.com');
+    const firstRequest = jasmine.createSpy('firstRequest');
+    const secondRequest = jasmine.createSpy('secondRequest');
+    const thirdRequest = jasmine.createSpy('thirdRequest');
+    const fourthRequest = jasmine.createSpy('fourthRequest');
+
+    // Request the config twice before flushing to test that the response is replayed for concurrent requests
+    configService.appConfig$.subscribe(config => firstRequest(config));
+    configService.appConfig$.subscribe(config => secondRequest(config));
+
+    expect(firstRequest).not.toHaveBeenCalled();
+    expect(secondRequest).not.toHaveBeenCalled();
+
+    const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
+    appConfigRequest.flush({});
+
+    // Request the config another two times after flushing to test that the response is replayed for subsequent requests
+    configService.appConfig$.subscribe(config => thirdRequest(config));
+    configService.appConfig$.subscribe(config => fourthRequest(config));
+
+    expect(firstRequest).toHaveBeenCalledTimes(1);
+    expect(secondRequest).toHaveBeenCalledTimes(1);
+    expect(thirdRequest).toHaveBeenCalledTimes(1);
+    expect(fourthRequest).toHaveBeenCalledTimes(1);
+
+    httpTestingController.expectNone('/assets/config/app.config.json');
+    httpTestingController.verify();
   });
 });

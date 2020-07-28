@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { SuggestedStationsEffects } from './suggested-stations.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialSuggestedStationsRootState } from '../models/initial-suggested-stations-root-state';
-import { NotificationService, RadioBrowserService } from '@core';
+import { NotificationService, RadioBrowserService, ConfigService } from '@core';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
 import { createSuggestedStationsServiceSpy } from '../suggested-stations-spy-factories.spec';
-import { CoreSpyFactories } from '@core/testing';
+import { CoreSpyFactories, ConfigStubService } from '@core/testing';
 
 describe('SuggestedStationsEffects', () => {
   const actions$: Observable<any> = null;
@@ -19,6 +19,7 @@ describe('SuggestedStationsEffects', () => {
         SuggestedStationsEffects,
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialSuggestedStationsRootState}),
+        { provide: ConfigService, useClass: ConfigStubService },
         { provide: SuggestedStationsService, useValue: createSuggestedStationsServiceSpy() },
         { provide: RadioBrowserService, useValue: CoreSpyFactories.createRadioBrowserServiceSpy() },
         { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() }

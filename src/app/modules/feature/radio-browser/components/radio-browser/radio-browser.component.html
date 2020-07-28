@@ -58,6 +58,6 @@
 <mat-card *ngIf="isSearchInProgress$ | async" class="mat-table-spinner mat-elevation-z2">
   <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
 </mat-card>
-<mat-card *ngIf="(searchResults$ | async) != null && (searchResults$ | async).length >= resultsLimit" class="mat-elevation-z2">
-  <p>Search limited to the first {{resultsLimit}} results.</p>
+<mat-card *ngIf="(searchResults$ | async) != null && (searchResults$ | async).length >= (resultsLimit$ | async)" class="mat-elevation-z2">
+  <p>Search limited to the first {{resultsLimit$ | async}} results.</p>
 </mat-card>

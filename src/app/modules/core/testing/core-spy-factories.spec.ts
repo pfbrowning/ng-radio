@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject, of } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
 import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { StreamPreprocessorService } from '../services/preprocessing/stream-preprocessor.service';
 import { StreamValidatorService } from '../services/preprocessing/stream-validator.service';
 import { RadioBrowserService } from '../services/radio-browser.service';
+import { WindowService } from '../services/application/window.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -55,21 +56,6 @@ export function createOAuthServiceSpy(): jasmine.SpyObj<OAuthService> {
   return spy;
 }
 
-export function createConfigServiceSpy(): any {
-  const spy = jasmine.createSpyObj('configService', ['initialize']);
-  const appConfig = {
-    'metadataApiUrl': 'test.com',
-    'radioBrowserApiUrl': 'test.com',
-    'metadataRefreshInterval': 15000,
-    'metadataFetchTimeout': 10
-  };
-  spy['appConfig'] = appConfig;
-  spy['appConfig$'] = of(appConfig);
-  spy['loaded$'] = new Subject();
-  spy['initialized'] = true;
-  return spy;
-}
-
 export function createLoggingServiceSpy(): jasmine.SpyObj<LoggingService> {
   return jasmine.createSpyObj('loggingService', ['logError', 'logInformation', 'logEvent']);
 }
@@ -92,4 +78,8 @@ export function createStreamPreprocessorServiceSpy(): jasmine.SpyObj<StreamPrepr
 
 export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
   return jasmine.createSpyObj('streamValidatorService', [ 'validate' ]);
+}
+
+export function createWindowServiceSpy(): jasmine.SpyObj<WindowService> {
+  return jasmine.createSpyObj('windowService', [ 'getLocationOrigin' ]);
 }
