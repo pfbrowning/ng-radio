@@ -9,6 +9,13 @@ export interface AppConfig {
     refreshIntervalShort: number;
     refreshIntervalLong: number;
     metadataFetchTimeout: number;
-    appInsightsInstrumentationKey: string;
     authConfig: AuthConfig;
+    logging: {
+        appInsightsInstrumentationKey: string;
+        minLogLevels: {
+            console: number;
+            appInsights: number;
+        }
+
+    };
 }

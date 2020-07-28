@@ -15,5 +15,6 @@ export { LoggingService } from './services/logging.service';
 export { StreamValidatorService } from './services/preprocessing/stream-validator.service';
 export { RadioBrowserService } from './services/radio-browser.service';
 export { AuthGuardService } from './services/authentication/auth-guard.service';
+export { AppInsightsService } from './services/logging/app-insights.service';
 
 export { CoreModule } from './core.module';

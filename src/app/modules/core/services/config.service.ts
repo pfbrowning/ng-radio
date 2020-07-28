@@ -6,9 +6,6 @@ import { AppConfig } from '../models/config/app-config';
 import { merge } from 'lodash-es';
 import { WindowService } from './application';
 
-/** Abstraction layer for configuration.  Fetches the app config for the store and
- * provides an observable to access it from the store once it's been loaded.
- */
 @Injectable()
 export class ConfigService {
   constructor(

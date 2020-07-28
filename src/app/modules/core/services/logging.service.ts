@@ -1,143 +1,104 @@
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
-import { ApplicationInsights, SeverityLevel, IExceptionTelemetry, ITraceTelemetry } from '@microsoft/applicationinsights-web';
-import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ConfigService } from './config.service';
+import { LoggerSeverity } from '../models/logging/logger-severity';
+import { AppInsightsService } from './logging/app-insights.service';
 
-/**
- * This service handles the responsibility of logging errors, events, and
- * information to Azure Application Insights.
- */
+/** Serilog-inspired provider-agnostic logging service */
 @Injectable({providedIn: 'root'})
 export class LoggingService {
-  constructor(private configService: ConfigService) {
-    // Once the app config has loaded
-    this.configService.appConfig$.subscribe(config => {
-      // If an app insights key was provided
-      if (config.appInsightsInstrumentationKey) {
-        this.appInsights = new ApplicationInsights({
-          config: {
-            instrumentationKey: config.appInsightsInstrumentationKey,
-            enableAutoRouteTracking: true
-          }
-        });
-        this.appInsights.loadAppInsights();
-        this.initialized.next();
-      }
-    });
-  }
+  private minLogLevels$ = this.configService.appConfig$.pipe(map(config => config.logging.minLogLevels));
 
-  private appInsights: ApplicationInsights;
-  private initialized = new ReplaySubject<void>(1);
+  constructor(
+    private configService: ConfigService,
+    private appInsightsService: AppInsightsService
+  ) { }
 
   /**
-   * Takes an Object and converts it to the dictionary format
-   * that the App Insights library expects.
-   * @param input Object to convert to a string dictionary
-   */
-  private static objectToLoggingDictionary(input: object) {
-    const output: { [name: string]: string; } = {};
-    for (const key in input) {
-      if (input.hasOwnProperty(key)) {
-        const value = input[key];
-        switch (typeof value) {
-          case 'boolean':
-          case 'number':
-          case 'string':
-            output[key] = value.toString();
-            break;
-          case 'object':
-            output[key] = JSON.stringify(value);
-            break;
-        }
-      }
-    }
-    return output;
-  }
-
-  /**
-   * Logs information to App Insights at the specified severity level once app insights has been initialized
+   * Log information at the specified severity level
    * @param message Message to log
    * @param severityLevel Severity level to log the message as
    * @param properties JS object mapping extra information to log as key/value pairs
    */
-  public logTrace(message: string, severityLevel: SeverityLevel, properties: object = null) {
-    this.initialized.pipe(take(1)).subscribe(() => {
-      const traceTelemetry: ITraceTelemetry = {
-        message,
-        severityLevel,
-        properties: LoggingService.objectToLoggingDictionary(properties)
-      };
-      this.appInsights.trackTrace(traceTelemetry);
+  private log(message: string, severityLevel: LoggerSeverity, properties: object = null) {
+    this.minLogLevels$.subscribe(minLogLevels => {
+      if (minLogLevels.appInsights && severityLevel >= minLogLevels.appInsights) {
+        this.appInsightsService.logTrace(message, severityLevel, properties);
+      }
+      if (minLogLevels.console && severityLevel >= minLogLevels.console) {
+        console.log(LoggerSeverity[severityLevel], message, properties);
+      }
     });
   }
 
   /**
-   * Logs an error to App Insights at the specified severity level once app insights has been initialized
+   * Log an exception at the specified severity level
    * @param error Error to log.  A regular old JS error.
    * @param severityLevel Severity level to log the message as
    * @param properties JS object mapping extra information to log as key/value pairs
    */
-  private logException(error: Error, severityLevel: SeverityLevel, properties: object = null) {
-    this.initialized.pipe(take(1)).subscribe(() => {
-      const exceptionTelementry: IExceptionTelemetry = {
-        exception: error,
-        severityLevel,
-        properties: LoggingService.objectToLoggingDictionary(properties)
-      };
-      this.appInsights.trackException(exceptionTelementry);
-    });
-  }
-
-  public setAuthenticatedUserContext(userId: string) {
-    this.initialized.pipe(take(1)).subscribe(() => {
-      this.appInsights.context.user.id =  userId;
-      this.appInsights.context.user.authenticatedId = userId;
+  public exception(exception: Error, severityLevel: LoggerSeverity, properties: object = null) {
+    this.minLogLevels$.subscribe(minLogLevels => {
+      if (minLogLevels.appInsights && severityLevel >= minLogLevels.appInsights) {
+        this.appInsightsService.exception(exception, severityLevel, properties);
+      }
+      if (minLogLevels.console && severityLevel >= minLogLevels.console) {
+        console.error(LoggerSeverity[severityLevel], exception, properties);
+      }
     });
   }
 
   /**
-   * Provider-agnostic logging entry point for verbose-level logging
+   * Log at the Trace level
    * @param message Message to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logVerbose(message: string, properties: object = null) {
-    this.logTrace(message, SeverityLevel.Verbose, properties);
+  public trace(message: string, properties: object = null) {
+    this.log(message, LoggerSeverity.Trace, properties);
   }
 
   /**
-   * Provider-agnostic logging entry point for warn-level logging
+   * Log at the Debug level
    * @param message Message to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logWarning(message: string, properties: object = null) {
-    this.logTrace(message, SeverityLevel.Warning, properties);
+  public debug(message: string, properties: object = null) {
+    this.log(message, LoggerSeverity.Debug, properties);
   }
 
   /**
-   * Provider-agnostic logging entry point for information-level logging
+   * Log at the Warn level
    * @param message Message to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logInformation(message: string, properties: object = null) {
-    this.logTrace(message, SeverityLevel.Information, properties);
+  public warn(message: string, properties: object = null) {
+    this.log(message, LoggerSeverity.Warn, properties);
   }
 
   /**
-   * Provider-agnostic logging entry point for error-level logging
+   * Log at the Info level
+   * @param message Message to log
+   * @param properties Extra information to log as a set of key/value pairs
+   */
+  public info(message: string, properties: object = null) {
+    this.log(message, LoggerSeverity.Info, properties);
+  }
+
+  /**
+   * Log at the Error level
    * @param error Error to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logError(error: Error, properties: object = null) {
-    this.logException(error, SeverityLevel.Error, properties);
+  public error(message: string, properties: object = null) {
+    this.log(message, LoggerSeverity.Error, properties);
   }
 
   /**
-   * Provider-agnostic logging entry point for critical-level logging
+   * Log at the Fatal level
    * @param error Error to log
    * @param properties Extra information to log as a set of key/value pairs
    */
-  public logCritical(error: Error, properties: object = null) {
-    this.logException(error, SeverityLevel.Critical, properties);
+  public fatal(message: string, properties: object = null) {
+    this.log(message, LoggerSeverity.Fatal, properties);
   }
 }

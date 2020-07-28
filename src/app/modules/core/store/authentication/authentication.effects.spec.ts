@@ -12,6 +12,7 @@ import { AuthenticationActions } from '.';
 import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
+import { AppInsightsService } from '../../services/logging/app-insights.service';
 
 describe('AuthenticationEffects', () => {
   let actions$: Observable<any> = null;
@@ -32,6 +33,7 @@ describe('AuthenticationEffects', () => {
         { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
         { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() },
         { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() },
+        { provide: AppInsightsService, useValue: CoreSpyFactories.createAppInsightsServiceSpy() }
       ]
     });
 

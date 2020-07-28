@@ -141,14 +141,14 @@ export class PlayerEffects {
     ofType(playAudioFailed),
     tap(({station, error}) => {
       this.notificationService.notify(Severities.Error, 'Failed To Play Audio', error.message);
-      this.loggingService.logWarning('Failed To Play Audio', { station, error });
+      this.loggingService.warn('Failed To Play Audio', { station, error });
     })
   ), { dispatch: false });
 
   logFailedToValidateStream$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.preprocessStreamFailed),
     tap(({streamUrl, reason, error, details}) =>
-      this.loggingService.logWarning('Failed To Validate Stream', { streamUrl, reason, error, details })
+      this.loggingService.warn('Failed To Validate Stream', { streamUrl, reason, error, details })
     )
   ), { dispatch: false });
 
@@ -229,7 +229,7 @@ export class PlayerEffects {
 
   logFetchNowPlayingFailed$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchNowPlayingFailed),
-    tap(({error, streamUrl}) => this.loggingService.logWarning('Fetch Now Playing Failed', { streamUrl, error }))
+    tap(({error, streamUrl}) => this.loggingService.warn('Fetch Now Playing Failed', { streamUrl, error }))
   ), { dispatch: false });
 
   updateTitleOnStreamInfoChanged$ = createEffect(() => this.actions$.pipe(

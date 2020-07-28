@@ -7,7 +7,6 @@
     "refreshIntervalShort": 20000,
     "refreshIntervalLong": 60000,
     "metadataFetchTimeout": 15000,
-    "appInsightsInstrumentationKey": null,
     "authConfig": {
         "issuer": null,
         "clientId": null,
@@ -20,6 +19,13 @@
         "postLogoutRedirectUri": "http://localhost:4200",
         "customQueryParams": {
             "audience": null
+        }
+    },
+    "logging": {
+        "appInsightsInstrumentationKey": null,
+        "minLogLevels": {
+            "console": 1,
+            "appInsights": 2
         }
     }
 }

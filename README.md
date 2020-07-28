@@ -57,11 +57,11 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Fix Chrome test config
-  * Refactor logging service
-  * Partition core/services directory
-  * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
-  * Refactor selector import / export logic
+  * Refactore core/store and core/services as necessary
+    * Partition services directory appropriately
+    * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
+    * Refactor selector import / export logic
+  * Configure APP_INITIALIZER for app insights service
 * Features
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy - use [icecast-parser](https://github.com/ghaiklor/icecast-parser) or [node-icy](https://github.com/TooTallNate/node-icy)
   * Non-logged-in experience: Require login only for favorites

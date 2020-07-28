@@ -9,6 +9,7 @@ import { StreamPreprocessorService } from '../services/preprocessing/stream-prep
 import { StreamValidatorService } from '../services/preprocessing/stream-validator.service';
 import { RadioBrowserService } from '../services/radio-browser.service';
 import { WindowService } from '../services/application/window.service';
+import { AppInsightsService } from '../services/logging/app-insights.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -57,9 +58,12 @@ export function createOAuthServiceSpy(): jasmine.SpyObj<OAuthService> {
 }
 
 export function createLoggingServiceSpy(): jasmine.SpyObj<LoggingService> {
-  return jasmine.createSpyObj('loggingService', ['logError', 'logInformation', 'logEvent']);
+  return jasmine.createSpyObj('loggingService', ['logError', 'info', 'logEvent']);
 }
 
+export function createAppInsightsServiceSpy(): jasmine.SpyObj<AppInsightsService> {
+  return jasmine.createSpyObj('appInsightsService', ['initialize']);
+}
 
 export function createNotificationServiceSpy(): jasmine.SpyObj<NotificationService> {
   return jasmine.createSpyObj('notificationServiceSpy', ['notify']);

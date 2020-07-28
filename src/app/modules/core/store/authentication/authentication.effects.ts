@@ -11,6 +11,8 @@ import { Action, Store, select } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
 import { LoggingService } from '../../services/logging.service';
 import { AuthenticationActions, AuthenticationSelectors } from '.';
+import { LoggerSeverity } from '../../models/logging/logger-severity';
+import { AppInsightsService } from '../../services/logging/app-insights.service';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {
@@ -21,6 +23,7 @@ export class AuthenticationEffects implements OnInitEffects {
     private configService: ConfigService,
     private currentTimeService: CurrentTimeService,
     private notificationService: NotificationService,
+    private appInsightsService: AppInsightsService,
     private loggingService: LoggingService
   ) { }
 
@@ -89,15 +92,14 @@ export class AuthenticationEffects implements OnInitEffects {
     withLatestFrom(this.store.pipe(select(AuthenticationSelectors.currentUserEmail))),
     filter(([{ authenticated } , email ]) => authenticated && email != null),
     tap(([, email ]) => {
-      this.loggingService.setAuthenticatedUserContext(email);
-      this.loggingService.logInformation('userInitialized', { 'email': email });
+      this.appInsightsService.setAuthenticatedUserContext(email);
+      this.loggingService.info('userInitialized', { 'email': email });
     })
   ), { dispatch: false });
 
   logInitializeFailed$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.initializeFailed),
-    tap(action => this.loggingService.logCritical(action.error, {
-      'event': 'Failed To Initialize Authentication',
+    tap(action => this.loggingService.fatal('Failed To Initialize Authentication', {
       'details': action.error
     }))
   ), { dispatch: false });
@@ -105,7 +107,7 @@ export class AuthenticationEffects implements OnInitEffects {
   logSilentRefreshFailed$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.silentRefreshFailed),
     withLatestFrom(this.store.pipe(select(AuthenticationSelectors.currentUserEmail))),
-    tap(([action, email]) => this.loggingService.logError(action.error, {
+    tap(([action, email]) => this.loggingService.exception(action.error, LoggerSeverity.Error, {
       event: 'Silent Refresh Failed',
       details: action.error,
       email

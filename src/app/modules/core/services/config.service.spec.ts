@@ -38,7 +38,7 @@ describe('ConfigService', () => {
   });
 
   it('should properly handle successful config fetch', (done: DoneFn) => {
-    const dummyConfig: AppConfig = {
+    const dummyConfig = {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       radioBrowserSearchResultsLimit: 25,
@@ -47,9 +47,9 @@ describe('ConfigService', () => {
       refreshIntervalShort: 1,
       refreshIntervalLong: 3,
       metadataFetchTimeout: 2,
-      appInsightsInstrumentationKey: null,
-      authConfig: {}
-    };
+      authConfig: {},
+      logging: {}
+    } as AppConfig;
 
     // Listen to the initialize observable
     configService.appConfig$.subscribe({
@@ -105,14 +105,16 @@ describe('ConfigService', () => {
       }
     };
     const localConfig = {
-      appInsightsInstrumentationKey: 'app insights key value',
       corsProxyUrl: 'testCorsProxy',
       authConfig: {
         logoutUrl: 'some place',
         clientId: 'local client'
+      },
+      logging: {
+        appInsightsInstrumentationKey: 'app insights key value',
       }
     };
-    const mergedConfig: AppConfig = {
+    const mergedConfig = {
       metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       radioBrowserSearchResultsLimit: 25,
@@ -121,13 +123,15 @@ describe('ConfigService', () => {
       refreshIntervalLong: 1,
       refreshIntervalShort: 2,
       metadataFetchTimeout: 3,
-      appInsightsInstrumentationKey: 'app insights key value',
       authConfig: {
         issuer: 'app issuer',
         clientId: 'local client',
         logoutUrl: 'some place',
+      },
+      logging: {
+        appInsightsInstrumentationKey: 'app insights key value',
       }
-    };
+    } as AppConfig;
 
     configService.appConfig$.subscribe({
       next: config => {

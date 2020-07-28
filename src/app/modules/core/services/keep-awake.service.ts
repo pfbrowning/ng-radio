@@ -37,7 +37,7 @@ export class KeepAwakeService {
     // Notify any subscribers
     this.enabled.next(true);
     this.notificationService.notify(Severities.Success, 'Keep Awake Enabled', 'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
-    this.loggingService.logInformation('Keep Awake Enabled');
+    this.loggingService.info('Keep Awake Enabled');
   }
 
   /** Disables NoSleep.js in order to allow the mobile screen
