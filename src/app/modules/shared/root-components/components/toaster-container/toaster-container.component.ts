@@ -1,9 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { SubSink } from 'subsink';
-import { Store } from '@ngrx/store';
-import { RootState } from '@core';
-import { ApplicationActions } from '@core/store';
+import { ToasterReadyService } from '@core/services';
 
 @Component({
   selector: 'blr-toaster-container',
@@ -15,7 +13,7 @@ export class ToasterContainerComponent implements OnInit, OnDestroy, AfterViewIn
   constructor(
     private messageService: MessageService,
     private changeDetectorRef: ChangeDetectorRef,
-    private store: Store<RootState>
+    private toasterReadyService: ToasterReadyService
   ) { }
 
   private subs = new SubSink();
@@ -31,6 +29,6 @@ export class ToasterContainerComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   public ngAfterViewInit(): void {
-    this.store.dispatch(ApplicationActions.toasterInitialized());
+    this.toasterReadyService.toasterInitialized();
   }
 }

@@ -8,7 +8,7 @@ import { MessageService } from 'primeng/api';
 import { StreamPreprocessorService } from '../services/preprocessing/stream-preprocessor.service';
 import { StreamValidatorService } from '../services/preprocessing/stream-validator.service';
 import { RadioBrowserService } from '../services/radio-browser.service';
-import { WindowService } from '../services/application/window.service';
+import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {

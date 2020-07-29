@@ -4,7 +4,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, Router } from '@angular/router';
-import { WindowService } from '@core/services/application';
+import { WindowService } from '@core/services';
 import { WindowServiceStub } from '@core/testing';
 import theoretically from 'jasmine-theories';
 

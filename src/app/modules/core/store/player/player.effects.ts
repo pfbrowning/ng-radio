@@ -2,7 +2,7 @@ import { Injectable, Inject, NgZone } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { StreamInfoService } from '../../services/stream-info.service';
 import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap } from 'rxjs/operators';
-import { from, of, timer } from 'rxjs';
+import { from, of, timer, merge } from 'rxjs';
 import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { Store, select, Action } from '@ngrx/store';
@@ -31,12 +31,13 @@ import { AudioElement } from '../../models/player/audio-element';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import { LoggingService } from '../../services/logging.service';
 import { PlayerActions, PlayerSelectors } from '.';
-import { ApplicationActions } from '../application/.';
 import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
+import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
+import { WindowService } from '../../services/browser-apis/window.service';
 
 @Injectable()
 export class PlayerEffects {
@@ -50,6 +51,8 @@ export class PlayerEffects {
     private titleService: Title,
     private streamPreprocessorService: StreamPreprocessorService,
     private currentTimeService: CurrentTimeService,
+    private windowService: WindowService,
+    private windowFocusService: WindowFocusService,
     private ngZone: NgZone,
     @Inject(AudioElementToken) private audio: AudioElement
   ) { }
@@ -159,22 +162,26 @@ export class PlayerEffects {
     map(([, {current}]) => fetchNowPlayingStart({streamUrl: current}))
   ));
 
-  fetchListedStreamInfo$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.selectStreamInfoUrls, ApplicationActions.windowFocus),
+  fetchListedStreamInfo$ = createEffect(() => merge([
+    this.actions$.pipe(ofType(PlayerActions.selectStreamInfoUrls)),
+    this.windowService.focus
+  ]).pipe(
     withLatestFrom(this.store.pipe(select(PlayerSelectors.nonIntervalOrFetchingStreamInfoUrls))),
-    switchMap(([, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({streamUrl})))
+    switchMap(([, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({ streamUrl })))
   ));
 
   startFetchInterval$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchNowPlayingSucceeded, PlayerActions.fetchNowPlayingFailed),
     withLatestFrom(
-      this.store.pipe(select(PlayerSelectors.fetchIntervalParams)),
+      this.store.pipe(select(PlayerSelectors.selectCurrentStationUrl)),
+      this.store.pipe(select(PlayerSelectors.streamInfoUrls)),
+      this.windowFocusService.focused$,
       this.configService.appConfig$
     ),
-    filter(([{streamUrl}, {current, listed}]) => listed.concat(current).includes(streamUrl)),
-    map(([action, selected, config]) => fetchIntervalStart({
+    filter(([{streamUrl}, current, listed]) => listed.concat(current).includes(streamUrl)),
+    map(([action, current, , focused, config]) => fetchIntervalStart({
       streamUrl: action.streamUrl,
-      duration: selected.current === action.streamUrl && selected.focused
+      duration: current === action.streamUrl && focused
         ? config.refreshIntervalShort
         : config.refreshIntervalLong
     }))
@@ -193,9 +200,14 @@ export class PlayerEffects {
 
   onFetchIntervalComplete$ = createEffect(() => this.actions$.pipe(
     ofType(PlayerActions.fetchIntervalCompleted),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.fetchIntervalParams))),
+    withLatestFrom(
+      this.store.pipe(select(PlayerSelectors.selectCurrentStationUrl)),
+      this.store.pipe(select(PlayerSelectors.streamInfoUrls)),
+      this.store.pipe(select(PlayerSelectors.selectPlayerStatus)),
+      this.windowFocusService.focused$
+    ),
     // Fetch listed streams only if the window is focused, but fetch the current playing stream regardless
-    filter(([{streamUrl}, {listed, current, status, focused}]) =>
+    filter(([{streamUrl}, current, listed, status, focused]) =>
       (listed.includes(streamUrl) && focused) || (current === streamUrl && status === PlayerStatus.Playing)
     ),
     map(([{streamUrl}]) => PlayerActions.fetchNowPlayingStart({streamUrl}))

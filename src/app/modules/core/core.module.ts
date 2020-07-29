@@ -21,7 +21,6 @@ import { ConfigService } from './services/config.service';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './services/notification.service';
-import { ApplicationEffects } from './store/application/application.effects';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
 import NoSleep from 'nosleep.js';
@@ -42,8 +41,7 @@ import NoSleep from 'nosleep.js';
       FavoriteStationsEffects,
       PlayerEffects,
       SleepTimerEffects,
-      AuthenticationEffects,
-      ApplicationEffects
+      AuthenticationEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),

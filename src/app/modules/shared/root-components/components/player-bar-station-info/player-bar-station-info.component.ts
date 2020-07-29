@@ -13,7 +13,7 @@ import {
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { SubSink } from 'subsink';
-import { WindowService } from '@core/services/application';
+import { WindowService } from '@core/services';
 import { PlayerSelectors } from '@core/store';
 
 @Component({

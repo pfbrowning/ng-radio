@@ -2,34 +2,28 @@ import { TestBed } from '@angular/core/testing';
 import { NotificationService } from '../services/notification.service';
 import { Severities } from '../models/notifications/severities';
 import { MessageService } from 'primeng/api';
-import { createMessageServiceSpy } from '../testing/core-spy-factories.spec';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { initialRootState } from '../models/initial-root-state';
-import { RootState } from '../models/root-state';
-import { ApplicationSelectors } from '../store/application';
 import theoretically from 'jasmine-theories';
+import { ToasterReadyService } from './notifications/toaster-ready.service';
+import { CoreSpyFactories } from '@core/testing';
+import { ToasterReadyStubService } from '../testing/stubs/toaster-ready-stub-service.spec';
 
 describe('NotificationService', () => {
   let notificationService: NotificationService;
   let messageServiceSpy: any;
-  let store: MockStore<RootState>;
+  let toasterReadyService: ToasterReadyStubService;
 
   beforeEach(() => {
-    messageServiceSpy = createMessageServiceSpy();
+    messageServiceSpy = CoreSpyFactories.createMessageServiceSpy();
+    toasterReadyService = new ToasterReadyStubService();
 
     TestBed.configureTestingModule({
       providers: [
         { provide: MessageService, useValue: messageServiceSpy },
-        provideMockStore({initialState: initialRootState}),
+        { provide: ToasterReadyService, useValue: toasterReadyService }
       ]
     });
 
     notificationService = TestBed.inject(NotificationService);
-    store = TestBed.inject(MockStore);
-  });
-
-  afterEach(() => {
-    store.resetSelectors();
   });
 
 
@@ -45,7 +39,7 @@ describe('NotificationService', () => {
   ];
   theoretically.it('Should pass notifications to messageService', testNotifications, (notification) => {
     // Arrange
-    store.overrideSelector(ApplicationSelectors.toasterInitialized, true);
+    toasterReadyService.toasterReadySource.next();
 
     // Act
     notificationService.notify(notification.severity, notification.summary, notification.detail, notification.life);
@@ -59,13 +53,11 @@ describe('NotificationService', () => {
 
   it('Should wait for toaster initialization before passing a message', () => {
     // Arrange
-    const initialized = store.overrideSelector(ApplicationSelectors.toasterInitialized, false);
     notificationService.notify(Severities.Info, 'Summary', 'Detail');
     expect(messageServiceSpy.add).not.toHaveBeenCalled();
 
     // Act
-    initialized.setResult(true);
-    store.refreshState();
+    toasterReadyService.toasterReadySource.next();
 
     // Assert
     expect(messageServiceSpy.add).toHaveBeenCalledTimes(1);

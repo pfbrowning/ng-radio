@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
 import { StreamInfo } from '../../models/player/stream-info';
-import { ApplicationSelectors } from '../application/.';
 
 export const selectPlayerState = (state: RootState) => state.player;
 
@@ -100,12 +99,4 @@ export const nonIntervalOrFetchingStreamInfoUrls = createSelector(
     nowPlayingFetchInProgressUrls,
     nowPlayingIntervalInProgressUrls,
     (urls, fetching, intervals) => urls.filter(u => !fetching.concat(intervals).includes(u))
-);
-
-export const fetchIntervalParams = createSelector(
-    selectCurrentStationUrl,
-    streamInfoUrls,
-    selectPlayerStatus,
-    ApplicationSelectors.windowHasFocus,
-    (current, listed, status, focused) => ({current, listed, status, focused})
 );
