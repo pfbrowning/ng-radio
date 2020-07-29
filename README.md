@@ -57,6 +57,12 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Refactor authentication logic
+    * Try out [oidc-client-js](https://github.com/IdentityModel/oidc-client-js)
+    * Refactor import & export pattern for actions & selectors
+    * Implement facade
+    * Manage logged-out state: change login/logout button in menu?
+  * Remove router store if possible
   * Refactore core/store and core/services as necessary
     * Partition services directory appropriately
     * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
