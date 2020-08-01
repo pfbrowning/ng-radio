@@ -9,6 +9,7 @@ export enum AuthenticationActions {
     SilentRefreshSucceeded = '[Authentication] Silent Refresh Succeeded',
     SilentRefreshFailed = '[Authentication] Silent Refresh Failed',
     AccessTokenExpired = '[Authentication] Access Token Expired',
+    LogoutButtonClicked = '[Authentication] Logout Button Clicked',
 }
 
 export const effectsInit = createAction(
@@ -36,4 +37,8 @@ export const silentRefreshSucceeded = createAction(
 
 export const accessTokenExpired = createAction(
     AuthenticationActions.AccessTokenExpired
+);
+
+export const logoutButtonClicked = createAction(
+    AuthenticationActions.LogoutButtonClicked
 );

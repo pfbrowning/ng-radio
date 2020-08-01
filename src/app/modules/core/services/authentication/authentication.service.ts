@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, tap, switchMap } from 'rxjs/operators';
-import { UserManager, User } from 'oidc-client';
-import { Observable, Subject } from 'rxjs';
-import { ConfigService } from '../config.service';
+import { map } from 'rxjs/operators';
+import { UserManager, User, UserManagerSettings } from 'oidc-client';
+import { Observable, Subject, from } from 'rxjs';
 import { WindowService } from '../browser-apis/window.service';
 import { isFalsyOrWhitespace } from '@utilities';
 import { TokenReceivedResult } from '../../models/authentication/token-received-result';
@@ -23,15 +22,12 @@ export class AuthenticationService {
     map(user => this.userToTokenReceivedResult(user))
   );
 
-  constructor(private configService: ConfigService, private windowService: WindowService) { }
+  constructor(private windowService: WindowService) { }
 
-  public initialize(): Observable<TokenReceivedResult> {
-    return this.configService.appConfig$.pipe(
-      tap(config => {
-        this.userManager = new UserManager(config.authConfig.userManager);
-        this.registerEvents();
-      }),
-      switchMap(() => this.userManager.getUser()),
+  public initialize(config: UserManagerSettings): Observable<TokenReceivedResult> {
+    this.userManager = new UserManager(config);
+    this.registerEvents();
+    return from(this.userManager.getUser()).pipe(
       map(user => this.userToTokenReceivedResult(user))
     );
   }
@@ -52,16 +48,19 @@ export class AuthenticationService {
     this.userManager.events.addSilentRenewError(error =>  this.silentRefreshErrorSource.next());
   }
 
-  public logOut(): void {
-    this.configService.appConfig$.subscribe(config => {
-      this.userManager.removeUser();
-      /* Do we care to handle updating the store for the "can't redirect because logoutUrl
-      isn't provided" scenario?  Will this ever actually happen? */
-      if (!isFalsyOrWhitespace(config.authConfig.logoutUrl)) {
-        /* Auth0 doesn't publish an OIDC standard end session endpoint
-        so we have to navigate manully. */
-        this.windowService.locationReplace(config.authConfig.logoutUrl);
+  public logOut(customLogoutUrl: string): void {
+    this.userManager.removeUser();
+    /* If a custom logout url was provided, then navigate directly.  This is necessary
+    for Auth0 or any other providers who don't support the standard OIDC end session endpoint. */
+    if (!isFalsyOrWhitespace(customLogoutUrl)) {
+      this.windowService.locationReplace(customLogoutUrl);
+    }
+    // If an OIDC standard end session endpoint is configured, then navigate via userManager
+    this.userManager.metadataService.getEndSessionEndpoint().then(url => {
+      if (!isFalsyOrWhitespace(url)) {
+        this.userManager.signoutRedirect();
       }
+      // If there's no custom logout url or OIDC standard end session endpoint, then do nothing.
     });
   }
 

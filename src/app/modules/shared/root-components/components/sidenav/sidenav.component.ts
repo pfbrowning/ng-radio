@@ -25,7 +25,7 @@ export class SidenavComponent {
   }
 
   public onLogoutClicked() {
-    this.authenticationService.logOut();
+    this.authenticationFacade.logoutButtonClicked();
   }
 
   public onLoginClicked() {

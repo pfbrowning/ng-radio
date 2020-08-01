@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable, of, NEVER } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 
@@ -14,6 +14,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.authenticationFacade.authenticated$.pipe(
+      take(1),
       switchMap(authenticated => {
         if (authenticated) {
           return of(true);

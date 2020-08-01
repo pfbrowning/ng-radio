@@ -32,7 +32,8 @@ export class AuthenticationEffects implements OnInitEffects {
 
   initialize$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.initializeStart),
-    switchMap(() => this.authenticationService.initialize().pipe(
+    switchMap(() => this.configService.appConfig$),
+    switchMap(config => this.authenticationService.initialize(config.authConfig.userManager).pipe(
       map(result => AuthenticationActions.initializeSucceeded({ ...result })),
       catchError(error => of(AuthenticationActions.initializeFailed({error})))
     ))
@@ -45,6 +46,12 @@ export class AuthenticationEffects implements OnInitEffects {
   accessTokenExpired$ = createEffect(() => this.authenticationService.accessTokenExpired$.pipe(
     map(() => AuthenticationActions.accessTokenExpired())
   ));
+
+  logoutButtonClicked$ = createEffect(() => this.actions$.pipe(
+    ofType(AuthenticationActions.logoutButtonClicked),
+    switchMap(() => this.configService.appConfig$),
+    tap(config => this.authenticationService.logOut(config.authConfig.logoutUrl))
+  ), { dispatch: false });
 
   notifyTokenExpired$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.accessTokenExpired),

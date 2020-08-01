@@ -18,7 +18,7 @@ const reducer = createReducer<AuthenticationState>(
     ...state,
     initialized: true
   })),
-  on(AuthenticationActions.accessTokenExpired, state => ({
+  on(AuthenticationActions.accessTokenExpired, AuthenticationActions.logoutButtonClicked, state => ({
     ...state,
     authenticated: false
   })),

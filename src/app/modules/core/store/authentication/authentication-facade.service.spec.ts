@@ -28,7 +28,7 @@ describe('AuthenticationFacadeService', () => {
   });
 
   describe('authenticated$', () => {
-    it('should wait until auth initializes before emitting and completing', fakeAsync(() => {
+    it('should wait until auth initializes before emitting', fakeAsync(() => {
       // Arrange
       const authenticatedSpy = jasmine.createSpyObj('authenticated$', [ 'next', 'complete' ]);
       authenticationFacade.authenticated$.subscribe({
@@ -50,7 +50,7 @@ describe('AuthenticationFacadeService', () => {
       // Assert
       expect(authenticatedSpy.next).toHaveBeenCalledTimes(1);
       expect(authenticatedSpy.next.calls.mostRecent().args[0]).toBe(true);
-      expect(authenticatedSpy.complete).toHaveBeenCalledTimes(1);
+      expect(authenticatedSpy.complete).not.toHaveBeenCalled();
     }));
   });
 });

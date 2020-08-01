@@ -48,6 +48,8 @@ You'll need to configure your own Oauth 2.0 + OpenID Connect identity provider. 
 
 Browninglogic Radio uses [oidc-client-js](https://github.com/IdentityModel/oidc-client-js) for authentication.  The `authConfig.userManager` section within `app.config.json` stores the `UserManagerSettings` object which is defined and documented by [oidc-client-js](https://github.com/IdentityModel/oidc-client-js/wiki).  For a standard simple OpenID Connect configuration it should be sufficient to specify your `authority`, `client_id`, `redirect_uri` and `silent_redirect_uri` within `authConfig.userManager` without having to make any modifications to the underlying code.
 
+Configuring a logout url is a bit more tricky because not all providers support the OpenID Connect standard End Session Endpoint.  For example, IdentityServer4 does, but Auth0 doesn't.  If the provider that you're using *does* support the end session endpoint, then you can stop reading.  I've implemented custom logout logic in order to support providers who do *not* support the end session endpoint: in order to use this, just configure your non-standard logout url in `authConfig.logoutUrl`.
+
 ### Running the App
 Once you've got the aforementioned dependencies configured, running, and in a happy state, simply install your dependencies and run the app as you would any Angular CLI app.  Assuming that you've already got npm and Angular CLI installed:
 ```bash
@@ -59,8 +61,6 @@ ng serve --open
 * Chores
   * Authentication refactor cleanup
     * Wrap login & logout behind the facade
-    * Store-aware logout logic & conditional redirect
-    * Document conditional redirect in readme
     * Logging Effects
   * Remove router store if possible
   * Refactore core/store and core/services as necessary

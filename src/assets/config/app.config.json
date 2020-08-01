@@ -20,7 +20,8 @@
             "extraQueryParams": {
                 "audience": null
             }
-        }
+        },
+        "logoutUrl": null
     },
     "logging": {
         "appInsightsInstrumentationKey": null,
