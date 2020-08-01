@@ -162,10 +162,10 @@ export class PlayerEffects {
     map(([, {current}]) => fetchNowPlayingStart({streamUrl: current}))
   ));
 
-  fetchListedStreamInfo$ = createEffect(() => merge([
+  fetchListedStreamInfo$ = createEffect(() => merge(
     this.actions$.pipe(ofType(PlayerActions.selectStreamInfoUrls)),
     this.windowService.focus
-  ]).pipe(
+  ).pipe(
     withLatestFrom(this.store.pipe(select(PlayerSelectors.nonIntervalOrFetchingStreamInfoUrls))),
     switchMap(([, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({ streamUrl })))
   ));
