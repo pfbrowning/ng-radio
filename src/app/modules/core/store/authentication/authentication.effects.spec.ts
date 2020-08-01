@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { AuthenticationEffects } from './authentication.effects';
 import { CurrentTimeService } from '@core';
 import { NotificationService, ConfigService, LoggingService } from '@core';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RootState } from '../../models/root-state';
@@ -31,7 +30,6 @@ describe('AuthenticationEffects', () => {
         { provide: ConfigService, useValue: configService },
         { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
         { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
-        { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() },
         { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() },
         { provide: AppInsightsService, useValue: CoreSpyFactories.createAppInsightsServiceSpy() }
       ]

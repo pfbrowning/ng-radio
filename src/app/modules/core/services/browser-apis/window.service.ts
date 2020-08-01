@@ -19,4 +19,8 @@ export class WindowService {
   public getLocationOrigin() {
     return window.location.origin;
   }
+
+  public locationReplace(url: string): void {
+    window.location.replace(url);
+  }
 }

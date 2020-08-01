@@ -6,7 +6,7 @@ import { AppConfig } from '../models/config/app-config';
 import { merge } from 'lodash-es';
 import { WindowService } from './browser-apis/window.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ConfigService {
   constructor(
     private httpClient: HttpClient,

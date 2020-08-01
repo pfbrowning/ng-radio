@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { AuthenticationService } from './authentication.service';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { ConfigService } from '../config.service';
 import { isFalsyOrWhitespace } from '@utilities';
+import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 
 @Injectable()
 export class BearerTokenService implements HttpInterceptor {
   constructor(
-    private authenticationService: AuthenticationService,
     private configService: ConfigService,
-    private oauthService: OAuthService
+    private authenticationFacade: AuthenticationFacadeService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,11 +23,10 @@ export class BearerTokenService implements HttpInterceptor {
       switchMap(config => {
         // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
         if (req.url.startsWith(config.favoriteStationsApiUrl) || req.url.startsWith(config.metadataApiUrl)) {
-          // Wait for authentication to initialize, regardless of whether the user is authenticated
-          return this.authenticationService.authenticated$.pipe(
-            switchMap(authenticated => authenticated && !isFalsyOrWhitespace(this.oauthService.getAccessToken())
+          return this.authenticationFacade.accessToken$.pipe(
+            switchMap(accessToken => !isFalsyOrWhitespace(accessToken)
               // If an access token is present, then append it to the Authorization header
-              ? next.handle(req.clone({ headers: req.headers.append('Authorization', `Bearer ${this.oauthService.getAccessToken()}`) }))
+              ? next.handle(req.clone({ headers: req.headers.append('Authorization', `Bearer ${accessToken}`) }))
               // If no access token is present, pass the unmodified request to the next handler
               : next.handle(req)
             )

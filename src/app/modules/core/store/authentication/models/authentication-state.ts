@@ -1,5 +1,6 @@
 export interface AuthenticationState {
     initialized: boolean;
-    authenticated: boolean;
     email: string;
+    authenticated: boolean;
+    accessToken: string;
 }

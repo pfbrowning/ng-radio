@@ -1,31 +1,24 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import {
-  initializeSucceeded,
-  initializeFailed,
-  silentRefreshSucceeded,
-  idTokenExpired,
-  accessTokenExpired
-} from './authentication.actions';
-import { initialAuthenticationState } from '../../models/authentication/initial-authentication-state';
-import { AuthenticationState } from '../../models/authentication/authentication-state';
+import { AuthenticationState } from './models/authentication-state';
+import { initialAuthenticationState } from './models/initial-authentication-state';
+import { AuthenticationActions } from '.';
 
 const reducer = createReducer<AuthenticationState>(
   initialAuthenticationState,
-  on(initializeSucceeded, (state, { idClaims, authenticated }) => ({
+  on(
+    AuthenticationActions.initializeSucceeded,
+    AuthenticationActions.silentRefreshSucceeded,
+    (state, { email, accessToken, authenticated }) => ({
+      ...state,
+      email,
+      accessToken,
+      authenticated
+    })),
+  on(AuthenticationActions.initializeSucceeded, AuthenticationActions.initializeFailed, state => ({
     ...state,
-    authenticated,
-    email: idClaims && idClaims['email'],
     initialized: true
   })),
-  on(initializeFailed, state => ({
-    ...state,
-    initialized: true
-  })),
-  on(silentRefreshSucceeded, state => ({
-    ...state,
-    authenticated: true
-  })),
-  on(idTokenExpired, accessTokenExpired, state => ({
+  on(AuthenticationActions.accessTokenExpired, state => ({
     ...state,
     authenticated: false
   })),

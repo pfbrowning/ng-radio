@@ -2,20 +2,23 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable, of, NEVER } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthenticationService } from './authentication.service';
+import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthGuardService implements CanActivate {
-  constructor(private authenticationService: AuthenticationService, private oauthService: OAuthService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private authenticationFacade: AuthenticationFacadeService
+  ) {}
 
   canActivate(): Observable<boolean> {
-    return this.authenticationService.authenticated$.pipe(
+    return this.authenticationFacade.authenticated$.pipe(
       switchMap(authenticated => {
         if (authenticated) {
           return of(true);
         }
-        this.oauthService.initCodeFlow();
+        this.authenticationService.logIn();
         return NEVER;
       })
     );

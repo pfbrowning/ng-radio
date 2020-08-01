@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Store } from '@ngrx/store';
 import { RootState } from '@core';
 import { FavoriteStationsActions } from '@core/store/favorite-stations';
+import { AuthenticationService } from '@core/services';
+import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
   selector: 'blr-side-nav',
@@ -11,13 +12,23 @@ import { FavoriteStationsActions } from '@core/store/favorite-stations';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidenavComponent {
-  constructor(private store: Store<RootState>, private oauthService: OAuthService) {}
+  public authenticated$ = this.authenticationFacade.authenticated$;
+
+  constructor(
+    private store: Store<RootState>,
+    private authenticationService: AuthenticationService,
+    private authenticationFacade: AuthenticationFacadeService
+  ) {}
 
   public onCustomStationClicked(): void {
     this.store.dispatch(FavoriteStationsActions.openStationEditNew());
   }
 
   public onLogoutClicked() {
-    this.oauthService.logOut();
+    this.authenticationService.logOut();
+  }
+
+  public onLoginClicked() {
+    this.authenticationService.logIn();
   }
 }

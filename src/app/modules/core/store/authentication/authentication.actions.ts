@@ -8,7 +8,6 @@ export enum AuthenticationActions {
     SilentRefreshStart = '[Authentication] Silent Refresh Start',
     SilentRefreshSucceeded = '[Authentication] Silent Refresh Succeeded',
     SilentRefreshFailed = '[Authentication] Silent Refresh Failed',
-    IdTokenExpired = '[Authentication] Id Token Expired',
     AccessTokenExpired = '[Authentication] Access Token Expired',
 }
 
@@ -22,12 +21,7 @@ export const initializeStart = createAction(
 
 export const initializeSucceeded = createAction(
     AuthenticationActions.InitializeSucceeded,
-    props<{
-        idClaims: { [name: string]: any };
-        idTokenExpiration: number,
-        accessTokenExpiration: number,
-        authenticated: boolean,
-    }>()
+    props<{ email: string, accessToken: string, authenticated: boolean }>()
 );
 
 export const initializeFailed = createAction(
@@ -37,16 +31,7 @@ export const initializeFailed = createAction(
 
 export const silentRefreshSucceeded = createAction(
     AuthenticationActions.SilentRefreshSucceeded,
-    props<{ idTokenExpiration: number, accessTokenExpiration: number }>()
-);
-
-export const silentRefreshFailed = createAction(
-    AuthenticationActions.SilentRefreshFailed,
-    props<{ error: any }>()
-);
-
-export const idTokenExpired = createAction(
-    AuthenticationActions.IdTokenExpired
+    props<{  email: string, accessToken: string, authenticated: boolean }>()
 );
 
 export const accessTokenExpired = createAction(

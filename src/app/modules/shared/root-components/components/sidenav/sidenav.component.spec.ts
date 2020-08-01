@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { CoreSpyFactories } from '@core/testing';
+import { AuthenticationService } from '@core/services';
+import { AuthenticationFacadeService } from '@core/store';
 
 describe('SidenavComponent', () => {
   let component: SidenavComponent;
@@ -13,7 +14,8 @@ describe('SidenavComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SidenavComponent ],
       providers: [
-        { provide: OAuthService, useValue: CoreSpyFactories.createOAuthServiceSpy() },
+        { provide: AuthenticationService, useValue: CoreSpyFactories.createAuthenticationServiceSpy() },
+        { provide: AuthenticationFacadeService, useValue: CoreSpyFactories.createAuthenticationFacadeSpy() },
         provideMockStore({initialState: initialRootState})
       ]
     })

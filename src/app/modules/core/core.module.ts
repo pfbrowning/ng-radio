@@ -12,12 +12,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@environment';
 import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stations.effects';
 import { PlayerEffects } from './store/player/player.effects';
+import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
 import { AudioElement } from './models/player/audio-element';
-import { AuthenticationEffects } from './store/authentication/authentication.effects';
-import { OAuthModule } from 'angular-oauth2-oidc';
-import { ConfigService } from './services/config.service';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { NotificationService } from './services/notification.service';
@@ -29,7 +27,6 @@ import NoSleep from 'nosleep.js';
   imports: [
     CommonModule,
     HttpClientModule,
-    OAuthModule.forRoot(),
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -50,7 +47,6 @@ import NoSleep from 'nosleep.js';
     StreamInfoService,
     KeepAwakeService,
     CurrentTimeService,
-    ConfigService,
     MessageService,
     NotificationService,
     { provide: NoSleepToken, useValue: new NoSleep() },

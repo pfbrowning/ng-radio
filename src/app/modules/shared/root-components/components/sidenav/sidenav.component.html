@@ -17,7 +17,12 @@
         <a routerLink="favorites" routerLinkActive="active-route">Favorites</a>
     </li>
     <li>
+      <ng-container *ngIf="authenticated$ | async; else logInButton">
         <a (click)="onLogoutClicked()" href="javascript:void(0);">Log Out</a>
+      </ng-container>
+      <ng-template #logInButton>
+        <a (click)="onLoginClicked()" href="javascript:void(0);">Log In</a>
+      </ng-template>
     </li>
   </ul>
 </nav>

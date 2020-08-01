@@ -44,9 +44,9 @@ You'll need to configure your own instance of the [radio-metadata-api](https://g
 If you want to log stuff to Azure Application Insights, then provide your instrumentation key in `app.config.json`.  Otherwise leave it as null: this is completely optional.
 
 ### Authentication
-You'll need to configure your own Oauth 2.0 + OpenID Connect identity provider.  In addition, you'll need to use an Oauth 2.0 provider which issues a JWT-based access token (this is not mandated by the Oauth 2.0 spec, but it's a common implementation).  This is required due to the "Favorites" functionality.  The quickest, easiest, and cheapest route would probably be to use an [Auth0](https://auth0.com/) free account.  A basic level of knowledge regarding authentication in Single Page Applications via OpenID Connect Authorization Code Flow + PKCE is required.
+You'll need to configure your own Oauth 2.0 + OpenID Connect identity provider.  In addition, you'll need to use an Oauth 2.0 provider which issues a JWT-based access token (this is not mandated by the Oauth 2.0 spec, but it's a common implementation).  This is required due to the "Favorites" functionality.  The quickest, easiest, and cheapest route would probably be to use an [Auth0](https://auth0.com/) free account.  A basic level of knowledge regarding authentication in Single Page Applications via OpenID Connect is required.
 
-Browninglogic Radio uses [angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc) for authentication.  The `authConfig` section within `app.config.json` stores the `AuthConfig` object which is defined and documented by `angular-oauth2-oidc`.  For a standard simple OpenID Connect configuration it should be sufficient to specify your `issuer`, `redirectUri`, `clientId`, and `scope` within `authConfig` without having to make any modifications to `src\modules\core\authentication\services\authentication.service.ts`.
+Browninglogic Radio uses [oidc-client-js](https://github.com/IdentityModel/oidc-client-js) for authentication.  The `authConfig.userManager` section within `app.config.json` stores the `UserManagerSettings` object which is defined and documented by [oidc-client-js](https://github.com/IdentityModel/oidc-client-js/wiki).  For a standard simple OpenID Connect configuration it should be sufficient to specify your `authority`, `client_id`, `redirect_uri` and `silent_redirect_uri` within `authConfig.userManager` without having to make any modifications to the underlying code.
 
 ### Running the App
 Once you've got the aforementioned dependencies configured, running, and in a happy state, simply install your dependencies and run the app as you would any Angular CLI app.  Assuming that you've already got npm and Angular CLI installed:
@@ -57,11 +57,11 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Refactor authentication logic
-    * Try out [oidc-client-js](https://github.com/IdentityModel/oidc-client-js)
-    * Refactor import & export pattern for actions & selectors
-    * Implement facade
-    * Manage logged-out state: change login/logout button in menu?
+  * Authentication refactor cleanup
+    * Wrap login & logout behind the facade
+    * Store-aware logout logic & conditional redirect
+    * Document conditional redirect in readme
+    * Logging Effects
   * Remove router store if possible
   * Refactore core/store and core/services as necessary
     * Partition services directory appropriately

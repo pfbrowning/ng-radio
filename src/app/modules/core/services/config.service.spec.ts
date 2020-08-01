@@ -131,7 +131,7 @@ describe('ConfigService', () => {
       logging: {
         appInsightsInstrumentationKey: 'app insights key value',
       }
-    } as AppConfig;
+    } as any;
 
     configService.appConfig$.subscribe({
       next: config => {

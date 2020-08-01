@@ -1,4 +1,4 @@
-import { AuthConfig } from 'angular-oauth2-oidc';
+import { UserManagerSettings } from 'oidc-client';
 
 export interface AppConfig {
     metadataApiUrl: string;
@@ -9,13 +9,15 @@ export interface AppConfig {
     refreshIntervalShort: number;
     refreshIntervalLong: number;
     metadataFetchTimeout: number;
-    authConfig: AuthConfig;
+    authConfig: {
+        userManager: UserManagerSettings;
+        logoutUrl: string;
+    };
     logging: {
         appInsightsInstrumentationKey: string;
         minLogLevels: {
             console: number;
             appInsights: number;
         }
-
     };
 }

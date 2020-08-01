@@ -1,4 +1,4 @@
-import { AuthenticationState } from './authentication/authentication-state';
+import { AuthenticationState } from '../store/authentication/models/authentication-state';
 import { FavoriteStationsState } from './favorite-stations/favorite-stations-state';
 import { PlayerState } from './player/player-state';
 import { SleepTimerState } from './sleep-timer/sleep-timer-state';

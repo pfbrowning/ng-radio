@@ -1,7 +1,17 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <script>
-            parent.postMessage(location.hash, location.origin);
-        </script>
-    </body>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="oidc-client.min.js"></script>
+    <script>
+        var mgr = new Oidc.UserManager();
+        mgr.signinSilentCallback().catch(error => {
+            console.error(error);
+        });
+    </script>
+</body>
 </html>
+

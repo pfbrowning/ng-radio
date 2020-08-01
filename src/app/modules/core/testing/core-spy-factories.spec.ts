@@ -1,7 +1,6 @@
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, NEVER } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { StreamInfoService } from '../services/stream-info.service';
-import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { LoggingService } from '../services/logging.service';
 import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
@@ -10,6 +9,8 @@ import { StreamValidatorService } from '../services/preprocessing/stream-validat
 import { RadioBrowserService } from '../services/radio-browser.service';
 import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
+import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
+import { AuthenticationService } from '../services/authentication/authentication.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -35,26 +36,6 @@ export function createCurrentTimeServiceSpy(): jasmine.SpyObj<CurrentTimeService
 
 export function createStreamInfoServiceSpy(): jasmine.SpyObj<StreamInfoService> {
   return jasmine.createSpyObj('streamInfoService', ['getMetadata']);
-}
-
-export function createOAuthServiceSpy(): jasmine.SpyObj<OAuthService> {
-  const spy = jasmine.createSpyObj('oAuthService', [
-      'configure',
-      'loadDiscoveryDocumentAndTryLogin',
-      'initCodeFlow',
-      'logOut',
-      'setupAutomaticSilentRefresh',
-      'silentRefresh',
-      'hasValidIdToken',
-      'hasValidAccessToken',
-      'getIdentityClaims',
-      'getAccessToken',
-      'getAccessTokenExpiration',
-      'getIdTokenExpiration'
-  ]);
-  spy['events'] = new Subject<OAuthEvent>();
-  spy.loadDiscoveryDocumentAndTryLogin.and.returnValue(Promise.resolve());
-  return spy;
 }
 
 export function createLoggingServiceSpy(): jasmine.SpyObj<LoggingService> {
@@ -86,4 +67,15 @@ export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidato
 
 export function createWindowServiceSpy(): jasmine.SpyObj<WindowService> {
   return jasmine.createSpyObj('windowService', [ 'getLocationOrigin' ]);
+}
+
+export function createAuthenticationFacadeSpy(): jasmine.SpyObj<AuthenticationFacadeService> {
+  const spy = jasmine.createSpyObj('authenticationFacade', ['logOut']);
+  spy.authenticated$ = NEVER;
+  spy.accessToken$ = NEVER;
+  return spy;
+}
+
+export function createAuthenticationServiceSpy(): jasmine.SpyObj<AuthenticationService> {
+  return jasmine.createSpyObj('authenticationService', [ 'logIn' ]);
 }

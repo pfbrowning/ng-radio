@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
-import { AuthenticationSelectors } from './modules/core/store/authentication';
 import { RouterExtendedSelectors } from './modules/core/store/router-extended';
+import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
   selector: 'blr-root',
@@ -11,8 +11,11 @@ import { RouterExtendedSelectors } from './modules/core/store/router-extended';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor(private store: Store<RootState>) {}
+  constructor(
+    private store: Store<RootState>,
+    private authenticationFacade: AuthenticationFacadeService
+  ) {}
 
-  public authInitialized$ = this.store.pipe(select(AuthenticationSelectors.isInitialized));
+  public authInitialized$ = this.authenticationFacade.initialized$;
   public routeResolving$ = this.store.pipe(select(RouterExtendedSelectors.isResolving));
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="oidc-client.min.js"></script>
+    <script>
+        const config = { response_mode: "query" };
+        const mgr = new Oidc.UserManager(config);
+        mgr.signinRedirectCallback().then(() => {
+            window.history.replaceState({},
+            window.document.title,
+            window.location.origin);
+            window.location = "/";
+        }, error => {
+            console.error(error);
+        });
+    </script>
+</body>
+</html>
+

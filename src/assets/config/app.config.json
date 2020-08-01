@@ -8,17 +8,18 @@
     "refreshIntervalLong": 60000,
     "metadataFetchTimeout": 15000,
     "authConfig": {
-        "issuer": null,
-        "clientId": null,
-        "responseType": "code",
-        "useSilentRefresh": true,
-        "scope": "openid profile email",
-        "redirectUri": "http://localhost:4200",
-        "silentRefreshRedirectUri": "http://localhost:4200/silent-refresh.html",
-        "logoutUrl": null,
-        "postLogoutRedirectUri": "http://localhost:4200",
-        "customQueryParams": {
-            "audience": null
+        "userManager": {
+            "authority": null,
+            "client_id": null,
+            "redirect_uri": "http://localhost:4200/login-callback.html",
+            "response_type": "code",
+            "scope": "openid profile email",
+            "automaticSilentRenew": true,
+            "silent_redirect_uri": "http://localhost:4200/silent-refresh.html",
+            "post_logout_redirect_uri": "http://localhost:4200",
+            "extraQueryParams": {
+                "audience": null
+            }
         }
     },
     "logging": {
