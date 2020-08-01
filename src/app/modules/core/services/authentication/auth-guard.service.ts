@@ -7,10 +7,7 @@ import { AuthenticationFacadeService } from '../../store/authentication/authenti
 
 @Injectable({providedIn: 'root'})
 export class AuthGuardService implements CanActivate {
-  constructor(
-    private authenticationService: AuthenticationService,
-    private authenticationFacade: AuthenticationFacadeService
-  ) {}
+  constructor(private authenticationFacade: AuthenticationFacadeService) {}
 
   canActivate(): Observable<boolean> {
     return this.authenticationFacade.authenticated$.pipe(
@@ -19,7 +16,7 @@ export class AuthGuardService implements CanActivate {
         if (authenticated) {
           return of(true);
         }
-        this.authenticationService.logIn();
+        this.authenticationFacade.logInRedirect();
         return NEVER;
       })
     );

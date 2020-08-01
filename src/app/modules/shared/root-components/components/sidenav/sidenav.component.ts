@@ -16,7 +16,6 @@ export class SidenavComponent {
 
   constructor(
     private store: Store<RootState>,
-    private authenticationService: AuthenticationService,
     private authenticationFacade: AuthenticationFacadeService
   ) {}
 
@@ -29,6 +28,6 @@ export class SidenavComponent {
   }
 
   public onLoginClicked() {
-    this.authenticationService.logIn();
+    this.authenticationFacade.logInRedirect();
   }
 }
