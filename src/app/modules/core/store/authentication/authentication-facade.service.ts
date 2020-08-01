@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
-import { AuthenticationSelectors as Selectors, AuthenticationActions as Actions } from '.';
 import { filter, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import * as Selectors from './authentication.selectors';
+import * as Actions from './authentication.actions';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationFacadeService {

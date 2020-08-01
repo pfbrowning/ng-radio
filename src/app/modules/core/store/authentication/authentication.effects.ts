@@ -7,10 +7,10 @@ import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { Action } from '@ngrx/store';
 import { LoggingService } from '../../services/logging.service';
-import { AuthenticationActions } from '.';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AuthenticationFacadeService } from './authentication-facade.service';
+import * as AuthenticationActions from './authentication.actions';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {

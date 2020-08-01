@@ -60,7 +60,7 @@ ng serve --open
 ## Backlog
 * Chores
   * Refactor core/store and core/services as necessary
-    * Refactor things too simple for a store into a service (router & sleep timer?)
+    * Refactor things too simple for a store into a service (router? sleep timer?)
     * Partition services directory appropriately
     * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
     * Refactor selector import / export logic

@@ -3,7 +3,7 @@ import { AuthenticationFacadeService } from './authentication-facade.service';
 import { initialRootState } from '../../models/initial-root-state';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { RootState } from '../../models/root-state';
-import { AuthenticationSelectors } from '.';
+import * as AuthenticationSelectors from './authentication.selectors';
 
 describe('AuthenticationFacadeService', () => {
   let authenticationFacade: AuthenticationFacadeService;

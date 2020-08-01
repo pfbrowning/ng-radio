@@ -7,11 +7,11 @@ import { NotificationService, ConfigService, LoggingService } from '@core';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RootState } from '../../models/root-state';
-import { AuthenticationActions } from '.';
 import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
+import * as AuthenticationActions from './authentication.actions';
 
 describe('AuthenticationEffects', () => {
   let actions$: Observable<any> = null;

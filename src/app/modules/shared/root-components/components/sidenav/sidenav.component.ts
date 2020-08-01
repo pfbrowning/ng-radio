@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState } from '@core';
 import { FavoriteStationsActions } from '@core/store/favorite-stations';
-import { AuthenticationService } from '@core/services';
 import { AuthenticationFacadeService } from '@core/store';
 
 @Component({

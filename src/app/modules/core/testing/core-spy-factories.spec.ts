@@ -70,7 +70,7 @@ export function createWindowServiceSpy(): jasmine.SpyObj<WindowService> {
 }
 
 export function createAuthenticationFacadeSpy(): jasmine.SpyObj<AuthenticationFacadeService> {
-  const spy = jasmine.createSpyObj('authenticationFacade', ['logOut']);
+  const spy = jasmine.createSpyObj('authenticationFacade', ['logOut', 'logInRedirect']);
   spy.authenticated$ = NEVER;
   spy.accessToken$ = NEVER;
   return spy;

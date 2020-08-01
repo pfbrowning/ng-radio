@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable, of, NEVER } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { AuthenticationService } from './authentication.service';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 
 @Injectable({providedIn: 'root'})
