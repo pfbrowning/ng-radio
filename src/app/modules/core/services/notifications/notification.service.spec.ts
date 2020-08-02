@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { NotificationService } from '../services/notification.service';
-import { Severities } from '../models/notifications/severities';
+import { Severities } from '../../models/notifications/severities';
 import { MessageService } from 'primeng/api';
 import theoretically from 'jasmine-theories';
-import { ToasterReadyService } from './notifications/toaster-ready.service';
 import { CoreSpyFactories } from '@core/testing';
-import { ToasterReadyStubService } from '../testing/stubs/toaster-ready-stub-service.spec';
+import { ToasterReadyStubService } from '@core/testing';
+import { NotificationService, ToasterReadyService } from '@core/services';
 
 describe('NotificationService', () => {
   let notificationService: NotificationService;

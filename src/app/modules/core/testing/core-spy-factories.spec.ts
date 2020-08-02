@@ -1,16 +1,13 @@
 import { BehaviorSubject, Subject, NEVER } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
-import { StreamInfoService } from '../services/stream-info.service';
-import { LoggingService } from '../services/logging.service';
-import { NotificationService } from '../services/notification.service';
 import { MessageService } from 'primeng/api';
 import { StreamPreprocessorService } from '../services/preprocessing/stream-preprocessor.service';
 import { StreamValidatorService } from '../services/preprocessing/stream-validator.service';
-import { RadioBrowserService } from '../services/radio-browser.service';
 import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
+import { NotificationService, RadioBrowserService, LoggingService, StreamInfoService } from '@core/services';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [

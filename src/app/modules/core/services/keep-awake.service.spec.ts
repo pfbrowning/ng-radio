@@ -6,8 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { audioPaused } from '../store/player/player-actions';
-import { NotificationService } from './notification.service';
-import { LoggingService } from './logging.service';
+import { NotificationService, LoggingService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {

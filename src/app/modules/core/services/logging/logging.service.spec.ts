@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { LoggingService } from './logging.service';
-import { ConfigService } from './config.service';
-import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
-import { AppInsightsService } from './logging/app-insights.service';
+import { ConfigService } from '../config.service';
+import { ConfigStubService } from '@core/testing';
 import { CoreSpyFactories } from '@core/testing';
+import { LoggingService, AppInsightsService } from '@core/services';
 
 describe('LoggingService', () => {
   let loggingService: LoggingService;

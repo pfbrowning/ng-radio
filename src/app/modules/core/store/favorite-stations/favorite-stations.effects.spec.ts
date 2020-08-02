@@ -2,10 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { FavoriteStationsEffects } from './favorite-stations.effects';
-import { FavoriteStationsService, NotificationService } from '@core';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '../../models/initial-root-state';
 import { CoreSpyFactories } from '@core/testing';
+import { NotificationService, FavoriteStationsService } from '@core/services';
 
 describe('FavoriteStationsEffects', () => {
   const actions$: Observable<any> = null;

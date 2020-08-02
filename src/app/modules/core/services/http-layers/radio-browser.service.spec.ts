@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { RadioBrowserService } from './radio-browser.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpParams } from '@angular/common/http';
-import { ConfigService } from './config.service';
-import { Station } from '../models/player/station';
+import { ConfigService } from '../config.service';
+import { Station } from '../../models/player/station';
 import { isFalsyOrWhitespace } from '@utilities';
+import { ConfigStubService } from '@core/testing';
 import theoretically from 'jasmine-theories';
-import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
 
 describe('RadioBrowserService', () => {
   let radioBrowserService: RadioBrowserService;

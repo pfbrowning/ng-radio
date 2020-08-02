@@ -2,8 +2,8 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigService } from '@core';
-import { NowPlaying } from '../models/player/now-playing';
-import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
+import { NowPlaying } from '../../models/player/now-playing';
+import { ConfigStubService } from '@core/testing';
 
 describe('StreamInfoService', () => {
   let metadataService: StreamInfoService;

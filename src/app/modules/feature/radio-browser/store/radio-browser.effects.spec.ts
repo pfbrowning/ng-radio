@@ -3,9 +3,10 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { RadioBrowserEffects } from './radio-browser.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState, NotificationService, RadioBrowserService, ConfigService } from '@core';
+import { initialRootState, ConfigService } from '@core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreSpyFactories, ConfigStubService } from '@core/testing';
+import { NotificationService, RadioBrowserService } from '@core/services';
 
 describe('RadioBrowserEffects', () => {
   const actions$: Observable<any> = null;

@@ -3,9 +3,10 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { SleepTimerEffects } from './sleep-timer.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { CurrentTimeService, NotificationService } from '@core';
+import { CurrentTimeService } from '@core';
 import { initialRootState } from '../../models/initial-root-state';
 import { CoreSpyFactories } from '@core/testing';
+import { NotificationService } from '@core/services';
 
 describe('SleepTimerEffects', () => {
   const actions$: Observable<any> = null;

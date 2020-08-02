@@ -3,16 +3,16 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { PlayerEffects } from './player.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { StreamInfoService, NotificationService, ConfigService } from '@core';
+import { ConfigService } from '@core';
 import { initialRootState } from '../../models/initial-root-state';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import { CurrentTimeService } from '../../services/current-time.service';
-import { LoggingService } from '../../services/logging.service';
 import { createLoggingServiceSpy, createStreamPreprocessorServiceSpy } from '../../testing/core-spy-factories.spec';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { CoreSpyFactories } from '@core/testing';
 import { AudioElementStub } from '../../testing/AudioElementStub.spec';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
+import { NotificationService, StreamInfoService, LoggingService } from '@core/services';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
