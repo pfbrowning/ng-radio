@@ -1,8 +1,6 @@
 import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatMenu } from '@angular/material/menu';
-import { RootState } from '@core';
-import { Store } from '@ngrx/store';
-import { SleepTimerActions } from '@core/store';
+import { SleepTimerService } from '@core/services';
 
 @Component({
   selector: 'blr-sleep-timer-menu',
@@ -11,15 +9,15 @@ import { SleepTimerActions } from '@core/store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SleepTimerMenuComponent {
-  constructor(private store: Store<RootState>) {}
+  constructor(private sleepTimerService: SleepTimerService) {}
 
   @ViewChild('menu', { static: true }) menu: MatMenu;
 
   public onTimerSelected(minutes: number): void {
-    this.store.dispatch(SleepTimerActions.setSleepTimerSubmit({minutes}));
+    this.sleepTimerService.setTimer(minutes);
   }
 
   public onCancelTimerClicked(): void {
-    this.store.dispatch(SleepTimerActions.clearSleepTimer());
+    this.sleepTimerService.clearSleepTimer();
   }
 }

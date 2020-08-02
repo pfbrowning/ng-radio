@@ -10,11 +10,11 @@ import {
   removeCurrentStationFromFavoritesRequested,
   FavoriteStationsSelectors
 } from '@core/store/favorite-stations';
-import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 import { PlayerActions, PlayerSelectors } from '@core/store';
 import { matProgressButtonDefaults } from '@core/constants';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { SleepTimerService } from '@core/services';
 
 @Component({
   selector: 'blr-player-bar',
@@ -26,7 +26,8 @@ export class PlayerBarComponent {
   constructor(
     public keepAwakeService: KeepAwakeService,
     private router: Router,
-    private store: Store<RootState>
+    private store: Store<RootState>,
+    private sleepTimerService: SleepTimerService
   ) {}
 
   public playerStatus = PlayerStatus;
@@ -34,7 +35,7 @@ export class PlayerBarComponent {
   public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
   public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite));
-  public minutesUntilSleep$ = this.store.pipe(select(selectMinutesUntilSleep));
+  public minutesUntilSleep$ = this.sleepTimerService.minutesToSleep$;
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
 
   private circleButtonDefaults: MatProgressButtonOptions = {

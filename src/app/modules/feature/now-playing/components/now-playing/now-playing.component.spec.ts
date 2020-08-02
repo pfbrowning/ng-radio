@@ -15,6 +15,8 @@ import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus, NowPlaying
 import { PlayerSelectors } from '@core/store';
 import { CoreSpyFactories } from '@core/testing';
 import { isFalsyOrWhitespace } from '@utilities';
+import { SleepTimerService } from '@core/services';
+import { BehaviorSubject, Observable, defer } from 'rxjs';
 import theoretically from 'jasmine-theories';
 
 
@@ -22,10 +24,14 @@ describe('NowPlayingComponent', () => {
   let component: NowPlayingComponent;
   let fixture: ComponentFixture<NowPlayingComponent>;
   let keepAwakeServiceSpy: any;
+  let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
   let store: MockStore<RootState>;
+  let minutesUntilSleep$: Observable<number>;
 
   beforeEach(async(() => {
     keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
+    sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
+    sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -41,8 +47,9 @@ describe('NowPlayingComponent', () => {
         SharedModule
       ],
       providers: [
-        { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
         provideMockStore({ initialState: initialRootState }),
+        { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
+        { provide: SleepTimerService, useValue: sleepTimerService }
       ]
     })
     .compileComponents();
@@ -198,8 +205,11 @@ describe('NowPlayingComponent', () => {
   });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
-    // Arrange: Emit an empty nowPlaying so that the 'selected' template is rendered
-    let state = {
+    // Arrange
+    const minutesUntilSleep = new BehaviorSubject<number>(null);
+    minutesUntilSleep$ = minutesUntilSleep.asObservable();
+    // Emit an empty nowPlaying so that the 'selected' template is rendered
+    const state = {
       ...initialRootState,
       player: {
         ...initialPlayerState,
@@ -217,14 +227,7 @@ describe('NowPlayingComponent', () => {
 
     for (let i = 300; i >= 0; i--) {
       // Act
-      state = {
-        ...state,
-        sleepTimer: {
-          ...state.sleepTimer,
-          minutesUntilSleep: i
-        }
-      };
-      store.setState(state);
+      minutesUntilSleep.next(i);
       fixture.detectChanges();
       // Assert: Ensure that the new value was rendered properly in the template
       expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.minutes-until-sleep')).toBe(`Sleeping in ${i} minutes`);
@@ -232,14 +235,7 @@ describe('NowPlayingComponent', () => {
 
     /* Clear the sleep timer and ensure that 'minutes until sleep' is
     removed from the template accordingly. */
-    state = {
-      ...state,
-      sleepTimer: {
-        ...state.sleepTimer,
-        minutesUntilSleep: null
-      }
-    };
-    store.setState(state);
+    minutesUntilSleep.next(null);
     fixture.detectChanges();
     expect(getElementBySelector<NowPlayingComponent>(fixture, '.minutes-until-sleep')).toBeNull();
   });

@@ -68,9 +68,7 @@ export class AuthenticationEffects implements OnInitEffects {
 
   logInitializeFailed$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.initializeFailed),
-    tap(action => this.loggingService.fatal('Failed To Initialize Authentication', {
-      'details': action.error
-    }))
+    tap(({error}) => this.loggingService.fatal('Failed To Initialize Authentication', { error }))
   ), { dispatch: false });
 
   logSilentRefreshFailed$ = createEffect(() => this.authenticationService.silentRefreshError$.pipe(

@@ -12,7 +12,6 @@ import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stat
 import { PlayerEffects } from './store/player/player.effects';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
 import { AudioElement } from './models/player/audio-element';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
@@ -35,7 +34,6 @@ import NoSleep from 'nosleep.js';
     EffectsModule.forRoot([
       FavoriteStationsEffects,
       PlayerEffects,
-      SleepTimerEffects,
       AuthenticationEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

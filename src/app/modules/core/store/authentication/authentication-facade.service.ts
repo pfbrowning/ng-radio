@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, map, take, distinctUntilChanged } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import * as Selectors from './authentication.selectors';
 import * as Actions from './authentication.actions';
@@ -13,8 +13,8 @@ export class AuthenticationFacadeService {
     filter(s => s.initialized),
   );
 
-  public email$ = this.stateOnceInitialized$.pipe(map(s => s.email));
-  public authenticated$ = this.stateOnceInitialized$.pipe(map(s => s.authenticated));
+  public email$ = this.stateOnceInitialized$.pipe(map(s => s.email), distinctUntilChanged());
+  public authenticated$ = this.stateOnceInitialized$.pipe(map(s => s.authenticated), distinctUntilChanged());
   public accessToken$ = this.stateOnceInitialized$.pipe(map(s => s.accessToken), take(1));
 
   public initialized$ = this.store.pipe(select(Selectors.isInitialized));

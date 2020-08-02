@@ -23,7 +23,6 @@ import {
   fetchNowPlayingFailed,
 } from './player-actions';
 import { RootState } from '../../models/root-state';
-import { goToSleep } from '../sleep-timer/sleep-timer.actions';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { AudioElement } from '../../models/player/audio-element';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
@@ -35,7 +34,7 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
-import { LoggingService, StreamInfoService, NotificationService } from '@core/services';
+import { LoggingService, StreamInfoService, NotificationService, SleepTimerService } from '@core/services';
 
 @Injectable()
 export class PlayerEffects {
@@ -51,6 +50,7 @@ export class PlayerEffects {
     private currentTimeService: CurrentTimeService,
     private windowService: WindowService,
     private windowFocusService: WindowFocusService,
+    private sleepTimerService: SleepTimerService,
     private ngZone: NgZone,
     @Inject(AudioElementToken) private audio: AudioElement
   ) { }
@@ -133,8 +133,7 @@ export class PlayerEffects {
     tap(() => this.audio.pause())
   ), { dispatch: false });
 
-  pauseOnGoToSleep$ = createEffect(() => this.actions$.pipe(
-    ofType(goToSleep),
+  pauseOnGoToSleep$ = createEffect(() => this.sleepTimerService.sleepTimer$.pipe(
     map(() => pauseAudioSubmit())
   ));
 

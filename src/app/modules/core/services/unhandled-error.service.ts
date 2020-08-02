@@ -12,7 +12,6 @@ export class UnhandledErrorService implements ErrorHandler {
   handleError(error: any) {
     const loggingService = this.injector.get(LoggingService);
     const notificationsService = this.injector.get(NotificationService);
-    console.error('Unhandled Error Caught', error);
     loggingService.exception(error, LoggerSeverity.Error, { event: 'Unhandled Error Caught' });
     notificationsService.notify(Severities.Error, 'Unhandled Error', error.message);
   }

@@ -17,22 +17,27 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
 import { Station } from '@core/models/player';
-import { selectMinutesUntilSleep } from '@core/store/sleep-timer';
 import { PlayerSelectors } from '@core/store';
 import { CoreSpyFactories } from '@core/testing';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StationIconStubDirective } from '@shared/testing';
+import { BehaviorSubject, Observable, defer } from 'rxjs';
+import { SleepTimerService } from '@core/services';
 
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
   let fixture: ComponentFixture<PlayerBarComponent>;
   let keepAwakeServiceSpy: any;
+  let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
   let store: MockStore<RootState>;
+  let minutesUntilSleep$: Observable<number>;
 
   beforeEach(async(() => {
     keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
+    sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
+    sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -56,8 +61,9 @@ describe('PlayerBarComponent', () => {
         MatProgressButtonsModule.forRoot()
       ],
       providers: [
+        provideMockStore({ initialState: initialRootState }),
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        provideMockStore({ initialState: initialRootState })
+        { provide: SleepTimerService, useValue: sleepTimerService },
       ]
     })
     .compileComponents();
@@ -80,10 +86,11 @@ describe('PlayerBarComponent', () => {
   });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
+    const minutesUntilSleep = new BehaviorSubject<number>(null);
+    minutesUntilSleep$ = minutesUntilSleep.asObservable();
     for (let i = 300; i >= 0; i--) {
       // Act
-      store.overrideSelector(selectMinutesUntilSleep, i);
-      store.refreshState();
+      minutesUntilSleep.next(i);
       fixture.detectChanges();
 
       // Assert: Ensure that the new value was rendered properly in the template
@@ -92,8 +99,7 @@ describe('PlayerBarComponent', () => {
 
     /* Clear the sleep timer and ensure that 'minutes until sleep'
     no longer shows a number. */
-    store.overrideSelector(selectMinutesUntilSleep, null);
-    store.refreshState();
+    minutesUntilSleep.next(null);
     fixture.detectChanges();
     expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe('');
   });
