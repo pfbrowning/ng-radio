@@ -15,13 +15,12 @@ import {
 } from './favorite-stations.actions';
 import { switchMap, catchError, map, withLatestFrom, filter, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { FavoriteStationsService } from '../../services/favorite-stations.service';
 import { Store, select } from '@ngrx/store';
-import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { RootState } from '../../models/root-state';
 import { selectStation } from '../player/player-actions';
 import { FavoriteStationsActions, FavoriteStationsSelectors } from '.';
+import { FavoriteStationsService, NotificationService } from '@core/services';
 
 @Injectable()
 export class FavoriteStationsEffects {

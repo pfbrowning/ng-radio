@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout, switchMap } from 'rxjs/operators';
-import { ConfigService } from './config.service';
-import { NowPlaying } from '../models/player/now-playing';
+import { ConfigService } from '../config.service';
+import { NowPlaying } from '../../models/player/now-playing';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
  * the configured radio metadata API

@@ -1,11 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { NotificationService } from '../services/notification.service';
 import { Severities } from '../models/notifications/severities';
 import { Actions, ofType } from '@ngrx/effects';
 import { audioPaused } from '../store/player/player-actions';
-import { LoggingService } from './logging.service';
+import { LoggingService, NotificationService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden

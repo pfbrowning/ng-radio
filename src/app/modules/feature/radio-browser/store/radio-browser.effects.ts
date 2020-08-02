@@ -4,12 +4,12 @@ import { switchMap, withLatestFrom, map, catchError, tap, filter } from 'rxjs/op
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserRootState } from '../models/radio-browser-root-state';
-import { NotificationService, Severities, ConfigService } from '@core';
+import { Severities, ConfigService } from '@core';
 import { RadioBrowserActions, RadioBrowserSelectors } from '.';
 import { Router } from '@angular/router';
 import { PlayerActions } from '@core/store';
-import { RadioBrowserService } from '@core';
 import { resolverParams } from './radio-browser.selectors';
+import { NotificationService, RadioBrowserService } from '@core/services';
 
 @Injectable()
 export class RadioBrowserEffects {

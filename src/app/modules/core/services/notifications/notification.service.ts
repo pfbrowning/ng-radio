@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Severities } from '../models/notifications/severities';
-import { ToasterReadyService } from './notifications/toaster-ready.service';
+import { Severities } from '../../models/notifications/severities';
+import { ToasterReadyService } from './toaster-ready.service';
 
 /** Convenience wrapper around the PrimeNG MessageService */
 @Injectable({providedIn: 'root'})

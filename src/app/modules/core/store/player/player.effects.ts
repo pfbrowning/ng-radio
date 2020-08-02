@@ -1,9 +1,7 @@
 import { Injectable, Inject, NgZone } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { StreamInfoService } from '../../services/stream-info.service';
 import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap } from 'rxjs/operators';
 import { from, of, timer, merge } from 'rxjs';
-import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { Store, select, Action } from '@ngrx/store';
 import { ConfigService } from '../../services/config.service';
@@ -29,7 +27,6 @@ import { goToSleep } from '../sleep-timer/sleep-timer.actions';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { AudioElement } from '../../models/player/audio-element';
 import { AudioElementToken } from '../../injection-tokens/audio-element-token';
-import { LoggingService } from '../../services/logging.service';
 import { PlayerActions, PlayerSelectors } from '.';
 import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
@@ -38,6 +35,7 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
+import { LoggingService, StreamInfoService, NotificationService } from '@core/services';
 
 @Injectable()
 export class PlayerEffects {

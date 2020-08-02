@@ -59,11 +59,12 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Refactor core/store and core/services as necessary
-    * Refactor things too simple for a store into a service (sleep timer?)
-    * Partition services directory appropriately
+  * Move sleep timer logic to a service
+  * Replace audioelement and factory with a single AudioElementService
+  * Refactor `core/store` as necessary
     * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
     * Refactor selector import / export logic
+  * Refactor `core/services` as necessary
 * Features
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy - use [icecast-parser](https://github.com/ghaiklor/icecast-parser) or [node-icy](https://github.com/TooTallNate/node-icy)
   * Non-logged-in experience: Require login only for favorites

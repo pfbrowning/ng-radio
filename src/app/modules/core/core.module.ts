@@ -1,6 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StreamInfoService } from './services/stream-info.service';
 import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
@@ -17,9 +16,9 @@ import { SleepTimerEffects } from './store/sleep-timer/sleep-timer.effects';
 import { AudioElement } from './models/player/audio-element';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
-import { NotificationService } from './services/notification.service';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
+import { NotificationService, StreamInfoService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 @NgModule({

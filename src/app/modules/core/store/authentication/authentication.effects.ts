@@ -3,13 +3,12 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { switchMap, catchError, map, filter, tap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ConfigService } from '../../services/config.service';
-import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { Action } from '@ngrx/store';
-import { LoggingService } from '../../services/logging.service';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AuthenticationFacadeService } from './authentication-facade.service';
+import { LoggingService, NotificationService } from '@core/services';
 import * as AuthenticationActions from './authentication.actions';
 
 @Injectable()

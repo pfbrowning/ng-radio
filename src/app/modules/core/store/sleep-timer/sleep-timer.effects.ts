@@ -3,13 +3,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { tap, map, switchMap, takeUntil, mapTo, withLatestFrom, filter } from 'rxjs/operators';
 import { timer } from 'rxjs';
-import { NotificationService } from '../../services/notification.service';
 import { Severities } from '../../models/notifications/severities';
 import { Store, select } from '@ngrx/store';
 import { selectSleepTime } from './sleep-timer.selectors';
 import { setSleepTimerSubmit, sleepTimerSet, clearSleepTimer, goToSleep, setMinutesUntilSleep, countMinutesUntilSleep } from './sleep-timer.actions';
 import { RootState } from '../../models/root-state';
 import { PlayerActions } from '../player';
+import { NotificationService } from '@core/services';
 import { SleepTimerActions, SleepTimerSelectors } from '..';
 import dayjs from 'dayjs';
 

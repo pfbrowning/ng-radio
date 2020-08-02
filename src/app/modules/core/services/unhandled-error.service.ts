@@ -1,6 +1,6 @@
 import { Injectable, Injector, ErrorHandler } from '@angular/core';
-import { LoggingService } from './logging.service';
-import { NotificationService } from '../services/notification.service';
+import { LoggingService } from './logging/logging.service';
+import { NotificationService } from './notifications/notification.service';
 import { Severities } from '../models/notifications/severities';
 import { LoggerSeverity } from '../models/logging/logger-severity';
 

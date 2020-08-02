@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from './config.service';
+import { ConfigService } from '../config.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Station } from '../models/player/station';
+import { Station } from '../../models/player/station';
 import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
