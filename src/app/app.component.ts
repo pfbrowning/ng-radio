@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { RootState } from '@core';
-import { RouterExtendedSelectors } from './modules/core/store/router-extended';
+import { RouterStateService } from '@core/services';
 import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
@@ -12,10 +10,10 @@ import { AuthenticationFacadeService } from '@core/store';
 })
 export class AppComponent {
   constructor(
-    private store: Store<RootState>,
-    private authenticationFacade: AuthenticationFacadeService
+    private authenticationFacade: AuthenticationFacadeService,
+    private routerStateService: RouterStateService
   ) {}
 
   public authInitialized$ = this.authenticationFacade.initialized$;
-  public routeResolving$ = this.store.pipe(select(RouterExtendedSelectors.isResolving));
+  public routeResolving$ = this.routerStateService.navigationInProgress$;
 }

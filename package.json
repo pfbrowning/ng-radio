@@ -30,7 +30,6 @@
     "@angular/router": "~10.0.5",
     "@microsoft/applicationinsights-web": "^2.5.6",
     "@ngrx/effects": "^9.2.0",
-    "@ngrx/router-store": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
     "core-js": "^3.6.5",

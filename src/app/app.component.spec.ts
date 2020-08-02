@@ -3,11 +3,12 @@ import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '@core';
+import { RouterStateService } from '@core/services';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { GlobalSpinnerStubComponent, ToasterContainerStubComponent } from '@root-components/testing';
+import { RouterStateStubService, CoreSpyFactories } from '@core/testing';
+import { AuthenticationFacadeService } from '@core/store';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -27,9 +28,10 @@ describe('AppComponent', () => {
         ToasterContainerStubComponent
       ],
       providers: [
-        provideMockStore({initialState: initialRootState}),
         MessageService,
-        ConfirmationService
+        ConfirmationService,
+        { provide: RouterStateService, useClass: RouterStateStubService },
+        { provide: AuthenticationFacadeService, useValue: CoreSpyFactories.createAuthenticationFacadeSpy() }
       ]
     }).compileComponents();
   }));
