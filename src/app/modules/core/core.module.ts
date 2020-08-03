@@ -1,6 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AudioElementToken } from './injection-tokens/audio-element-token';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { KeepAwakeService } from './services/keep-awake.service';
 import { NoSleepToken } from './injection-tokens/no-sleep-token';
@@ -12,7 +11,6 @@ import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stat
 import { PlayerEffects } from './store/player/player.effects';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { AudioElement } from './models/player/audio-element';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
@@ -45,7 +43,6 @@ import NoSleep from 'nosleep.js';
     MessageService,
     NotificationService,
     { provide: NoSleepToken, useValue: new NoSleep() },
-    { provide: AudioElementToken, useValue: new AudioElement() },
     { provide: HTTP_INTERCEPTORS, useClass: BearerTokenService, multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorService }
   ]

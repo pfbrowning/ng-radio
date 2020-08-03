@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { map, catchError, tap, switchMap, concatMap, timeout, take } from 'rxjs/operators';
-import { AudioElementFactoryService } from '../audio-element-factory.service';
-import { AudioElement } from '../../models/player/audio-element';
 import { ValidateStreamResult } from '../../models/player/validate-stream-result';
+import { AudioElementService } from '../audio-element.service';
 
 @Injectable({providedIn: 'root'})
 export class StreamValidatorService {
-  constructor(audioElementFactoryService: AudioElementFactoryService) {
-    /* The validator service gets its own audio element so that it can validate streams
-    independently of the currently-playing audio. */
-    this.audio = audioElementFactoryService.create();
-    this.audio.muted = true;
-    /* I only want to maintain one audio element for validation, so I'm queuing up try
-    play operations to run sequentially. */
+  constructor(private audioElementService: AudioElementService) {
+    // Queue up try play operations to run sequentially because we only have one audio element.
     this.tryPlayQueueSource
       .pipe(concatMap(source => this.tryPlayStream(source.streamUrl).pipe(
         tap(result => source.completed.next(result))
@@ -22,7 +16,6 @@ export class StreamValidatorService {
   }
 
   private tryPlayQueueSource = new Subject<{streamUrl: string, completed: Subject<ValidateStreamResult>}>();
-  private audio: AudioElement;
   private validStreams = new Array<string>();
 
   /**
@@ -32,17 +25,23 @@ export class StreamValidatorService {
    * @param streamUrl The stream to try to open
    */
   private tryPlayStream(streamUrl: string): Observable<ValidateStreamResult> {
+    let previouslyMuted: boolean;
     return of(null).pipe(
       // Set the stream URL and attempt to play
-      tap(() => this.audio.src = streamUrl),
-      switchMap(() => this.audio.play()),
+      tap(() => {
+        this.audioElementService.src = streamUrl;
+        previouslyMuted = this.audioElementService.muted;
+        this.audioElementService.muted = true;
+      }),
+      switchMap(() => this.audioElementService.play()),
       timeout(10000),
       map(() => new ValidateStreamResult(true)),
       catchError(err => of(new ValidateStreamResult(false, err))),
       // Pause and unload the audio
       tap(() => {
-        this.audio.pause();
-        this.audio.src = '';
+        this.audioElementService.pause();
+        this.audioElementService.src = '';
+        this.audioElementService.muted = previouslyMuted;
       }),
     );
   }

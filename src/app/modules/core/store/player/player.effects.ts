@@ -1,7 +1,7 @@
-import { Injectable, Inject, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap } from 'rxjs/operators';
-import { from, of, timer, merge } from 'rxjs';
+import { of, timer, merge } from 'rxjs';
 import { Severities } from '../../models/notifications/severities';
 import { Store, select, Action } from '@ngrx/store';
 import { ConfigService } from '../../services/config.service';
@@ -24,8 +24,6 @@ import {
 } from './player-actions';
 import { RootState } from '../../models/root-state';
 import { CurrentTimeService } from '../../services/current-time.service';
-import { AudioElement } from '../../models/player/audio-element';
-import { AudioElementToken } from '../../injection-tokens/audio-element-token';
 import { PlayerActions, PlayerSelectors } from '.';
 import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
@@ -34,7 +32,7 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
-import { LoggingService, StreamInfoService, NotificationService, SleepTimerService } from '@core/services';
+import { LoggingService, StreamInfoService, NotificationService, SleepTimerService, AudioElementService } from '@core/services';
 
 @Injectable()
 export class PlayerEffects {
@@ -51,16 +49,12 @@ export class PlayerEffects {
     private windowService: WindowService,
     private windowFocusService: WindowFocusService,
     private sleepTimerService: SleepTimerService,
-    private ngZone: NgZone,
-    @Inject(AudioElementToken) private audio: AudioElement
+    private audio: AudioElementService,
   ) { }
 
   listenForAudioPaused$ = createEffect(() => this.audio.paused.pipe(
-    /* We have to explicitly dispatch this within the Angular zone in order for change detection
-    to work properly because the HTML5 audio element which the event originated from was not in
-    the Angular Zone. */
-    tap(() => this.ngZone.run(() => this.store.dispatch(audioPaused())))
-  ), { dispatch: false });
+    map(() => PlayerActions.audioPaused())
+  ));
 
   selectStation$ = createEffect(() => this.actions$.pipe(
     ofType(selectStation),
@@ -68,11 +62,6 @@ export class PlayerEffects {
     tap(([action]) => {
       // Regardless of validation state, pause any playing audio and set the url & site title
       this.audio.pause();
-      /* Include a timestamp query param because Firefox doesn't play well with
-      some previously-buffered streams */
-      const url = new URL(action.station.url);
-      url.searchParams.append('t', this.currentTimeService.unix().toString());
-      this.audio.src = url.toString();
 
       if (!isFalsyOrWhitespace(action.station.title)) {
         this.titleService.setTitle(action.station.title);
@@ -122,7 +111,14 @@ export class PlayerEffects {
   playStation$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioStart),
     withLatestFrom(this.store.pipe(select(selectCurrentStation))),
-    switchMap(([, station]) => from(this.audio.play()).pipe(
+    tap(([, station]) => {
+      /* Include a timestamp query param because Firefox doesn't play well with
+      some previously-buffered streams */
+      const url = new URL(station.url);
+      url.searchParams.append('t', this.currentTimeService.unix().toString());
+      this.audio.src = url.toString();
+    }),
+    switchMap(([, station]) => this.audio.play().pipe(
       map(() => playAudioSucceeded()),
       catchError(error => of(playAudioFailed({error, station})))
     ))

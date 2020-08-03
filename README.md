@@ -59,11 +59,11 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Replace audioElement class and factory with a single AudioElementService
+  * Refactor `core/services` as necessary
+    * Rename & Refactor Notification service
   * Refactor `core/store` as necessary
     * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
     * Refactor selector import / export logic
-  * Refactor `core/services` as necessary
 * Features
   * Socket.IO Now Playing Listener with HTTPS / CORS stream proxy - use [icecast-parser](https://github.com/ghaiklor/icecast-parser) or [node-icy](https://github.com/TooTallNate/node-icy)
   * Non-logged-in experience: Require login only for favorites
@@ -71,6 +71,7 @@ ng serve --open
   * Browser-based audio recording (pending CORS proxy for audio stream)
   * HTML5 Notifications
 * More Chores
+  * Move stream preprocessing logic behind API
   * Find a better alternative to the mat spinner button package
   * Replace NoSleep.js with an alternative which works with Firefox mobile and which [isn't CommonJS-based](https://angular.io/guide/build#configuring-commonjs-dependencies), or remove the "Keep Awake" feature entirely if it's not worth the trouble.
   * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
