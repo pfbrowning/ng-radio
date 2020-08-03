@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { BearerTokenService } from './bearer-token.service';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../config/config.service';
 import { CoreSpyFactories } from '@core/testing';
 import { of, NEVER } from 'rxjs';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';

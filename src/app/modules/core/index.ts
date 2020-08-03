@@ -6,7 +6,6 @@ export { Severities } from './models/notifications/severities';
 // Services
 export { KeepAwakeService } from './services/keep-awake.service';
 export { CurrentTimeService } from './services/current-time.service';
-export { ConfigService } from './services/config.service';
 export { UnhandledErrorService } from './services/unhandled-error.service';
 
 export { CoreModule } from './core.module';

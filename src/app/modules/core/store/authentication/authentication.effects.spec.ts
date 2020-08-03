@@ -3,7 +3,6 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { AuthenticationEffects } from './authentication.effects';
 import { CurrentTimeService } from '@core';
-import { ConfigService } from '@core';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RootState } from '../../models/root-state';
@@ -11,7 +10,7 @@ import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
-import { NotificationService, LoggingService } from '@core/services';
+import { NotificationService, LoggingService, ConfigService } from '@core/services';
 import * as AuthenticationActions from './authentication.actions';
 
 describe('AuthenticationEffects', () => {

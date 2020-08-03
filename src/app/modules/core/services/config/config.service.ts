@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, take, shareReplay } from 'rxjs/operators';
 import { forkJoin, throwError, of, Observable, defer } from 'rxjs';
-import { AppConfig } from '../models/config/app-config';
+import { AppConfig } from '../../models/config/app-config';
 import { merge } from 'lodash-es';
-import { WindowService } from './browser-apis/window.service';
+import { WindowService } from '../browser-apis/window.service';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigService {

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RadioBrowserService } from './radio-browser.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpParams } from '@angular/common/http';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
 import { isFalsyOrWhitespace } from '@utilities';
 import { ConfigStubService } from '@core/testing';

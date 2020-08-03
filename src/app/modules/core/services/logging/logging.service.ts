@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../config/config.service';
 import { LoggerSeverity } from '../../models/logging/logger-severity';
 import { AppInsightsService } from './app-insights.service';
 

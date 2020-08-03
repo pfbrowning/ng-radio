@@ -59,8 +59,8 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Refactor `core/services` as necessary
-    * Rename & Refactor Notification service
+  * Use EnvironmentService for config
+  * Rename & Refactor Notification service
   * Refactor `core/store` as necessary
     * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
     * Refactor selector import / export logic

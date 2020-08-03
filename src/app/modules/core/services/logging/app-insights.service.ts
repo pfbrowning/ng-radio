@@ -3,7 +3,7 @@ import { ApplicationInsights, SeverityLevel as MicrosoftSeverity, IExceptionTele
 import { ReplaySubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LoggerSeverity as GenericSeverity } from '../../models/logging/logger-severity';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../config/config.service';
 import { isFalsyOrWhitespace } from '@utilities';
 
 @Injectable({ providedIn: 'root' })

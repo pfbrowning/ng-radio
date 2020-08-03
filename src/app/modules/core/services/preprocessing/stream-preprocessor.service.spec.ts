@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '@core/services';
 import { StreamPreprocessorService } from './stream-preprocessor.service';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 

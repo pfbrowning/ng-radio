@@ -10,7 +10,7 @@ import { SubSink } from 'subsink';
 import { selectSearchResults, selectIsSearchInProgress } from '../../store/radio-browser.selectors';
 import { RadioBrowserRootState } from '../../models/radio-browser-root-state';
 import { RadioBrowserSelectors, RadioBrowserActions } from '../../store';
-import { ConfigService } from '@core';
+import { ConfigService } from '@core/services';
 
 @Component({
   templateUrl: './radio-browser.component.html',

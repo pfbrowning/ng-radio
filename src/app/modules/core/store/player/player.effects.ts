@@ -4,7 +4,6 @@ import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filt
 import { of, timer, merge } from 'rxjs';
 import { Severities } from '../../models/notifications/severities';
 import { Store, select, Action } from '@ngrx/store';
-import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import {
   selectCurrentStationUrlAndItsValidationState,
@@ -32,7 +31,7 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
-import { LoggingService, StreamInfoService, NotificationService, SleepTimerService, AudioElementService } from '@core/services';
+import { LoggingService, StreamInfoService, NotificationService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
 
 @Injectable()
 export class PlayerEffects {

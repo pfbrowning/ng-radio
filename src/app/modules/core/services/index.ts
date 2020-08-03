@@ -25,3 +25,6 @@ export { AppInsightsService } from './logging/app-insights.service';
 export { RouterStateService } from './router-state.service';
 export { SleepTimerService } from './sleep-timer.service';
 export { AudioElementService } from './audio-element.service';
+
+// Config
+export { ConfigService } from './config/config.service';

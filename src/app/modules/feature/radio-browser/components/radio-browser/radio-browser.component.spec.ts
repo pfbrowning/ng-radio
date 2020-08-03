@@ -12,7 +12,7 @@ import { initialRadioBrowserRootState } from '../../models/initial-radio-browser
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { ConfigService } from '@core';
+import { ConfigService } from '@core/services';
 import { ConfigStubService } from '@core/testing';
 import { StationIconStubDirective } from '@shared/testing';
 

@@ -3,7 +3,6 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { PlayerEffects } from './player.effects';
 import { provideMockStore } from '@ngrx/store/testing';
-import { ConfigService } from '@core';
 import { initialRootState } from '../../models/initial-root-state';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { createLoggingServiceSpy, createStreamPreprocessorServiceSpy } from '../../testing/core-spy-factories.spec';
@@ -11,7 +10,7 @@ import { StreamPreprocessorService } from '../../services/preprocessing/stream-p
 import { CoreSpyFactories } from '@core/testing';
 import { AudioElementStub } from '../../testing/AudioElementStub.spec';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
-import { NotificationService, StreamInfoService, LoggingService, AudioElementService } from '@core/services';
+import { NotificationService, StreamInfoService, LoggingService, AudioElementService, ConfigService } from '@core/services';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '@core/services';
 import { isFalsyOrWhitespace } from '@utilities';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 

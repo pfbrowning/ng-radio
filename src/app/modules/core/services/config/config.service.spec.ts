@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AppConfig } from '../models/config/app-config';
-import { WindowService } from './browser-apis/window.service';
+import { AppConfig } from '../../models/config/app-config';
+import { WindowService } from '../browser-apis/window.service';
 import { CoreSpyFactories } from '@core/testing';
 
 describe('ConfigService', () => {

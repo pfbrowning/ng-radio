@@ -3,10 +3,10 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
-import { Severities, ConfigService } from '@core';
+import { Severities } from '@core';
 import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
-import { NotificationService, RadioBrowserService } from '@core/services';
+import { NotificationService, RadioBrowserService, ConfigService } from '@core/services';
 import * as SuggestedStationsActions from './suggested-stations.actions';
 
 @Injectable()

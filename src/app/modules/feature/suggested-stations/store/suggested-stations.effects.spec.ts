@@ -4,11 +4,10 @@ import { Observable } from 'rxjs';
 import { SuggestedStationsEffects } from './suggested-stations.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialSuggestedStationsRootState } from '../models/initial-suggested-stations-root-state';
-import { ConfigService } from '@core';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
 import { createSuggestedStationsServiceSpy } from '../suggested-stations-spy-factories.spec';
 import { CoreSpyFactories, ConfigStubService } from '@core/testing';
-import { NotificationService, RadioBrowserService } from '@core/services';
+import { NotificationService, RadioBrowserService, ConfigService } from '@core/services';
 
 describe('SuggestedStationsEffects', () => {
   const actions$: Observable<any> = null;

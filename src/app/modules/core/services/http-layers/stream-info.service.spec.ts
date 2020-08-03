@@ -1,7 +1,7 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StreamInfoService } from './stream-info.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ConfigService } from '@core';
+import { ConfigService } from '@core/services';
 import { NowPlaying } from '../../models/player/now-playing';
 import { ConfigStubService } from '@core/testing';
 
