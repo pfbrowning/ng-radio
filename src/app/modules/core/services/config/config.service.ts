@@ -4,13 +4,13 @@ import { catchError, map, take, shareReplay } from 'rxjs/operators';
 import { forkJoin, throwError, of, Observable, defer } from 'rxjs';
 import { AppConfig } from '../../models/config/app-config';
 import { merge } from 'lodash-es';
-import { WindowService } from '../browser-apis/window.service';
+import { EnvironmentService } from './environment.service';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
   constructor(
     private httpClient: HttpClient,
-    private windowService: WindowService
+    private environmentService: EnvironmentService
   ) {}
 
   public appConfig$ = defer(() => this.fetch()).pipe(
@@ -21,7 +21,7 @@ export class ConfigService {
   private fetch(): Observable<AppConfig> {
     return forkJoin([
       this.fetchAppConfig(),
-      this.windowService.getLocationOrigin().startsWith('http://localhost')
+      !this.environmentService.isProduction()
         ? this.fetchLocalConfig()
         : of(null)
     ]).pipe(

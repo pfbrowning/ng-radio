@@ -2,17 +2,17 @@ import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AppConfig } from '../../models/config/app-config';
-import { WindowService } from '../browser-apis/window.service';
 import { CoreSpyFactories } from '@core/testing';
+import { EnvironmentService } from './environment.service';
 
 describe('ConfigService', () => {
   let configService: ConfigService;
   let httpTestingController: HttpTestingController;
   let fetchNextSpy: jasmine.Spy;
-  let windowService: jasmine.SpyObj<WindowService>;
+  let environmentService: jasmine.SpyObj<EnvironmentService>;
 
   beforeEach(() => {
-    windowService = CoreSpyFactories.createWindowServiceSpy();
+    environmentService = CoreSpyFactories.createEnvironmentServiceSpy();
 
     TestBed.configureTestingModule({
       imports: [
@@ -20,7 +20,7 @@ describe('ConfigService', () => {
       ],
       providers: [
         ConfigService,
-        { provide: WindowService, useValue: windowService }
+        { provide: EnvironmentService, useValue: environmentService }
       ]
     });
 
@@ -30,7 +30,7 @@ describe('ConfigService', () => {
 
     fetchNextSpy = jasmine.createSpy('fetchNext');
 
-    windowService.getLocationOrigin.and.returnValue('http://localhost:4200/dummypath');
+    environmentService.isProduction.and.returnValue(false);
   });
 
   it('should be created', () => {
@@ -195,9 +195,9 @@ describe('ConfigService', () => {
     localConfigRequest.flush(null, { status: 403, statusText: 'Can Not Has' });
   });
 
-  it('should fetch local config if running the app on localhost', (done: DoneFn) => {
+  it('should fetch local config if running the app in dev mode', (done: DoneFn) => {
     // Arrange
-    windowService.getLocationOrigin.and.returnValue('http://localhost:4200/somepath');
+    environmentService.isProduction.and.returnValue(false);
 
     // Listen to the initialize observable
     configService.appConfig$.subscribe({
@@ -219,9 +219,9 @@ describe('ConfigService', () => {
     localConfigRequest.flush({});
   });
 
-  it('should not fetch local config if not running the app on localhost', (done: DoneFn) => {
+  it('should not fetch local config if running the app in prod mode', (done: DoneFn) => {
     // Arrange
-    windowService.getLocationOrigin.and.returnValue('http://radio.browninglogic.com');
+    environmentService.isProduction.and.returnValue(true);
 
     // Listen to the initialize observable
     configService.appConfig$.subscribe({
@@ -238,14 +238,14 @@ describe('ConfigService', () => {
     });
 
     // Expect one app.config.json request & flush our dummy config object
-    expect(windowService.getLocationOrigin).toHaveBeenCalledTimes(1);
+    expect(environmentService.isProduction).toHaveBeenCalledTimes(1);
     const appConfigRequest = httpTestingController.expectOne('/assets/config/app.config.json');
     appConfigRequest.flush({});
   });
 
   it('should only request the config once even if there are multiple concurrent and subsequent requests', () => {
     // Arrange
-    windowService.getLocationOrigin.and.returnValue('http://radio.browninglogic.com');
+    environmentService.isProduction.and.returnValue(true);
     const firstRequest = jasmine.createSpy('firstRequest');
     const secondRequest = jasmine.createSpy('secondRequest');
     const thirdRequest = jasmine.createSpy('thirdRequest');

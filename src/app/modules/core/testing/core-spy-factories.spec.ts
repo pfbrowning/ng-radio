@@ -8,6 +8,7 @@ import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
 import { NotificationsService, RadioBrowserService, LoggingService, StreamInfoService, SleepTimerService, AudioElementService } from '@core/services';
+import { EnvironmentService } from '../services/config/environment.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -82,6 +83,11 @@ export function createSleepTimerServiceSpy(): jasmine.SpyObj<SleepTimerService> 
   spy.minutesToSleep$ = of(7);
   return spy;
 }
+
 export function createAudioElementServiceSpy(): jasmine.SpyObj<AudioElementService> {
   return jasmine.createSpyObj('audioElementServiceSpy', ['play']);
+}
+
+export function createEnvironmentServiceSpy(): jasmine.SpyObj<EnvironmentService> {
+  return jasmine.createSpyObj('environmentService', [ 'isProduction' ]);
 }
