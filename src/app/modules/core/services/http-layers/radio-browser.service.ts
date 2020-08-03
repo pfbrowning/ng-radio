@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
 import { Country } from '../../models/country';
 import { isFalsyOrWhitespace } from '@utilities';
@@ -32,11 +32,10 @@ export class RadioBrowserService {
 
   public fetchListedCountries(): Observable<Country[]> {
     return forkJoin([this.fetchAllCountries(), this.fetchListedCountryCodes()]).pipe(
-      map(forkData => {
-        const countries = forkData[0];
-        const listed = forkData[1].map(c => c.toLowerCase());
+      map(([countries, listed]) => {
+        const lowercaseListed = listed.map(c => c.toLowerCase());
 
-        return countries.filter(country => listed.includes(country.code.toLowerCase()));
+        return countries.filter(country => lowercaseListed.includes(country.code.toLowerCase()));
       })
     );
   }

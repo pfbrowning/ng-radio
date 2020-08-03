@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, map, timeout, switchMap } from 'rxjs/operators';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../config/config.service';
 import { NowPlaying } from '../../models/player/now-playing';
 
 /** Fetches "Now Playing" metadata for the specified radio URL from
@@ -29,12 +29,14 @@ export class StreamInfoService {
   public getMetadata(url: string): Observable<NowPlaying> {
     // Encode the URL before sending it via query param
     const encodedUrl = encodeURIComponent(url);
+
     let params = new HttpParams();
     params = params.append('url', encodedUrl);
     // If we already know the stream type, then add the 'method' querystring param
     if (this.streamTypes.has(encodedUrl)) {
       params = params.append('method', this.streamTypes.get(encodedUrl));
     }
+
     // GET now-playing data from the API
     return this.configService.appConfig$.pipe(
       switchMap(config => this.httpClient.get<any>(`${config.metadataApiUrl}/now-playing`, { params }).pipe(
