@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { switchMap, catchError, map, filter, tap, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Severities } from '../../models/notifications/severities';
 import { Action } from '@ngrx/store';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AuthenticationFacadeService } from './authentication-facade.service';
-import { LoggingService, NotificationService, ConfigService } from '@core/services';
+import { LoggingService, NotificationsService, ConfigService } from '@core/services';
 import * as AuthenticationActions from './authentication.actions';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class AuthenticationEffects implements OnInitEffects {
     private configService: ConfigService,
     private authenticationFacade: AuthenticationFacadeService,
     private authenticationService: AuthenticationService,
-    private notificationsService: NotificationService,
+    private notificationsService: NotificationsService,
     private loggingService: LoggingService,
     private appInsightsService: AppInsightsService
   ) { }
@@ -53,7 +52,7 @@ export class AuthenticationEffects implements OnInitEffects {
 
   notifyTokenExpired$ = createEffect(() => this.actions$.pipe(
     ofType(AuthenticationActions.accessTokenExpired),
-    tap(() => this.notificationsService.notify(Severities.Error, 'Tokens Expired', 'Tokens expired.  Please log in again.', 20000))
+    tap(() => this.notificationsService.error('Tokens Expired', 'Tokens expired.  Please log in again.', 20000))
   ), { dispatch: false });
 
   logUserInit$ = createEffect(() => this.authenticationFacade.email$.pipe(

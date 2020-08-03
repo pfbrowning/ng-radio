@@ -4,12 +4,11 @@ import { switchMap, withLatestFrom, map, catchError, tap, filter } from 'rxjs/op
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserRootState } from '../models/radio-browser-root-state';
-import { Severities } from '@core';
 import { RadioBrowserActions, RadioBrowserSelectors } from '.';
 import { Router } from '@angular/router';
 import { PlayerActions } from '@core/store';
 import { resolverParams } from './radio-browser.selectors';
-import { NotificationService, RadioBrowserService, ConfigService } from '@core/services';
+import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 
 @Injectable()
 export class RadioBrowserEffects {
@@ -80,12 +79,12 @@ export class RadioBrowserEffects {
 
   notifySearchFailed$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchFailed),
-    tap(() => this.notificationService.notify(Severities.Error, 'Search Failed'))
+    tap(() => this.notificationsService.error('Search Failed'))
   ), { dispatch: false });
 
   notifyTagSuggestionsFetchFailed$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.tagSuggestionsFetchFailed),
-    tap(() => this.notificationService.notify(Severities.Error, 'Failed To Fetch Tag Suggestions'))
+    tap(() => this.notificationsService.error('Failed To Fetch Tag Suggestions'))
   ), { dispatch: false });
 
   constructor(
@@ -94,6 +93,6 @@ export class RadioBrowserEffects {
     private configService: ConfigService,
     private router: Router,
     private radioBrowserService: RadioBrowserService,
-    private notificationService: NotificationService
+    private notificationsService: NotificationsService
   ) {}
 }

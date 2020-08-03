@@ -1,10 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NoSleepToken } from '../injection-tokens/no-sleep-token';
-import { Severities } from '../models/notifications/severities';
 import { Actions, ofType } from '@ngrx/effects';
 import { audioPaused } from '../store/player/player-actions';
-import { LoggingService, NotificationService } from '@core/services';
+import { LoggingService, NotificationsService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 /** Manages NoSleep.js, which keeps mobile screens awake by playing a hidden
@@ -15,7 +14,7 @@ export class KeepAwakeService {
   constructor(
     private actions$: Actions,
     private loggingService: LoggingService,
-    private notificationService: NotificationService,
+    private notificationsService: NotificationsService,
     @Inject(NoSleepToken) private noSleep: NoSleep) {
     // Disable nosleep when the audio stops
     this.actions$.pipe(ofType(audioPaused)).subscribe(() => this.disable());
@@ -35,7 +34,7 @@ export class KeepAwakeService {
     this.noSleep.enable();
     // Notify any subscribers
     this.enabled.next(true);
-    this.notificationService.notify(Severities.Success, 'Keep Awake Enabled', 'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
+    this.notificationsService.success('Keep Awake Enabled', 'Keep Awake has been enabled.  This should keep the screen from locking when used on mobile devices.');
     this.loggingService.info('Keep Awake Enabled');
   }
 
@@ -49,8 +48,7 @@ export class KeepAwakeService {
       this.noSleep.disable();
       // Notify any subscribers
       this.enabled.next(false);
-      this.notificationService.notify(Severities.Success, 'Keep Awake Disabled',
-        'Keep Awake has been disabled.');
+      this.notificationsService.success('Keep Awake Disabled', 'Keep Awake has been disabled.');
     }
   }
 

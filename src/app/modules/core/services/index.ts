@@ -15,7 +15,7 @@ export { RadioBrowserService } from './http-layers/radio-browser.service';
 
 // Notifications
 export { ToasterReadyService } from './notifications/toaster-ready.service';
-export { NotificationService } from './notifications/notification.service';
+export { NotificationsService } from './notifications/notifications.service';
 
 // Logging
 export { LoggingService } from './logging/logging.service';

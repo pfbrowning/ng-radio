@@ -7,7 +7,7 @@ import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { NotificationService, RadioBrowserService, LoggingService, StreamInfoService, SleepTimerService, AudioElementService } from '@core/services';
+import { NotificationsService, RadioBrowserService, LoggingService, StreamInfoService, SleepTimerService, AudioElementService } from '@core/services';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -43,8 +43,8 @@ export function createAppInsightsServiceSpy(): jasmine.SpyObj<AppInsightsService
   return jasmine.createSpyObj('appInsightsService', ['initialize']);
 }
 
-export function createNotificationServiceSpy(): jasmine.SpyObj<NotificationService> {
-  return jasmine.createSpyObj('notificationServiceSpy', ['notify']);
+export function createNotificationsServiceSpy(): jasmine.SpyObj<NotificationsService> {
+  return jasmine.createSpyObj('notificationsServiceSpy', ['info', 'success', 'error', 'warn']);
 }
 
 export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {

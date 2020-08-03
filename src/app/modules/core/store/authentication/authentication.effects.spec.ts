@@ -10,7 +10,7 @@ import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
-import { NotificationService, LoggingService, ConfigService } from '@core/services';
+import { NotificationsService, LoggingService, ConfigService } from '@core/services';
 import * as AuthenticationActions from './authentication.actions';
 
 describe('AuthenticationEffects', () => {
@@ -29,7 +29,7 @@ describe('AuthenticationEffects', () => {
         provideMockStore({initialState: initialRootState}),
         { provide: ConfigService, useValue: configService },
         { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
-        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
+        { provide: NotificationsService, useValue: CoreSpyFactories.createNotificationsServiceSpy() },
         { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() },
         { provide: AppInsightsService, useValue: CoreSpyFactories.createAppInsightsServiceSpy() }
       ]

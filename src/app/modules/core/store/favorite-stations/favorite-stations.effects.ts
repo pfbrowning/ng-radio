@@ -16,11 +16,10 @@ import {
 import { switchMap, catchError, map, withLatestFrom, filter, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { Severities } from '../../models/notifications/severities';
 import { RootState } from '../../models/root-state';
 import { selectStation } from '../player/player-actions';
 import { FavoriteStationsActions, FavoriteStationsSelectors } from '.';
-import { FavoriteStationsService, NotificationService } from '@core/services';
+import { FavoriteStationsService, NotificationsService } from '@core/services';
 
 @Injectable()
 export class FavoriteStationsEffects {
@@ -28,7 +27,7 @@ export class FavoriteStationsEffects {
     private actions$: Actions,
     private store: Store<RootState>,
     private favoriteStationsService: FavoriteStationsService,
-    private notificationService: NotificationService
+    private notificationsService: NotificationsService
   ) {}
 
   fetchStationsSubmit$ = createEffect(() => this.actions$.pipe(
@@ -102,18 +101,18 @@ export class FavoriteStationsEffects {
 
   notifyAddSucceeded$ = createEffect(() => this.actions$.pipe(
     ofType(addToFavoritesSucceeded),
-    tap(action => this.notificationService.notify(Severities.Success, 'Added To Favorites', `${action.station.title} has been added to favorites.`))
+    tap(action => this.notificationsService.success('Added To Favorites', `${action.station.title} has been added to favorites.`))
   ), { dispatch: false });
 
   notifyAddFailed$ = createEffect(() => this.actions$.pipe(
     ofType(addToFavoritesFailed),
-    tap(action => this.notificationService.notify(Severities.Error, 'Failed to Add To Favorites', `${action.station.title} was not added to favorites.`))
+    tap(action => this.notificationsService.error('Failed to Add To Favorites', `${action.station.title} was not added to favorites.`))
   ), { dispatch: false });
 
   notifyRemoveFailed$ = createEffect(() => this.actions$.pipe(
     ofType(removeFromFavoritesFailed),
     tap(() =>
-      this.notificationService.notify(Severities.Error, 'Failed to Remove From Favorites', `Station was not removed from favorites.`)
+      this.notificationsService.error('Failed to Remove From Favorites', `Station was not removed from favorites.`)
     )
   ), { dispatch: false });
 }

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { CoreSpyFactories } from '@core/testing';
 import { TestScheduler } from 'rxjs/testing';
-import { NotificationService } from './notifications/notification.service';
+import { NotificationsService } from './notifications/notifications.service';
 
 describe('SleepTimerService', () => {
   let sleepTimerService: SleepTimerService;
@@ -24,7 +24,7 @@ describe('SleepTimerService', () => {
       providers: [
         provideMockActions(() => actions$),
         { provide: CurrentTimeService, useValue: currentTimeService },
-        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() }
+        { provide: NotificationsService, useValue: CoreSpyFactories.createNotificationsServiceSpy() }
       ]
     });
     sleepTimerService = TestBed.inject(SleepTimerService);

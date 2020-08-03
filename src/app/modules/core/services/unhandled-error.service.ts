@@ -1,7 +1,6 @@
 import { Injectable, Injector, ErrorHandler } from '@angular/core';
 import { LoggingService } from './logging/logging.service';
-import { NotificationService } from './notifications/notification.service';
-import { Severities } from '../models/notifications/severities';
+import { NotificationsService } from './notifications/notifications.service';
 import { LoggerSeverity } from '../models/logging/logger-severity';
 
 @Injectable()
@@ -11,8 +10,8 @@ export class UnhandledErrorService implements ErrorHandler {
   // Pass any unhandled errors to the global error handler
   handleError(error: any) {
     const loggingService = this.injector.get(LoggingService);
-    const notificationsService = this.injector.get(NotificationService);
+    const notificationsService = this.injector.get(NotificationsService);
     loggingService.exception(error, LoggerSeverity.Error, { event: 'Unhandled Error Caught' });
-    notificationsService.notify(Severities.Error, 'Unhandled Error', error.message);
+    notificationsService.error('Unhandled Error', error.message);
   }
 }

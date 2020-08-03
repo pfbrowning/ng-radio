@@ -6,7 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Subject } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { audioPaused } from '../store/player/player-actions';
-import { NotificationService, LoggingService } from '@core/services';
+import { NotificationsService, LoggingService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 describe('KeepAwakeService', () => {
@@ -23,7 +23,7 @@ describe('KeepAwakeService', () => {
         KeepAwakeService,
         provideMockActions(() => actions$),
         { provide: NoSleepToken, useValue: noSleepSpy },
-        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() },
+        { provide: NotificationsService, useValue: CoreSpyFactories.createNotificationsServiceSpy() },
         { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() }
       ]
     });

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { Severities } from '../../models/notifications/severities';
 import { MessageService } from 'primeng/api';
-import theoretically from 'jasmine-theories';
 import { CoreSpyFactories } from '@core/testing';
 import { ToasterReadyStubService } from '@core/testing';
-import { NotificationService, ToasterReadyService } from '@core/services';
+import { NotificationsService, ToasterReadyService } from '@core/services';
+import theoretically from 'jasmine-theories';
 
-describe('NotificationService', () => {
-  let notificationService: NotificationService;
+describe('NotificationsService', () => {
+  let notificationsService: NotificationsService;
   let messageServiceSpy: any;
   let toasterReadyService: ToasterReadyStubService;
 
@@ -22,12 +22,12 @@ describe('NotificationService', () => {
       ]
     });
 
-    notificationService = TestBed.inject(NotificationService);
+    notificationsService = TestBed.inject(NotificationsService);
   });
 
 
   it('should be created', () => {
-    expect(notificationService).toBeTruthy();
+    expect(notificationsService).toBeTruthy();
   });
 
   const testNotifications = [
@@ -41,7 +41,21 @@ describe('NotificationService', () => {
     toasterReadyService.toasterReadySource.next();
 
     // Act
-    notificationService.notify(notification.severity, notification.summary, notification.detail, notification.life);
+    switch (notification.severity) {
+      case Severities.Success:
+        notificationsService.success(notification.summary, notification.detail, notification.life);
+        break;
+      case Severities.Info:
+        notificationsService.info(notification.summary, notification.detail, notification.life);
+        break;
+      case Severities.Warn:
+        notificationsService.warn(notification.summary, notification.detail, notification.life);
+        break;
+      case Severities.Error:
+        notificationsService.error(notification.summary, notification.detail, notification.life);
+        break;
+    }
+
 
     // Assert
     expect(messageServiceSpy.add).toHaveBeenCalledTimes(1);
@@ -52,7 +66,7 @@ describe('NotificationService', () => {
 
   it('Should wait for toaster initialization before passing a message', () => {
     // Arrange
-    notificationService.notify(Severities.Info, 'Summary', 'Detail');
+    notificationsService.info('Summary', 'Detail');
     expect(messageServiceSpy.add).not.toHaveBeenCalled();
 
     // Act

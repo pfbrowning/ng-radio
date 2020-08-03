@@ -60,7 +60,6 @@ ng serve --open
 ## Backlog
 * Chores
   * Use EnvironmentService for config
-  * Rename & Refactor Notification service
   * Refactor `core/store` as necessary
     * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
     * Refactor selector import / export logic
@@ -80,5 +79,6 @@ ng serve --open
   * Prevent accidental audio streaming through CORS proxy
   * Package up reusable things and deploy to npm
     * isFalsyOrWhitespace
+  * Replace `jasmine-theories` tests with vanilla forEach tests
   * Improve test coverage
   

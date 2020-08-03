@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap } from 'rxjs/operators';
 import { of, timer, merge } from 'rxjs';
-import { Severities } from '../../models/notifications/severities';
 import { Store, select, Action } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
 import {
@@ -31,14 +30,14 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
-import { LoggingService, StreamInfoService, NotificationService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
+import { LoggingService, StreamInfoService, NotificationsService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
 
 @Injectable()
 export class PlayerEffects {
   constructor(
     private actions$: Actions,
     private store: Store<RootState>,
-    private notificationService: NotificationService,
+    private notificationsService: NotificationsService,
     private loggingService: LoggingService,
     private streamInfoService: StreamInfoService,
     private configService: ConfigService,
@@ -91,7 +90,7 @@ export class PlayerEffects {
     ofType(PlayerActions.preprocessStreamFailed),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
     filter(([action, station]) => action.streamUrl === station.url),
-    tap(([action]) => this.notificationService.notify(Severities.Error, 'Failed To Validate Stream', `Can't play ${action.streamUrl}.`))
+    tap(([action]) => this.notificationsService.error('Failed To Validate Stream', `Can't play ${action.streamUrl}.`))
   ), { dispatch: false });
 
   preprocessStream$ = createEffect(() => this.actions$.pipe(
@@ -135,7 +134,7 @@ export class PlayerEffects {
   notifyLogPlayAudioFailed$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioFailed),
     tap(({station, error}) => {
-      this.notificationService.notify(Severities.Error, 'Failed To Play Audio', error.message);
+      this.notificationsService.error('Failed To Play Audio', error.message);
       this.loggingService.warn('Failed To Play Audio', { station, error });
     })
   ), { dispatch: false });
@@ -226,7 +225,7 @@ export class PlayerEffects {
     ofType(PlayerActions.currentNowPlayingChanged),
     withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
     tap(([{nowPlaying}, station]) => {
-      this.notificationService.notify(Severities.Info, 'Now Playing', !isFalsyOrWhitespace(nowPlaying.title) ?
+      this.notificationsService.info('Now Playing', !isFalsyOrWhitespace(nowPlaying.title) ?
       `${nowPlaying.title} - ${station.title}` : station.title);
     })
   ), { dispatch: false });

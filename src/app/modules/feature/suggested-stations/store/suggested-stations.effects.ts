@@ -3,10 +3,9 @@ import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
-import { Severities } from '@core';
 import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
-import { NotificationService, RadioBrowserService, ConfigService } from '@core/services';
+import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 import * as SuggestedStationsActions from './suggested-stations.actions';
 
 @Injectable()
@@ -47,17 +46,17 @@ export class SuggestedStationsEffects implements OnInitEffects {
 
   notifyDeveloperSuggestedFetchFailed$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.developerSuggestedFetchFailed),
-    tap(() => this.notificationService.notify(Severities.Error, 'Failed To Fetch Developer Suggested'))
+    tap(() => this.notificationsService.error('Failed To Fetch Developer Suggested'))
   ), { dispatch: false });
 
   notifyTopClickedFetchFailed$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.topClickedFetchFailed),
-    tap(() => this.notificationService.notify(Severities.Error, 'Failed To Fetch Top Clicked'))
+    tap(() => this.notificationsService.error('Failed To Fetch Top Clicked'))
   ), { dispatch: false });
 
   notifyTopVotedFailed$ = createEffect(() => this.actions$.pipe(
     ofType(SuggestedStationsActions.topVotedFetchFailed),
-    tap(() => this.notificationService.notify(Severities.Error, 'Failed To Fetch Top Voted'))
+    tap(() => this.notificationsService.error('Failed To Fetch Top Voted'))
   ), { dispatch: false });
 
   ngrxOnInitEffects(): Action {
@@ -70,6 +69,6 @@ export class SuggestedStationsEffects implements OnInitEffects {
     private configService: ConfigService,
     private suggestedStationsService: SuggestedStationsService,
     private radioBrowserService: RadioBrowserService,
-    private notificationService: NotificationService
+    private notificationsService: NotificationsService
   ) {}
 }

@@ -7,7 +7,7 @@ import { initialSuggestedStationsRootState } from '../models/initial-suggested-s
 import { SuggestedStationsService } from '../services/suggested-stations.service';
 import { createSuggestedStationsServiceSpy } from '../suggested-stations-spy-factories.spec';
 import { CoreSpyFactories, ConfigStubService } from '@core/testing';
-import { NotificationService, RadioBrowserService, ConfigService } from '@core/services';
+import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 
 describe('SuggestedStationsEffects', () => {
   const actions$: Observable<any> = null;
@@ -22,7 +22,7 @@ describe('SuggestedStationsEffects', () => {
         { provide: ConfigService, useClass: ConfigStubService },
         { provide: SuggestedStationsService, useValue: createSuggestedStationsServiceSpy() },
         { provide: RadioBrowserService, useValue: CoreSpyFactories.createRadioBrowserServiceSpy() },
-        { provide: NotificationService, useValue: CoreSpyFactories.createNotificationServiceSpy() }
+        { provide: NotificationsService, useValue: CoreSpyFactories.createNotificationsServiceSpy() }
       ]
     });
 

@@ -15,7 +15,7 @@ import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
-import { NotificationService, StreamInfoService } from '@core/services';
+import { NotificationsService, StreamInfoService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -41,7 +41,7 @@ import NoSleep from 'nosleep.js';
     KeepAwakeService,
     CurrentTimeService,
     MessageService,
-    NotificationService,
+    NotificationsService,
     { provide: NoSleepToken, useValue: new NoSleep() },
     { provide: HTTP_INTERCEPTORS, useClass: BearerTokenService, multi: true },
     { provide: ErrorHandler, useClass: UnhandledErrorService }

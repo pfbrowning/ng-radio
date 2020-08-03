@@ -3,8 +3,7 @@ import { BehaviorSubject, timer, Observable, of } from 'rxjs';
 import { switchMap, map, filter, withLatestFrom, share, takeWhile, takeUntil, startWith } from 'rxjs/operators';
 import { CurrentTimeService } from './current-time.service';
 import { Actions, ofType } from '@ngrx/effects';
-import { NotificationService } from './notifications/notification.service';
-import { Severities } from '../models/notifications/severities';
+import { NotificationsService } from './notifications/notifications.service';
 import { PlayerActions } from '../store/player';
 import dayjs from 'dayjs';
 
@@ -54,7 +53,7 @@ export class SleepTimerService {
   constructor(
     private actions$: Actions,
     private currentTimeService: CurrentTimeService,
-    private notificationService: NotificationService,
+    private notificationsService: NotificationsService,
   ) {
     this.sleepTimer$.subscribe(() => this.onGoToSleep());
     this.stopTimerOnAudioPaused$.subscribe(() => this.clearSleepTimer());
@@ -72,15 +71,15 @@ export class SleepTimerService {
     const prettyTime = dayjs(sleepTimeInMs).format('h:mm:ssa');
 
     this.sleepTime.next(sleepTimeInMs);
-    this.notificationService.notify(Severities.Success, 'Sleep Timer Set', `Sleep timer set for ${prettyTime}.`);
+    this.notificationsService.success('Sleep Timer Set', `Sleep timer set for ${prettyTime}.`);
   }
 
   public clearSleepTimer() {
     this.sleepTime.next(null);
-    this.notificationService.notify(Severities.Success, 'Sleep Timer Cleared', 'Sleep timer cleared.');
+    this.notificationsService.success('Sleep Timer Cleared', 'Sleep timer cleared.');
   }
 
   private onGoToSleep() {
-    this.notificationService.notify(Severities.Info, 'Going to sleep', 'Good night!');
+    this.notificationsService.info('Going to sleep', 'Good night!');
   }
 }
