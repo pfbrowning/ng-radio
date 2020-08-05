@@ -10,7 +10,6 @@ export { StreamValidatorService } from './preprocessing/stream-validator.service
 
 // HTTP Layers
 export { FavoriteStationsService } from './http-layers/favorite-stations.service';
-export { StreamInfoService } from './http-layers/stream-info.service';
 export { RadioBrowserService } from './http-layers/radio-browser.service';
 
 // Notifications
@@ -25,6 +24,7 @@ export { AppInsightsService } from './logging/app-insights.service';
 export { RouterStateService } from './router-state.service';
 export { SleepTimerService } from './sleep-timer.service';
 export { AudioElementService } from './audio-element.service';
+export { StreamMetadataService } from './stream-metadata.service';
 
 // Config
 export { ConfigService } from './config/config.service';

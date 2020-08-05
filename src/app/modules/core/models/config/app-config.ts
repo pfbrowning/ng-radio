@@ -6,6 +6,7 @@ export interface AppConfig {
     radioBrowserSearchResultsLimit: number;
     favoriteStationsApiUrl: string;
     corsProxyUrl: string;
+    radioProxyUrl: string;
     refreshIntervalShort: number;
     refreshIntervalLong: number;
     metadataFetchTimeout: number;

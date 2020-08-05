@@ -70,13 +70,6 @@ export class RadioBrowserEffects {
     ))
   ));
 
-  updateListedStations$ = createEffect(() => this.actions$.pipe(
-    ofType(RadioBrowserActions.searchSucceeded),
-    filter(() => this.router.url === '/radio-browser'),
-    map(({results}) => results.map(r => r.url)),
-    map(streamUrls => PlayerActions.selectStreamInfoUrls({streamUrls}))
-  ));
-
   notifySearchFailed$ = createEffect(() => this.actions$.pipe(
     ofType(RadioBrowserActions.searchFailed),
     tap(() => this.notificationsService.error('Search Failed'))
@@ -91,7 +84,6 @@ export class RadioBrowserEffects {
     private actions$: Actions,
     private store: Store<RadioBrowserRootState>,
     private configService: ConfigService,
-    private router: Router,
     private radioBrowserService: RadioBrowserService,
     private notificationsService: NotificationsService
   ) {}

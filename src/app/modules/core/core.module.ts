@@ -10,12 +10,13 @@ import { environment } from '@environment';
 import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stations.effects';
 import { PlayerEffects } from './store/player/player.effects';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
+import { StreamMetadataEffects } from './store/stream-metadata/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
-import { NotificationsService, StreamInfoService } from '@core/services';
+import { NotificationsService } from '@core/services';
 import NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -32,12 +33,12 @@ import NoSleep from 'nosleep.js';
     EffectsModule.forRoot([
       FavoriteStationsEffects,
       PlayerEffects,
-      AuthenticationEffects
+      AuthenticationEffects,
+      StreamMetadataEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [
-    StreamInfoService,
     KeepAwakeService,
     CurrentTimeService,
     MessageService,

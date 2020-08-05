@@ -3,7 +3,7 @@ import { Subject, timer, EMPTY } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take, filter, debounce, map } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
 import { Store, select } from '@ngrx/store';
-import { PlayerActions, PlayerSelectors } from '@core/store';
+import { PlayerActions, PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
 import { Station } from '@core/models/player';
 import { nameTermUpdated, tagTermUpdated } from '../../store/radio-browser.actions';
 import { SubSink } from 'subsink';
@@ -18,7 +18,7 @@ import { ConfigService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<RadioBrowserRootState>, private configService: ConfigService) {}
+  constructor(private store: Store<RadioBrowserRootState>, private configService: ConfigService, private streamMetadataFacade: StreamMetadataFacadeService) {}
 
   @ViewChild('nameSearchInput', { static: true }) nameSearchInput: MatInput;
 
@@ -27,7 +27,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   public resultsLimit$ = this.configService.appConfig$.pipe(map(config => config.radioBrowserSearchResultsLimit));
   public searchResults$ = this.store.pipe(select(selectSearchResults));
   public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
-  public streamInfo$ = this.store.pipe(select(PlayerSelectors.streamInfo));
+  public streamInfo$ = this.streamMetadataFacade.streamsMap$;
   public selectedCountry$ = this.store.pipe(select(RadioBrowserSelectors.selectedCountry));
   public countryFilter$ = this.store.pipe(select(RadioBrowserSelectors.countryFilter));
   public countries$ = this.store.pipe(select(RadioBrowserSelectors.filteredCountries));
@@ -57,18 +57,12 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
       this.tagSearch = criteria.tagTerm;
     });
 
-    // On init set any existing search results as listed stream info urls
-    this.searchResults$.pipe(take(1), filter(results => results != null)).subscribe(results =>
-      this.store.dispatch(PlayerActions.selectStreamInfoUrls({streamUrls: results.map(s => s.url)})
-    ));
-
     // Focus on the name input
     this.nameSearchInput.focus();
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
-    this.store.dispatch(PlayerActions.clearStreamInfoUrls());
   }
 
   onRowClicked(station: Station) {

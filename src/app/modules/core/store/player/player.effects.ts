@@ -15,10 +15,6 @@ import {
   playAudioFailed,
   pauseAudioSubmit,
   audioPaused,
-  fetchIntervalStart,
-  fetchNowPlayingStart,
-  fetchNowPlayingSucceeded,
-  fetchNowPlayingFailed,
 } from './player-actions';
 import { RootState } from '../../models/root-state';
 import { CurrentTimeService } from '../../services/current-time.service';
@@ -30,7 +26,7 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
-import { LoggingService, StreamInfoService, NotificationsService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
+import { LoggingService, NotificationsService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
 
 @Injectable()
 export class PlayerEffects {
@@ -39,7 +35,6 @@ export class PlayerEffects {
     private store: Store<RootState>,
     private notificationsService: NotificationsService,
     private loggingService: LoggingService,
-    private streamInfoService: StreamInfoService,
     private configService: ConfigService,
     private titleService: Title,
     private streamPreprocessorService: StreamPreprocessorService,
@@ -108,11 +103,15 @@ export class PlayerEffects {
 
   playStation$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioStart),
-    withLatestFrom(this.store.pipe(select(selectCurrentStation))),
-    tap(([, station]) => {
+    withLatestFrom(
+      this.store.pipe(select(selectCurrentStation)),
+      this.configService.appConfig$
+    ),
+    tap(([, station, config]) => {
       /* Include a timestamp query param because Firefox doesn't play well with
       some previously-buffered streams */
-      const url = new URL(station.url);
+      const url = new URL(`${config.radioProxyUrl}/stream`);
+      url.searchParams.append('url', station.url);
       url.searchParams.append('t', this.currentTimeService.unix().toString());
       this.audio.src = url.toString();
     }),
@@ -146,111 +145,35 @@ export class PlayerEffects {
     )
   ), { dispatch: false });
 
-  fetchOnPlaySucceeded$ = createEffect(() => this.actions$.pipe(
-    ofType(playAudioSucceeded),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.currentUrlAndFetchInProgressUrls))),
-    filter(([, {current, fetching}]) => !fetching.includes(current)),
-    map(([, {current}]) => fetchNowPlayingStart({streamUrl: current}))
-  ));
+  // /* TODO Rewrite this effect once everything else is working.  Use the state change itself, rather than an action,
+  // as the trigger for the effect. */
+  // notifyStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
+  //   ofType(PlayerActions.currentNowPlayingChanged),
+  //   withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
+  //   tap(([{nowPlaying}, station]) => {
+  //     this.notificationsService.info('Now Playing', !isFalsyOrWhitespace(nowPlaying.title) ?
+  //     `${nowPlaying.title} - ${station.title}` : station.title);
+  //   })
+  // ), { dispatch: false });
 
-  fetchListedStreamInfo$ = createEffect(() => merge(
-    this.actions$.pipe(ofType(PlayerActions.selectStreamInfoUrls)),
-    this.windowService.focus
-  ).pipe(
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.nonIntervalOrFetchingStreamInfoUrls))),
-    switchMap(([, urls]) => urls.map(streamUrl => PlayerActions.fetchNowPlayingStart({ streamUrl })))
-  ));
+  // // TODO Rewrite this as well
+  // updateTitleOnStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
+  //   ofType(PlayerActions.currentNowPlayingChanged),
+  //   withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
+  //   tap(([{nowPlaying}, station]) => {
+  //     if (!isFalsyOrWhitespace(nowPlaying.title)) {
+  //       this.titleService.setTitle(nowPlaying.title);
+  //     } else if (!isFalsyOrWhitespace(station.title)) {
+  //       this.titleService.setTitle(station.title);
+  //     } else {
+  //       this.titleService.setTitle('Browninglogic Radio');
+  //     }
+  //   })
+  // ), { dispatch: false });
 
-  startFetchInterval$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.fetchNowPlayingSucceeded, PlayerActions.fetchNowPlayingFailed),
-    withLatestFrom(
-      this.store.pipe(select(PlayerSelectors.selectCurrentStationUrl)),
-      this.store.pipe(select(PlayerSelectors.streamInfoUrls)),
-      this.windowFocusService.focused$,
-      this.configService.appConfig$
-    ),
-    filter(([{streamUrl}, current, listed]) => listed.concat(current).includes(streamUrl)),
-    map(([action, current, , focused, config]) => fetchIntervalStart({
-      streamUrl: action.streamUrl,
-      duration: current === action.streamUrl && focused
-        ? config.refreshIntervalShort
-        : config.refreshIntervalLong
-    }))
-  ));
-
-  fetchInterval$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.fetchIntervalStart),
-    mergeMap(({streamUrl, duration}) => timer(duration).pipe(
-      takeUntil(this.actions$.pipe(
-        ofType(PlayerActions.fetchNowPlayingStart),
-        filter(action => action.streamUrl === streamUrl)
-      )),
-      mapTo(PlayerActions.fetchIntervalCompleted({streamUrl})
-    )),
-  )));
-
-  onFetchIntervalComplete$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.fetchIntervalCompleted),
-    withLatestFrom(
-      this.store.pipe(select(PlayerSelectors.selectCurrentStationUrl)),
-      this.store.pipe(select(PlayerSelectors.streamInfoUrls)),
-      this.store.pipe(select(PlayerSelectors.selectPlayerStatus)),
-      this.windowFocusService.focused$
-    ),
-    // Fetch listed streams only if the window is focused, but fetch the current playing stream regardless
-    filter(([{streamUrl}, current, listed, status, focused]) =>
-      (listed.includes(streamUrl) && focused) || (current === streamUrl && status === PlayerStatus.Playing)
-    ),
-    map(([{streamUrl}]) => PlayerActions.fetchNowPlayingStart({streamUrl}))
-  ));
-
-  fetchStreamInfo$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.fetchNowPlayingStart),
-    mergeMap(({streamUrl}) => this.streamInfoService.getMetadata(streamUrl).pipe(
-      withLatestFrom(this.store.pipe(select(PlayerSelectors.currentStationAndNowPlaying))),
-      switchMap(([fetched, selected]) => {
-        const actions: Action[] = [ fetchNowPlayingSucceeded({streamUrl, nowPlaying: fetched}) ];
-        if (selected.station && streamUrl === selected.station.url && !isEqual(fetched, selected.nowPlaying)) {
-          actions.push(PlayerActions.currentNowPlayingChanged({streamUrl, nowPlaying: fetched}));
-        }
-        return actions;
-      }),
-      catchError(error => {
-        return of(fetchNowPlayingFailed({streamUrl, error}));
-      })
-    ))
-  ));
-
-  notifyStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.currentNowPlayingChanged),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
-    tap(([{nowPlaying}, station]) => {
-      this.notificationsService.info('Now Playing', !isFalsyOrWhitespace(nowPlaying.title) ?
-      `${nowPlaying.title} - ${station.title}` : station.title);
-    })
-  ), { dispatch: false });
-
-  logFetchNowPlayingFailed$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.fetchNowPlayingFailed),
-    tap(({error, streamUrl}) => this.loggingService.warn('Fetch Now Playing Failed', { streamUrl, error }))
-  ), { dispatch: false });
-
-  updateTitleOnStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.currentNowPlayingChanged),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
-    tap(([{nowPlaying}, station]) => {
-      if (!isFalsyOrWhitespace(nowPlaying.title)) {
-        this.titleService.setTitle(nowPlaying.title);
-      } else if (!isFalsyOrWhitespace(station.title)) {
-        this.titleService.setTitle(station.title);
-      } else {
-        this.titleService.setTitle('Browninglogic Radio');
-      }
-    })
-  ), { dispatch: false });
-
-  clearTitle$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchNowPlayingFailed, audioPaused),
-    tap(() => this.titleService.setTitle('Browninglogic Radio'))
-  ), { dispatch: false });
+  // TODO Rewrite this
+  // clearTitle$ = createEffect(() => this.actions$.pipe(
+  //   ofType(fetchNowPlayingFailed, audioPaused),
+  //   tap(() => this.titleService.setTitle('Browninglogic Radio'))
+  // ), { dispatch: false });
 }

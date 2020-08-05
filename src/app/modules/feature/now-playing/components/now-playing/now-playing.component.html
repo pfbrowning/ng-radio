@@ -19,7 +19,6 @@
           </ng-container>
         </div>
         <div class="station-title">{{ (currentStation$ | async).title }}</div>
-        <div *ngIf="(currentStreamInfo$ | async)?.nowPlaying?.bitrate; let bitrate" class="bitrate">Bitrate: {{ bitrate }}</div>
         <div *ngIf="(minutesUntilSleep$ | async) != null" class="minutes-until-sleep">
           Sleeping in {{minutesUntilSleep$ | async}} minutes
         </div>

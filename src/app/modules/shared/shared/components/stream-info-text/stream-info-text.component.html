@@ -1,13 +1,6 @@
-<ng-container *ngIf="streamInfo?.nowPlaying; else noNowPlaying; let nowPlaying">
-    {{ nowPlaying.title || nowPlaying.description || nowPlaying.stationTitle }}
+<ng-container *ngIf="streamInfo?.title; else noTitle; let title">
+    {{ title }}
 </ng-container>
-<ng-template #noNowPlaying>
-    <ng-container [ngSwitch]="streamInfo?.status">
-        <ng-container *ngSwitchCase="streamInfoStatus.LoadingStreamInfo">
-            Loading Stream Info...
-        </ng-container>
-        <ng-container *ngSwitchCase="streamInfoStatus.Error">
-            Metadata Unavailable
-        </ng-container>
-    </ng-container>
+<ng-template #noTitle>
+    <ng-container *ngIf="streamInfo?.connecting">Connecting...</ng-container>
 </ng-template>

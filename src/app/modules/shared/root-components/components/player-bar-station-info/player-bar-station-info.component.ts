@@ -1,4 +1,4 @@
-import { StreamInfoStatus, PlayerStatus, Station } from '@core/models/player';
+import { PlayerStatus, Station } from '@core/models/player';
 import {
   Component,
   ViewChild,
@@ -14,7 +14,7 @@ import { Store, select } from '@ngrx/store';
 import { RootState } from '@core';
 import { SubSink } from 'subsink';
 import { WindowService } from '@core/services';
-import { PlayerSelectors } from '@core/store';
+import { PlayerSelectors, PlayerFacadeService } from '@core/store';
 
 @Component({
   selector: 'blr-player-bar-station-info',
@@ -24,7 +24,7 @@ import { PlayerSelectors } from '@core/store';
 })
 export class PlayerBarStationInfoComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(
-    private store: Store<RootState>,
+    private playerFacade: PlayerFacadeService,
     private changeDetectorRef: ChangeDetectorRef,
     private windowService: WindowService
   ) {}
@@ -34,11 +34,10 @@ export class PlayerBarStationInfoComponent implements OnInit, OnDestroy, AfterVi
   @Input() validatingCurrent: boolean;
   @ViewChild('title') titleElement: ElementRef;
   @ViewChild('station') stationElement: ElementRef;
-  public streamInfoStatus = StreamInfoStatus;
   public playerStatus = PlayerStatus;
   public titleMarquee = false;
   public stationMarquee = false;
-  public currentStreaminfo$ = this.store.pipe(select(PlayerSelectors.currentStreamInfo));
+  public metadataForCurrentStation$ = this.playerFacade.metadataForCurrentStation$;
   private subs = new SubSink();
 
   public ngOnInit(): void {

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { StreamInfoStatus } from '@core/models/player';
-import { StreamInfo } from '@core/models/player';
+import { MetadataViewModel } from '@core/models';
 
 @Component({
   selector: 'blr-stream-info-text',
@@ -8,7 +7,5 @@ import { StreamInfo } from '@core/models/player';
   styleUrls: ['./stream-info-text.component.scss']
 })
 export class StreamInfoTextComponent {
-  @Input() streamInfo: StreamInfo;
-
-  public streamInfoStatus = StreamInfoStatus;
+  @Input() streamInfo: MetadataViewModel;
 }

@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
-import { StreamInfo } from '../../models/player/stream-info';
+import * as MetadataSelectors from '../stream-metadata/selectors';
 
 export const selectPlayerState = (state: RootState) => state.player;
 
@@ -24,25 +24,9 @@ export const selectPlayerStatus = createSelector(
     (state) => state.playerStatus
 );
 
-export const currentStreamInfo = createSelector(
-    selectPlayerState,
-    state => state.streamInfo.current
-);
-
-export const currentNowPlaying = createSelector(
-    currentStreamInfo,
-    current => current.nowPlaying
-);
-
 export const selectCurrentStationTitle = createSelector(
     selectCurrentStation,
     station => station && station.title
-);
-
-export const currentStationAndNowPlaying = createSelector(
-    selectCurrentStation,
-    currentNowPlaying,
-    (station, nowPlaying) => ({station, nowPlaying})
 );
 
 export const selectCheckedStreams = createSelector(
@@ -67,36 +51,8 @@ export const selectIsValidationInProgressForCurrentStation = createSelector(
     vs => vs && vs.inProgress
 );
 
-export const nowPlayingFetchInProgressUrls = createSelector(
-    selectPlayerState,
-    state => state.streamInfo.fetchInProgressUrls
-);
-
-export const nowPlayingIntervalInProgressUrls = createSelector(
-    selectPlayerState,
-    state => state.streamInfo.intervalInProgressUrls
-);
-
-export const currentUrlAndFetchInProgressUrls = createSelector(
-    selectCurrentStationUrl,
-    nowPlayingFetchInProgressUrls,
-    (current, fetching) => ({current, fetching})
-);
-
-export const streamInfoUrls = createSelector(
-    selectPlayerState,
-    state => Object.keys(state.streamInfo.streams)
-);
-
-export const streamInfo = createSelector(
-    selectPlayerState,
-    streamInfoUrls,
-    (state, urls) => new Map<string, StreamInfo>(urls.map(url => [url, state.streamInfo.streams[url]]))
-);
-
-export const nonIntervalOrFetchingStreamInfoUrls = createSelector(
-    streamInfoUrls,
-    nowPlayingFetchInProgressUrls,
-    nowPlayingIntervalInProgressUrls,
-    (urls, fetching, intervals) => urls.filter(u => !fetching.concat(intervals).includes(u))
-);
+export const metadataForCurrentStation = createSelector(
+    selectCurrentStation,
+    MetadataSelectors.streamsMap,
+    (current, streams) => streams.get(current.url)
+)

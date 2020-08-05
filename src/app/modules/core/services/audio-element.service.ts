@@ -38,6 +38,6 @@ export class AudioElementService {
     /* We have to explicitly dispatch this within the Angular zone in order for change detection
     to work properly because the HTML5 audio element which the event originated from was not in
     the Angular Zone. */
-    this.ngZone.run(() => this.paused.next);
+    this.ngZone.run(() => this.paused.next());
   }
 }
