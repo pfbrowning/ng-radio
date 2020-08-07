@@ -49,3 +49,10 @@ export const selectIsValidationInProgressForCurrentStation = createSelector(
     selectCurrentStationValidationState,
     vs => vs && vs.inProgress
 );
+
+export const streamsMappedToADifferentUrl = createSelector(
+    selectCheckedStreams,
+    (checked) => Object.keys(checked)
+        .map(original => ({original, validated: checked[original].validatedUrl}))
+        .filter(m => m.validated && m.original !== m.validated)
+)

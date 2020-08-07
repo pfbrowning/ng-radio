@@ -62,10 +62,18 @@ export class PlayerEffects {
         this.titleService.setTitle('Browninglogic Radio');
       }
     }),
-    map(([action, selected]) => selected.validationState && selected.validationState.validatedUrl === action.station.url
-      ? PlayerActions.playAudioStart()
-      : PlayerActions.preprocessStreamStart({streamUrl: action.station.url})
-    )
+    map(([{station}, {validationState}]) => {
+      if (validationState && validationState.validatedUrl) {
+        // If the station url has already been successfully validated, then start playing
+        if (validationState.validatedUrl === station.url) {
+          return PlayerActions.playAudioStart();
+        }
+        // If a different url has been validated for the selected station, then reselect with the validated url
+        return PlayerActions.selectStation({station: { ...station, url: validationState.validatedUrl }})
+      }
+      // If this station hasn't been successfully validated at all, then start preprocessing
+      return PlayerActions.preprocessStreamStart({streamUrl: station.url})
+    })
   ));
 
   onStreamPreprocessSucceeded$ = createEffect(() => this.actions$.pipe(

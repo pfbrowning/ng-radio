@@ -4,12 +4,11 @@ import { MetadataViewModel } from '../../../models/stream-metadata/metadata-view
 
 export const streamMetadataState = (state: RootState) => state.streamMetadata;
 
-export const streamsMap = createSelector(
+export const streamViewModels = createSelector(
     streamMetadataState,
-    (state) => new Map<string, MetadataViewModel>(Object.keys(state.streams).map(url => [
-        url, {
-            title: state.streams[url],
-            connecting: state.connectionInProgressStreams.includes(url)
-        }
-    ]))
-);
+    (state) => Object.keys(state.streams).map(url => ({
+        url,
+        title: state.streams[url],
+        connecting: state.connectionInProgressStreams.includes(url)
+    }))
+)
