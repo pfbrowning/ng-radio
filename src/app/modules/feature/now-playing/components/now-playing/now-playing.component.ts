@@ -4,7 +4,7 @@ import { RootState } from '@core';
 import { KeepAwakeService } from '@core';
 import { PlayerStatus } from '@core/models/player';
 import { FavoriteStationsSelectors, FavoriteStationsActions } from '@core/store/favorite-stations';
-import { PlayerSelectors, PlayerFacadeService } from '@core/store';
+import { PlayerSelectors, PlayerFacadeService, StreamMetadataFacadeService } from '@core/store';
 import { SleepTimerService } from '@core/services';
 
 @Component({
@@ -17,12 +17,13 @@ export class NowPlayingComponent {
     public keepAwakeService: KeepAwakeService,
     private sleepTimerService: SleepTimerService,
     private store: Store<RootState>,
-    private playerFacadeService: PlayerFacadeService
+    private playerFacadeService: PlayerFacadeService,
+    private metadataFacade: StreamMetadataFacadeService
   ) {}
 
   public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
   public currentStation$ = this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite));
-  public currentStreamInfo$ = this.playerFacadeService.metadataForCurrentStation$;
+  public currentStreamInfo$ = this.metadataFacade.metadataForCurrentStation$;
   public minutesUntilSleep$ = this.sleepTimerService.minutesToSleep$;
   public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
   public playerStatus = PlayerStatus;

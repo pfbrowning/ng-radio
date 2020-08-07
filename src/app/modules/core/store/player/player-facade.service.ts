@@ -5,7 +5,6 @@ import { PlayerSelectors } from '.';
 
 @Injectable({ providedIn: 'root' })
 export class PlayerFacadeService {
-  public metadataForCurrentStation$ = this.store.pipe(select(PlayerSelectors.metadataForCurrentStation));
 
   constructor(private store: Store<RootState>) {}
 }

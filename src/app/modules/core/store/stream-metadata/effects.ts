@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap, catchError, concatMap} from 'rxjs/operators';
+import { map, switchMap, catchError, concatMap, debounceTime} from 'rxjs/operators';
 import { of } from 'rxjs';
 import { StreamMetadataService } from '@core/services';
+import { StreamMetadataFacadeService } from './stream-metadata-facade.service';
 import * as StreamMetadataActions from './actions';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class StreamMetadataEffects {
   constructor(
     private actions$: Actions,
     private streamMetadataService: StreamMetadataService,
+    private streamMetadataFacade: StreamMetadataFacadeService
   ) { }
 
   connectToStreams$ = createEffect(() => this.actions$.pipe(
@@ -24,6 +26,8 @@ export class StreamMetadataEffects {
     map(({url, title}) => StreamMetadataActions.metadataReceived({url, title}))
   ));
 
-  /* TODO Write an effect which listens on the "all streams for metadata" selector's observable and
-  maps that to a setStreamListStart action. */
+  setStreamList$ = createEffect(() => this.streamMetadataFacade.urlsSelectedForMetadata$.pipe(
+    debounceTime(250),
+    map(streams => StreamMetadataActions.setStreamListStart({ streams }))
+  ));
 }

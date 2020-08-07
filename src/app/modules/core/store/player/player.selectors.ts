@@ -1,6 +1,5 @@
 import { createSelector } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
-import * as MetadataSelectors from '../stream-metadata/selectors';
 
 export const selectPlayerState = (state: RootState) => state.player;
 
@@ -50,9 +49,3 @@ export const selectIsValidationInProgressForCurrentStation = createSelector(
     selectCurrentStationValidationState,
     vs => vs && vs.inProgress
 );
-
-export const metadataForCurrentStation = createSelector(
-    selectCurrentStation,
-    MetadataSelectors.streamsMap,
-    (current, streams) => streams.get(current.url)
-)
