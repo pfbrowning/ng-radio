@@ -47,7 +47,8 @@
     "socket.io-client": "^2.3.0",
     "subsink": "^1.0.1",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.10.3",
+    "@ngrx/router-store": "^9.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.4",

@@ -5,6 +5,7 @@ import { initialAuthenticationState } from '../store/authentication/models/initi
 import { initialStreamMetadataState } from '../store/stream-metadata/models/initial-stream-metadata-state';
 
 export const initialRootState: RootState = {
+    router: null,
     favoriteStations: initialFavoriteStationsState,
     player: initialPlayerState,
     authentication: initialAuthenticationState,

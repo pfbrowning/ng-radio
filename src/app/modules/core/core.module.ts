@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
 import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import NoSleep from 'nosleep.js';
 
 @NgModule({
@@ -36,6 +37,7 @@ import NoSleep from 'nosleep.js';
       AuthenticationEffects,
       StreamMetadataEffects
     ]),
+    StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [
