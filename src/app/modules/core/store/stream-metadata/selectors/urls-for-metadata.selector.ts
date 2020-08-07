@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
-import * as PlayerSelectors from '../../player/player.selectors';
 import { PlayerStatus } from '../../../models/player/player-status';
+import * as PlayerSelectors from '../../player/player.selectors';
 
 export const urlsSelectedForMetadata = createSelector(
     PlayerSelectors.selectCurrentStation,
