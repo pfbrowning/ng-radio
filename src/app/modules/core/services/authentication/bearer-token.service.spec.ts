@@ -14,7 +14,7 @@ describe('BearerTokenService', () => {
   let authenticationFacade: jasmine.SpyObj<AuthenticationFacadeService>;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  const config: any = Object.freeze({ favoriteStationsApiUrl: 'mockFavoritesUrl', metadataApiUrl: 'mockMetadataUrl' });
+  const config: any = Object.freeze({ favoriteStationsApiUrl: 'mockFavoritesUrl', radioProxyUrl: 'mockRadioProxyUrl' });
 
   beforeEach(() => {
     authenticationFacade = CoreSpyFactories.createAuthenticationFacadeSpy();

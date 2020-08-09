@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class CurrentTimeService {
-
-  public unix(): number {
+  /** The current unix timestamp in milliseconds */
+  public unixMs(): number {
     return Date.now();
   }
 }

@@ -26,6 +26,7 @@ import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
 import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
 import { WindowService } from '../../services/browser-apis/window.service';
+import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
 import { LoggingService, NotificationsService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
 
 @Injectable()
@@ -43,6 +44,7 @@ export class PlayerEffects {
     private windowFocusService: WindowFocusService,
     private sleepTimerService: SleepTimerService,
     private audio: AudioElementService,
+    private radioPlayerService: RadioPlayerService
   ) { }
 
   listenForAudioPaused$ = createEffect(() => this.audio.paused.pipe(
@@ -111,19 +113,8 @@ export class PlayerEffects {
 
   playStation$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioStart),
-    withLatestFrom(
-      this.store.pipe(select(selectCurrentStation)),
-      this.configService.appConfig$
-    ),
-    tap(([, station, config]) => {
-      /* Include a timestamp query param because Firefox doesn't play well with
-      some previously-buffered streams */
-      const url = new URL(`${config.radioProxyUrl}/stream`);
-      url.searchParams.append('url', station.url);
-      url.searchParams.append('t', this.currentTimeService.unix().toString());
-      this.audio.src = url.toString();
-    }),
-    switchMap(([, station]) => this.audio.play().pipe(
+    withLatestFrom(this.store.pipe(select(selectCurrentStation))),
+    switchMap(([, station]) => this.radioPlayerService.play(station.url).pipe(
       map(() => playAudioSucceeded()),
       catchError(error => of(playAudioFailed({error, station})))
     ))

@@ -42,7 +42,6 @@ import NoSleep from 'nosleep.js';
   ],
   providers: [
     KeepAwakeService,
-    CurrentTimeService,
     MessageService,
     NotificationsService,
     { provide: NoSleepToken, useValue: new NoSleep() },

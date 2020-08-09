@@ -60,14 +60,14 @@ export class SleepTimerService {
   }
 
   private msUntilSleep(sleepTime: number): number {
-    const currentTime = this.currentTimeService.unix();
+    const currentTime = this.currentTimeService.unixMs();
     return sleepTime != null && currentTime < sleepTime
       ? sleepTime - currentTime
       : null;
   }
 
   public setTimer(minutesUntilSleep: number) {
-    const sleepTimeInMs = this.currentTimeService.unix() + (minutesUntilSleep * 60000);
+    const sleepTimeInMs = this.currentTimeService.unixMs() + (minutesUntilSleep * 60000);
     const prettyTime = dayjs(sleepTimeInMs).format('h:mm:ssa');
 
     this.sleepTime.next(sleepTimeInMs);

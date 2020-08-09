@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config/config.service';
-import { Observable, Observer, ReplaySubject, Subject, fromEvent } from 'rxjs';
+import { Observable, Observer, ReplaySubject, Subject, fromEvent, combineLatest } from 'rxjs';
 import { take, switchMap, tap, map } from 'rxjs/operators';
+import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import io from 'socket.io-client';
 
 @Injectable({ providedIn: 'root' })
@@ -15,10 +16,27 @@ export class StreamMetadataService {
     map(([url, title]) => ({url, title}))
   )
 
-  constructor(private configService: ConfigService) {
-    this.configService.appConfig$.subscribe(config => {
-      this.socket = io(config.radioProxyUrl);
-      this.initializedSource.next();
+  constructor(private configService: ConfigService, private authenticationFacade: AuthenticationFacadeService) {
+    // TODO Abstract the direct Socket.IO logic behind a service
+    combineLatest([
+      this.configService.appConfig$,
+      this.authenticationFacade.accessToken$
+    ]).subscribe(([{radioProxyUrl}, token]) => {
+      this.socket = io.connect(radioProxyUrl);
+      this.socket
+        .emit('authenticate', { token })
+        .on('clientInitialized', () => {
+          console.log('authenticated');
+          this.initializedSource.next();
+        })
+        .on('unauthorized', (msg) => {
+          console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
+          throw new Error(msg.data.type);
+        })
+
+      /* Should we try to automatically reconnect?  Maybe only if there are streamUrls
+      in the store? */
+      this.socket.on('disconnect', a => console.log('disconnected'));
     });
   }
 

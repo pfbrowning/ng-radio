@@ -14,6 +14,7 @@ export class BearerTokenService implements HttpInterceptor {
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('intercepting', req.url);
     // Don't handle the initial config fetch at all
     if (req.url.endsWith('/assets/config/app.config.json') || req.url.endsWith('/assets/config/local.config.json')) {
       return next.handle(req);
@@ -22,7 +23,7 @@ export class BearerTokenService implements HttpInterceptor {
     return this.configService.appConfig$.pipe(
       switchMap(config => {
         // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
-        if (req.url.startsWith(config.favoriteStationsApiUrl) || req.url.startsWith(config.metadataApiUrl)) {
+        if ([config.favoriteStationsApiUrl, config.radioProxyUrl].some(authUrl => req.url.startsWith(authUrl))) {
           return this.authenticationFacade.accessToken$.pipe(
             switchMap(accessToken => !isFalsyOrWhitespace(accessToken)
               // If an access token is present, then append it to the Authorization header

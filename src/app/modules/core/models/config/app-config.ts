@@ -1,7 +1,6 @@
 import { UserManagerSettings } from 'oidc-client';
 
 export interface AppConfig {
-    metadataApiUrl: string;
     radioBrowserApiUrl: string;
     radioBrowserSearchResultsLimit: number;
     favoriteStationsApiUrl: string;
