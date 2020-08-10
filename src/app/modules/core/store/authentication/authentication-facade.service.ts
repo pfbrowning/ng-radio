@@ -15,7 +15,7 @@ export class AuthenticationFacadeService {
 
   public email$ = this.stateOnceInitialized$.pipe(map(s => s.email), distinctUntilChanged());
   public authenticated$ = this.stateOnceInitialized$.pipe(map(s => s.authenticated), distinctUntilChanged());
-  public accessToken$ = this.stateOnceInitialized$.pipe(map(s => s.accessToken), take(1));
+  public accessToken$ = this.stateOnceInitialized$.pipe(map(s => s.accessToken), distinctUntilChanged());
 
   public initialized$ = this.store.pipe(select(Selectors.isInitialized));
 

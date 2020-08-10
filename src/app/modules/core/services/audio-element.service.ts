@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Subject, Observable, from } from 'rxjs';
 
+// TODO Move this to the radio-player directory to be with his friends
 @Injectable({ providedIn: 'root' })
 export class AudioElementService {
   private readonly audio: HTMLAudioElement = new Audio();
