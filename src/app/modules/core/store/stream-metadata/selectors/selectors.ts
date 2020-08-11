@@ -8,7 +8,6 @@ export const streamViewModels = createSelector(
     streamMetadataState,
     (state) => Object.keys(state.streams).map(url => ({
         url,
-        title: state.streams[url],
-        connecting: state.connectionInProgressStreams.includes(url)
+        title: state.streams[url]
     }))
 )

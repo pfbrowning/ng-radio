@@ -11,7 +11,6 @@ import { FavoriteStationsEffects } from './store/favorite-stations/favorite-stat
 import { PlayerEffects } from './store/player/player.effects';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { StreamMetadataEffects } from './store/stream-metadata/effects';
-import { SocketIOEffects } from './store/socket-io/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
@@ -36,8 +35,7 @@ import NoSleep from 'nosleep.js';
       FavoriteStationsEffects,
       PlayerEffects,
       AuthenticationEffects,
-      StreamMetadataEffects,
-      SocketIOEffects
+      StreamMetadataEffects
     ]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

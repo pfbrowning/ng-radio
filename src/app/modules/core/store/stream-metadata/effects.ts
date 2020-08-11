@@ -17,29 +17,34 @@ export class StreamMetadataEffects {
     private socketIOService: SocketIOService
   ) { }
 
-  connectToStreams$ = createEffect(() => this.actions$.pipe(
-    ofType(StreamMetadataActions.setStreamListStart),
-    switchMap(({streams}) => this.streamMetadataService.setConnectedStreams(streams).pipe(
-      map(() => StreamMetadataActions.setStreamListSucceeded({streams})),
-      catchError(error => of(StreamMetadataActions.setStreamListFailed({streams, error})))
-    ))
-  ));
+  setStreamList$ = createEffect(() => this.actions$.pipe(
+    ofType(StreamMetadataActions.setStreamList),
+    tap(({streams}) => this.streamMetadataService.setConnectedStreams(streams))
+  ), { dispatch: false });
 
   metadataReceived$ = createEffect(() => this.streamMetadataService.metadataReceived$.pipe(
     map(({url, title}) => StreamMetadataActions.metadataReceived({url, title}))
   ));
 
-  setStreamList$ = createEffect(() => this.streamMetadataFacade.urlsSelectedForMetadata$.pipe(
+  setUrlsOnChanged$ = createEffect(() => this.streamMetadataFacade.urlsSelectedForMetadata$.pipe(
     distinctUntilChanged((x, y) => isEqual(x, y)),
     /* The initial value will be an empty array that we don't want to call the server about,
     but we do want to call the server about subsequent empty arrays, so skip is better than filter. */
     skip(1),
-    map(streams => StreamMetadataActions.setStreamListStart({ streams }))
+    map(streams => StreamMetadataActions.setStreamList({ streams }))
   ));
 
-  // reconnect$ = createEffect(() => this.socketIOService.serverDisconnect$.pipe(
-  //   withLatestFrom(this.streamMetadataFacade.urlsSelectedForMetadata$),
-  //   filter(([, urls]) => urls.length > 0),
-  //   tap(() => this.socketIOService.reconnect())
-  // ), { dispatch: false });
+  // Re-send the url list upon re-connection in case of disconnects
+  setUrlsOnSocketInit$ = createEffect(() => this.socketIOService.socketInitialized$.pipe(
+    withLatestFrom(this.streamMetadataFacade.urlsSelectedForMetadata$),
+    filter(([, urls]) => urls.length > 0),
+    map(([, streams]) => StreamMetadataActions.setStreamList({ streams }))
+  ));
+
+  // Reconnect to Socket.IO if the server closed the connection while we're subscribed to (a) stream(s)
+  reconnect$ = createEffect(() => this.socketIOService.serverDisconnect$.pipe(
+    withLatestFrom(this.streamMetadataFacade.urlsSelectedForMetadata$),
+    filter(([, urls]) => urls.length > 0),
+    tap(() => this.socketIOService.connect())
+  ), { dispatch: false });
 }

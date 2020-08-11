@@ -12,7 +12,7 @@ export class StreamMetadataService {
 
   constructor(private socketIoService: SocketIOService) { }
 
-  public setConnectedStreams(streamUrls: Array<string>): Observable<void> {
-    return this.socketIoService.sendAndWait('setStreams', streamUrls);
+  public setConnectedStreams(streamUrls: Array<string>) {
+    return this.socketIoService.emit('setStreams', streamUrls);
   }
 }
