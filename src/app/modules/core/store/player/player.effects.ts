@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap } from 'rxjs/operators';
+import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { of, timer, merge } from 'rxjs';
 import { Store, select, Action } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
@@ -28,6 +28,8 @@ import { WindowFocusService } from '../../services/browser-apis/window-focus.ser
 import { WindowService } from '../../services/browser-apis/window.service';
 import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
 import { LoggingService, NotificationsService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
+import { PlayerFacadeService } from './player-facade.service';
+import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service';
 
 @Injectable()
 export class PlayerEffects {
@@ -36,15 +38,12 @@ export class PlayerEffects {
     private store: Store<RootState>,
     private notificationsService: NotificationsService,
     private loggingService: LoggingService,
-    private configService: ConfigService,
     private titleService: Title,
     private streamPreprocessorService: StreamPreprocessorService,
-    private currentTimeService: CurrentTimeService,
-    private windowService: WindowService,
-    private windowFocusService: WindowFocusService,
     private sleepTimerService: SleepTimerService,
     private audio: AudioElementService,
-    private radioPlayerService: RadioPlayerService
+    private radioPlayerService: RadioPlayerService,
+    private metadataFacade: StreamMetadataFacadeService
   ) { }
 
   listenForAudioPaused$ = createEffect(() => this.audio.paused.pipe(
@@ -144,35 +143,33 @@ export class PlayerEffects {
     )
   ), { dispatch: false });
 
-  // /* TODO Rewrite this effect once everything else is working.  Use the state change itself, rather than an action,
-  // as the trigger for the effect. */
-  // notifyStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
-  //   ofType(PlayerActions.currentNowPlayingChanged),
-  //   withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
-  //   tap(([{nowPlaying}, station]) => {
-  //     this.notificationsService.info('Now Playing', !isFalsyOrWhitespace(nowPlaying.title) ?
-  //     `${nowPlaying.title} - ${station.title}` : station.title);
-  //   })
-  // ), { dispatch: false });
+  onCurrentMetadataChanged$ = createEffect(() => this.metadataFacade.metadataForCurrentStation$.pipe(
+    withLatestFrom(
+      this.store.pipe(select(PlayerSelectors.selectCurrentStation)),
+      this.store.pipe(select(PlayerSelectors.selectPlayerStatus))
+    ),
+    filter(([, , status]) => status === PlayerStatus.Playing),
+    map(([metadata, station]) => ({stationTitle: station.title, metadataTitle: metadata.title})),
+    distinctUntilChanged((x,y) => isEqual(x,y)),
+    tap(meta => {
+      if (!isFalsyOrWhitespace(meta.metadataTitle)) {
+        this.titleService.setTitle(meta.metadataTitle);
+      } else if (!isFalsyOrWhitespace(meta.stationTitle)) {
+        this.titleService.setTitle(meta.stationTitle);
+      } else {
+        this.titleService.setTitle('Browninglogic Radio');
+      }
 
-  // // TODO Rewrite this as well
-  // updateTitleOnStreamInfoChanged$ = createEffect(() => this.actions$.pipe(
-  //   ofType(PlayerActions.currentNowPlayingChanged),
-  //   withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
-  //   tap(([{nowPlaying}, station]) => {
-  //     if (!isFalsyOrWhitespace(nowPlaying.title)) {
-  //       this.titleService.setTitle(nowPlaying.title);
-  //     } else if (!isFalsyOrWhitespace(station.title)) {
-  //       this.titleService.setTitle(station.title);
-  //     } else {
-  //       this.titleService.setTitle('Browninglogic Radio');
-  //     }
-  //   })
-  // ), { dispatch: false });
+      this.notificationsService.info('Now Playing',
+        !isFalsyOrWhitespace(meta.metadataTitle)
+        ? `${meta.metadataTitle} - ${meta.stationTitle}`
+        : meta.stationTitle
+      );
+    })
+  ), { dispatch: false });
 
-  // TODO Rewrite this
-  // clearTitle$ = createEffect(() => this.actions$.pipe(
-  //   ofType(fetchNowPlayingFailed, audioPaused),
-  //   tap(() => this.titleService.setTitle('Browninglogic Radio'))
-  // ), { dispatch: false });
+  clearTitle$ = createEffect(() => this.actions$.pipe(
+    ofType(audioPaused),
+    tap(() => this.titleService.setTitle('Browninglogic Radio'))
+  ), { dispatch: false });
 }

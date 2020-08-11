@@ -28,10 +28,7 @@ export class SocketIOService {
   private initializeOnce$ = defer(() => this.initialize()).pipe(shareReplay(1));
 
   // TODO Should we be emitting a wildcard for custom events?
-  public metadataReceived$ = fromEvent(this.socket, 'metadata').pipe(
-    // TODO Should we be emitting this as an object from the server so that we don't have to map it here?
-    map(([url, title]) => ({url, title})),
-  )
+  public metadataReceived$: Observable<{url: string, title: string}> = fromEvent(this.socket, 'metadata');
   public serverDisconnect$ = this.disconnect$.pipe(
     filter(reason => reason === 'io server disconnect')
   );

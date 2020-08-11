@@ -31,5 +31,5 @@ export const streamsMap = createSelector(
 export const metadataForCurrentStation = createSelector(
     PlayerSelectors.selectCurrentStation,
     streamsMap,
-    (current, streams) => streams.get(current.url)
+    (current, streams) => current && streams.get(current.url)
 )
