@@ -8,7 +8,7 @@ import { Station } from '@core/models/player';
 import { SubSink } from 'subsink';
 import { RadioBrowserSearchFacadeService } from '../../store/radio-browser-search-facade.service';
 import { ConfigService } from '@core/services';
-import { RadioBrowserSearchRootState } from '../../models/radio-browser-root-state';
+import { RadioBrowserSearchRootState } from '../../models/radio-browser-sear-root-state';
 
 @Component({
   templateUrl: './radio-browser.component.html',

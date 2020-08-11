@@ -1,5 +1,5 @@
 import { radioBrowserSearchReducer } from './radio-browser.reducer';
-import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-state';
+import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-search-state';
 
 describe('RadioBrowser Search Reducer', () => {
   describe('an unknown action', () => {

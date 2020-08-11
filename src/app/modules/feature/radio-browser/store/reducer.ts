@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { RadioBrowserSearchState } from '../models/radio-browser-state';
-import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-state';
+import { RadioBrowserSearchState } from '../models/radio-browser-search-state';
+import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-search-state';
 import { RadioBrowserResultsActions } from '@core/store';
 import * as RadioBrowserActions from './radio-browser.actions';
 

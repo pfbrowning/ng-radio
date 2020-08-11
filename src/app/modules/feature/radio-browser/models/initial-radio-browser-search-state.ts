@@ -1,4 +1,4 @@
-import { RadioBrowserSearchState } from './radio-browser-state';
+import { RadioBrowserSearchState } from './radio-browser-search-state';
 
 export const initialRadioBrowserSearchState: RadioBrowserSearchState = {
     nameTerm: null,

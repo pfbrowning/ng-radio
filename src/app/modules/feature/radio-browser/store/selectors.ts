@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { RadioBrowserSearchState } from '../models/radio-browser-state';
+import { RadioBrowserSearchState } from '../models/radio-browser-search-state';
 import { radioBrowserSearchFeatureKey } from './radio-browser.reducer';
 import { isFalsyOrWhitespace } from '@utilities';
 

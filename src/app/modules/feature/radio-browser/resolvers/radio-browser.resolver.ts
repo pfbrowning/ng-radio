@@ -3,8 +3,8 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { RadioBrowserSearchRootState } from '../models/radio-browser-root-state';
-import { resolverParams } from '../store/radio-browser.selectors';
+import { RadioBrowserSearchRootState } from '../models/radio-browser-sear-root-state';
+import { resolverParams } from '../store/selectors';
 import { resolveSubmit } from '../store/radio-browser.actions';
 
 @Injectable({providedIn: 'root'})

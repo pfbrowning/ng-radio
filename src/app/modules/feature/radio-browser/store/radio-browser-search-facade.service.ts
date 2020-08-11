@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { RadioBrowserSearchRootState } from '../models/radio-browser-root-state';
+import { RadioBrowserSearchRootState } from '../models/radio-browser-sear-root-state';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserResultsSelectors } from '@core/store';
-import * as RadioBrowserSelectors from './radio-browser.selectors';
+import * as RadioBrowserSelectors from './selectors';
 import * as RadioBrowserActions from './radio-browser.actions';
 
 @Injectable({ providedIn: 'root' })

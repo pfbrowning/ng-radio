@@ -3,14 +3,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, withLatestFrom, map, catchError, tap, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { RadioBrowserSearchRootState } from '../models/radio-browser-root-state';
+import { RadioBrowserSearchRootState } from '../models/radio-browser-sear-root-state';
 import { Router } from '@angular/router';
 import { PlayerActions } from '@core/store';
-import { resolverParams } from './radio-browser.selectors';
+import { resolverParams } from './selectors';
 import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 import { RadioBrowserResultsActions } from '@core/store';
 import * as RadioBrowserSearchActions from './radio-browser.actions';
-import * as RadioBrowserSearchSelectors from './radio-browser.selectors';
+import * as RadioBrowserSearchSelectors from './selectors';
 
 @Injectable()
 export class RadioBrowserSearchEffects {
