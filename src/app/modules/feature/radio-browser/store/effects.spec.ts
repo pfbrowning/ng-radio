@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
-import { RadioBrowserSearchEffects } from './radio-browser.effects';
+import { RadioBrowserSearchEffects } from './effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RouterTestingModule } from '@angular/router/testing';

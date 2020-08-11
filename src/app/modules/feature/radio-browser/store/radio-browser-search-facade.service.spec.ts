@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { RadioBrowserSearchFacadeService } from './radio-browser-search-facade.service';
 
 describe('RadioBrowserSearchFacadeService', () => {

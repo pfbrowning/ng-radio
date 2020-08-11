@@ -1,5 +1,5 @@
 import { RootState } from '@core';
-import { RadioBrowserSearchState } from './radio-browser-state';
+import { RadioBrowserSearchState } from './radio-browser-search-state';
 
 export interface RadioBrowserSearchRootState extends RootState {
     radioBrowser: RadioBrowserSearchState;

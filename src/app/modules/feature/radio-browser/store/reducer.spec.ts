@@ -1,4 +1,4 @@
-import { radioBrowserSearchReducer } from './radio-browser.reducer';
+import { radioBrowserSearchReducer } from './reducer';
 import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-search-state';
 
 describe('RadioBrowser Search Reducer', () => {
