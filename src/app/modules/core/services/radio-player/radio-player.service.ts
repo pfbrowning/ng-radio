@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ProxyKeyService } from './proxy-key.service';
-import { AudioElementService } from '../audio-element.service';
+import { AudioElementService } from './audio-element.service';
 import { Observable, forkJoin } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import { map, tap, switchMap } from 'rxjs/operators';

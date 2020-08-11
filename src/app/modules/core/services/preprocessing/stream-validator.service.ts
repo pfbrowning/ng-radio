@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { map, catchError, tap, switchMap, concatMap, timeout, take } from 'rxjs/operators';
 import { ValidateStreamResult } from '../../models/player/validate-stream-result';
-import { AudioElementService } from '../audio-element.service';
+import { AudioElementService } from '../radio-player/audio-element.service';
 
 @Injectable({providedIn: 'root'})
 export class StreamValidatorService {
