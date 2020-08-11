@@ -4,6 +4,7 @@ import { uniq, sortBy } from 'lodash-es';
 import * as PlayerSelectors from '../../player/player.selectors';
 import * as RouterSelectors from '../../router/selectors';
 import * as FavoritesSelectors from '../../favorite-stations/favorite-stations.selectors';
+import * as RadioBrowserResultsSelectors from '../../radio-browser-results/selectors';
 
 export const urlsSelectedForMetadata = createSelector(
     PlayerSelectors.selectCurrentStation,
@@ -11,10 +12,8 @@ export const urlsSelectedForMetadata = createSelector(
     PlayerSelectors.streamsMappedToADifferentUrl,
     RouterSelectors.currentUrl,
     FavoritesSelectors.selectFavoriteStations,
-    (currentStation, currentStatus, mapped, currentRoute, favorites) => {
-        /* TODO Conditionally add the urls for favorites or search based on the current
-        route url. */
-        console.log('current route', currentRoute);
+    RadioBrowserResultsSelectors.radioBrowserResults,
+    (currentStation, currentStatus, mapped, currentRoute, favorites, radioBrowserResults) => {
         let urls = [];
         if (currentStation != null && currentStatus == PlayerStatus.Playing) {
             urls.push(currentStation.url);
@@ -23,6 +22,11 @@ export const urlsSelectedForMetadata = createSelector(
             case '/favorites':
                 if (favorites) {
                     urls.push(...favorites.map(s => s.url));
+                }
+                break;
+            case '/radio-browser':
+                if (radioBrowserResults) {
+                    urls.push(...radioBrowserResults.map(s => s.url));
                 }
                 break;
         }
