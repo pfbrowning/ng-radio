@@ -5,12 +5,10 @@ import { MatInput } from '@angular/material/input';
 import { Store, select } from '@ngrx/store';
 import { PlayerActions, PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
 import { Station } from '@core/models/player';
-import { nameTermUpdated, tagTermUpdated } from '../../store/radio-browser.actions';
 import { SubSink } from 'subsink';
-import { selectSearchResults, selectIsSearchInProgress } from '../../store/radio-browser.selectors';
-import { RadioBrowserRootState } from '../../models/radio-browser-root-state';
-import { RadioBrowserSelectors, RadioBrowserActions } from '../../store';
+import { RadioBrowserSearchFacadeService } from '../../store/radio-browser-search-facade.service';
 import { ConfigService } from '@core/services';
+import { RadioBrowserSearchRootState } from '../../models/radio-browser-root-state';
 
 @Component({
   templateUrl: './radio-browser.component.html',
@@ -18,22 +16,27 @@ import { ConfigService } from '@core/services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<RadioBrowserRootState>, private configService: ConfigService, private streamMetadataFacade: StreamMetadataFacadeService) {}
+  constructor(
+    private store: Store<RadioBrowserSearchRootState>,
+    private configService: ConfigService,
+    private streamMetadataFacade: StreamMetadataFacadeService,
+    private radioBrowserFacade: RadioBrowserSearchFacadeService,
+  ) {}
 
   @ViewChild('nameSearchInput', { static: true }) nameSearchInput: MatInput;
 
   public columns = ['name', 'now-playing', 'tags', 'icon'];
 
   public resultsLimit$ = this.configService.appConfig$.pipe(map(config => config.radioBrowserSearchResultsLimit));
-  public searchResults$ = this.store.pipe(select(selectSearchResults));
-  public isSearchInProgress$ = this.store.pipe(select(selectIsSearchInProgress));
+  public searchResults$ = this.radioBrowserFacade.searchResults$;
+  public isSearchInProgress$ = this.radioBrowserFacade.isSearchInProgress$;
   public streamInfo$ = this.streamMetadataFacade.streamsMap$;
-  public selectedCountry$ = this.store.pipe(select(RadioBrowserSelectors.selectedCountry));
-  public countryFilter$ = this.store.pipe(select(RadioBrowserSelectors.countryFilter));
-  public countries$ = this.store.pipe(select(RadioBrowserSelectors.filteredCountries));
-  public tagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.tagSuggestions));
-  public fetchingTagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.fetchingTagSuggestions));
-  public nameSearch$ = new Subject<string>();
+  public selectedCountry$ = this.radioBrowserFacade.selectedCountry$;
+  public countryFilter$ = this.radioBrowserFacade.countryFilter$;
+  public countries$ = this.radioBrowserFacade.filteredCountries$;
+  public tagSuggestions$ = this.radioBrowserFacade.tagSuggestions$;
+  public fetchingTagSuggestions$ = this.radioBrowserFacade.fetchingTagSuggestions$;
+  public nameSearch$ = new Subject<string>(); 
   public tagSearch$ = new Subject<{tag: string, debounce: boolean}>();
   public nameSearch: string;
   public tagSearch: string;
@@ -43,16 +46,16 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subs.sink = this.nameSearch$
       .pipe(debounceTime(this.debounceTime), distinctUntilChanged())
-      .subscribe(term => this.store.dispatch(nameTermUpdated({term})));
+      .subscribe(term => this.radioBrowserFacade.nameTermChanged(term));
     this.subs.sink = this.tagSearch$.pipe(
       // Debounce conditionally
       debounce(t => t.debounce ? timer(this.debounceTime) : EMPTY),
       map(t => t.tag.toLowerCase()),
       distinctUntilChanged()
-    ).subscribe(term => this.store.dispatch(tagTermUpdated({term})));
+    ).subscribe(term => this.radioBrowserFacade.tagTermChanged(term));
 
     // Load any pre-existing search criteria from state on init
-    this.store.pipe(select(RadioBrowserSelectors.searchCriteria), take(1)).subscribe(criteria => {
+    this.radioBrowserFacade.searchCriteria$.pipe(take(1)).subscribe(criteria => {
       this.nameSearch = criteria.nameTerm;
       this.tagSearch = criteria.tagTerm;
     });
@@ -83,14 +86,14 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   }
 
   public onCountryChanged(country: string): void {
-    this.store.dispatch(RadioBrowserActions.countrySelected({country}));
+    this.radioBrowserFacade.countryChanged(country);
   }
 
   public onCountryFilterChanged(text: string): void {
-    this.store.dispatch(RadioBrowserActions.countryFilterChanged({text}));
+    this.radioBrowserFacade.countryFilterChanged(text);
   }
 
   public onTagFocused(): void {
-    this.store.dispatch(RadioBrowserActions.tagInputFocused());
+    this.radioBrowserFacade.tagFocused();
   }
 }

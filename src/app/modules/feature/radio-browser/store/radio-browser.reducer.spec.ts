@@ -1,15 +1,14 @@
-import { radioBrowserReducer } from './radio-browser.reducer';
-import { initialRadioBrowserState } from '../models/initial-radio-browser-state';
+import { radioBrowserSearchReducer } from './radio-browser.reducer';
+import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-state';
 
-
-describe('RadioBrowser Reducer', () => {
+describe('RadioBrowser Search Reducer', () => {
   describe('an unknown action', () => {
     it('should return the previous state', () => {
       const action = {} as any;
 
-      const result = radioBrowserReducer(initialRadioBrowserState, action);
+      const result = radioBrowserSearchReducer(initialRadioBrowserSearchState, action);
 
-      expect(result).toBe(initialRadioBrowserState);
+      expect(result).toBe(initialRadioBrowserSearchState);
     });
   });
 });

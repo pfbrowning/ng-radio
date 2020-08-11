@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
-import { RadioBrowserEffects } from './radio-browser.effects';
+import { RadioBrowserSearchEffects } from './radio-browser.effects';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreSpyFactories, ConfigStubService } from '@core/testing';
 import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 
-describe('RadioBrowserEffects', () => {
+describe('RadioBrowserSearchEffects', () => {
   const actions$: Observable<any> = null;
-  let effects: RadioBrowserEffects;
+  let effects: RadioBrowserSearchEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('RadioBrowserEffects', () => {
         RouterTestingModule
       ],
       providers: [
-        RadioBrowserEffects,
+        RadioBrowserSearchEffects,
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialRootState}),
         { provide: RadioBrowserService, useValue: CoreSpyFactories.createRadioBrowserServiceSpy() },
@@ -27,7 +27,7 @@ describe('RadioBrowserEffects', () => {
       ]
     });
 
-    effects = TestBed.inject<RadioBrowserEffects>(RadioBrowserEffects);
+    effects = TestBed.inject<RadioBrowserSearchEffects>(RadioBrowserSearchEffects);
   });
 
   it('should be created', () => {

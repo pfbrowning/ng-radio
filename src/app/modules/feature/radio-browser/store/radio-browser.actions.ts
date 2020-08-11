@@ -2,90 +2,84 @@ import { createAction, props } from '@ngrx/store';
 import { Station } from '@core/models/player';
 import { Country } from '@core/models';
 
-export enum RadioBrowserActions {
-  ResolveSubmit = '[Radio Browser] Resolve Submit',
-  NameTermUpdated = '[Radio Browser] Name Term Updated',
-  TagTermUpdated = '[Radio Browser] Tag Term Updated',
-  CountryFilterChanged = '[Radio Browser] Country Filter Changed',
-  CountrySelected = '[Radio Browser] Country Selected',
-  SearchStart = '[Radio Browser] Search Start',
-  SearchSucceeded = '[Radio Browser] Search Succeeded',
-  SearchFailed = '[Radio Browser] Search Failed',
-  CountriesFetchStart = '[Radio Browser] Countries Fetch Start',
-  CountriesFetchSucceeded = '[Radio Browser] Countries Fetch Succeeded',
-  CountriesFetchFailed = '[Radio Browser] Countries Fetch Failed',
-  TagInputFocused = '[Radio Browser] Tag Input Focused',
-  TagSuggestionsFetchStart = '[Radio Browser] Tag Suggestions Fetch Start',
-  TagSuggestionsFetchSucceeded = '[Radio Browser] Tag Suggestions Fetch Succeeded',
-  TagSuggestionsFetchFailed = '[Radio Browser] Tag Suggestions Fetch Failed',
+export enum RadioBrowserSearchActions {
+  RouteResolverInit = '[Radio Browser Search Route Resolver] Resolve Init',
+  NameTermChanged = '[Radio Browser Search Page] Name Term Changed',
+  TagTermChanged = '[Radio Browser Search Page] Tag Term Changed',
+  CountryFilterChanged = '[Radio Browser Search Page] Country Filter Changed',
+  CountrySelected = '[Radio Browser Search Page] Country Selected',
+  SearchStart = '[Radio Browser API] Search Start',
+  SearchFailed = '[Radio Browser API] Search Failed',
+  CountriesFetchStart = '[Radio Browser API] Countries Fetch Start',
+  CountriesFetchSucceeded = '[Radio Browser API] Countries Fetch Succeeded',
+  CountriesFetchFailed = '[Radio Browser API] Countries Fetch Failed',
+  TagInputFocused = '[Radio Browser Search Page] Tag Input Focused',
+  TagSuggestionsFetchStart = '[Radio Browser API] Tag Suggestions Fetch Start',
+  TagSuggestionsFetchSucceeded = '[Radio Browser API] Tag Suggestions Fetch Succeeded',
+  TagSuggestionsFetchFailed = '[Radio Browser API] Tag Suggestions Fetch Failed',
 }
 
 export const resolveSubmit = createAction(
-  RadioBrowserActions.ResolveSubmit
+  RadioBrowserSearchActions.RouteResolverInit
 );
 
-export const nameTermUpdated = createAction(
-  RadioBrowserActions.NameTermUpdated,
+export const nameTermChanged = createAction(
+  RadioBrowserSearchActions.NameTermChanged,
   props<{ term: string }>()
 );
 
-export const tagTermUpdated = createAction(
-  RadioBrowserActions.TagTermUpdated,
+export const tagTermChanged = createAction(
+  RadioBrowserSearchActions.TagTermChanged,
   props<{ term: string }>()
 );
 
 export const countrySelected = createAction(
-  RadioBrowserActions.CountrySelected,
+  RadioBrowserSearchActions.CountrySelected,
   props<{ country: string }>()
 );
 
 export const searchStart = createAction(
-  RadioBrowserActions.SearchStart
-);
-
-export const searchSucceeded = createAction(
-  RadioBrowserActions.SearchSucceeded,
-  props<{ results: Station[] }>()
+  RadioBrowserSearchActions.SearchStart
 );
 
 export const searchFailed = createAction(
-  RadioBrowserActions.SearchFailed,
+  RadioBrowserSearchActions.SearchFailed,
   props<{ error: any }>()
 );
 
 export const countryFilterChanged = createAction(
-  RadioBrowserActions.CountryFilterChanged,
+  RadioBrowserSearchActions.CountryFilterChanged,
   props<{ text: string }>()
 );
 
 export const countriesFetchStart = createAction(
-  RadioBrowserActions.CountriesFetchStart
+  RadioBrowserSearchActions.CountriesFetchStart
 );
 
 export const countriesFetchSucceeded = createAction(
-  RadioBrowserActions.CountriesFetchSucceeded,
+  RadioBrowserSearchActions.CountriesFetchSucceeded,
   props<{ countries: Country[] }>()
 );
 
 export const countriesFetchFailed = createAction(
-  RadioBrowserActions.CountriesFetchFailed,
+  RadioBrowserSearchActions.CountriesFetchFailed,
   props<{ error: any }>()
 );
 
 export const tagInputFocused = createAction(
-  RadioBrowserActions.TagInputFocused
+  RadioBrowserSearchActions.TagInputFocused
 );
 
 export const tagSuggestionsFetchStart = createAction(
-  RadioBrowserActions.TagSuggestionsFetchStart
+  RadioBrowserSearchActions.TagSuggestionsFetchStart
 );
 
 export const tagSuggestionsFetchSucceeded = createAction(
-  RadioBrowserActions.TagSuggestionsFetchSucceeded,
+  RadioBrowserSearchActions.TagSuggestionsFetchSucceeded,
   props<{ tagSuggestions: string[] }>()
 );
 
 export const tagSuggestionsFetchFailed = createAction(
-  RadioBrowserActions.TagSuggestionsFetchFailed,
+  RadioBrowserSearchActions.TagSuggestionsFetchFailed,
   props<{ error: any }>()
 );

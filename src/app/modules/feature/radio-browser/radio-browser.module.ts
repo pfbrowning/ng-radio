@@ -10,9 +10,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { StoreModule } from '@ngrx/store';
-import { radioBrowserReducer, radioBrowserFeatureKey } from './store/radio-browser.reducer';
+import { radioBrowserSearchReducer, radioBrowserSearchFeatureKey } from './store/radio-browser.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { RadioBrowserEffects } from './store/radio-browser.effects';
+import { RadioBrowserSearchEffects } from './store/radio-browser.effects';
 import { SharedModule } from '@shared';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -36,8 +36,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatProgressSpinnerModule,
     MatAutocompleteModule,
     NgxMatSelectSearchModule,
-    StoreModule.forFeature(radioBrowserFeatureKey, radioBrowserReducer),
-    EffectsModule.forFeature([RadioBrowserEffects])
+    StoreModule.forFeature(radioBrowserSearchFeatureKey, radioBrowserSearchReducer),
+    EffectsModule.forFeature([RadioBrowserSearchEffects])
   ]
 })
 export class RadioBrowserModule {}

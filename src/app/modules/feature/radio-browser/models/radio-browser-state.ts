@@ -1,12 +1,11 @@
 import { Station } from '@core/models/player';
 import { Country } from '@core/models';
 
-export interface RadioBrowserState {
+export interface RadioBrowserSearchState {
     nameTerm: string;
     tagTerm: string;
     country: string;
     searchInProgress: boolean;
-    results: Station[];
     countryFilter: string;
     countries: Country[];
     countriesFetchInProgress: boolean;

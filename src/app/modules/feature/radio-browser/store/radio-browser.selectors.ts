@@ -1,17 +1,17 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { RadioBrowserState } from '../models/radio-browser-state';
-import { radioBrowserFeatureKey } from './radio-browser.reducer';
+import { RadioBrowserSearchState } from '../models/radio-browser-state';
+import { radioBrowserSearchFeatureKey } from './radio-browser.reducer';
 import { isFalsyOrWhitespace } from '@utilities';
 
-export const selectRadioBrowserState = createFeatureSelector<RadioBrowserState>(radioBrowserFeatureKey);
+export const radioBrowserSearchState = createFeatureSelector<RadioBrowserSearchState>(radioBrowserSearchFeatureKey);
 
 export const selectedCountry = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   state => state.country
 );
 
 export const searchCriteria = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   selectedCountry,
   (state, country) => ({
     nameTerm: state.nameTerm,
@@ -20,23 +20,18 @@ export const searchCriteria = createSelector(
   })
 );
 
-export const selectSearchResults = createSelector(
-  selectRadioBrowserState,
-  (state) => state.results
-);
-
 export const selectIsSearchInProgress = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   (state) => state.searchInProgress
 );
 
 export const listedCountries = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   (state) => state.countries
 );
 
 export const countryFilter = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   state => state.countryFilter
 );
 
@@ -47,7 +42,7 @@ export const filteredCountries = createSelector(
 );
 
 export const resolverParams = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   listedCountries,
   (state, countries) => ({
     countries,
@@ -57,11 +52,11 @@ export const resolverParams = createSelector(
 );
 
 export const tagSuggestions = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   (state) => state.tagSuggestions
 );
 
 export const fetchingTagSuggestions = createSelector(
-  selectRadioBrowserState,
+  radioBrowserSearchState,
   (state) => state.tagSuggestionsFetchInProgress
 );

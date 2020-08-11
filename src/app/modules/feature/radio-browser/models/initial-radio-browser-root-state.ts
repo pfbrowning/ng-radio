@@ -1,8 +1,8 @@
-import { RadioBrowserRootState } from './radio-browser-root-state';
-import { initialRadioBrowserState } from './initial-radio-browser-state';
+import { RadioBrowserSearchRootState } from './radio-browser-root-state';
+import { initialRadioBrowserSearchState } from './initial-radio-browser-state';
 import { initialRootState } from '@core';
 
-export const initialRadioBrowserRootState: RadioBrowserRootState = {
+export const initialRadioBrowserRootState: RadioBrowserSearchRootState = {
     ...initialRootState,
-    radioBrowser: initialRadioBrowserState
+    radioBrowser: initialRadioBrowserSearchState
 };

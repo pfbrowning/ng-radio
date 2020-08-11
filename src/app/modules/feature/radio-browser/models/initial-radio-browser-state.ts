@@ -1,11 +1,10 @@
-import { RadioBrowserState } from './radio-browser-state';
+import { RadioBrowserSearchState } from './radio-browser-state';
 
-export const initialRadioBrowserState: RadioBrowserState = {
+export const initialRadioBrowserSearchState: RadioBrowserSearchState = {
     nameTerm: null,
     tagTerm: null,
     country: null,
     searchInProgress: false,
-    results: null,
     countryFilter: null,
     countries: null,
     countriesFetchInProgress: false,

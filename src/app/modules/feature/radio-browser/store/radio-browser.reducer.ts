@@ -1,17 +1,18 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { RadioBrowserState } from '../models/radio-browser-state';
-import { initialRadioBrowserState } from '../models/initial-radio-browser-state';
+import { RadioBrowserSearchState } from '../models/radio-browser-state';
+import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-state';
+import { RadioBrowserResultsActions } from '@core/store';
 import * as RadioBrowserActions from './radio-browser.actions';
 
-export const radioBrowserFeatureKey = 'radioBrowser';
+export const radioBrowserSearchFeatureKey = 'radioBrowserSearch';
 
-const reducer = createReducer<RadioBrowserState>(
-  initialRadioBrowserState,
-  on(RadioBrowserActions.nameTermUpdated, (state, {term}) => ({
+export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
+  initialRadioBrowserSearchState,
+  on(RadioBrowserActions.nameTermChanged, (state, {term}) => ({
     ...state,
     nameTerm: term
   })),
-  on(RadioBrowserActions.tagTermUpdated, (state, {term}) => ({
+  on(RadioBrowserActions.tagTermChanged, (state, {term}) => ({
     ...state,
     tagTerm: term
   })),
@@ -28,10 +29,9 @@ const reducer = createReducer<RadioBrowserState>(
     results: null,
     searchInProgress: true
   })),
-  on(RadioBrowserActions.searchSucceeded, (state, { results }) => ({
+  on(RadioBrowserResultsActions.searchSucceeded, (state, { results }) => ({
     ...state,
     searchInProgress: false,
-    results
   })),
   on(RadioBrowserActions.searchFailed, state => ({
     ...state,
@@ -75,7 +75,3 @@ const reducer = createReducer<RadioBrowserState>(
     tagSuggestionsFetchInProgress: false
   })),
 );
-
-export function radioBrowserReducer(state: RadioBrowserState | undefined, action: Action) {
-  return reducer(state, action);
-}
