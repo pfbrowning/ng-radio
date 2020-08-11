@@ -3,8 +3,8 @@ import { ConfigService } from './config/config.service';
 import { Observable, Observer, ReplaySubject, Subject, fromEvent, combineLatest, forkJoin, merge, throwError, defer, BehaviorSubject } from 'rxjs';
 import { take, switchMap, tap, map, shareReplay, filter, withLatestFrom } from 'rxjs/operators';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
-import io from 'socket.io-client';
 import { LoggingService } from './logging/logging.service';
+import io from 'socket.io-client';
 
 @Injectable({ providedIn: 'root' })
 export class SocketIOService {
@@ -27,7 +27,6 @@ export class SocketIOService {
   )
   private initializeOnce$ = defer(() => this.initialize()).pipe(shareReplay(1));
 
-  // TODO Should we be emitting a wildcard for custom events?
   public metadataReceived$: Observable<{url: string, title: string}> = fromEvent(this.socket, 'metadata');
   public serverDisconnect$ = this.disconnect$.pipe(
     filter(reason => reason === 'io server disconnect')
