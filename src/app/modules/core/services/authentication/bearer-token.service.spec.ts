@@ -47,8 +47,8 @@ describe('BearerTokenService', () => {
   const shouldAddTokenCases = [
     'mockFavoritesUrl',
     'mockFavoritesUrl/somePath',
-    'mockMetadataUrl',
-    'mockMetadataUrl/somePath'
+    'mockRadioProxyUrl',
+    'mockRadioProxyUrl/somePath'
   ];
   shouldAddTokenCases.forEach(url => {
     it(`should add a bearer token if the request is for an API url specified in the config: ${url}`, (done: DoneFn) => {

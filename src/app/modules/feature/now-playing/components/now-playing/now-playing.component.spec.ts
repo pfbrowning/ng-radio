@@ -11,13 +11,12 @@ import { getElementBySelector, getElementTextBySelector } from '@utilities/testi
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
-import { PlayerStatus, initialPlayerState, Station, StreamInfoStatus, NowPlaying } from '@core/models/player';
-import { PlayerSelectors } from '@core/store';
-import { CoreSpyFactories } from '@core/testing';
+import { PlayerStatus, initialPlayerState, Station } from '@core/models/player';
+import { PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
+import { CoreSpyFactories, StreamMetadataFacadeStub } from '@core/testing';
 import { isFalsyOrWhitespace } from '@utilities';
 import { SleepTimerService } from '@core/services';
-import { BehaviorSubject, Observable, defer } from 'rxjs';
-import theoretically from 'jasmine-theories';
+import { BehaviorSubject, Observable, defer, of } from 'rxjs';
 
 
 describe('NowPlayingComponent', () => {
@@ -27,11 +26,17 @@ describe('NowPlayingComponent', () => {
   let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
   let store: MockStore<RootState>;
   let minutesUntilSleep$: Observable<number>;
+  let metadataForCurrentStation$: Observable<string>;
+  let metadataFacade: StreamMetadataFacadeStub;
 
   beforeEach(async(() => {
     keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
+
     sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
     sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
+
+    metadataFacade = new StreamMetadataFacadeStub();
+    metadataFacade.metadataForCurrentStation$ = defer(() => metadataForCurrentStation$);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -49,7 +54,8 @@ describe('NowPlayingComponent', () => {
       providers: [
         provideMockStore({ initialState: initialRootState }),
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService }
+        { provide: SleepTimerService, useValue: sleepTimerService },
+        { provide: StreamMetadataFacadeService, useValue: metadataFacade }
       ]
     })
     .compileComponents();
@@ -73,51 +79,41 @@ describe('NowPlayingComponent', () => {
   const nowPlayingTemplateInput = [
     {
       station: new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
-      nowPlaying: new NowPlaying('stream title', 'stream source', '128', 'station title from stream', 'stream description', 'stream genre'),
-      streamInfoStatus: StreamInfoStatus.Valid
+      metadata: 'station title from stream'
     },
     {
       station: new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
-      nowPlaying: new NowPlaying('stream title 2', 'stream source 2', '256', 'station title from stream 2', 'stream description 2', 'stream genre 2'),
-      streamInfoStatus: StreamInfoStatus.Valid
+      metadata: 'station title from stream 2',
     },
     {
       station: new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
-      nowPlaying: new NowPlaying('stream 3', 'another stream source', '64', 'station 3', 'another stream description', 'another stream genre'),
-      streamInfoStatus: StreamInfoStatus.Valid
+      metadata: 'station 3',
     },
     {
       station: new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
-      nowPlaying: new NowPlaying(
-        'Radio Caprice Stream', 'source 4', '48', 'stream station title', 'awesome speed metal station', 'genre 4'
-      ),
-      streamInfoStatus: StreamInfoStatus.Valid
+      metadata: 'stream station title',
     }
   ];
-  theoretically.it('should update the template to reflect changes in nowPlaying metadata', nowPlayingTemplateInput, (input) => {
-    // Act
-    store.setState({
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: input.station,
-        streamInfo: {
-          ...initialPlayerState.streamInfo,
-          current: {
-            nowPlaying: input.nowPlaying,
-            status: input.streamInfoStatus
-          },
-        },
-        playerStatus: PlayerStatus.Playing
-      }
-    });
-    fixture.detectChanges();
+  nowPlayingTemplateInput.forEach(input => {
+    it('should update the template to reflect changes in metadata', () => {
+      // Act
+      store.setState({
+        ...initialRootState,
+        player: {
+          ...initialPlayerState,
+          currentStation: input.station,
+          playerStatus: PlayerStatus.Playing
+        }
+      });
+      store.refreshState();
+      metadataForCurrentStation$ = of(input.metadata);
+      fixture.detectChanges();
 
-    // Assert: Ensure that the important NowPlaying properties were properly bound to the template
-    expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(input.station.iconUrl);
-    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(input.station.title);
-    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.nowPlaying.title);
-    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.nowPlaying.bitrate}`);
+      // Assert: Ensure that the important NowPlaying properties were properly bound to the template
+      expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(input.station.iconUrl);
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(input.station.title);
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.metadata);
+    });
   });
 
 
@@ -138,70 +134,24 @@ describe('NowPlayingComponent', () => {
       expected: 'Validating Stream...'
     },
     {
-      streamInfo: {
-        nowPlaying: new NowPlaying('Valid Title', null),
-        status: StreamInfoStatus.Valid
-      },
       playerStatus: PlayerStatus.Playing,
+      metadata: 'Valid Title',
       expected: 'Valid Title'
     },
   ];
-  theoretically.it('should reflect the various player states properly in the template',
-    playerStatusTemplateInput, (input) => {
-    // Arrange & Act
-    store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
-    store.overrideSelector(PlayerSelectors.currentStreamInfo, input.streamInfo);
-    store.overrideSelector(PlayerSelectors.selectPlayerStatus, input.playerStatus);
-    store.overrideSelector(PlayerSelectors.selectIsValidationInProgressForCurrentStation, input.validating);
-    store.refreshState();
-    fixture.detectChanges();
+  playerStatusTemplateInput.forEach(input => {
+    it(`should reflect the various player states properly in the template ${JSON.stringify(input)}`, () => {
+      // Arrange & Act
+      store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
+      store.overrideSelector(PlayerSelectors.selectPlayerStatus, input.playerStatus);
+      store.overrideSelector(PlayerSelectors.selectIsValidationInProgressForCurrentStation, input.validating);
+      metadataForCurrentStation$ = of(input.metadata);
+      store.refreshState();
+      fixture.detectChanges();
 
-    // Assert: Ensure that the text of the title element conveys the current stream status
-    expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.expected);
-  });
-
-  const nonEmptyBitrateInput = [
-    {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null),
-      streamInfoStatus: StreamInfoStatus.Valid
-    },
-    {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null, ''),
-      streamInfoStatus: StreamInfoStatus.Valid
-    },
-    {
-      station: new Station(),
-      nowPlaying: new NowPlaying(null, null, '128'),
-      streamInfoStatus: StreamInfoStatus.Valid
-    }
-  ];
-  theoretically.it('should only display bitrate when a non-empty value is present', nonEmptyBitrateInput, (input) => {
-    // Act
-    store.setState({
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: input.station,
-        streamInfo: {
-          ...initialPlayerState.streamInfo,
-          current: {
-            nowPlaying: input.nowPlaying,
-            status: input.streamInfoStatus
-          },
-        },
-        playerStatus: PlayerStatus.Playing
-      }
+      // Assert: Ensure that the text of the title element conveys the current stream status
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.expected);
     });
-    fixture.detectChanges();
-
-    // Assert: Ensure that the bitrate is displayed if not blank and not shown at all if it is blank
-    if (!isFalsyOrWhitespace(input.nowPlaying.bitrate)) {
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBe(`Bitrate: ${input.nowPlaying.bitrate}`);
-    } else {
-      expect(getElementBySelector<NowPlayingComponent>(fixture, '.bitrate')).toBeNull();
-    }
   });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
@@ -214,13 +164,6 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: new Station(),
-        streamInfo: {
-          ...initialPlayerState.streamInfo,
-          current: {
-            nowPlaying: new NowPlaying(null, null),
-            status: StreamInfoStatus.Valid
-          },
-        },
       }
     };
     store.setState(state);
@@ -247,13 +190,6 @@ describe('NowPlayingComponent', () => {
       player: {
         ...initialPlayerState,
         currentStation: new Station(),
-        streamInfo: {
-          ...initialPlayerState.streamInfo,
-          current: {
-            nowPlaying: new NowPlaying(null, null),
-            status: StreamInfoStatus.Valid
-          },
-        },
       }
     });
     // Set up a sequence of dummy boolean $enabled values to iterate through

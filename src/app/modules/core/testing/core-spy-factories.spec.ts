@@ -7,8 +7,10 @@ import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { NotificationsService, RadioBrowserService, LoggingService, StreamInfoService, SleepTimerService, AudioElementService } from '@core/services';
+import { NotificationsService, RadioBrowserService, LoggingService, SleepTimerService, AudioElementService } from '@core/services';
 import { EnvironmentService } from '../services/config/environment.service';
+import { RadioPlayerService } from '../services/radio-player/radio-player.service';
+import { ProxyKeyService } from '../services/radio-player/proxy-key.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -29,11 +31,7 @@ export function createKeepAwakeServiceSpy(): any {
 }
 
 export function createCurrentTimeServiceSpy(): jasmine.SpyObj<CurrentTimeService> {
-  return jasmine.createSpyObj('currentTimeService', ['unix']);
-}
-
-export function createStreamInfoServiceSpy(): jasmine.SpyObj<StreamInfoService> {
-  return jasmine.createSpyObj('streamInfoService', ['getMetadata']);
+  return jasmine.createSpyObj('currentTimeService', ['unixMs']);
 }
 
 export function createLoggingServiceSpy(): jasmine.SpyObj<LoggingService> {
@@ -91,3 +89,9 @@ export function createAudioElementServiceSpy(): jasmine.SpyObj<AudioElementServi
 export function createEnvironmentServiceSpy(): jasmine.SpyObj<EnvironmentService> {
   return jasmine.createSpyObj('environmentService', [ 'isProduction' ]);
 }
+
+export function createRadioPlayerServiceSpy(): jasmine.SpyObj<RadioPlayerService> {
+  return jasmine.createSpyObj('radioPlayerService', [ 'play' ]);
+}
+
+export const createProxyKeyServiceSpy = () => jasmine.createSpyObj<ProxyKeyService>('proxyKeyService', [ 'fetchNew' ]);

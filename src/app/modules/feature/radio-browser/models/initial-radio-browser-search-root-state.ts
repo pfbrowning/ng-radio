@@ -4,5 +4,5 @@ import { initialRootState } from '@core';
 
 export const initialRadioBrowserRootState: RadioBrowserSearchRootState = {
     ...initialRootState,
-    radioBrowser: initialRadioBrowserSearchState
+    radioBrowserSearch: initialRadioBrowserSearchState
 };

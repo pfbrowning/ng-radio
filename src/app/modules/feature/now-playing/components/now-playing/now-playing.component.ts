@@ -17,7 +17,6 @@ export class NowPlayingComponent {
     public keepAwakeService: KeepAwakeService,
     private sleepTimerService: SleepTimerService,
     private store: Store<RootState>,
-    private playerFacadeService: PlayerFacadeService,
     private metadataFacade: StreamMetadataFacadeService
   ) {}
 

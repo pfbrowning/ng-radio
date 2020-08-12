@@ -39,7 +39,6 @@ describe('ConfigService', () => {
 
   it('should properly handle successful config fetch', (done: DoneFn) => {
     const dummyConfig = {
-      metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       radioBrowserSearchResultsLimit: 25,
       favoriteStationsApiUrl: 'testFavoritesApi',
