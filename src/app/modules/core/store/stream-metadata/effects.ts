@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, distinctUntilChanged, skip, withLatestFrom, filter, tap} from 'rxjs/operators';
+import { map, distinctUntilChanged, skip, withLatestFrom, filter, tap, switchMap} from 'rxjs/operators';
 import { StreamMetadataFacadeService } from './stream-metadata-facade.service';
 import { isEqual } from 'lodash-es';
 import { SocketIOService } from '../../services/socket-io.service';
@@ -16,7 +16,7 @@ export class StreamMetadataEffects {
 
   setStreamList$ = createEffect(() => this.actions$.pipe(
     ofType(StreamMetadataActions.setStreamList),
-    tap(({streams}) => this.socketIOService.emit('setStreams', streams))
+    switchMap(({streams}) => this.socketIOService.emit('setStreams', streams))
   ), { dispatch: false });
 
   metadataReceived$ = createEffect(() => this.socketIOService.metadataReceived$.pipe(
@@ -42,6 +42,6 @@ export class StreamMetadataEffects {
   reconnect$ = createEffect(() => this.socketIOService.serverDisconnect$.pipe(
     withLatestFrom(this.streamMetadataFacade.urlsSelectedForMetadata$),
     filter(([, urls]) => urls.length > 0),
-    tap(() => this.socketIOService.connect())
+    switchMap(() => this.socketIOService.connect())
   ), { dispatch: false });
 }

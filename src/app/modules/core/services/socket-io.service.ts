@@ -9,7 +9,6 @@ import io from 'socket.io-client';
 @Injectable({ providedIn: 'root' })
 export class SocketIOService {
   private socket = io({ autoConnect: false });
-  private authenticated = false;
 
   private disconnect$: Observable<string> = fromEvent(this.socket, 'disconnect');
   private connect$ = fromEvent(this.socket, 'connect');
@@ -38,14 +37,8 @@ export class SocketIOService {
     private authenticationFacade: AuthenticationFacadeService,
     private loggingService: LoggingService
   ) {
-    this.authenticateOnConnect$.subscribe(authenticated => {
-      this.loggingService.info(`Authentication ${authenticated ? 'Succeeded' : 'Failed'}`);
-      this.authenticated = authenticated;
-    });
-    this.disconnect$.subscribe(reason => {
-      this.loggingService.info('Disconnected', { reason });
-      this.authenticated = false;
-    });
+    this.authenticateOnConnect$.subscribe(authenticated => this.loggingService.info(`Authentication ${authenticated ? 'Succeeded' : 'Failed'}`));
+    this.disconnect$.subscribe(reason => this.loggingService.info('Disconnected', { reason }));
   }
 
   private initialize() {
@@ -54,20 +47,26 @@ export class SocketIOService {
     );
   }
 
-  public emit(event: string, ...args: any[]) {
-    this.initializeOnce$.subscribe(() => {
-      this.connect();
-      this.loggingService.debug('Sending', { event, args });
-      this.socket.emit(event, ...args);
-    });
+  public emit(event: string, ...args: any[]): Observable<void> {
+    return this.initializeOnce$.pipe(
+      switchMap(() => this.connect()),
+      tap(() => {
+        this.loggingService.debug('Sending', { event, args });
+        this.socket.emit(event, ...args);
+      }),
+      map(() => null)
+    );
   }
 
-  public connect(): void {
-    this.initializeOnce$.subscribe(() => {
-      if (!this.socket.connected) {
-        this.loggingService.info('Connecting To Socket.IO');
-        this.socket.connect();
-      }
-    });
+  public connect(): Observable<void> {
+    return this.initializeOnce$.pipe(
+      tap(() => {
+        if (!this.socket.connected) {
+          this.loggingService.info('Connecting To Socket.IO');
+          this.socket.connect();
+        }
+      }),
+      map(() => null)
+    );
   }
 }
