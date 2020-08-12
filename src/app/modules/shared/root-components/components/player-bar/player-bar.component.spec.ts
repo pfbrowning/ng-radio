@@ -17,13 +17,13 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
 import { Station } from '@core/models/player';
-import { PlayerSelectors } from '@core/store';
 import { CoreSpyFactories } from '@core/testing';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StationIconStubDirective } from '@shared/testing';
 import { BehaviorSubject, Observable, defer } from 'rxjs';
 import { SleepTimerService } from '@core/services';
+import { FavoriteStationsSelectors } from '@core/store/favorite-stations';
 
 
 describe('PlayerBarComponent', () => {
@@ -72,7 +72,7 @@ describe('PlayerBarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerBarComponent);
     store = TestBed.inject(MockStore);
-    store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
+    store.overrideSelector(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite, new Station());
     component = fixture.componentInstance;
   });
 
