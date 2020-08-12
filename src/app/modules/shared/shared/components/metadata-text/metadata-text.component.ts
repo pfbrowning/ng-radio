@@ -1,13 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-  selector: 'blr-stream-info-text',
-  templateUrl: './stream-info-text.component.html',
-  styleUrls: ['./stream-info-text.component.scss'],
+  selector: 'blr-metadata-text',
+  templateUrl: './metadata-text.component.html',
+  styleUrls: ['./metadata-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-// TODO Should we rename this to MetadataTextComponent?
-export class StreamInfoTextComponent {
+export class MetadataTextComponent {
   /* There's not much reason for this to be its own component in its current form since all it does is show a string of text,
   however my intention is to update the radio proxy to include extra metadata from the stream header to fall back on when the
   title string is empty.  At that point, this is where that "what should I display" logic will live.  If I decide not to go in
