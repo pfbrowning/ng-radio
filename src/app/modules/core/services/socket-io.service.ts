@@ -38,11 +38,6 @@ export class SocketIOService {
     private authenticationFacade: AuthenticationFacadeService,
     private loggingService: LoggingService
   ) {
-    this.socket.on('disconnect', a => console.log('disconnect', a));
-    this.socket.on('connect', a => console.log('connect', a));
-    this.socket.on('reconnect', a => console.log('reconnect'));
-    this.socket.on('unauthorized', a => console.log('unauthorized', a));
-    this.socket.on('socketInitialized', a => console.log('socketInitialized', a));
     this.authenticateOnConnect$.subscribe(authenticated => {
       this.loggingService.info(`Authentication ${authenticated ? 'Succeeded' : 'Failed'}`);
       this.authenticated = authenticated;

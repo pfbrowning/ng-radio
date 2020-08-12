@@ -14,7 +14,6 @@ export class BearerTokenService implements HttpInterceptor {
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercepting', req.url);
     // Don't handle the initial config fetch at all
     if (req.url.endsWith('/assets/config/app.config.json') || req.url.endsWith('/assets/config/local.config.json')) {
       return next.handle(req);
