@@ -149,7 +149,7 @@ export class PlayerEffects {
       this.store.pipe(select(PlayerSelectors.selectPlayerStatus))
     ),
     filter(([, , status]) => status === PlayerStatus.Playing),
-    map(([metadata, station]) => ({stationTitle: station.title, metadataTitle: metadata.title})),
+    map(([metadataTitle, station]) => ({stationTitle: station.title, metadataTitle})),
     distinctUntilChanged((x,y) => isEqual(x,y)),
     tap(meta => {
       if (!isFalsyOrWhitespace(meta.metadataTitle)) {

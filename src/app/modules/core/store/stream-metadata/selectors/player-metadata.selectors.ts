@@ -1,5 +1,4 @@
 import { createSelector } from '@ngrx/store';
-import { MetadataViewModel } from '../../../models/stream-metadata/metadata-view-model';
 import * as PlayerSelectors from '../../player/player.selectors';
 import * as MetadataSelectors from './selectors';
 
@@ -20,12 +19,12 @@ export const streamViewModelsMappedToValidatedStreams = createSelector(
             });
         }
         return next;
-    }, []) as Array<MetadataViewModel>
+    }, []) as Array<{ url: string, title: string}>
 );
 
 export const streamsMap = createSelector(
     streamViewModelsMappedToValidatedStreams,
-    viewModels => new Map<string, MetadataViewModel>(viewModels.map(vm => [vm.url, vm]))
+    viewModels => new Map<string, string>(viewModels.map(vm => [vm.url, vm.title]))
 )
 
 export const metadataForCurrentStation = createSelector(
