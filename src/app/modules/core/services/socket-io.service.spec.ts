@@ -3,7 +3,6 @@ import { SocketIOService } from './socket-io.service';
 import { ConfigService } from './config/config.service';
 import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
-import { createAuthenticationFacadeSpy } from '../testing/core-spy-factories.spec';
 import { LoggingService } from './logging/logging.service';
 import { CoreSpyFactories } from '@core/testing';
 

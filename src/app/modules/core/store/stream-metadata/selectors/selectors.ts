@@ -9,4 +9,4 @@ export const streamViewModels = createSelector(
         url,
         title: state.streams[url]
     }))
-)
+);

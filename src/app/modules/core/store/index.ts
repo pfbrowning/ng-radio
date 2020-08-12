@@ -6,4 +6,4 @@ export { StreamMetadataFacadeService } from './stream-metadata/stream-metadata-f
 
 import * as RadioBrowserResultsActions from './radio-browser-results/actions';
 import * as RadioBrowserResultsSelectors from './radio-browser-results/selectors';
-export { RadioBrowserResultsActions, RadioBrowserResultsSelectors }
+export { RadioBrowserResultsActions, RadioBrowserResultsSelectors };

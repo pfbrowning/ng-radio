@@ -4,8 +4,6 @@ import { switchMap, withLatestFrom, map, catchError, tap, filter } from 'rxjs/op
 import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserSearchRootState } from '../models/radio-browser-search-root-state';
-import { Router } from '@angular/router';
-import { PlayerActions } from '@core/store';
 import { resolverParams } from './selectors';
 import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 import { RadioBrowserResultsActions } from '@core/store';

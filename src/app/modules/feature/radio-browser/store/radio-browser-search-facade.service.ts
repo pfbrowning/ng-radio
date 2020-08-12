@@ -14,7 +14,7 @@ export class RadioBrowserSearchFacadeService {
   public fetchingTagSuggestions$ = this.store.pipe(select(RadioBrowserSelectors.fetchingTagSuggestions));
   public searchResults$ = this.store.pipe(select(RadioBrowserResultsSelectors.radioBrowserResults));
   public isSearchInProgress$ = this.store.pipe(select(RadioBrowserSelectors.selectIsSearchInProgress));
-  public searchCriteria$ = this.store.pipe(select(RadioBrowserSelectors.searchCriteria))
+  public searchCriteria$ = this.store.pipe(select(RadioBrowserSelectors.searchCriteria));
 
   constructor(private store: Store<RadioBrowserSearchRootState>) {}
 
@@ -23,7 +23,7 @@ export class RadioBrowserSearchFacadeService {
   }
 
   public tagTermChanged(term: string) {
-    this.store.dispatch(RadioBrowserActions.tagTermChanged({term}))
+    this.store.dispatch(RadioBrowserActions.tagTermChanged({term}));
   }
 
   public countryChanged(country: string): void {

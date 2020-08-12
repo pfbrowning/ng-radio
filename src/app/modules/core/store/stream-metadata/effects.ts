@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap, catchError, concatMap, debounceTime, distinctUntilChanged, skip, withLatestFrom, filter, tap} from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, distinctUntilChanged, skip, withLatestFrom, filter, tap} from 'rxjs/operators';
 import { StreamMetadataFacadeService } from './stream-metadata-facade.service';
 import { isEqual } from 'lodash-es';
 import { SocketIOService } from '../../services/socket-io.service';

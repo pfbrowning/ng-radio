@@ -3,9 +3,6 @@ import { select, Store } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
 import { urlsSelectedForMetadata } from './selectors/urls-for-metadata.selector';
 import * as PlayerMetadataSelectors from './selectors/player-metadata.selectors';
-import * as Selectors from './selectors/selectors';
-import { tap, distinctUntilChanged } from 'rxjs/operators';
-import { isEqual } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class StreamMetadataFacadeService {

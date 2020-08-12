@@ -1,4 +1,4 @@
-import { of, NEVER, Observable } from 'rxjs';
+import { NEVER, Observable } from 'rxjs';
 
 export class StreamMetadataFacadeStub {
     metadataForCurrentStation$: Observable<string> = NEVER;

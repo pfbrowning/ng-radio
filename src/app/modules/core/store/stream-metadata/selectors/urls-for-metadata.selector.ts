@@ -15,10 +15,10 @@ export const urlsSelectedForMetadata = createSelector(
     RadioBrowserResultsSelectors.radioBrowserResults,
     (currentStation, currentStatus, mapped, currentRoute, favorites, radioBrowserResults) => {
         let urls = [];
-        if (currentStation != null && currentStatus == PlayerStatus.Playing) {
+        if (currentStation != null && currentStatus === PlayerStatus.Playing) {
             urls.push(currentStation.url);
         }
-        switch(currentRoute) {
+        switch (currentRoute) {
             case '/favorites':
                 if (favorites) {
                     urls.push(...favorites.map(s => s.url));
@@ -39,4 +39,4 @@ export const urlsSelectedForMetadata = createSelector(
         to just being reordered or having a duplicate entry added. */
         return sortBy(uniq(urls));
     }
-)
+);

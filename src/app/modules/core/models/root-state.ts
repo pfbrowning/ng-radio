@@ -11,5 +11,5 @@ export interface RootState {
     player: PlayerState;
     authentication: AuthenticationState;
     streamMetadata: StreamMetadataState;
-    radioBrowserResults: RadioBrowserResultsState
+    radioBrowserResults: RadioBrowserResultsState;
 }

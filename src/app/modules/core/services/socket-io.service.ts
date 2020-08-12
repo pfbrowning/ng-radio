@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config/config.service';
-import { Observable, Observer, ReplaySubject, Subject, fromEvent, combineLatest, forkJoin, merge, throwError, defer, BehaviorSubject } from 'rxjs';
+import { Observable, fromEvent, merge, defer } from 'rxjs';
 import { take, switchMap, tap, map, shareReplay, filter, withLatestFrom } from 'rxjs/operators';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { LoggingService } from './logging/logging.service';
@@ -10,7 +10,7 @@ import io from 'socket.io-client';
 export class SocketIOService {
   private socket = io({ autoConnect: false });
   private authenticated = false;
-  
+
   private disconnect$: Observable<string> = fromEvent(this.socket, 'disconnect');
   private connect$ = fromEvent(this.socket, 'connect');
   private unauthorized$ = fromEvent(this.socket, 'unauthorized');
@@ -24,7 +24,7 @@ export class SocketIOService {
       this.socketInitialized$.pipe(map(() => true)),
       this.unauthorized$.pipe(map(() => false))
     ).pipe(take(1))),
-  )
+  );
   private initializeOnce$ = defer(() => this.initialize()).pipe(shareReplay(1));
 
   public metadataReceived$: Observable<{url: string, title: string}> = fromEvent(this.socket, 'metadata');
@@ -45,7 +45,7 @@ export class SocketIOService {
     this.socket.on('socketInitialized', a => console.log('socketInitialized', a));
     this.authenticateOnConnect$.subscribe(authenticated => {
       this.loggingService.info(`Authentication ${authenticated ? 'Succeeded' : 'Failed'}`);
-      this.authenticated = authenticated
+      this.authenticated = authenticated;
     });
     this.disconnect$.subscribe(reason => {
       this.loggingService.info('Disconnected', { reason });
@@ -64,7 +64,7 @@ export class SocketIOService {
       this.connect();
       this.loggingService.debug('Sending', { event, args });
       this.socket.emit(event, ...args);
-    })
+    });
   }
 
   public connect(): void {
@@ -73,6 +73,6 @@ export class SocketIOService {
         this.loggingService.info('Connecting To Socket.IO');
         this.socket.connect();
       }
-    })
+    });
   }
 }

@@ -4,7 +4,7 @@ import { RootState } from '@core';
 import { KeepAwakeService } from '@core';
 import { PlayerStatus } from '@core/models/player';
 import { FavoriteStationsSelectors, FavoriteStationsActions } from '@core/store/favorite-stations';
-import { PlayerSelectors, PlayerFacadeService, StreamMetadataFacadeService } from '@core/store';
+import { PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
 import { SleepTimerService } from '@core/services';
 
 @Component({

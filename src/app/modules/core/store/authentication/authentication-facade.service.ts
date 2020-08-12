@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
-import { filter, map, take, distinctUntilChanged } from 'rxjs/operators';
+import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import * as Selectors from './authentication.selectors';
 import * as Actions from './authentication.actions';

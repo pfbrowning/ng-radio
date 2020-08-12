@@ -7,7 +7,7 @@ export enum StreamMetadataActions {
 
 export const setStreamList = createAction(
     StreamMetadataActions.SetStreamList,
-    props<{ streams: Array<string> }>()
+    props<{ streams: string[] }>()
 );
 
 export const metadataReceived = createAction(

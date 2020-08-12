@@ -14,7 +14,6 @@ import { SharedModule } from '@shared';
 import { PlayerStatus, initialPlayerState, Station } from '@core/models/player';
 import { PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
 import { CoreSpyFactories, StreamMetadataFacadeStub } from '@core/testing';
-import { isFalsyOrWhitespace } from '@utilities';
 import { SleepTimerService } from '@core/services';
 import { BehaviorSubject, Observable, defer, of } from 'rxjs';
 

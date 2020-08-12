@@ -1,3 +1,3 @@
 export interface StreamMetadataState {
-    streams: { [url: string]: string; },
+    streams: { [url: string]: string; };
 }

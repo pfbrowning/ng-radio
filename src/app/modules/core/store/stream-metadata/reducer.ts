@@ -1,8 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { initialPlayerState } from '../../models/player/initial-player-state';
-import { PlayerStatus } from '../../models/player/player-status';
-import { PlayerState } from '../../models/player/player-state';
-import { StreamPreprocessingState } from '../../models/player/stream-preprocessing-state';
+import { createReducer, on } from '@ngrx/store';
 import { initialStreamMetadataState } from './models/initial-stream-metadata-state';
 import { StreamMetadataState } from './models/stream-metadata-state';
 import * as Actions from './actions';

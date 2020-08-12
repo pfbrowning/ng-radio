@@ -55,4 +55,4 @@ export const streamsMappedToADifferentUrl = createSelector(
     (checked) => Object.keys(checked)
         .map(original => ({original, validated: checked[original].validatedUrl}))
         .filter(m => m.validated && m.original !== m.validated)
-)
+);

@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerBarStationInfoComponent } from './player-bar-station-info.component';
 import { getElementTextBySelector } from '@utilities/testing';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { RootState, initialRootState } from '@core';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
 import { Station, PlayerStatus } from '@core/models/player';
-import { PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
+import { StreamMetadataFacadeService } from '@core/store';
 import { SharedModule } from '@shared';
 import { StreamMetadataFacadeStub } from '@core/testing';
 import { of, Observable, defer } from 'rxjs';
-import { metadataForCurrentStation } from 'src/app/modules/core/store/stream-metadata/selectors/player-metadata.selectors';
 
 describe('PlayerBarStationInfoComponent', () => {
   let component: PlayerBarStationInfoComponent;
@@ -78,5 +77,5 @@ describe('PlayerBarStationInfoComponent', () => {
       // Assert: Ensure that the text of the title element conveys the current stream status
       expect(getElementTextBySelector<PlayerBarStationInfoComponent>(fixture, '.title')).toBe(input.expected);
     });
-  })
+  });
 });

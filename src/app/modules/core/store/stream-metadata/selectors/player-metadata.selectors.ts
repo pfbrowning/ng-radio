@@ -19,16 +19,16 @@ export const streamViewModelsMappedToValidatedStreams = createSelector(
             });
         }
         return next;
-    }, []) as Array<{ url: string, title: string}>
+    }, []) as { url: string, title: string}[]
 );
 
 export const streamsMap = createSelector(
     streamViewModelsMappedToValidatedStreams,
     viewModels => new Map<string, string>(viewModels.map(vm => [vm.url, vm.title]))
-)
+);
 
 export const metadataForCurrentStation = createSelector(
     PlayerSelectors.selectCurrentStation,
     streamsMap,
     (current, streams) => current && streams.get(current.url)
-)
+);

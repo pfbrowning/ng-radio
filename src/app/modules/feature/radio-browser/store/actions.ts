@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Station } from '@core/models/player';
 import { Country } from '@core/models';
 
 export enum RadioBrowserSearchActions {

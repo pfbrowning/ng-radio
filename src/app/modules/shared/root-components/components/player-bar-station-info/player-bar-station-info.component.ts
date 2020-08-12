@@ -10,11 +10,9 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { RootState } from '@core';
 import { SubSink } from 'subsink';
 import { WindowService } from '@core/services';
-import { PlayerSelectors, PlayerFacadeService, StreamMetadataFacadeService } from '@core/store';
+import { StreamMetadataFacadeService } from '@core/store';
 
 @Component({
   selector: 'blr-player-bar-station-info',

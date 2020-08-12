@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap, map, switchMap, catchError, withLatestFrom, takeUntil, mapTo, filter, mergeMap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { of, timer, merge } from 'rxjs';
-import { Store, select, Action } from '@ngrx/store';
+import { tap, map, switchMap, catchError, withLatestFrom, filter, mergeMap, distinctUntilChanged } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
 import {
   selectCurrentStationUrlAndItsValidationState,
@@ -17,18 +17,14 @@ import {
   audioPaused,
 } from './player-actions';
 import { RootState } from '../../models/root-state';
-import { CurrentTimeService } from '../../services/current-time.service';
 import { PlayerActions, PlayerSelectors } from '.';
 import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { isEqual } from 'lodash-es';
 import { isFalsyOrWhitespace } from '@utilities';
-import { WindowFocusService } from '../../services/browser-apis/window-focus.service';
-import { WindowService } from '../../services/browser-apis/window.service';
 import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
-import { LoggingService, NotificationsService, SleepTimerService, AudioElementService, ConfigService } from '@core/services';
-import { PlayerFacadeService } from './player-facade.service';
+import { LoggingService, NotificationsService, SleepTimerService, AudioElementService } from '@core/services';
 import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service';
 
 @Injectable()
@@ -70,10 +66,10 @@ export class PlayerEffects {
           return PlayerActions.playAudioStart();
         }
         // If a different url has been validated for the selected station, then reselect with the validated url
-        return PlayerActions.selectStation({station: { ...station, url: validationState.validatedUrl }})
+        return PlayerActions.selectStation({station: { ...station, url: validationState.validatedUrl }});
       }
       // If this station hasn't been successfully validated at all, then start preprocessing
-      return PlayerActions.preprocessStreamStart({streamUrl: station.url})
+      return PlayerActions.preprocessStreamStart({streamUrl: station.url});
     })
   ));
 
@@ -150,7 +146,7 @@ export class PlayerEffects {
     ),
     filter(([, , status]) => status === PlayerStatus.Playing),
     map(([metadataTitle, station]) => ({stationTitle: station.title, metadataTitle})),
-    distinctUntilChanged((x,y) => isEqual(x,y)),
+    distinctUntilChanged((x, y) => isEqual(x, y)),
     tap(meta => {
       if (!isFalsyOrWhitespace(meta.metadataTitle)) {
         this.titleService.setTitle(meta.metadataTitle);

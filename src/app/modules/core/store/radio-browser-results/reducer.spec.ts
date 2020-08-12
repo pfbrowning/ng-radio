@@ -1,5 +1,5 @@
 import { radioBrowserResultsReducer } from './reducer';
-import { initialRadioBrowserResultsState } from './models/initial-radio-browser-results-state'
+import { initialRadioBrowserResultsState } from './models/initial-radio-browser-results-state';
 
 describe('RadioBrowser Reducer', () => {
   describe('an unknown action', () => {

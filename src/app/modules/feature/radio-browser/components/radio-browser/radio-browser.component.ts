@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, timer, EMPTY } from 'rxjs';
-import { debounceTime, distinctUntilChanged, take, filter, debounce, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, take, debounce, map } from 'rxjs/operators';
 import { MatInput } from '@angular/material/input';
-import { Store, select } from '@ngrx/store';
-import { PlayerActions, PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
+import { Store } from '@ngrx/store';
+import { PlayerActions, StreamMetadataFacadeService } from '@core/store';
 import { Station } from '@core/models/player';
 import { SubSink } from 'subsink';
 import { RadioBrowserSearchFacadeService } from '../../store/radio-browser-search-facade.service';
@@ -36,7 +36,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
   public countries$ = this.radioBrowserFacade.filteredCountries$;
   public tagSuggestions$ = this.radioBrowserFacade.tagSuggestions$;
   public fetchingTagSuggestions$ = this.radioBrowserFacade.fetchingTagSuggestions$;
-  public nameSearch$ = new Subject<string>(); 
+  public nameSearch$ = new Subject<string>();
   public tagSearch$ = new Subject<{tag: string, debounce: boolean}>();
   public nameSearch: string;
   public tagSearch: string;
