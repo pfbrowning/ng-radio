@@ -4,7 +4,7 @@
         <ng-container *ngIf="validatingCurrent">Validating Stream...</ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="playerStatus.Playing">
-        <blr-stream-info-text [streamInfo]="currentStreaminfo$ | async"></blr-stream-info-text>
+        <blr-metadata-text [metadata]="metadataForCurrentStation$ | async"></blr-metadata-text>
     </ng-container>
 </div>
 <div #station class="station" [class.marquee]="stationMarquee">{{ currentStation.title }}</div>

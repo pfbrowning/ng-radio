@@ -1,26 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerBarStationInfoComponent } from './player-bar-station-info.component';
 import { getElementTextBySelector } from '@utilities/testing';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { RootState, initialRootState } from '@core';
-import { Station, StreamInfoStatus, PlayerStatus, NowPlaying } from '@core/models/player';
-import { PlayerSelectors } from '@core/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
+import { Station, PlayerStatus } from '@core/models/player';
+import { StreamMetadataFacadeService } from '@core/store';
 import { SharedModule } from '@shared';
-import theoretically from 'jasmine-theories';
+import { StreamMetadataFacadeStub } from '@core/testing';
+import { of, Observable, defer } from 'rxjs';
 
 describe('PlayerBarStationInfoComponent', () => {
   let component: PlayerBarStationInfoComponent;
   let fixture: ComponentFixture<PlayerBarStationInfoComponent>;
-  let store: MockStore<RootState>;
+  let streamMetadataFacade: StreamMetadataFacadeStub;
+  let metadataForCurrentStation$: Observable<string>;
 
   beforeEach(async(() => {
+    streamMetadataFacade = new StreamMetadataFacadeStub();
+    streamMetadataFacade.metadataForCurrentStation$ = defer(() => metadataForCurrentStation$);
+
     TestBed.configureTestingModule({
       declarations: [ PlayerBarStationInfoComponent ],
       imports: [
         SharedModule
       ],
       providers: [
-        provideMockStore({initialState: initialRootState})
+        provideMockStore({initialState: initialRootState}),
+        { provide: StreamMetadataFacadeService, useValue: streamMetadataFacade }
       ]
     })
     .compileComponents();
@@ -28,13 +34,9 @@ describe('PlayerBarStationInfoComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerBarStationInfoComponent);
-    store = TestBed.inject(MockStore);
+    streamMetadataFacade = TestBed.inject(StreamMetadataFacadeService) as any;
     component = fixture.componentInstance;
     component.currentStation = new Station();
-  });
-
-  afterEach(() => {
-    store.resetSelectors();
   });
 
   it('should create', () => {
@@ -59,24 +61,21 @@ describe('PlayerBarStationInfoComponent', () => {
       expected: 'Validating Stream...'
     },
     {
-      streamInfo: {
-        nowPlaying: new NowPlaying('Valid Title', null),
-        status: StreamInfoStatus.Valid
-      },
+      streamInfo: 'Valid Title',
       playerStatus: PlayerStatus.Playing,
       expected: 'Valid Title'
     },
   ];
-  theoretically.it('should reflect the various player states properly in the template',
-    playerStatusTemplateInput, (input) => {
-    // Arrange & Act
-    component.currentPlayerStatus = input.playerStatus;
-    component.validatingCurrent = input.validating;
-    store.overrideSelector(PlayerSelectors.currentStreamInfo, input.streamInfo);
-    store.refreshState();
-    fixture.detectChanges();
+  playerStatusTemplateInput.forEach(input => {
+    it('should reflect the various player states properly in the template', () => {
+      // Arrange & Act
+      component.currentPlayerStatus = input.playerStatus;
+      component.validatingCurrent = input.validating;
+      metadataForCurrentStation$ = of(input.streamInfo);
+      fixture.detectChanges();
 
-    // Assert: Ensure that the text of the title element conveys the current stream status
-    expect(getElementTextBySelector<PlayerBarStationInfoComponent>(fixture, '.title')).toBe(input.expected);
+      // Assert: Ensure that the text of the title element conveys the current stream status
+      expect(getElementTextBySelector<PlayerBarStationInfoComponent>(fixture, '.title')).toBe(input.expected);
+    });
   });
 });

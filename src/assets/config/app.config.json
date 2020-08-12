@@ -3,7 +3,7 @@
     "corsProxyUrl": "http://localhost:3001",
     "radioBrowserApiUrl": "https://de1.api.radio-browser.info/json",
     "radioBrowserSearchResultsLimit": 25,
-    "favoriteStationsApiUrl": "https://localhost:5001",
+    "radioProxyUrl": "http://localhost:3000",
     "refreshIntervalShort": 20000,
     "refreshIntervalLong": 60000,
     "metadataFetchTimeout": 15000,

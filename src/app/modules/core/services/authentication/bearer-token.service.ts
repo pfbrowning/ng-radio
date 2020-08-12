@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { ConfigService } from '@core/services';
 import { isFalsyOrWhitespace } from '@utilities';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
@@ -22,8 +22,9 @@ export class BearerTokenService implements HttpInterceptor {
     return this.configService.appConfig$.pipe(
       switchMap(config => {
         // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
-        if (req.url.startsWith(config.favoriteStationsApiUrl) || req.url.startsWith(config.metadataApiUrl)) {
+        if ([config.favoriteStationsApiUrl, config.radioProxyUrl].some(authUrl => req.url.startsWith(authUrl))) {
           return this.authenticationFacade.accessToken$.pipe(
+            take(1),
             switchMap(accessToken => !isFalsyOrWhitespace(accessToken)
               // If an access token is present, then append it to the Authorization header
               ? next.handle(req.clone({ headers: req.headers.append('Authorization', `Bearer ${accessToken}`) }))

@@ -51,7 +51,7 @@ jobs:
         authConfig.logoutUrl: https://browninglogic.auth0.com/v2/logout?returnTo=http%3A%2F%2Fradio.browninglogic.com
         corsProxyUrl: https://sheltered-spire-83395.herokuapp.com
         favoriteStationsApiUrl: https://favorite-stations-api.azurewebsites.net
-        metadataApiUrl: https://obscure-tundra-59475.herokuapp.com
+        radioProxyUrl: https://agile-earth-21410.herokuapp.com
     - name: FTP Deploy
       uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
       with:

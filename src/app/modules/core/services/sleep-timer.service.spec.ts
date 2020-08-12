@@ -38,7 +38,7 @@ describe('SleepTimerService', () => {
     it('should emit the number of minutes until expiration once per minute until sleepTime', () => {
       testScheduler.run(helpers => {
         // Arrange
-        currentTimeService.unix.and.returnValue(1596391847549);
+        currentTimeService.unixMs.and.returnValue(1596391847549);
         const expectedDiagram = 'a 59999ms b 59999ms c 59999ms d 59999ms e 59999ms f';
         const expectedValues = { a: 4, b: 3, c: 2, d: 1, e: 0, f: null };
 
@@ -53,13 +53,13 @@ describe('SleepTimerService', () => {
     it('should account for a remainder if the subscription was not started on an exact multiple of 60ms before sleep time', () => {
       testScheduler.run(helpers => {
         // Arrange
-        currentTimeService.unix.and.returnValue(1596391847549);
+        currentTimeService.unixMs.and.returnValue(1596391847549);
         const expectedDiagram = 'a 29999ms b 59999ms c 59999ms d 59999ms e 59999ms f';
         const expectedValues = { a: 4, b: 3, c: 2, d: 1, e: 0, f: null };
         // Act
         sleepTimerService.setTimer(5);
         // Advance time by 30s to simulate waiting before subscribing
-        currentTimeService.unix.and.returnValue(1596391877549);
+        currentTimeService.unixMs.and.returnValue(1596391877549);
 
         // Assert
         helpers.expectObservable(sleepTimerService.minutesToSleep$).toBe(expectedDiagram, expectedValues);
@@ -69,7 +69,7 @@ describe('SleepTimerService', () => {
     it('should emit null if no sleep timer is set', () => {
       testScheduler.run(helpers => {
         // Arrange
-        currentTimeService.unix.and.returnValue(1596391847549);
+        currentTimeService.unixMs.and.returnValue(1596391847549);
         const expectedDiagram = 'a';
         const expectedValues = { a: null };
 
@@ -82,7 +82,7 @@ describe('SleepTimerService', () => {
       // Arrange
       const minutesSpy = jasmine.createSpy('minutes');
       sleepTimerService.minutesToSleep$.subscribe(val => minutesSpy(val));
-      currentTimeService.unix.and.returnValue(1596391847549);
+      currentTimeService.unixMs.and.returnValue(1596391847549);
 
       // Act
       sleepTimerService.setTimer(5);
@@ -108,7 +108,7 @@ describe('SleepTimerService', () => {
       // Arrange
       const sleepTimerSpy = jasmine.createSpy('sleepTimer');
       sleepTimerService.sleepTimer$.subscribe(val => sleepTimerSpy(val));
-      currentTimeService.unix.and.returnValue(1596391847549);
+      currentTimeService.unixMs.and.returnValue(1596391847549);
 
       // Act
       sleepTimerService.setTimer(5);
@@ -127,7 +127,7 @@ describe('SleepTimerService', () => {
       // Arrange
       const sleepTimerSpy = jasmine.createSpy('sleepTimer');
       sleepTimerService.sleepTimer$.subscribe(val => sleepTimerSpy(val));
-      currentTimeService.unix.and.returnValue(1596391847549);
+      currentTimeService.unixMs.and.returnValue(1596391847549);
 
       // Act
       sleepTimerService.setTimer(2);
@@ -148,7 +148,7 @@ describe('SleepTimerService', () => {
       // Arrange
       const sleepTimerSpy = jasmine.createSpy('sleepTimer');
       sleepTimerService.sleepTimer$.subscribe(val => sleepTimerSpy(val));
-      currentTimeService.unix.and.returnValue(1596391847549);
+      currentTimeService.unixMs.and.returnValue(1596391847549);
 
       // Act
       tick(121000);

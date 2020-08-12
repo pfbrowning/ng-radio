@@ -10,7 +10,8 @@ import { StreamPreprocessorService } from '../../services/preprocessing/stream-p
 import { CoreSpyFactories } from '@core/testing';
 import { AudioElementStub } from '../../testing/AudioElementStub.spec';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
-import { NotificationsService, StreamInfoService, LoggingService, AudioElementService, ConfigService } from '@core/services';
+import { NotificationsService, LoggingService, AudioElementService, ConfigService } from '@core/services';
+import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
@@ -26,12 +27,12 @@ describe('PlayerEffects', () => {
         provideMockActions(() => actions$),
         provideMockStore({initialState: initialRootState}),
         { provide: NotificationsService, useValue: CoreSpyFactories.createNotificationsServiceSpy() },
-        { provide: StreamInfoService, useValue: CoreSpyFactories.createStreamInfoServiceSpy() },
         { provide: ConfigService, useClass: ConfigStubService },
         { provide: AudioElementService, useValue: audioElement },
         { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
         { provide: LoggingService, useValue: createLoggingServiceSpy() },
-        { provide: StreamPreprocessorService, useValue: createStreamPreprocessorServiceSpy() }
+        { provide: StreamPreprocessorService, useValue: createStreamPreprocessorServiceSpy() },
+        { provide: RadioPlayerService, useValue: CoreSpyFactories.createRadioPlayerServiceSpy() }
       ]
     });
 

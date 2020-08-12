@@ -3,13 +3,13 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, filter, take } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { RadioBrowserRootState } from '../models/radio-browser-root-state';
-import { resolverParams } from '../store/radio-browser.selectors';
-import { resolveSubmit } from '../store/radio-browser.actions';
+import { RadioBrowserSearchRootState } from '../models/radio-browser-search-root-state';
+import { resolverParams } from '../store/selectors';
+import { resolveSubmit } from '../store/actions';
 
 @Injectable({providedIn: 'root'})
 export class RadioBrowserResolver implements Resolve<void> {
-  constructor(private store: Store<RadioBrowserRootState>) { }
+  constructor(private store: Store<RadioBrowserSearchRootState>) { }
 
   resolve(): Observable<void> {
     this.store.dispatch(resolveSubmit());

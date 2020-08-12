@@ -14,7 +14,7 @@ describe('BearerTokenService', () => {
   let authenticationFacade: jasmine.SpyObj<AuthenticationFacadeService>;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  const config: any = Object.freeze({ favoriteStationsApiUrl: 'mockFavoritesUrl', metadataApiUrl: 'mockMetadataUrl' });
+  const config: any = Object.freeze({ favoriteStationsApiUrl: 'mockFavoritesUrl', radioProxyUrl: 'mockRadioProxyUrl' });
 
   beforeEach(() => {
     authenticationFacade = CoreSpyFactories.createAuthenticationFacadeSpy();
@@ -47,8 +47,8 @@ describe('BearerTokenService', () => {
   const shouldAddTokenCases = [
     'mockFavoritesUrl',
     'mockFavoritesUrl/somePath',
-    'mockMetadataUrl',
-    'mockMetadataUrl/somePath'
+    'mockRadioProxyUrl',
+    'mockRadioProxyUrl/somePath'
   ];
   shouldAddTokenCases.forEach(url => {
     it(`should add a bearer token if the request is for an API url specified in the config: ${url}`, (done: DoneFn) => {
