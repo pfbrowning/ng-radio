@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap, map, switchMap, catchError, withLatestFrom, filter, mergeMap, distinctUntilChanged } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { tap, map, switchMap, catchError, withLatestFrom, filter, mergeMap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { of, combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
 import {
@@ -139,13 +139,14 @@ export class PlayerEffects {
     )
   ), { dispatch: false });
 
-  onCurrentMetadataChanged$ = createEffect(() => this.metadataFacade.metadataForCurrentStation$.pipe(
-    withLatestFrom(
-      this.store.pipe(select(PlayerSelectors.selectCurrentStation)),
-      this.store.pipe(select(PlayerSelectors.selectPlayerStatus))
-    ),
+  onCurrentMetadataChanged$ = createEffect(() => combineLatest([
+    this.metadataFacade.metadataForCurrentStation$,
+    this.store.pipe(select(PlayerSelectors.selectCurrentStation)),
+    this.store.pipe(select(PlayerSelectors.selectPlayerStatus))
+  ]).pipe(
+    debounceTime(0),
     filter(([, , status]) => status === PlayerStatus.Playing),
-    map(([metadataTitle, station]) => ({stationTitle: station.title, metadataTitle})),
+    map(([metadataTitle, station]) => ({ stationTitle: station.title, metadataTitle })),
     distinctUntilChanged((x, y) => isEqual(x, y)),
     tap(meta => {
       if (!isFalsyOrWhitespace(meta.metadataTitle)) {
@@ -158,8 +159,8 @@ export class PlayerEffects {
 
       this.notificationsService.info('Now Playing',
         !isFalsyOrWhitespace(meta.metadataTitle)
-        ? `${meta.metadataTitle} - ${meta.stationTitle}`
-        : meta.stationTitle
+          ? `${meta.metadataTitle} - ${meta.stationTitle}`
+          : meta.stationTitle
       );
     })
   ), { dispatch: false });
