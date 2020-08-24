@@ -59,7 +59,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Package up `isFalsyOrWhitespace` and deploy to npm
   * Persist silent refresh errors in sessionStorage so that they can be accessed and logged from the app itself
   * Investigate [cookieless image workarounds](https://stackoverflow.com/questions/51549390/how-to-disable-third-party-cookie-for-img-tags) to resolve SameSite cookie warnings in Chrome
   * Host on HTTPS

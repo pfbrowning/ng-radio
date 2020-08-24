@@ -8,7 +8,14 @@
     <script src="oidc-client.min.js"></script>
     <script>
         var mgr = new Oidc.UserManager();
-        mgr.signinSilentCallback().catch(error => {
+        mgr.signinSilentCallback().then(() => {
+            localStorage.setItem('silent_refresh_succeeded', Date.now());
+        }).catch(error => {
+            localStorage.setItem('silent_refresh_failed', JSON.stringify({
+                timestamp: Date.now(),
+                name: error.name,
+                message: error.message
+            }));
             console.error(error);
         });
     </script>
