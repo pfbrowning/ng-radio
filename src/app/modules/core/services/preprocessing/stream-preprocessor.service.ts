@@ -4,7 +4,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import { PlaylistReaderService } from './playlist-reader.service';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamValidatorService } from './stream-validator.service';
-import { isFalsyOrWhitespace } from '@utilities';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable({providedIn: 'root'})
 export class StreamPreprocessorService {

@@ -3,8 +3,8 @@ import { map } from 'rxjs/operators';
 import { UserManager, User, UserManagerSettings } from 'oidc-client';
 import { Observable, Subject, from } from 'rxjs';
 import { WindowService } from '../browser-apis/window.service';
-import { isFalsyOrWhitespace } from '@utilities';
 import { TokenReceivedResult } from '../../models/authentication/token-received-result';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {

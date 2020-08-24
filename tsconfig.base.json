@@ -36,7 +36,6 @@
       "@shared/testing": ["src/app/modules/shared/shared/testing/index.spec"],
       "@root-components": ["src/app/modules/shared/root-components/index"],
       "@root-components/testing": ["src/app/modules/shared/root-components/testing/index.spec"],
-      "@utilities": ["src/app/utilities/index"],
       "@utilities/testing": ["src/app/utilities/index.spec"]
     }
   }

@@ -3,8 +3,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { ConfigService } from '@core/services';
-import { isFalsyOrWhitespace } from '@utilities';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable()
 export class BearerTokenService implements HttpInterceptor {

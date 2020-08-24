@@ -22,10 +22,10 @@ import { PlayerStatus } from '../../models/player/player-status';
 import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
 import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { isEqual } from 'lodash-es';
-import { isFalsyOrWhitespace } from '@utilities';
 import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
 import { LoggingService, NotificationsService, SleepTimerService, AudioElementService } from '@core/services';
 import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable()
 export class PlayerEffects {

@@ -4,7 +4,7 @@ import { ReplaySubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LoggerSeverity as GenericSeverity } from '../../models/logging/logger-severity';
 import { ConfigService } from '../config/config.service';
-import { isFalsyOrWhitespace } from '@utilities';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable({ providedIn: 'root' })
 export class AppInsightsService {

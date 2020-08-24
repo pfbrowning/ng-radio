@@ -5,8 +5,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
 import { Country } from '../../models/country';
-import { isFalsyOrWhitespace } from '@utilities';
 import { sortBy } from 'lodash-es';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable({providedIn: 'root'})
 export class RadioBrowserService {

@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpParams } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
-import { isFalsyOrWhitespace } from '@utilities';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 import { ConfigStubService } from '@core/testing';
 import theoretically from 'jasmine-theories';
 

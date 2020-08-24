@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { RadioBrowserSearchState } from '../models/radio-browser-search-state';
 import { radioBrowserSearchFeatureKey } from './reducer';
-import { isFalsyOrWhitespace } from '@utilities';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 export const radioBrowserSearchState = createFeatureSelector<RadioBrowserSearchState>(radioBrowserSearchFeatureKey);
 
