@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 import { UserManager, User, UserManagerSettings } from 'oidc-client';
 import { Observable, Subject, from } from 'rxjs';
 import { WindowService } from '../browser-apis/window.service';
@@ -30,6 +30,16 @@ export class AuthenticationService {
     return from(this.userManager.getUser()).pipe(
       map(user => this.userToTokenReceivedResult(user))
     );
+  }
+
+  private silentRefresh(): Observable<TokenReceivedResult> {
+    return from(this.userManager.signinSilent()).pipe(
+      map(user => this.userToTokenReceivedResult(user))
+    );
+  }
+
+  public attemptSilentRefresh() {
+    return this.silentRefresh().pipe(retry(3));
   }
 
   private userToTokenReceivedResult(user: User): TokenReceivedResult {

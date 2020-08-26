@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { switchMap, catchError, map, filter, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, catchError, map, filter, tap, withLatestFrom, exhaustMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
@@ -36,8 +36,16 @@ export class AuthenticationEffects implements OnInitEffects {
     ))
   ));
 
-  silentRefreshSucceeded$ = createEffect(() => this.authenticationService.silentRefreshSucceeded$.pipe(
-    map(result => AuthenticationActions.silentRefreshSucceeded({ ...result }))
+  initSilentRefreshOnTokenExpiring$ = createEffect(() => this.authenticationService.accessTokenExpiring$.pipe(
+    map(() => AuthenticationActions.silentRefreshStart())
+  ));
+
+  silentRefresh$ = createEffect(() => this.actions$.pipe(
+    ofType(AuthenticationActions.silentRefreshStart),
+    exhaustMap(() => this.authenticationService.attemptSilentRefresh().pipe(
+      map(result => AuthenticationActions.silentRefreshSucceeded({ ...result })),
+      catchError(error => of(AuthenticationActions.silentRefreshFailed({error})))
+    ))
   ));
 
   accessTokenExpired$ = createEffect(() => this.authenticationService.accessTokenExpired$.pipe(

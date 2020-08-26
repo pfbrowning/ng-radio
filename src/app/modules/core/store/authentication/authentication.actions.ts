@@ -8,6 +8,7 @@ export enum AuthenticationActions {
     SilentRefreshStart = '[Authentication] Silent Refresh Start',
     SilentRefreshSucceeded = '[Authentication] Silent Refresh Succeeded',
     SilentRefreshFailed = '[Authentication] Silent Refresh Failed',
+    AccessTokenExpiring = '[Authentication] Access Token Expiring',
     AccessTokenExpired = '[Authentication] Access Token Expired',
     LogoutButtonClicked = '[Authentication] Logout Button Clicked',
 }
@@ -30,9 +31,22 @@ export const initializeFailed = createAction(
     props<{ error: any }>()
 );
 
+export const silentRefreshStart = createAction(
+    AuthenticationActions.SilentRefreshStart
+);
+
 export const silentRefreshSucceeded = createAction(
     AuthenticationActions.SilentRefreshSucceeded,
-    props<{  email: string, accessToken: string, authenticated: boolean }>()
+    props<{ email: string, accessToken: string, authenticated: boolean }>()
+);
+
+export const silentRefreshFailed = createAction(
+    AuthenticationActions.SilentRefreshFailed,
+    props<{ error: any }>()
+);
+
+export const accessTokenExpiring = createAction(
+    AuthenticationActions.AccessTokenExpiring
 );
 
 export const accessTokenExpired = createAction(
