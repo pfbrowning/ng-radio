@@ -44,9 +44,9 @@ jobs:
         appInsightsInstrumentationKey: ${{ secrets.appinsights_instrumentation_key }}
         authConfig.userManager.client_id: OUO72IMzQPFkpXz5IkVMAnaDM0iKtK3t
         authConfig.userManager.authority: https://browninglogic.auth0.com/
-        authConfig.userManager.redirect_uri: http://radio.browninglogic.com/login-callback.html
-        authConfig.userManager.post_logout_redirect_uri: http://radio.browninglogic.com
-        authConfig.userManager.silent_redirect_uri: http://radio.browninglogic.com/silent-refresh.html
+        authConfig.userManager.redirect_uri: https://radio.browninglogic.com/login-callback.html
+        authConfig.userManager.post_logout_redirect_uri: https://radio.browninglogic.com
+        authConfig.userManager.silent_redirect_uri: https://radio.browninglogic.com/silent-refresh.html
         authConfig.userManager.extraQueryParams.audience: browninglogic-radio
         authConfig.logoutUrl: https://browninglogic.auth0.com/v2/logout?returnTo=http%3A%2F%2Fradio.browninglogic.com
         corsProxyUrl: https://sheltered-spire-83395.herokuapp.com

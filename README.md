@@ -6,7 +6,7 @@
 ## Introduction
 Browninglogic Radio is an internet radio app written as a Single-Page Application in Angular.  This is a hobby project that I work on in what little free time I have.  My motivation for this is primarily because I enjoy working with Angular and secondarily because I enjoy internet radio.
 
-The in-progress demo version of the app can be accessed at [radio.browninglogic.com](http://radio.browninglogic.com).
+The in-progress demo version of the app can be accessed at [radio.browninglogic.com](https://radio.browninglogic.com).
 
 ## Current Features
 * Display of the current "Now Playing" stream info as provided by [node-internet-radio](https://github.com/gabek/node-internet-radio) and fetched via [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api)
@@ -59,11 +59,12 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Host on HTTPS
+  * Log audio errors client-side and server-side
   * Investigate [cookieless image workarounds](https://stackoverflow.com/questions/51549390/how-to-disable-third-party-cookie-for-img-tags) to resolve SameSite cookie warnings in Chrome
     * I'll probably want to determine whether I can use the CORS proxy I'm already using, and use an image proxy server otherwise.  The following look like good options to start with:
       * https://github.com/jamslevy/proxy-image-service
       * https://github.com/jpmckinney/image-proxy
-  * Host on HTTPS
   * Solve `ai_session` cookie warning
   * Move stream preprocessing logic behind API
   * Refactor & simplify NGRX store architecture
