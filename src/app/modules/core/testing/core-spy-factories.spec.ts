@@ -1,8 +1,7 @@
 import { BehaviorSubject, Subject, NEVER, of } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { MessageService } from 'primeng/api';
-import { StreamPreprocessorService } from '../services/preprocessing/stream-preprocessor.service';
-import { StreamValidatorService } from '../services/preprocessing/stream-validator.service';
+import { StreamValidatorService } from '../services/radio-player/stream-validator.service';
 import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
@@ -11,6 +10,7 @@ import { NotificationsService, RadioBrowserService, LoggingService, SleepTimerSe
 import { EnvironmentService } from '../services/config/environment.service';
 import { RadioPlayerService } from '../services/radio-player/radio-player.service';
 import { ProxyKeyService } from '../services/radio-player/proxy-key.service';
+import { PlayerBarFacadeService } from '../store/dispatch-facades/player-bar/player-bar-facade.service';
 
 export function createRadioBrowserServiceSpy(): jasmine.SpyObj<RadioBrowserService> {
   return jasmine.createSpyObj('radioBrowserService', [
@@ -53,10 +53,6 @@ export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
   return spy;
 }
 
-export function createStreamPreprocessorServiceSpy(): jasmine.SpyObj<StreamPreprocessorService> {
-  return jasmine.createSpyObj('streamPreprocessorService', ['preprocess']);
-}
-
 export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
   return jasmine.createSpyObj('streamValidatorService', [ 'validate' ]);
 }
@@ -95,3 +91,5 @@ export function createRadioPlayerServiceSpy(): jasmine.SpyObj<RadioPlayerService
 }
 
 export const createProxyKeyServiceSpy = () => jasmine.createSpyObj<ProxyKeyService>('proxyKeyService', [ 'fetchNew' ]);
+
+export const createPlayerBarFacadeSpy = () => jasmine.createSpyObj<PlayerBarFacadeService>('playerBarFacade', [ 'addToFavoritesClicked' ]);

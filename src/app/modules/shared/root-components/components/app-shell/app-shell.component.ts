@@ -1,18 +1,33 @@
-import { Component } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { RootState } from '@core';
-import { PlayerSelectors } from '@core/store';
-import { FavoriteStationsSelectors } from '@core/store/favorite-stations';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { PlayerFacadeService, FavoriteStationsFacadeService, StreamMetadataFacadeService } from '@core/store';
+import { SleepTimerService } from '@core/services';
 
 @Component({
   selector: 'blr-app-shell',
   templateUrl: './app-shell.component.html',
-  styleUrls: ['./app-shell.component.scss']
+  styleUrls: ['./app-shell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppShellComponent {
-  constructor(private store: Store<RootState>) {}
+  constructor(
+    private playerFacade: PlayerFacadeService,
+    private sleepTimerService: SleepTimerService,
+    private favoriteStationsFacade: FavoriteStationsFacadeService,
+    private metadataFacade: StreamMetadataFacadeService
+  ) {}
 
-  public stationSelected$ = this.store.pipe(select(PlayerSelectors.selectIsStationSelected));
-  public editStationExisting$ = this.store.pipe(select(FavoriteStationsSelectors.editStationExisting));
-  public editingNewStation$ = this.store.pipe(select(FavoriteStationsSelectors.editingNewStation));
+  // Player
+  public currentStation$ = this.playerFacade.currentStation$;
+  public playerStatus$ = this.playerFacade.playerStatus$;
+
+  // Favorite Stations
+  public favoriteMatchingCurrentStation$ = this.favoriteStationsFacade.favoriteMatchingCurrentStation$;
+  public currentStationFavoritesProcessingState$ = this.favoriteStationsFacade.currentStationFavoritesProcessingState$;
+  public editModalSaveInProgress$ = this.favoriteStationsFacade.editModalSaveInProgress$;
+  public showEditModal$ = this.favoriteStationsFacade.showEditModal$;
+  public existingStationForEdit$ = this.favoriteStationsFacade.existingStationForEdit$;
+  public favoritesFetchInProgress$ = this.favoriteStationsFacade.favoritesFetchInProgress$;
+  public metadataForCurrentStation$ = this.metadataFacade.metadataForCurrentStation$;
+
+  public minutesUntilSleep$ = this.sleepTimerService.minutesToSleep$;
 }

@@ -6,11 +6,9 @@ import {
   playAudioFailed,
   audioPaused,
 } from './player-actions';
-import { initialPlayerState } from '../../models/player/initial-player-state';
+import { initialPlayerState } from './models/initial-player-state';
 import { PlayerStatus } from '../../models/player/player-status';
-import { PlayerState } from '../../models/player/player-state';
-import { PlayerActions } from './index';
-import { StreamPreprocessingState } from '../../models/player/stream-preprocessing-state';
+import { PlayerState } from './models/player-state';
 
 export const playerReducer = createReducer<PlayerState>(
   initialPlayerState,
@@ -34,27 +32,5 @@ export const playerReducer = createReducer<PlayerState>(
   on(audioPaused, state => ({
     ...state,
     playerStatus: PlayerStatus.Stopped,
-  })),
-  on(PlayerActions.preprocessStreamStart, (state, { streamUrl }) => ({
-    ...state,
-    checkedStreams: {
-      ...state.checkedStreams,
-      [streamUrl]: new StreamPreprocessingState(true, null, null)
-    }
-  })),
-  on(PlayerActions.preprocessStreamSucceeded, (state, { streamUrl, validatedUrl }) => ({
-    ...state,
-    checkedStreams: {
-      ...state.checkedStreams,
-      [streamUrl]: new StreamPreprocessingState(false, validatedUrl, null),
-      [validatedUrl]: new StreamPreprocessingState(false, validatedUrl, null)
-    }
-  })),
-  on(PlayerActions.preprocessStreamFailed, (state, { streamUrl, reason }) => ({
-    ...state,
-    checkedStreams: {
-      ...state.checkedStreams,
-      [streamUrl]: new StreamPreprocessingState(false, null, reason)
-    }
   })),
 );

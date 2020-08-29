@@ -1,10 +1,10 @@
-import { Station } from '../player/station';
+import { Station } from '../../../models/player/station';
 
 export interface FavoriteStationsState {
     favoriteStations: Station[];
     fetchInProgress: boolean;
     fetchFailed: boolean;
-    editingNew: boolean;
+    showEditModal: boolean;
     editingStationId: number;
     addInProgressUrls: string[];
     updateInProgressIds: number[];

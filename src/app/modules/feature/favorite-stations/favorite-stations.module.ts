@@ -8,6 +8,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SharedModule } from '@shared';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EffectsModule } from '@ngrx/effects';
+import { FavoriteStationsFeatureEffects } from './store/effects';
 
 @NgModule({
   declarations: [FavoriteStationsComponent],
@@ -19,7 +21,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    EffectsModule.forFeature([ FavoriteStationsFeatureEffects ])
   ]
 })
 export class FavoriteStationsModule { }

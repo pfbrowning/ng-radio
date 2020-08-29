@@ -8,14 +8,15 @@ import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { initialRootState, RootState } from '@core';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
 import { SharedModule } from '@shared';
-import { PlayerStatus, initialPlayerState, Station } from '@core/models/player';
-import { PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
+import { PlayerStatus, Station } from '@core/models/player';
+import { StreamMetadataFacadeService, PlayerFacadeService } from '@core/store';
 import { CoreSpyFactories, StreamMetadataFacadeStub } from '@core/testing';
 import { SleepTimerService } from '@core/services';
 import { BehaviorSubject, Observable, defer, of } from 'rxjs';
+import { PlayerFacadeStub } from 'src/app/modules/core/testing/stubs/player-facade-stub.service.spec';
 
 
 describe('NowPlayingComponent', () => {
@@ -23,10 +24,12 @@ describe('NowPlayingComponent', () => {
   let fixture: ComponentFixture<NowPlayingComponent>;
   let keepAwakeServiceSpy: any;
   let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
-  let store: MockStore<RootState>;
+  let currentStation$: Observable<Station>;
+  let playerStatus$: Observable<PlayerStatus>;
   let minutesUntilSleep$: Observable<number>;
   let metadataForCurrentStation$: Observable<string>;
   let metadataFacade: StreamMetadataFacadeStub;
+  let playerFacade: PlayerFacadeStub;
 
   beforeEach(async(() => {
     keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
@@ -36,6 +39,10 @@ describe('NowPlayingComponent', () => {
 
     metadataFacade = new StreamMetadataFacadeStub();
     metadataFacade.metadataForCurrentStation$ = defer(() => metadataForCurrentStation$);
+
+    playerFacade = new PlayerFacadeStub();
+    playerFacade.currentStation$ = defer(() => currentStation$);
+    playerFacade.playerStatus$ = defer(() => playerStatus$);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -54,7 +61,8 @@ describe('NowPlayingComponent', () => {
         provideMockStore({ initialState: initialRootState }),
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
         { provide: SleepTimerService, useValue: sleepTimerService },
-        { provide: StreamMetadataFacadeService, useValue: metadataFacade }
+        { provide: StreamMetadataFacadeService, useValue: metadataFacade },
+        { provide: PlayerFacadeService, useValue: playerFacade }
       ]
     })
     .compileComponents();
@@ -63,11 +71,6 @@ describe('NowPlayingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NowPlayingComponent);
     component = fixture.componentInstance;
-    store = TestBed.inject(MockStore);
-  });
-
-  afterEach(() => {
-    store.resetSelectors();
   });
 
   it('should create', () => {
@@ -96,15 +99,8 @@ describe('NowPlayingComponent', () => {
   nowPlayingTemplateInput.forEach(input => {
     it('should update the template to reflect changes in metadata', () => {
       // Act
-      store.setState({
-        ...initialRootState,
-        player: {
-          ...initialPlayerState,
-          currentStation: input.station,
-          playerStatus: PlayerStatus.Playing
-        }
-      });
-      store.refreshState();
+      currentStation$ = of(input.station);
+      playerStatus$ = of(PlayerStatus.Playing);
       metadataForCurrentStation$ = of(input.metadata);
       fixture.detectChanges();
 
@@ -119,18 +115,11 @@ describe('NowPlayingComponent', () => {
   const playerStatusTemplateInput = [
     {
       playerStatus: PlayerStatus.LoadingAudio,
-      validating: false,
       expected: 'Loading Audio...'
     },
     {
       playerStatus: PlayerStatus.Stopped,
-      validating: false,
       expected: ''
-    },
-    {
-      playerStatus: PlayerStatus.Stopped,
-      validating: true,
-      expected: 'Validating Stream...'
     },
     {
       playerStatus: PlayerStatus.Playing,
@@ -141,11 +130,9 @@ describe('NowPlayingComponent', () => {
   playerStatusTemplateInput.forEach(input => {
     it(`should reflect the various player states properly in the template ${JSON.stringify(input)}`, () => {
       // Arrange & Act
-      store.overrideSelector(PlayerSelectors.selectCurrentStation, new Station());
-      store.overrideSelector(PlayerSelectors.selectPlayerStatus, input.playerStatus);
-      store.overrideSelector(PlayerSelectors.selectIsValidationInProgressForCurrentStation, input.validating);
+      currentStation$ = of(new Station());
+      playerStatus$ = of(input.playerStatus);
       metadataForCurrentStation$ = of(input.metadata);
-      store.refreshState();
       fixture.detectChanges();
 
       // Assert: Ensure that the text of the title element conveys the current stream status
@@ -157,15 +144,7 @@ describe('NowPlayingComponent', () => {
     // Arrange
     const minutesUntilSleep = new BehaviorSubject<number>(null);
     minutesUntilSleep$ = minutesUntilSleep.asObservable();
-    // Emit an empty nowPlaying so that the 'selected' template is rendered
-    const state = {
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: new Station(),
-      }
-    };
-    store.setState(state);
+    currentStation$ = of(new Station());
 
     for (let i = 300; i >= 0; i--) {
       // Act
@@ -184,13 +163,7 @@ describe('NowPlayingComponent', () => {
 
   it('should update the template to reflect changes in the keepAwake state', () => {
     // Arrange
-    store.setState({
-      ...initialRootState,
-      player: {
-        ...initialPlayerState,
-        currentStation: new Station(),
-      }
-    });
+    currentStation$ = of(new Station());
     // Set up a sequence of dummy boolean $enabled values to iterate through
     const testEntries = [ false, true, false, true, false ];
 

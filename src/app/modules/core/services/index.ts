@@ -5,9 +5,6 @@ export { WindowService } from './browser-apis/window.service';
 export { AuthenticationService } from './authentication/authentication.service';
 export { AuthGuardService } from './authentication/auth-guard.service';
 
-// Stream Preprocessing
-export { StreamValidatorService } from './preprocessing/stream-validator.service';
-
 // HTTP Layers
 export { FavoriteStationsService } from './http-layers/favorite-stations.service';
 export { RadioBrowserService } from './http-layers/radio-browser.service';
@@ -29,3 +26,4 @@ export { ConfigService } from './config/config.service';
 
 // Radio Player Logic
 export { AudioElementService } from './radio-player/audio-element.service';
+export { StreamValidatorService } from './radio-player/stream-validator.service';

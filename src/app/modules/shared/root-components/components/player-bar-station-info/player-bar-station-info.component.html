@@ -1,10 +1,7 @@
 <div #title [ngSwitch]="currentPlayerStatus" class="title" [class.marquee]="titleMarquee">
     <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
-    <ng-container *ngSwitchCase="playerStatus.Stopped">
-        <ng-container *ngIf="validatingCurrent">Validating Stream...</ng-container>
-    </ng-container>
     <ng-container *ngSwitchCase="playerStatus.Playing">
-        <blr-metadata-text [metadata]="metadataForCurrentStation$ | async"></blr-metadata-text>
+        <blr-metadata-text [metadata]="metadataForCurrentStation"></blr-metadata-text>
     </ng-container>
 </div>
 <div #station class="station" [class.marquee]="stationMarquee">{{ currentStation.title }}</div>

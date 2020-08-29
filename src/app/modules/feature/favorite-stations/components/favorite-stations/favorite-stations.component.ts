@@ -1,10 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { RootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
-import { selectFavoriteStationRows, removeFromFavoritesStart, FavoriteStationsActions } from '@core/store/favorite-stations';
+import { FavoriteStationsActions } from '@core/store';
 import { Station } from '@core/models/player';
-import { PlayerActions, StreamMetadataFacadeService } from '@core/store';
+import { PlayerActions, StreamMetadataFacadeService, FavoriteStationsFacadeService } from '@core/store';
+import { FavoriteStationsFeatureFacadeService } from '../../store/favorite-stations-feature-facade.service';
 
 @Component({
   selector: 'blr-favorite-stations',
@@ -16,12 +17,14 @@ export class FavoriteStationsComponent {
   constructor(
     private store: Store<RootState>,
     private confirmationService: ConfirmationService,
-    private streamMetadataFacade: StreamMetadataFacadeService
+    private streamMetadataFacade: StreamMetadataFacadeService,
+    private favoriteStationsFacade: FavoriteStationsFacadeService,
+    private favoriteStationsFeatureFacade: FavoriteStationsFeatureFacadeService
   ) { }
 
   public columns = ['name', 'now-playing', 'actions'];
 
-  public stationRows$ = this.store.pipe(select(selectFavoriteStationRows));
+  public stationRows$ = this.favoriteStationsFacade.favoriteStationRows$;
   public metadata$ = this.streamMetadataFacade.streamsMap$;
 
   public onRowClicked(station: Station): void {
@@ -33,7 +36,7 @@ export class FavoriteStationsComponent {
     event.stopPropagation();
     this.confirmationService.confirm({
       message: `Are you sure you want to delete ${station.title}?`,
-      accept: () => this.store.dispatch(removeFromFavoritesStart({stationId: station.stationId}))
+      accept: () => this.favoriteStationsFeatureFacade.deleteFavoriteConfirmed(station.stationId)
     });
   }
 

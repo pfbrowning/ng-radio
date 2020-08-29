@@ -11,9 +11,6 @@
       <div class="now-playing">
         <div [ngSwitch]="playerStatus$ | async" class="title">
           <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
-          <ng-container *ngSwitchCase="playerStatus.Stopped">
-              <ng-container *ngIf="validatingCurrent$ | async">Validating Stream...</ng-container>
-          </ng-container>
           <ng-container *ngSwitchCase="playerStatus.Playing">
             <blr-metadata-text [metadata]="currentStreamInfo$ | async"></blr-metadata-text>
           </ng-container>

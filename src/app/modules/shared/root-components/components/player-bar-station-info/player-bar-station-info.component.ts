@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { SubSink } from 'subsink';
 import { WindowService } from '@core/services';
-import { StreamMetadataFacadeService } from '@core/store';
 
 @Component({
   selector: 'blr-player-bar-station-info',
@@ -22,20 +21,18 @@ import { StreamMetadataFacadeService } from '@core/store';
 })
 export class PlayerBarStationInfoComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(
-    private metadataFacade: StreamMetadataFacadeService,
     private changeDetectorRef: ChangeDetectorRef,
     private windowService: WindowService
   ) {}
 
   @Input() currentPlayerStatus: PlayerStatus;
   @Input() currentStation: Station;
-  @Input() validatingCurrent: boolean;
+  @Input() metadataForCurrentStation: string;
   @ViewChild('title') titleElement: ElementRef;
   @ViewChild('station') stationElement: ElementRef;
   public playerStatus = PlayerStatus;
   public titleMarquee = false;
   public stationMarquee = false;
-  public metadataForCurrentStation$ = this.metadataFacade.metadataForCurrentStation$;
   private subs = new SubSink();
 
   public ngOnInit(): void {

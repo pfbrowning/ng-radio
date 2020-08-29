@@ -1,5 +1,5 @@
 import { favoriteStationsReducer } from './favorite-stations.reducer';
-import { initialFavoriteStationsState } from '../../models/favorite-stations/initial-favorite-stations-state';
+import { initialFavoriteStationsState } from './models/initial-favorite-stations-state';
 
 describe('FavoriteStations Reducer', () => {
   describe('an unknown action', () => {

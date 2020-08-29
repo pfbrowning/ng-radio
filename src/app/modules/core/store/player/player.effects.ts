@@ -1,31 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap, map, switchMap, catchError, withLatestFrom, filter, mergeMap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { tap, map, switchMap, catchError, withLatestFrom, filter, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { of, combineLatest } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
-import {
-  selectCurrentStationUrlAndItsValidationState,
-  selectCurrentStation,
-} from './player.selectors';
 import {
   selectStation,
   playAudioStart,
   playAudioSucceeded,
   playAudioFailed,
-  pauseAudioSubmit,
   audioPaused,
 } from './player-actions';
 import { RootState } from '../../models/root-state';
-import { PlayerActions, PlayerSelectors } from '.';
+import { PlayerActions } from '.';
 import { PlayerStatus } from '../../models/player/player-status';
-import { StreamPreprocessorFailureReason } from '../../models/player/stream-preprocessor-failure-reason';
-import { StreamPreprocessorService } from '../../services/preprocessing/stream-preprocessor.service';
 import { isEqual } from 'lodash-es';
 import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
 import { LoggingService, NotificationsService, SleepTimerService, AudioElementService } from '@core/services';
 import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service';
+import { PlayerFacadeService } from './player-facade.service';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.actions';
 
 @Injectable()
 export class PlayerEffects {
@@ -35,10 +30,10 @@ export class PlayerEffects {
     private notificationsService: NotificationsService,
     private loggingService: LoggingService,
     private titleService: Title,
-    private streamPreprocessorService: StreamPreprocessorService,
     private sleepTimerService: SleepTimerService,
     private audio: AudioElementService,
     private radioPlayerService: RadioPlayerService,
+    private playerFacade: PlayerFacadeService,
     private metadataFacade: StreamMetadataFacadeService
   ) { }
 
@@ -46,11 +41,15 @@ export class PlayerEffects {
     map(() => PlayerActions.audioPaused())
   ));
 
+  playOnPlayClicked$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerBarActions.playClicked),
+    map(() => PlayerActions.playAudioStart())
+  ));
+
   selectStation$ = createEffect(() => this.actions$.pipe(
     ofType(selectStation),
-    withLatestFrom(this.store.pipe(select(selectCurrentStationUrlAndItsValidationState))),
-    tap(([action]) => {
-      // Regardless of validation state, pause any playing audio and set the url & site title
+    tap(action => {
+      // Pause any playing audio and set the url & site title
       this.audio.pause();
 
       if (!isFalsyOrWhitespace(action.station.title)) {
@@ -59,70 +58,26 @@ export class PlayerEffects {
         this.titleService.setTitle('Browninglogic Radio');
       }
     }),
-    map(([{station}, {validationState}]) => {
-      if (validationState && validationState.validatedUrl) {
-        // If the station url has already been successfully validated, then start playing
-        if (validationState.validatedUrl === station.url) {
-          return PlayerActions.playAudioStart();
-        }
-        // If a different url has been validated for the selected station, then reselect with the validated url
-        return PlayerActions.selectStation({station: { ...station, url: validationState.validatedUrl }});
-      }
-      // If this station hasn't been successfully validated at all, then start preprocessing
-      return PlayerActions.preprocessStreamStart({streamUrl: station.url});
-    })
-  ));
-
-  onStreamPreprocessSucceeded$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.preprocessStreamSucceeded),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
-    filter(([action, station]) => action.streamUrl === station.url),
-    map(([{ streamUrl, validatedUrl }, station]) => streamUrl === validatedUrl
-      ? PlayerActions.playAudioStart()
-      : PlayerActions.selectStation({station: {
-        ...station,
-        url: validatedUrl
-      }})
-    )
-  ));
-
-  onStreamPreprocessFailed$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.preprocessStreamFailed),
-    withLatestFrom(this.store.pipe(select(PlayerSelectors.selectCurrentStation))),
-    filter(([action, station]) => action.streamUrl === station.url),
-    tap(([action]) => this.notificationsService.error('Failed To Validate Stream', `Can't play ${action.streamUrl}.`))
-  ), { dispatch: false });
-
-  preprocessStream$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.preprocessStreamStart),
-    mergeMap(action => this.streamPreprocessorService.preprocessStream(action.streamUrl).pipe(
-      map(validatedUrl => PlayerActions.preprocessStreamSucceeded({streamUrl: action.streamUrl, validatedUrl})),
-      catchError(error => of(PlayerActions.preprocessStreamFailed({
-        details: { ...error, reason: undefined, error: undefined },
-        streamUrl: action.streamUrl,
-        reason: error.reason || StreamPreprocessorFailureReason.NoReasonGiven,
-        error: error.error
-      })))
-    ))
+    map(() => PlayerActions.playAudioStart())
   ));
 
   playStation$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioStart),
-    withLatestFrom(this.store.pipe(select(selectCurrentStation))),
+    withLatestFrom(this.playerFacade.currentStation$),
     switchMap(([, station]) => this.radioPlayerService.play(station.url).pipe(
       map(() => playAudioSucceeded()),
       catchError(error => of(playAudioFailed({error, station})))
     ))
   ));
 
-  pauseAudio$ = createEffect(() => this.actions$.pipe(
-    ofType(pauseAudioSubmit),
+  pauseOnPauseClicked$ = createEffect(() => this.actions$.pipe(
+    ofType(PlayerBarActions.pauseClicked),
     tap(() => this.audio.pause())
   ), { dispatch: false });
 
   pauseOnGoToSleep$ = createEffect(() => this.sleepTimerService.sleepTimer$.pipe(
-    map(() => pauseAudioSubmit())
-  ));
+    map(() => this.audio.pause())
+  ), { dispatch: false });
 
   notifyLogPlayAudioFailed$ = createEffect(() => this.actions$.pipe(
     ofType(playAudioFailed),
@@ -132,17 +87,10 @@ export class PlayerEffects {
     })
   ), { dispatch: false });
 
-  logFailedToValidateStream$ = createEffect(() => this.actions$.pipe(
-    ofType(PlayerActions.preprocessStreamFailed),
-    tap(({streamUrl, reason, error, details}) =>
-      this.loggingService.warn('Failed To Validate Stream', { streamUrl, reason, error, details })
-    )
-  ), { dispatch: false });
-
   onCurrentMetadataChanged$ = createEffect(() => combineLatest([
     this.metadataFacade.metadataForCurrentStation$,
-    this.store.pipe(select(PlayerSelectors.selectCurrentStation)),
-    this.store.pipe(select(PlayerSelectors.selectPlayerStatus))
+    this.playerFacade.currentStation$,
+    this.playerFacade.playerStatus$
   ]).pipe(
     debounceTime(0),
     filter(([, , status]) => status === PlayerStatus.Playing),

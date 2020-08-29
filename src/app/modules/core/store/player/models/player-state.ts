@@ -1,11 +1,7 @@
-import { Station } from './station';
-import { PlayerStatus } from './player-status';
-import { StreamPreprocessingState } from './stream-preprocessing-state';
+import { Station } from '../../../models/player/station';
+import { PlayerStatus } from '../../../models/player/player-status';
 
 export interface PlayerState {
     currentStation: Station;
     playerStatus: PlayerStatus;
-    checkedStreams: {
-        [url: string]: StreamPreprocessingState;
-    };
 }

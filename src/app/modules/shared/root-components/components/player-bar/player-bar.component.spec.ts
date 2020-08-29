@@ -9,41 +9,34 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { KeepAwakeService } from '@core';
-import { PlayerBarStationInfoComponent } from '../player-bar-station-info/player-bar-station-info.component';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { initialRootState, RootState } from '@core';
 import { SharedModule } from '@shared';
 import { Station } from '@core/models/player';
 import { CoreSpyFactories } from '@core/testing';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StationIconStubDirective } from '@shared/testing';
-import { BehaviorSubject, Observable, defer } from 'rxjs';
+import { PlayerBarFacadeService } from '@core/store';
+import { PlayerBarStationInfoStubComponent } from '../../testing/stubs/player-bar-station-info-stub.component.spec';
 import { SleepTimerService } from '@core/services';
-import { FavoriteStationsSelectors } from '@core/store/favorite-stations';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
   let fixture: ComponentFixture<PlayerBarComponent>;
   let keepAwakeServiceSpy: any;
-  let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
-  let store: MockStore<RootState>;
-  let minutesUntilSleep$: Observable<number>;
 
   beforeEach(async(() => {
     keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
-    sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
-    sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
     TestBed.configureTestingModule({
       declarations: [
         PlayerBarComponent,
-        PlayerBarStationInfoComponent,
-        StationIconStubDirective
+        PlayerBarStationInfoStubComponent,
+        StationIconStubDirective,
       ],
       imports: [
         RouterTestingModule,
@@ -55,29 +48,27 @@ describe('PlayerBarComponent', () => {
         MatInputModule,
         MatTooltipModule,
         FormsModule,
-        NoopAnimationsModule,
         SharedModule,
+        NoopAnimationsModule,
         MatProgressSpinnerModule,
         MatProgressButtonsModule.forRoot()
       ],
       providers: [
-        provideMockStore({ initialState: initialRootState }),
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
-        { provide: SleepTimerService, useValue: sleepTimerService },
+        { provide: PlayerBarFacadeService, useValue: CoreSpyFactories.createPlayerBarFacadeSpy() },
+        { provide: SleepTimerService, useValue: CoreSpyFactories.createSleepTimerServiceSpy() },
       ]
+    })
+    .overrideComponent(PlayerBarComponent, {
+      set: { changeDetection: ChangeDetectionStrategy.Default }
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerBarComponent);
-    store = TestBed.inject(MockStore);
-    store.overrideSelector(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite, new Station());
     component = fixture.componentInstance;
-  });
-
-  afterEach(() => {
-    store.resetSelectors();
+    component.currentStation = new Station();
   });
 
   it('should create', () => {
@@ -86,11 +77,9 @@ describe('PlayerBarComponent', () => {
   });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
-    const minutesUntilSleep = new BehaviorSubject<number>(null);
-    minutesUntilSleep$ = minutesUntilSleep.asObservable();
     for (let i = 300; i >= 0; i--) {
       // Act
-      minutesUntilSleep.next(i);
+      component.minutesToSleep = i;
       fixture.detectChanges();
 
       // Assert: Ensure that the new value was rendered properly in the template
@@ -99,7 +88,7 @@ describe('PlayerBarComponent', () => {
 
     /* Clear the sleep timer and ensure that 'minutes until sleep'
     no longer shows a number. */
-    minutesUntilSleep.next(null);
+    component.minutesToSleep = null;
     fixture.detectChanges();
     expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe('');
   });

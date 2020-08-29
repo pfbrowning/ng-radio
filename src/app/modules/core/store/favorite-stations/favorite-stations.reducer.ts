@@ -1,72 +1,63 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import {
-  fetchStationsStart,
-  fetchStationsSucceeded,
-  fetchStationsFailed,
-  addToFavoritesStart,
-  addToFavoritesSucceeded,
-  addToFavoritesFailed,
-  removeFromFavoritesStart,
-  removeFromFavoritesSucceeded,
-  removeFromFavoritesFailed
-} from './favorite-stations.actions';
-import { initialFavoriteStationsState } from '../../models/favorite-stations/initial-favorite-stations-state';
-import { FavoriteStationsState } from '../../models/favorite-stations/favorite-stations-state';
-import { FavoriteStationsActions } from '.';
+import { FavoriteStationsActions } from './actions';
+import { initialFavoriteStationsState } from './models/initial-favorite-stations-state';
+import { FavoriteStationsState } from './models/favorite-stations-state';
+import { RouteResolverActions } from './actions';
 
 const reducer = createReducer<FavoriteStationsState>(
   initialFavoriteStationsState,
-  on(fetchStationsStart, state => ({ ...state, fetchInProgress: true})),
-  on(fetchStationsSucceeded, (state, {stations}) => ({
+  on(RouteResolverActions.init, state => ({ ...state, fetchFailed: false})),
+  on(FavoriteStationsActions.fetchStationsStart, state => ({ ...state, fetchInProgress: true})),
+  on(FavoriteStationsActions.fetchStationsSucceeded, (state, {stations}) => ({
     ...state,
     favoriteStations: stations,
     fetchInProgress: false
   })),
-  on(fetchStationsFailed, state => ({
+  on(FavoriteStationsActions.fetchStationsFailed, state => ({
     ...state,
     fetchInProgress: false,
     fetchFailed: true
   })),
-  on(addToFavoritesStart, (state, {station}) => ({
+  on(FavoriteStationsActions.addToFavoritesStart, (state, {station}) => ({
     ...state,
     addInProgressUrls: state.addInProgressUrls.concat(station.url)
   })),
-  on(addToFavoritesSucceeded, (state, {station}) => ({
+  on(FavoriteStationsActions.addToFavoritesSucceeded, (state, {station}) => ({
     ...state,
     addInProgressUrls: state.addInProgressUrls.filter(p => p !== station.url),
     favoriteStations: state.favoriteStations.concat(station),
-    editingNew: false
+    showEditModal: false
   })),
-  on(addToFavoritesFailed, (state, {station}) => ({
+  on(FavoriteStationsActions.addToFavoritesFailed, (state, {station}) => ({
     ...state,
     addInProgressUrls: state.addInProgressUrls.filter(p => p !== station.url),
   })),
-  on(removeFromFavoritesStart, (state, {stationId}) => ({
+  on(FavoriteStationsActions.removeFromFavoritesStart, (state, {stationId}) => ({
     ...state,
     removeInProgressIds: state.removeInProgressIds.concat(stationId)
   })),
-  on(removeFromFavoritesSucceeded, (state, {stationId}) => ({
+  on(FavoriteStationsActions.removeFromFavoritesSucceeded, (state, {stationId}) => ({
     ...state,
     removeInProgressIds: state.removeInProgressIds.filter(ip => ip !== stationId),
     favoriteStations: state.favoriteStations.filter(f => f.stationId !== stationId)
   })),
-  on(removeFromFavoritesFailed, (state, {stationId}) => ({
+  on(FavoriteStationsActions.removeFromFavoritesFailed, (state, {stationId}) => ({
     ...state,
     removeInProgressIds: state.removeInProgressIds.filter(ip => ip !== stationId),
   })),
   on(FavoriteStationsActions.openStationEditNew, state => ({
     ...state,
-    editingNew: true,
+    showEditModal: true,
     editingStationId: null
   })),
   on(FavoriteStationsActions.openStationEditExisting, (state, {stationId}) => ({
     ...state,
-    editingNew: false,
+    showEditModal: true,
     editingStationId: stationId
   })),
   on(FavoriteStationsActions.closeStationEdit, state => ({
     ...state,
-    editingNew: false,
+    showEditModal: false,
     editingStationId: null
   })),
   on(FavoriteStationsActions.stationUpdateStart, (state, {station}) => ({

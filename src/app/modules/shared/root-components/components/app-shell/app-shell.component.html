@@ -13,6 +13,11 @@
     </blr-responsive-sidenav-container>
 </div>
 
-<blr-player-bar *ngIf="stationSelected$ | async" class="bottom-toolbar"></blr-player-bar>
+<blr-player-bar *ngIf="currentStation$ | async" [currentStation]="currentStation$ | async" [playerStatus]="playerStatus$ | async"
+    [favoriteMatchingCurrentStation]="favoriteMatchingCurrentStation$ | async" [favoritesProcessingState]="currentStationFavoritesProcessingState$ | async"
+    [minutesToSleep]="minutesUntilSleep$ | async" class="bottom-toolbar" [metadataForCurrentStation]="metadataForCurrentStation$ | async">
+</blr-player-bar>
 
-<blr-station-edit *ngIf="(editStationExisting$ | async) || (editingNewStation$ | async)" [existingStation]="editStationExisting$ | async"></blr-station-edit>
+<blr-station-edit *ngIf="showEditModal$ | async" [existingStation]="existingStationForEdit$ | async"
+    [saveInProgress]="editModalSaveInProgress$ | async" [fetchingFavorites]="favoritesFetchInProgress$ | async">
+</blr-station-edit>

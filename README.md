@@ -59,17 +59,18 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Host on HTTPS
-  * Log audio errors client-side and server-side
   * Investigate [cookieless image workarounds](https://stackoverflow.com/questions/51549390/how-to-disable-third-party-cookie-for-img-tags) to resolve SameSite cookie warnings in Chrome
     * I'll probably want to determine whether I can use the CORS proxy I'm already using, and use an image proxy server otherwise.  The following look like good options to start with:
       * https://github.com/jamslevy/proxy-image-service
       * https://github.com/jpmckinney/image-proxy
-  * Solve `ai_session` cookie warning
-  * Move stream preprocessing logic behind API
+  * Log audio errors client-side and server-side
+  * Add .pls reader logic to API
+  * Use radio proxy for stream validator
   * Refactor & simplify NGRX store architecture
   * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
   * Refactor selector import / export logic
+  * Refactor with smart / dumb components in mind
+  * Separate the models for current station, favorite station, and radio browser result
   * Configure [prettier](https://www.npmjs.com/package/prettier)
 * Features
   * Browser-based audio recording

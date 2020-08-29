@@ -1,5 +1,5 @@
 import { playerReducer } from './player.reducer';
-import { initialPlayerState } from '../../models/player/initial-player-state';
+import { initialPlayerState } from './models/initial-player-state';
 
 describe('Player Reducer', () => {
   describe('an unknown action', () => {

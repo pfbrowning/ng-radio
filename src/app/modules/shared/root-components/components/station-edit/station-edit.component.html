@@ -2,12 +2,12 @@
   <form #form="ngForm">
     <fieldset class="flex-grid">
       <mat-form-field class="flex-column-half">
-        <input matInput [(ngModel)]="stationPending.title" [disabled]="saving$ | async" #titleInput="matInput" #title="ngModel" required name="title" placeholder="Station Title">
+        <input matInput [(ngModel)]="stationPending.title" [disabled]="saveInProgress" #titleInput="matInput" #title="ngModel" required name="title" placeholder="Station Title">
         <mat-error *ngIf="title.hasError('required')">Title is required.</mat-error>
       </mat-form-field>
       <div class="flex-column-half form-field-spinner-container">
         <mat-form-field>
-          <input matInput [(ngModel)]="stationPending.url" [disabled]="saving$ | async" #url="ngModel" required blrStreamUrlValidator name="url" placeholder="Stream URL" pattern="https?://.+">
+          <input matInput [(ngModel)]="stationPending.url" [disabled]="saveInProgress" #url="ngModel" required blrStreamUrlValidator name="url" placeholder="Stream URL" pattern="https?://.+">
           <mat-error *ngIf="url.hasError('required')">Stream URL is required.</mat-error>
           <mat-error *ngIf="url.hasError('pattern')">Stream URL must be a valid URL.</mat-error>
           <mat-error *ngIf="url.hasError('invalidStream')">Failed to load the stream.  Please double-check the URL.</mat-error>
@@ -15,14 +15,14 @@
         <mat-spinner *ngIf="url.pending" diameter="25"></mat-spinner>
       </div>
       <mat-form-field class="flex-column-half">
-        <input matInput [(ngModel)]="stationPending.iconUrl" [disabled]="saving$ | async" #iconUrl="ngModel" name="icon-url" placeholder="Icon URL" pattern="https?://.+">
+        <input matInput [(ngModel)]="stationPending.iconUrl" [disabled]="saveInProgress" #iconUrl="ngModel" name="icon-url" placeholder="Icon URL" pattern="https?://.+">
         <mat-error *ngIf="iconUrl.hasError('pattern')">Icon URL must be a valid URL.</mat-error>
       </mat-form-field>
     </fieldset>
   </form>
   <p-footer>
-    <mat-spinner-button *ngIf="!existingStation" (btnClick)="onOpenClicked()" [options]="openBtnOptions" [disabled]="saving$ | async"></mat-spinner-button>
-    <mat-spinner-button (btnClick)="onSaveClicked()" [options]="saveBtnOptions" [active]="(saving$ | async) || (fetchingFavorites$ | async)"></mat-spinner-button>
-    <mat-spinner-button (btnClick)="closeEditor()" [options]="cancelBtnOptions" [disabled]="saving$ | async"></mat-spinner-button>
+    <mat-spinner-button *ngIf="!existingStation" (btnClick)="onOpenClicked()" [options]="openBtnOptions" [disabled]="saveInProgress"></mat-spinner-button>
+    <mat-spinner-button (btnClick)="onSaveClicked()" [options]="saveBtnOptions" [active]="saveInProgress || fetchingFavorites"></mat-spinner-button>
+    <mat-spinner-button (btnClick)="closeEditor()" [options]="cancelBtnOptions" [disabled]="saveInProgress"></mat-spinner-button>
   </p-footer>
 </p-dialog>

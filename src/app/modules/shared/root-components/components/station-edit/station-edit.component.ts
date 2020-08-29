@@ -3,9 +3,9 @@ import { Station } from '@core/models/player';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RootState } from '@core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { PlayerActions } from '@core/store';
-import { FavoriteStationsActions, FavoriteStationsSelectors } from '@core/store/favorite-stations';
+import { FavoriteStationsActions } from '@core/store';
 import { MatInput } from '@angular/material/input';
 import { matProgressButtonDefaults } from '@core/constants';
 import { cloneDeep } from 'lodash-es';
@@ -22,9 +22,8 @@ export class StationEditComponent implements OnInit {
   @ViewChild('titleInput', { static: true }) titleInput: MatInput;
   @ViewChild('form', { static: true }) form: NgForm;
   @Input() existingStation: Station;
-  public updateInProgressIds$ = this.store.pipe(select(FavoriteStationsSelectors.updateInProgressIds));
-  public fetchingFavorites$ = this.store.pipe(select(FavoriteStationsSelectors.selectIsFavoriteStationFetchInProgress));
-  public saving$ = this.store.pipe(select(FavoriteStationsSelectors.editStationSaveInProgress));
+  @Input() saveInProgress: boolean;
+  @Input() fetchingFavorites: boolean;
   public stationPending: Station;
 
   public openBtnOptions = {

@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { RootState } from '@core';
 import { KeepAwakeService } from '@core';
 import { PlayerStatus } from '@core/models/player';
-import { FavoriteStationsSelectors, FavoriteStationsActions } from '@core/store/favorite-stations';
-import { PlayerSelectors, StreamMetadataFacadeService } from '@core/store';
+import { FavoriteStationsActions } from '@core/store';
+import { StreamMetadataFacadeService, PlayerFacadeService } from '@core/store';
 import { SleepTimerService } from '@core/services';
 
 @Component({
@@ -17,14 +17,14 @@ export class NowPlayingComponent {
     public keepAwakeService: KeepAwakeService,
     private sleepTimerService: SleepTimerService,
     private store: Store<RootState>,
-    private metadataFacade: StreamMetadataFacadeService
+    private metadataFacade: StreamMetadataFacadeService,
+    private playerFacade: PlayerFacadeService
   ) {}
 
-  public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
-  public currentStation$ = this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite));
+  public playerStatus$ = this.playerFacade.playerStatus$;
+  public currentStation$ = this.playerFacade.currentStation$;
   public currentStreamInfo$ = this.metadataFacade.metadataForCurrentStation$;
   public minutesUntilSleep$ = this.sleepTimerService.minutesToSleep$;
-  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
   public playerStatus = PlayerStatus;
 
   public onEditFavoriteClicked(): void {

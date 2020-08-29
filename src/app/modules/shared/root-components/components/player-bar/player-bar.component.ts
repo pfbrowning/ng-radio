@@ -1,20 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
-import { KeepAwakeService, RootState } from '@core';
-import { PlayerStatus } from '@core/models/player';
-import {
-  selectCurrentStationFavoritesProcessingState,
-  selectIsProcessingFavoritesForCurrentStation,
-  addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested,
-  FavoriteStationsSelectors
-} from '@core/store/favorite-stations';
+import { KeepAwakeService } from '@core';
+import { PlayerStatus, Station } from '@core/models/player';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
-import { PlayerActions, PlayerSelectors } from '@core/store';
+import { PlayerBarFacadeService } from '@core/store';
 import { matProgressButtonDefaults } from '@core/constants';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
-import { SleepTimerService } from '@core/services';
 
 @Component({
   selector: 'blr-player-bar',
@@ -24,19 +15,18 @@ import { SleepTimerService } from '@core/services';
 })
 export class PlayerBarComponent {
   constructor(
-    public keepAwakeService: KeepAwakeService,
     private router: Router,
-    private store: Store<RootState>,
-    private sleepTimerService: SleepTimerService
+    private playerBarFacade: PlayerBarFacadeService,
+    public keepAwakeService: KeepAwakeService,
   ) {}
 
-  public playerStatus = PlayerStatus;
-  public processingFavorites$ = this.store.pipe(select(selectIsProcessingFavoritesForCurrentStation));
-  public favoritesProcessingState$ = this.store.pipe(select(selectCurrentStationFavoritesProcessingState));
-  public playerStatus$ = this.store.pipe(select(PlayerSelectors.selectPlayerStatus));
-  public currentStation$ = this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite));
-  public minutesUntilSleep$ = this.sleepTimerService.minutesToSleep$;
-  public validatingCurrent$ = this.store.pipe(select(PlayerSelectors.selectIsValidationInProgressForCurrentStation));
+  public playerStatusEnum = PlayerStatus;
+  @Input() favoriteMatchingCurrentStation: Station[];
+  @Input() currentStation: Station;
+  @Input() playerStatus: PlayerStatus;
+  @Input() favoritesProcessingState: CurrentStationFavoritesProcessingState;
+  @Input() minutesToSleep: number;
+  @Input() metadataForCurrentStation: string;
 
   private circleButtonDefaults: MatProgressButtonOptions = {
     ...matProgressButtonDefaults,
@@ -67,15 +57,15 @@ export class PlayerBarComponent {
   }
 
   public onAddToFavoritesClicked(): void {
-    this.store.dispatch(addCurrentStationToFavoritesRequested());
+    this.playerBarFacade.addToFavoritesClicked();
   }
 
   public onRemoveFromFavoritesClicked(): void {
-    this.store.dispatch(removeCurrentStationFromFavoritesRequested());
+    this.playerBarFacade.removeFromFavoritesClicked();
   }
 
-  public decideFavoritesProcessingTooltipText(state: CurrentStationFavoritesProcessingState) {
-    switch (state) {
+  public favoritesProcessingTooltip() {
+    switch (this.favoritesProcessingState) {
       case CurrentStationFavoritesProcessingState.Loading:
         return 'Loading Favorites';
       case CurrentStationFavoritesProcessingState.Adding:
@@ -88,10 +78,10 @@ export class PlayerBarComponent {
   }
 
   public onPlayClicked(): void {
-    this.store.dispatch(PlayerActions.playAudioStart());
+    this.playerBarFacade.playClicked();
   }
 
   public onPauseClicked(): void {
-    this.store.dispatch(PlayerActions.pauseAudioSubmit());
+    this.playerBarFacade.pauseClicked();
   }
 }

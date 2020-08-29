@@ -1,16 +1,14 @@
 import { createAction, props } from '@ngrx/store';
-import { Station } from '../../models/player/station';
+import { Station } from '../../../models/player/station';
 
 export enum FavoriteStationsActions {
     FetchStationsSubmit = '[Favorite Stations] Fetch Stations Submit',
     FetchStationsStart = '[Favorite Stations] Fetch Stations Start',
     FetchStationsSucceeded = '[Favorite Stations] Fetch Stations Succeeded',
     FetchStationsFailed = '[Favorite Stations] Fetch Stations Failed',
-    AddCurrentStationToFavoritesRequested = '[Favorite Stations] Add Current Station To Favorites Requested',
     AddToFavoritesStart = '[Favorite Stations] Add To Favorites Start',
     AddToFavoritesSucceeded = '[Favorite Stations] Add To Favorites Succeeded',
     AddToFavoritesFailed = '[Favorite Stations] Add To Favorites Failed',
-    RemoveCurrentStationFromFavoritesRequested = '[Favorite Stations] Remove Current Station From Favorites Requested',
     RemoveFromFavoritesStart = '[Favorite Stations] Remove From Favorites Start',
     RemoveFromFavoritesSucceeded = '[Favorite Stations] Remove From Favorites Succeeded',
     RemoveFromFavoritesFailed = '[Favorite Stations] Remove From Favorites Failed',
@@ -41,10 +39,6 @@ export const fetchStationsFailed = createAction(
     props<{ error: any }>()
 );
 
-export const addCurrentStationToFavoritesRequested = createAction(
-    FavoriteStationsActions.AddCurrentStationToFavoritesRequested,
-);
-
 export const addToFavoritesStart = createAction(
     FavoriteStationsActions.AddToFavoritesStart,
     props<{ station: Station }>()
@@ -58,10 +52,6 @@ export const addToFavoritesSucceeded = createAction(
 export const addToFavoritesFailed = createAction(
     FavoriteStationsActions.AddToFavoritesFailed,
     props<{ station: Station, error: any }>()
-);
-
-export const removeCurrentStationFromFavoritesRequested = createAction(
-    FavoriteStationsActions.RemoveCurrentStationFromFavoritesRequested,
 );
 
 export const removeFromFavoritesStart = createAction(

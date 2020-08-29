@@ -1,39 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  fetchStationsStart,
-  fetchStationsSucceeded,
-  fetchStationsFailed,
-  addToFavoritesStart,
-  addToFavoritesSucceeded,
-  removeFromFavoritesStart,
-  addToFavoritesFailed,
-  removeFromFavoritesSucceeded,
-  removeFromFavoritesFailed,
-  addCurrentStationToFavoritesRequested,
-  removeCurrentStationFromFavoritesRequested,
-} from './favorite-stations.actions';
+import { FavoriteStationsActions } from './actions';
+import { RouteResolverActions } from './actions';
+import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.actions';
 import { switchMap, catchError, map, withLatestFrom, filter, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Store, select } from '@ngrx/store';
-import { RootState } from '../../models/root-state';
 import { selectStation } from '../player/player-actions';
-import { FavoriteStationsActions, FavoriteStationsSelectors } from '.';
 import { FavoriteStationsService, NotificationsService } from '@core/services';
+import { PlayerFacadeService } from '../player/player-facade.service';
+import { FavoriteStationsFacadeService } from './favorite-stations-facade.service';
 
 @Injectable()
 export class FavoriteStationsEffects {
   constructor(
     private actions$: Actions,
-    private store: Store<RootState>,
+    private playerFacade: PlayerFacadeService,
     private favoriteStationsService: FavoriteStationsService,
+    private favoriteStationsFacade: FavoriteStationsFacadeService,
     private notificationsService: NotificationsService
   ) {}
 
   fetchStationsSubmit$ = createEffect(() => this.actions$.pipe(
-    ofType(FavoriteStationsActions.fetchStationsSubmit),
-    withLatestFrom(this.store.pipe(select(FavoriteStationsSelectors.selectFavoriteStationsLoadingStatus))),
-    filter(([, selected]) => !selected.loaded && !selected.inProgress),
+    ofType(FavoriteStationsActions.fetchStationsSubmit, RouteResolverActions.init),
+    withLatestFrom(this.favoriteStationsFacade.favoriteStationsArray$, this.favoriteStationsFacade.favoritesFetchInProgress$),
+    filter(([, stations, fetching]) => !stations && !fetching),
     map(() => FavoriteStationsActions.fetchStationsStart())
   ));
 
@@ -43,27 +33,26 @@ export class FavoriteStationsEffects {
   ));
 
   fetchStations$ = createEffect(() => this.actions$.pipe(
-    ofType(fetchStationsStart),
+    ofType(FavoriteStationsActions.fetchStationsStart),
     switchMap(() =>
       this.favoriteStationsService.fetchAll().pipe(
-        map(stations => fetchStationsSucceeded({stations})),
-        catchError(error => of(fetchStationsFailed({error})))
+        map(stations => FavoriteStationsActions.fetchStationsSucceeded({stations})),
+        catchError(error => of(FavoriteStationsActions.fetchStationsFailed({error})))
       )
     )
   ));
 
   addCurrentStationToFavoritesRequested$ = createEffect(() => this.actions$.pipe(
-    ofType(addCurrentStationToFavoritesRequested),
-    withLatestFrom(this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite))),
-    filter(([, match]) => match.stationId == null),
-    map(([, station]) => addToFavoritesStart({station}))
+    ofType(PlayerBarActions.addToFavoritesClicked),
+    withLatestFrom(this.playerFacade.currentStation$),
+    map(([, station]) => FavoriteStationsActions.addToFavoritesStart({station}))
   ));
 
   addFavorite$ = createEffect(() => this.actions$.pipe(
-    ofType(addToFavoritesStart),
+    ofType(FavoriteStationsActions.addToFavoritesStart),
     mergeMap(action => this.favoriteStationsService.addFavorite(action.station).pipe(
-      map(station => addToFavoritesSucceeded({station})),
-      catchError(error => of(addToFavoritesFailed({station: action.station, error})))
+      map(station => FavoriteStationsActions.addToFavoritesSucceeded({station})),
+      catchError(error => of(FavoriteStationsActions.addToFavoritesFailed({station: action.station, error})))
     ))
   ));
 
@@ -76,41 +65,37 @@ export class FavoriteStationsEffects {
   ));
 
   removeCurrentStationFromFavoritesRequested$ = createEffect(() => this.actions$.pipe(
-    ofType(removeCurrentStationFromFavoritesRequested),
-    withLatestFrom(this.store.pipe(select(FavoriteStationsSelectors.selectCurrentStationOrMatchingFavorite))),
-    map(([, station]) => station.stationId),
-    filter(stationId => stationId != null),
-    map(stationId => removeFromFavoritesStart({stationId}))
+    ofType(PlayerBarActions.removeFromFavoritesClicked),
+    withLatestFrom(this.favoriteStationsFacade.favoriteMatchingCurrentStation$),
+    map(([, station]) => FavoriteStationsActions.removeFromFavoritesStart({stationId: station.stationId}))
   ));
 
   removeFavorite$ = createEffect(() => this.actions$.pipe(
-    ofType(removeFromFavoritesStart),
+    ofType(FavoriteStationsActions.removeFromFavoritesStart),
     mergeMap(action => this.favoriteStationsService.removeFavorite(action.stationId).pipe(
-      map(() => removeFromFavoritesSucceeded({stationId: action.stationId})),
-      catchError(error => of(removeFromFavoritesFailed({stationId: action.stationId, error})))
+      map(() => FavoriteStationsActions.removeFromFavoritesSucceeded({stationId: action.stationId})),
+      catchError(error => of(FavoriteStationsActions.removeFromFavoritesFailed({stationId: action.stationId, error})))
     ))
   ));
 
   openStationEditCurrent$ = createEffect(() => this.actions$.pipe(
     ofType(FavoriteStationsActions.openStationEditCurrent),
-    withLatestFrom(this.store.pipe(select(FavoriteStationsSelectors.selectCurrentFavoriteStation))),
-    map(([, current]) => current && current.stationId),
-    filter(stationId => stationId != null),
-    map(stationId => FavoriteStationsActions.openStationEditExisting({stationId}))
+    withLatestFrom(this.favoriteStationsFacade.favoriteMatchingCurrentStation$),
+    map(([, station]) => FavoriteStationsActions.openStationEditExisting({stationId: station.stationId}))
   ));
 
   notifyAddSucceeded$ = createEffect(() => this.actions$.pipe(
-    ofType(addToFavoritesSucceeded),
+    ofType(FavoriteStationsActions.addToFavoritesSucceeded),
     tap(action => this.notificationsService.success('Added To Favorites', `${action.station.title} has been added to favorites.`))
   ), { dispatch: false });
 
   notifyAddFailed$ = createEffect(() => this.actions$.pipe(
-    ofType(addToFavoritesFailed),
+    ofType(FavoriteStationsActions.addToFavoritesFailed),
     tap(action => this.notificationsService.error('Failed to Add To Favorites', `${action.station.title} was not added to favorites.`))
   ), { dispatch: false });
 
   notifyRemoveFailed$ = createEffect(() => this.actions$.pipe(
-    ofType(removeFromFavoritesFailed),
+    ofType(FavoriteStationsActions.removeFromFavoritesFailed),
     tap(() =>
       this.notificationsService.error('Failed to Remove From Favorites', `Station was not removed from favorites.`)
     )
