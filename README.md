@@ -59,6 +59,7 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Strip out cookies & filter non-image response types via image-proxy
   * Use radio proxy for custom url validation via `StreamValidatorService`
   * Refactor & simplify NGRX store architecture
   * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
