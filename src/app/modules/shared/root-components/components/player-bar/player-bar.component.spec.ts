@@ -12,31 +12,34 @@ import { KeepAwakeService } from '@core';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
-import { SharedModule } from '@shared';
 import { Station } from '@core/models/player';
 import { CoreSpyFactories } from '@core/testing';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { StationIconStubDirective } from '@shared/testing';
 import { PlayerBarFacadeService } from '@core/store';
 import { PlayerBarStationInfoStubComponent } from '../../testing/stubs/player-bar-station-info-stub.component.spec';
 import { SleepTimerService } from '@core/services';
 import { ChangeDetectionStrategy } from '@angular/core';
+import { Observable, defer, BehaviorSubject } from 'rxjs';
 
 
 describe('PlayerBarComponent', () => {
   let component: PlayerBarComponent;
   let fixture: ComponentFixture<PlayerBarComponent>;
   let keepAwakeServiceSpy: any;
+  let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
+  let minutesUntilSleep$: Observable<number>;
 
   beforeEach(async(() => {
     keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
+
+    sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
+    sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
     TestBed.configureTestingModule({
       declarations: [
         PlayerBarComponent,
         PlayerBarStationInfoStubComponent,
-        StationIconStubDirective,
       ],
       imports: [
         RouterTestingModule,
@@ -48,7 +51,6 @@ describe('PlayerBarComponent', () => {
         MatInputModule,
         MatTooltipModule,
         FormsModule,
-        SharedModule,
         NoopAnimationsModule,
         MatProgressSpinnerModule,
         MatProgressButtonsModule.forRoot()
@@ -56,7 +58,7 @@ describe('PlayerBarComponent', () => {
       providers: [
         { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
         { provide: PlayerBarFacadeService, useValue: CoreSpyFactories.createPlayerBarFacadeSpy() },
-        { provide: SleepTimerService, useValue: CoreSpyFactories.createSleepTimerServiceSpy() },
+        { provide: SleepTimerService, useValue: sleepTimerService },
       ]
     })
     .overrideComponent(PlayerBarComponent, {
@@ -77,9 +79,11 @@ describe('PlayerBarComponent', () => {
   });
 
   it('should update the template to reflect changes in minutes until sleep', () => {
+    const minutesUntilSleep = new BehaviorSubject<number>(null);
+    minutesUntilSleep$ = minutesUntilSleep.asObservable();
     for (let i = 300; i >= 0; i--) {
       // Act
-      component.minutesToSleep = i;
+      minutesUntilSleep.next(i);
       fixture.detectChanges();
 
       // Assert: Ensure that the new value was rendered properly in the template
@@ -88,7 +92,7 @@ describe('PlayerBarComponent', () => {
 
     /* Clear the sleep timer and ensure that 'minutes until sleep'
     no longer shows a number. */
-    component.minutesToSleep = null;
+    minutesUntilSleep.next(null);
     fixture.detectChanges();
     expect(getElementTextBySelector<PlayerBarComponent>(fixture, '.minutes-until-sleep')).toBe('');
   });

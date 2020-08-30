@@ -5,10 +5,10 @@
       [currentStation]="currentStation" [metadataForCurrentStation]="metadataForCurrentStation">
     </blr-player-bar-station-info>
   </div>
-  <div [class.off-white]="minutesToSleep == null" [matMenuTriggerFor]="sleepTimerMenu.menu" 
-    [matTooltip]="minutesToSleep == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
+  <div [class.off-white]="(minutesToSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu" 
+    [matTooltip]="(minutesToSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
     class="indicator-icon selectable large-screen-only" >
-    <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesToSleep }}</span>
+    <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesToSleep$ | async }}</span>
   </div>
   <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
     [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
@@ -46,7 +46,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="sleepTimerMenu.menu">
+  <button mat-menu-item [matMenuTriggerFor]="sleepTimerMenu">
     <mat-icon>timer</mat-icon>
     <span>Sleep Timer</span>
   </button>
@@ -74,4 +74,26 @@
   </ng-template>
 </mat-menu>
 
-<blr-sleep-timer-menu #sleepTimerMenu></blr-sleep-timer-menu>
+<mat-menu #sleepTimerMenu="matMenu">
+  <button mat-menu-item (click)="onCancelTimerClicked()">
+    <span>Cancel Timer</span>
+  </button>
+  <button mat-menu-item (click)="onTimerSelected(1)">
+    <span>1 Minute</span>
+  </button>
+  <button mat-menu-item (click)="onTimerSelected(5)">
+    <span>5 Minutes</span>
+  </button>
+  <button mat-menu-item (click)="onTimerSelected(15)">
+    <span>15 Minutes</span>
+  </button>
+  <button mat-menu-item (click)="onTimerSelected(30)">
+    <span>30 Minutes</span>
+  </button>
+  <button mat-menu-item (click)="onTimerSelected(60)">
+    <span>60 Minutes</span>
+  </button>
+  <button mat-menu-item (click)="onTimerSelected(120)">
+    <span>120 Minutes</span>
+  </button>
+</mat-menu>

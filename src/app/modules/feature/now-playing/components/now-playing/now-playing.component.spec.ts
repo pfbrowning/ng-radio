@@ -10,13 +10,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { getElementBySelector, getElementTextBySelector } from '@utilities/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
-import { SharedModule } from '@shared';
 import { PlayerStatus, Station } from '@core/models/player';
 import { StreamMetadataFacadeService, PlayerFacadeService } from '@core/store';
 import { CoreSpyFactories, StreamMetadataFacadeStub } from '@core/testing';
 import { SleepTimerService } from '@core/services';
 import { BehaviorSubject, Observable, defer, of } from 'rxjs';
 import { PlayerFacadeStub } from 'src/app/modules/core/testing/stubs/player-facade-stub.service.spec';
+import { StationIconStubDirective } from '@shared/testing';
 
 
 describe('NowPlayingComponent', () => {
@@ -27,7 +27,6 @@ describe('NowPlayingComponent', () => {
   let currentStation$: Observable<Station>;
   let playerStatus$: Observable<PlayerStatus>;
   let minutesUntilSleep$: Observable<number>;
-  let metadataForCurrentStation$: Observable<string>;
   let metadataFacade: StreamMetadataFacadeStub;
   let playerFacade: PlayerFacadeStub;
 
@@ -38,7 +37,6 @@ describe('NowPlayingComponent', () => {
     sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
     metadataFacade = new StreamMetadataFacadeStub();
-    metadataFacade.metadataForCurrentStation$ = defer(() => metadataForCurrentStation$);
 
     playerFacade = new PlayerFacadeStub();
     playerFacade.currentStation$ = defer(() => currentStation$);
@@ -46,7 +44,8 @@ describe('NowPlayingComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        NowPlayingComponent
+        NowPlayingComponent,
+        StationIconStubDirective
       ],
       imports: [
         RouterTestingModule,
@@ -55,7 +54,6 @@ describe('NowPlayingComponent', () => {
         MatInputModule,
         NoopAnimationsModule,
         FormsModule,
-        SharedModule
       ],
       providers: [
         provideMockStore({ initialState: initialRootState }),
@@ -78,65 +76,21 @@ describe('NowPlayingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  const nowPlayingTemplateInput = [
-    {
-      station: new Station(null, 'station title', 'http://url.com', 'station genre', 'http://icon.com/'),
-      metadata: 'station title from stream'
-    },
-    {
-      station: new Station(null, 'station title 2', 'http://url2.com', 'station genre 2', 'http://icon2.com/'),
-      metadata: 'station title from stream 2',
-    },
-    {
-      station: new Station(null, 'another station title', 'http://anotherurl.com', 'another station genre', 'http://anothericon.com/'),
-      metadata: 'station 3',
-    },
-    {
-      station: new Station(null, 'Radio Caprice: Speed Metal', 'http://radiocapricespeedmetal.com', 'Speed Metal', 'http://icon4.com/'),
-      metadata: 'stream station title',
-    }
+  const nowPlayingTemplateInput: Station[] = [
+    { title: 'station title' } as Station,
+    { title: 'station title 2' } as Station,
+    { title: 'another station title' } as Station,
+    { title: 'Radio Caprice: Speed Metal' } as Station
   ];
-  nowPlayingTemplateInput.forEach(input => {
-    it('should update the template to reflect changes in metadata', () => {
+  nowPlayingTemplateInput.forEach(station => {
+    it('should update the template to reflect changes in station title', () => {
       // Act
-      currentStation$ = of(input.station);
+      currentStation$ = of(station);
       playerStatus$ = of(PlayerStatus.Playing);
-      metadataForCurrentStation$ = of(input.metadata);
       fixture.detectChanges();
 
-      // Assert: Ensure that the important NowPlaying properties were properly bound to the template
-      expect(getElementBySelector<NowPlayingComponent>(fixture, '.station-icon').src).toBe(input.station.iconUrl);
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(input.station.title);
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.metadata);
-    });
-  });
-
-
-  const playerStatusTemplateInput = [
-    {
-      playerStatus: PlayerStatus.LoadingAudio,
-      expected: 'Loading Audio...'
-    },
-    {
-      playerStatus: PlayerStatus.Stopped,
-      expected: ''
-    },
-    {
-      playerStatus: PlayerStatus.Playing,
-      metadata: 'Valid Title',
-      expected: 'Valid Title'
-    },
-  ];
-  playerStatusTemplateInput.forEach(input => {
-    it(`should reflect the various player states properly in the template ${JSON.stringify(input)}`, () => {
-      // Arrange & Act
-      currentStation$ = of(new Station());
-      playerStatus$ = of(input.playerStatus);
-      metadataForCurrentStation$ = of(input.metadata);
-      fixture.detectChanges();
-
-      // Assert: Ensure that the text of the title element conveys the current stream status
-      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.title')).toBe(input.expected);
+      // Assert: Ensure that the station title was properly bound to the template
+      expect(getElementTextBySelector<NowPlayingComponent>(fixture, '.station-title')).toBe(station.title);
     });
   });
 

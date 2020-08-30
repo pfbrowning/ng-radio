@@ -48,12 +48,12 @@ describe('ConfigService', () => {
       metadataFetchTimeout: 2,
       authConfig: {},
       logging: {}
-    } as AppConfig;
+    } as any;
 
     // Listen to the initialize observable
     configService.appConfig$.subscribe({
       next: config => {
-        expect(config).toEqual(dummyConfig);
+        expect(config).toEqual(dummyConfig as any);
         fetchNextSpy(config);
       },
       complete: () => {
@@ -90,7 +90,6 @@ describe('ConfigService', () => {
   it('should merge local config with app config', (done: DoneFn) => {
     // Arrange
     const appConfig = {
-      metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       radioBrowserSearchResultsLimit: 25,
       favoriteStationsApiUrl: 'testFavoritesApi',
@@ -114,7 +113,6 @@ describe('ConfigService', () => {
       }
     };
     const mergedConfig = {
-      metadataApiUrl: 'testapi',
       radioBrowserApiUrl: 'testradiobrowserapi',
       radioBrowserSearchResultsLimit: 25,
       favoriteStationsApiUrl: 'testFavoritesApi',

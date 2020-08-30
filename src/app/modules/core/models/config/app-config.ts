@@ -4,7 +4,7 @@ export interface AppConfig {
     radioBrowserApiUrl: string;
     radioBrowserSearchResultsLimit: number;
     favoriteStationsApiUrl: string;
-    corsProxyUrl: string;
+    imageProxyUrl: string;
     radioProxyUrl: string;
     refreshIntervalShort: number;
     refreshIntervalLong: number;

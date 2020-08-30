@@ -15,7 +15,7 @@
 
 <blr-player-bar *ngIf="currentStation$ | async" [currentStation]="currentStation$ | async" [playerStatus]="playerStatus$ | async"
     [favoriteMatchingCurrentStation]="favoriteMatchingCurrentStation$ | async" [favoritesProcessingState]="currentStationFavoritesProcessingState$ | async"
-    [minutesToSleep]="minutesUntilSleep$ | async" class="bottom-toolbar" [metadataForCurrentStation]="metadataForCurrentStation$ | async">
+    class="bottom-toolbar" [metadataForCurrentStation]="metadataForCurrentStation$ | async">
 </blr-player-bar>
 
 <blr-station-edit *ngIf="showEditModal$ | async" [existingStation]="existingStationForEdit$ | async"

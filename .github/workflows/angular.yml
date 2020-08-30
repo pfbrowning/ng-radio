@@ -49,7 +49,7 @@ jobs:
         authConfig.userManager.silent_redirect_uri: https://radio.browninglogic.com/silent-refresh.html
         authConfig.userManager.extraQueryParams.audience: browninglogic-radio
         authConfig.logoutUrl: https://browninglogic.auth0.com/v2/logout?returnTo=http%3A%2F%2Fradio.browninglogic.com
-        corsProxyUrl: https://sheltered-spire-83395.herokuapp.com
+        imageProxyUrl: https://fast-everglades-74198.herokuapp.com
         favoriteStationsApiUrl: https://favorite-stations-api.azurewebsites.net
         radioProxyUrl: https://agile-earth-21410.herokuapp.com
     - name: FTP Deploy

@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PlayerFacadeService, FavoriteStationsFacadeService, StreamMetadataFacadeService } from '@core/store';
-import { SleepTimerService } from '@core/services';
 
 @Component({
   selector: 'blr-app-shell',
@@ -11,7 +10,6 @@ import { SleepTimerService } from '@core/services';
 export class AppShellComponent {
   constructor(
     private playerFacade: PlayerFacadeService,
-    private sleepTimerService: SleepTimerService,
     private favoriteStationsFacade: FavoriteStationsFacadeService,
     private metadataFacade: StreamMetadataFacadeService
   ) {}
@@ -28,6 +26,4 @@ export class AppShellComponent {
   public existingStationForEdit$ = this.favoriteStationsFacade.existingStationForEdit$;
   public favoritesFetchInProgress$ = this.favoriteStationsFacade.favoritesFetchInProgress$;
   public metadataForCurrentStation$ = this.metadataFacade.metadataForCurrentStation$;
-
-  public minutesUntilSleep$ = this.sleepTimerService.minutesToSleep$;
 }

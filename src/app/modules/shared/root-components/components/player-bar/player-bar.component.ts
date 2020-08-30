@@ -6,6 +6,7 @@ import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-st
 import { PlayerBarFacadeService } from '@core/store';
 import { matProgressButtonDefaults } from '@core/constants';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { SleepTimerService } from '@core/services';
 
 @Component({
   selector: 'blr-player-bar',
@@ -17,16 +18,19 @@ export class PlayerBarComponent {
   constructor(
     private router: Router,
     private playerBarFacade: PlayerBarFacadeService,
+    private sleepTimerService: SleepTimerService,
     public keepAwakeService: KeepAwakeService,
   ) {}
 
-  public playerStatusEnum = PlayerStatus;
   @Input() favoriteMatchingCurrentStation: Station[];
   @Input() currentStation: Station;
   @Input() playerStatus: PlayerStatus;
   @Input() favoritesProcessingState: CurrentStationFavoritesProcessingState;
-  @Input() minutesToSleep: number;
   @Input() metadataForCurrentStation: string;
+
+  public playerStatusEnum = PlayerStatus;
+
+  public minutesToSleep$ = this.sleepTimerService.minutesToSleep$;
 
   private circleButtonDefaults: MatProgressButtonOptions = {
     ...matProgressButtonDefaults,
@@ -83,5 +87,13 @@ export class PlayerBarComponent {
 
   public onPauseClicked(): void {
     this.playerBarFacade.pauseClicked();
+  }
+
+  public onTimerSelected(minutes: number): void {
+    this.sleepTimerService.setTimer(minutes);
+  }
+
+  public onCancelTimerClicked(): void {
+    this.sleepTimerService.clearSleepTimer();
   }
 }

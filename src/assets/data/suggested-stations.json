@@ -3,7 +3,6 @@
         "title": "BBC World Service",
         "url": "http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-eieuk",
         "genre": "News",
-        "iconUrl": "https://pbs.twimg.com/profile_images/1004638958091894784/JtNS_gjE_400x400.jpg",
         "tags": null
     },
     {
@@ -101,7 +100,6 @@
         "title": "Gutter Punk Radio",
         "url": "http://www.gutter-punk-radio.com:8000/;",
         "genre": "Punk Rock",
-        "iconUrl": "http://gutterpunkradio.com/images/gutter-punk-radio.jpg",
         "tags": null
     }
 ]
