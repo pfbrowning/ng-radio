@@ -34,6 +34,8 @@ jobs:
         COVERALLS_REPO_TOKEN: ${{ secrets.coveralls }}
     - run: npm run lint
       name: Lint
+    - run: npm run format:check
+      name: Format
     - run: npm run build
       name: Build
     - name: Write Configuration
