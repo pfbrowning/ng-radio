@@ -1,14 +1,12 @@
 import { BehaviorSubject, Subject, NEVER, of } from 'rxjs';
 import { CurrentTimeService } from '../services/current-time.service';
 import { MessageService } from 'primeng/api';
-import { StreamValidatorService } from '../services/radio-player/stream-validator.service';
 import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { NotificationsService, RadioBrowserService, LoggingService, SleepTimerService, AudioElementService } from '@core/services';
+import { NotificationsService, RadioBrowserService, LoggingService, SleepTimerService, AudioElementService, AudioProxyService } from '@core/services';
 import { EnvironmentService } from '../services/config/environment.service';
-import { RadioPlayerService } from '../services/radio-player/radio-player.service';
 import { ProxyKeyService } from '../services/radio-player/proxy-key.service';
 import { PlayerBarFacadeService } from '../store/dispatch-facades/player-bar/player-bar-facade.service';
 
@@ -53,10 +51,6 @@ export function createMessageServiceSpy(): jasmine.SpyObj<MessageService> {
   return spy;
 }
 
-export function createStreamValidatorServiceSpy(): jasmine.SpyObj<StreamValidatorService> {
-  return jasmine.createSpyObj('streamValidatorService', [ 'validate' ]);
-}
-
 export function createWindowServiceSpy(): jasmine.SpyObj<WindowService> {
   return jasmine.createSpyObj('windowService', [ 'getLocationOrigin' ]);
 }
@@ -86,9 +80,7 @@ export function createEnvironmentServiceSpy(): jasmine.SpyObj<EnvironmentService
   return jasmine.createSpyObj('environmentService', [ 'isProduction' ]);
 }
 
-export function createRadioPlayerServiceSpy(): jasmine.SpyObj<RadioPlayerService> {
-  return jasmine.createSpyObj('radioPlayerService', [ 'play' ]);
-}
+export const createAudioProxyService = () => jasmine.createSpyObj('audioProxyService', [ 'play' ]);
 
 export const createProxyKeyServiceSpy = () => jasmine.createSpyObj<ProxyKeyService>('proxyKeyService', [ 'fetchNew' ]);
 

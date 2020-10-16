@@ -8,8 +8,7 @@ import { CurrentTimeService } from '../../services/current-time.service';
 import { CoreSpyFactories } from '@core/testing';
 import { AudioElementStub } from '../../testing/AudioElementStub.spec';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
-import { NotificationsService, LoggingService, AudioElementService, ConfigService } from '@core/services';
-import { RadioPlayerService } from '../../services/radio-player/radio-player.service';
+import { NotificationsService, LoggingService, AudioElementService, ConfigService, AudioProxyService } from '@core/services';
 
 describe('PlayerEffects', () => {
   const actions$: Observable<any> = null;
@@ -29,7 +28,7 @@ describe('PlayerEffects', () => {
         { provide: AudioElementService, useValue: audioElement },
         { provide: CurrentTimeService, useValue: CoreSpyFactories.createCurrentTimeServiceSpy() },
         { provide: LoggingService, useValue: CoreSpyFactories.createLoggingServiceSpy() },
-        { provide: RadioPlayerService, useValue: CoreSpyFactories.createRadioPlayerServiceSpy() }
+        { provide: AudioProxyService, useValue: CoreSpyFactories.createAudioProxyService() }
       ]
     });
 

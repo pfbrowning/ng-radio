@@ -5,7 +5,7 @@ import { CoreSpyFactories } from '@core/testing';
 describe('StreamUrlValidatorDirective', () => {
   it('should create an instance', () => {
     const directive = new StreamUrlValidatorDirective(
-      CoreSpyFactories.createStreamValidatorServiceSpy(),
+      CoreSpyFactories.createAudioProxyService(),
       createChangeDetectorRefSpy()
     );
     expect(directive).toBeTruthy();
