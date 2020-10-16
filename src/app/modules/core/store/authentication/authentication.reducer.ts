@@ -1,9 +1,9 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { AuthenticationState } from './models/authentication-state';
 import { initialAuthenticationState } from './models/initial-authentication-state';
 import * as Actions from './authentication.actions';
 
-const reducer = createReducer<AuthenticationState>(
+export const reducer = createReducer<AuthenticationState>(
     initialAuthenticationState,
     on(
         Actions.initializeSucceeded,
@@ -24,10 +24,3 @@ const reducer = createReducer<AuthenticationState>(
         authenticated: false,
     }))
 );
-
-export function authenticationReducer(
-    state: AuthenticationState | undefined,
-    action: Action
-) {
-    return reducer(state, action);
-}

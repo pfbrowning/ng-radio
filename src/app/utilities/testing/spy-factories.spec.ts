@@ -1,7 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 
-export function createChangeDetectorRefSpy(): jasmine.SpyObj<
-    ChangeDetectorRef
-> {
-    return jasmine.createSpyObj('changeDetectorRef', ['markForChanges']);
-}
+export const createChangeDetectorRefSpy = () =>
+    jasmine.createSpyObj<ChangeDetectorRef>('changeDetectorRef', [
+        'markForCheck',
+    ]);
