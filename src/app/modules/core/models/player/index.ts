@@ -1,2 +1,2 @@
-export { PlayerStatus } from './player-status';
-export { Station } from './station';
+export { PlayerStatus } from './player-status'
+export { Station } from './station'

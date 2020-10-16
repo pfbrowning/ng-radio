@@ -1,1 +1,1 @@
-export { RootComponentsModule } from './root-components.module';
+export { RootComponentsModule } from './root-components.module'

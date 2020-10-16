@@ -1,18 +1,18 @@
 /* Using the padding-top percentage hack with an inner and
 outer container in order to enforce a 1:1 aspect ratio. */
 .thumb-container-outer {
-    width:100%;
-    height:0;
-    padding-top:100%;
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
     position: relative;
 }
 
 .thumb-container-inner {
     position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 // Center the image and the station title text
@@ -24,10 +24,10 @@ outer container in order to enforce a 1:1 aspect ratio. */
 .thumb-image {
     /* Expand the image to take up the height of its container 
     if it's big enough to do so. */
-    max-width:100%;
-    max-height:100%;
+    max-width: 100%;
+    max-height: 100%;
     // Vertically center the image within its container
-    position:relative;
-    top:50%;
-    transform:translateY(-50%);
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }

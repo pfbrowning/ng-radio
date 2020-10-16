@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
     selector: 'blr-toaster-container',
-    template: ''
+    template: '',
 })
-export class ToasterContainerStubComponent { }
+export class ToasterContainerStubComponent {}

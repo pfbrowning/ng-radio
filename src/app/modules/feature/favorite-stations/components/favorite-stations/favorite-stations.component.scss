@@ -1,7 +1,7 @@
 @import 'variables';
 
 .mat-column-actions {
-    width:115px;
+    width: 115px;
 }
 
 .delete-in-progress {
@@ -9,17 +9,17 @@
 }
 
 // Special styles for small screens
-@media (max-width:$smallScreenCutoff - 1) {
+@media (max-width: $smallScreenCutoff - 1) {
     /* We want the Station title to take up a little bit less
     space than the now playing text. */
     .mat-column-name {
-        width:40%;
+        width: 40%;
     }
 
     /* We don't have room for actions in small screen mode.  Any
     important actions should be accessible via the player bar or
     now-playing component. */
     .mat-column-actions {
-        display:none;
+        display: none;
     }
 }

@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
-  selector: 'blr-sleep-timer-menu',
-  template: '',
+    selector: 'blr-sleep-timer-menu',
+    template: '',
 })
-export class SleepTimerMenuStubComponent {
-}
+export class SleepTimerMenuStubComponent {}

@@ -11,16 +11,16 @@
 }
 
 .station-title {
-    font-size:23px;
+    font-size: 23px;
 }
 
 .action-items button {
-    width:200px;
+    width: 200px;
 }
 
 h1,
 .flex-grid {
-    @media (max-width:$smallScreenCutoff - 1) {
+    @media (max-width: $smallScreenCutoff - 1) {
         text-align: center;
     }
 }

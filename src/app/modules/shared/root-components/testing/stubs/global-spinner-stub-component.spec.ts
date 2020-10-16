@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
     selector: 'blr-global-spinner',
-    template: ''
+    template: '',
 })
-export class GlobalSpinnerStubComponent { }
+export class GlobalSpinnerStubComponent {}

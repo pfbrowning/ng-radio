@@ -1,3 +1,3 @@
-import * as PlayerSelectors from './player.selectors';
+import * as PlayerSelectors from './player.selectors'
 
-export { PlayerSelectors };
+export { PlayerSelectors }

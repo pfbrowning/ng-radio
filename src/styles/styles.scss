@@ -1,8 +1,13 @@
 @import 'variables';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 .fill-remaining {
     flex: 1 1 auto;
@@ -13,7 +18,7 @@ table.mat-table .mat-row.selectable-row {
     cursor: pointer;
 }
 
-@media (min-width:$smallScreenCutoff) {
+@media (min-width: $smallScreenCutoff) {
     .small-screen-only,
     .mat-toolbar.small-screen-only,
     .mat-icon-button.small-screen-only,
@@ -22,7 +27,7 @@ table.mat-table .mat-row.selectable-row {
     }
 }
 
-@media (max-width:$smallScreenCutoff - 1) {
+@media (max-width: $smallScreenCutoff - 1) {
     .large-screen-only,
     div.indicator-icon.large-screen-only {
         display: none;
@@ -30,22 +35,22 @@ table.mat-table .mat-row.selectable-row {
 }
 
 .mat-toolbar .mat-raised-button {
-    margin:0px 6px;
+    margin: 0px 6px;
 }
 
 table.mat-table {
-    width:100%;
+    width: 100%;
     /* Use a fixed layout for mat-tables on small screens 
     to prevent them from overflowing. */
-    @media (max-width:$smallScreenCutoff - 1) {
+    @media (max-width: $smallScreenCutoff - 1) {
         table-layout: fixed;
     }
 }
 
 .station-icon-thumb {
-    max-width:56px;
+    max-width: 56px;
     max-height: 56px;
-    margin:4px;
+    margin: 4px;
 }
 
 .flex-grid {
@@ -61,7 +66,7 @@ table.mat-table {
     padding: 10px;
 }
 
-@media (min-width:$smallScreenCutoff) {
+@media (min-width: $smallScreenCutoff) {
     .flex-column-third {
         flex-basis: 33%;
     }
@@ -73,16 +78,16 @@ table.mat-table {
 
 .bulletless-list {
     list-style-type: none;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 
     li {
-        margin:5px;
+        margin: 5px;
     }
 }
 
 fieldset {
-    border:none;
+    border: none;
 }
 
 .off-white {
@@ -100,7 +105,7 @@ too closely together otherwise. */
 so that:
 1) Padding isn't inconsistent when columns are hidden
 2) We're not taking up quite so much width when width is limited. */
-@media (max-width:$smallScreenCutoff - 1) {
+@media (max-width: $smallScreenCutoff - 1) {
     .mat-table th.mat-header-cell:first-of-type,
     .mat-table th.mat-header-cell:last-of-type,
     .mat-table td.mat-cell:first-of-type,

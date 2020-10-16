@@ -1,14 +1,14 @@
-import { createSelector } from '@ngrx/store';
-import { RootState } from '../../models/root-state';
+import { createSelector } from '@ngrx/store'
+import { RootState } from '../../models/root-state'
 
-const authenticationStateRoot = (state: RootState) => state.authentication;
+const authenticationStateRoot = (state: RootState) => state.authentication
 
 export const authenticationState = createSelector(
     authenticationStateRoot,
-    state => state
-);
+    (state) => state
+)
 
 export const isInitialized = createSelector(
     authenticationState,
-    state => state.initialized
-);
+    (state) => state.initialized
+)

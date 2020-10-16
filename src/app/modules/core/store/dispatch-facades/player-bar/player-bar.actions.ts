@@ -1,4 +1,4 @@
-import { createAction } from '@ngrx/store';
+import { createAction } from '@ngrx/store'
 
 export enum PlayerBarActions {
     AddToFavoritesClicked = '[Player Bar] Add To Favorites Clicked',
@@ -8,17 +8,13 @@ export enum PlayerBarActions {
 }
 
 export const addToFavoritesClicked = createAction(
-    PlayerBarActions.AddToFavoritesClicked,
-);
+    PlayerBarActions.AddToFavoritesClicked
+)
 
 export const removeFromFavoritesClicked = createAction(
-    PlayerBarActions.RemoveFromFavoritesClicked,
-);
+    PlayerBarActions.RemoveFromFavoritesClicked
+)
 
-export const playClicked = createAction(
-    PlayerBarActions.PlayClicked,
-);
+export const playClicked = createAction(PlayerBarActions.PlayClicked)
 
-export const pauseClicked = createAction(
-    PlayerBarActions.PauseClicked,
-);
+export const pauseClicked = createAction(PlayerBarActions.PauseClicked)

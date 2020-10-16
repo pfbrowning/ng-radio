@@ -1,3 +1,3 @@
-import * as PlayerActions from './player-actions';
+import * as PlayerActions from './player-actions'
 
-export { PlayerActions };
+export { PlayerActions }

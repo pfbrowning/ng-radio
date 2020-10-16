@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
     selector: 'blr-responsive-sidenav-container',
-    template: ''
+    template: '',
 })
-export class ResponsiveSidenavStubComponent { }
+export class ResponsiveSidenavStubComponent {}

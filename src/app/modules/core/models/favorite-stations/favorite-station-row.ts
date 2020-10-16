@@ -1,4 +1,4 @@
-import { Station } from '../player/station';
+import { Station } from '../player/station'
 
 export class FavoriteStationRow {
     constructor(

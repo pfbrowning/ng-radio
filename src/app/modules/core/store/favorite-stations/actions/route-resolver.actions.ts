@@ -1,9 +1,7 @@
-import { createAction } from '@ngrx/store';
+import { createAction } from '@ngrx/store'
 
 export enum Actions {
     Init = '[Favorite Stations Route Resolver] Route Resolve Init',
 }
 
-export const init = createAction(
-    Actions.Init
-);
+export const init = createAction(Actions.Init)

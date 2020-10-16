@@ -1,14 +1,17 @@
-import { streamMetadataReducer } from './reducer';
-import { initialStreamMetadataState } from './models/initial-stream-metadata-state';
+import { streamMetadataReducer } from './reducer'
+import { initialStreamMetadataState } from './models/initial-stream-metadata-state'
 
 describe('Stream Metadata Reducer', () => {
-  describe('an unknown action', () => {
-    it('should return the previous state', () => {
-      const action = {} as any;
+    describe('an unknown action', () => {
+        it('should return the previous state', () => {
+            const action = {} as any
 
-      const result = streamMetadataReducer(initialStreamMetadataState, action);
+            const result = streamMetadataReducer(
+                initialStreamMetadataState,
+                action
+            )
 
-      expect(result).toBe(initialStreamMetadataState);
-    });
-  });
-});
+            expect(result).toBe(initialStreamMetadataState)
+        })
+    })
+})

@@ -1,5 +1,5 @@
-import { of } from 'rxjs';
+import { of } from 'rxjs'
 
 export class RouterStateStubService {
-    public navigationInProgress$ = of(false);
+    public navigationInProgress$ = of(false)
 }

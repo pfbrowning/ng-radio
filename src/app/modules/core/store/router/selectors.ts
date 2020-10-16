@@ -1,6 +1,6 @@
-import * as fromRouter from '@ngrx/router-store';
-import { RootState } from '../../models/root-state';
+import * as fromRouter from '@ngrx/router-store'
+import { RootState } from '../../models/root-state'
 
-export const routerState = (state: RootState) => state.router;
+export const routerState = (state: RootState) => state.router
 
-export const currentUrl = fromRouter.getSelectors(routerState).selectUrl;
+export const currentUrl = fromRouter.getSelectors(routerState).selectUrl

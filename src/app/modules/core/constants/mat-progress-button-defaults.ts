@@ -1,4 +1,4 @@
-import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { MatProgressButtonOptions } from 'mat-progress-buttons'
 
 export const matProgressButtonDefaults: MatProgressButtonOptions = {
     active: false,
@@ -8,4 +8,4 @@ export const matProgressButtonDefaults: MatProgressButtonOptions = {
     buttonColor: 'primary',
     spinnerColor: 'accent',
     mode: 'indeterminate',
-};
+}
