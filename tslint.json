@@ -7,6 +7,7 @@
     "no-unused-declaration": true, // Use tslint-etc to check for unused imports
     "no-string-literal": false,
     "no-console": false,
-    "only-arrow-functions": true
+    "only-arrow-functions": true,
+    "arrow-return-shorthand": true
   }
 }
