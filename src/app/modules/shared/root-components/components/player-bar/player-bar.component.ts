@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { KeepAwakeService } from '@core';
 import { PlayerStatus, Station } from '@core/models/player';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 import { PlayerBarFacadeService } from '@core/store';
@@ -18,8 +17,7 @@ export class PlayerBarComponent {
     constructor(
         private router: Router,
         private playerBarFacade: PlayerBarFacadeService,
-        private sleepTimerService: SleepTimerService,
-        public keepAwakeService: KeepAwakeService
+        private sleepTimerService: SleepTimerService
     ) {}
 
     @Input() favoriteMatchingCurrentStation: Station[];

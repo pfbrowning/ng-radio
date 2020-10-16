@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState } from '@core';
-import { KeepAwakeService } from '@core';
 import { PlayerStatus } from '@core/models/player';
 import { FavoriteStationsActions } from '@core/store';
 import { StreamMetadataFacadeService, PlayerFacadeService } from '@core/store';
@@ -14,7 +13,6 @@ import { SleepTimerService } from '@core/services';
 })
 export class NowPlayingComponent {
     constructor(
-        public keepAwakeService: KeepAwakeService,
         private sleepTimerService: SleepTimerService,
         private store: Store<RootState>,
         private metadataFacade: StreamMetadataFacadeService,

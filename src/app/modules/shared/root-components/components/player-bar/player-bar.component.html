@@ -10,11 +10,6 @@
     class="indicator-icon selectable large-screen-only" >
     <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesToSleep$ | async }}</span>
   </div>
-  <div (click)="keepAwakeService.toggle()" [class.off-white]="(keepAwakeService.enabled$ | async) == false" 
-    [matTooltip]="(keepAwakeService.enabled$ | async) ? 'Keep Awake is enabled' : 'Keep Awake is disabled'" 
-    class="indicator-icon selectable large-screen-only keep-awake">
-    <mat-icon>settings_cell</mat-icon>
-  </div>
   <ng-container *ngIf="favoritesProcessingState; else favoritesProcessedIcon">
     <div class="indicator-icon large-screen-only" [matTooltip]="favoritesProcessingTooltip()">
       <mat-spinner diameter="25"></mat-spinner>
@@ -49,10 +44,6 @@
   <button mat-menu-item [matMenuTriggerFor]="sleepTimerMenu">
     <mat-icon>timer</mat-icon>
     <span>Sleep Timer</span>
-  </button>
-  <button mat-menu-item (click)="keepAwakeService.toggle()">
-    <mat-icon>settings_cell</mat-icon>
-    <span>Toggle Keep Awake</span>
   </button>
   <button *ngIf="favoritesProcessingState; else favoritesProcessedMenuItem" mat-menu-item>
     <span class="spinner-container">

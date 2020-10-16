@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { KeepAwakeService } from '@core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,7 +23,6 @@ import { StationIconStubDirective } from '@shared/testing';
 describe('NowPlayingComponent', () => {
     let component: NowPlayingComponent;
     let fixture: ComponentFixture<NowPlayingComponent>;
-    let keepAwakeServiceSpy: any;
     let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
     let currentStation$: Observable<Station>;
     let playerStatus$: Observable<PlayerStatus>;
@@ -33,8 +31,6 @@ describe('NowPlayingComponent', () => {
     let playerFacade: PlayerFacadeStub;
 
     beforeEach(async(() => {
-        keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
-
         sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
         sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
@@ -56,7 +52,6 @@ describe('NowPlayingComponent', () => {
             ],
             providers: [
                 provideMockStore({ initialState: initialRootState }),
-                { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
                 { provide: SleepTimerService, useValue: sleepTimerService },
                 {
                     provide: StreamMetadataFacadeService,
@@ -129,42 +124,5 @@ describe('NowPlayingComponent', () => {
                 '.minutes-until-sleep'
             )
         ).toBeNull();
-    });
-
-    it('should update the template to reflect changes in the keepAwake state', () => {
-        // Arrange
-        currentStation$ = of(new Station());
-        // Set up a sequence of dummy boolean $enabled values to iterate through
-        const testEntries = [false, true, false, true, false];
-
-        testEntries.forEach((enabled) => {
-            // Act: Emit the test entry and detect changes to update the template
-            keepAwakeServiceSpy.enabled$.next(enabled);
-            fixture.detectChanges();
-            const keepAwakeButtonText = getElementTextBySelector<
-                NowPlayingComponent
-            >(fixture, 'li.keep-awake button');
-            // If we turned on keepAwake
-            if (enabled) {
-                /* The keepawake div should be rendered with the text 'Keeping Awake'
-        and the disable button should be shown. */
-                const keepAwakeDiv = getElementBySelector<NowPlayingComponent>(
-                    fixture,
-                    'div.keep-awake'
-                );
-                expect(keepAwakeDiv).not.toBeNull();
-                expect(keepAwakeDiv.innerText).toBe('Keeping Awake');
-                expect(keepAwakeButtonText).toBe('Disable Keep Awake');
-            } else {
-                // The keepAwake div should *not* be shown and the enable button *should* be shown
-                expect(
-                    getElementBySelector<NowPlayingComponent>(
-                        fixture,
-                        'div.keep-awake'
-                    )
-                ).toBeNull();
-                expect(keepAwakeButtonText).toBe('Enable Keep Awake');
-            }
-        });
     });
 });

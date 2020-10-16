@@ -15,7 +15,6 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 * Support for opening and playing custom station URLs
 * Saving of "Favorite" stations
 * Automatic retry of Shoutcast streams which fail due to missing the trailing`/;` which is [required to listen from a web browser](https://stackoverflow.com/a/1759607)
-* Experimental mobile browser keep-awake via [nosleep.js](https://github.com/richtr/NoSleep.js/)
 * Responsive & mobile-friendly
 * Logging to Azure Application Insights
 
@@ -59,7 +58,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Replace NoSleep.js with an alternative which works with Firefox mobile and which [isn't CommonJS-based](https://angular.io/guide/build#configuring-commonjs-dependencies), or remove the "Keep Awake" feature entirely if it's not worth the trouble.
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture
       * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)

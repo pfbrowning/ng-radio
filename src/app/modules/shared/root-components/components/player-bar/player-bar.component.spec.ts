@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { KeepAwakeService } from '@core';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -28,13 +27,10 @@ import { Observable, defer, BehaviorSubject } from 'rxjs';
 describe('PlayerBarComponent', () => {
     let component: PlayerBarComponent;
     let fixture: ComponentFixture<PlayerBarComponent>;
-    let keepAwakeServiceSpy: any;
     let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
     let minutesUntilSleep$: Observable<number>;
 
     beforeEach(async(() => {
-        keepAwakeServiceSpy = CoreSpyFactories.createKeepAwakeServiceSpy();
-
         sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
         sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
@@ -58,7 +54,6 @@ describe('PlayerBarComponent', () => {
                 MatProgressButtonsModule.forRoot(),
             ],
             providers: [
-                { provide: KeepAwakeService, useValue: keepAwakeServiceSpy },
                 {
                     provide: PlayerBarFacadeService,
                     useValue: CoreSpyFactories.createPlayerBarFacadeSpy(),
@@ -110,26 +105,5 @@ describe('PlayerBarComponent', () => {
                 '.minutes-until-sleep'
             )
         ).toBe('');
-    });
-
-    it('should update the template to reflect changes in the keepAwake state', () => {
-        // Arrange
-        fixture.detectChanges();
-        const keepAwakeElement = getElementBySelector<PlayerBarComponent>(
-            fixture,
-            '.keep-awake'
-        );
-        // Set up a sequence of dummy boolean $enabled values to iterate through
-        const testEntries = [false, true, false, true, false];
-
-        testEntries.forEach((enabled) => {
-            // Act: Emit the test entry and detect changes to update the template
-            keepAwakeServiceSpy.enabled$.next(enabled);
-            fixture.detectChanges();
-            // The keep awake element should have the off-white class if it's disabled and vice-versa
-            expect(keepAwakeElement.classList.contains('off-white')).toBe(
-                !enabled
-            );
-        });
     });
 });

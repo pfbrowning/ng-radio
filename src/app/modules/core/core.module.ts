@@ -1,8 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { KeepAwakeService } from './services/keep-awake.service';
-import { NoSleepToken } from './injection-tokens/no-sleep-token';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@environment';
@@ -17,7 +15,6 @@ import { BearerTokenService } from './services/authentication/bearer-token.servi
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import NoSleep from 'nosleep.js';
 
 @NgModule({
     imports: [
@@ -40,10 +37,8 @@ import NoSleep from 'nosleep.js';
         !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [
-        KeepAwakeService,
         MessageService,
         NotificationsService,
-        { provide: NoSleepToken, useValue: new NoSleep() },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: BearerTokenService,
