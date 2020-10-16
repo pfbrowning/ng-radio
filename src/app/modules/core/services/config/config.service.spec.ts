@@ -119,7 +119,6 @@ describe('ConfigService', () => {
             radioBrowserSearchResultsLimit: 25,
             favoriteStationsApiUrl: 'testFavoritesApi',
             corsProxyUrl: 'testCorsProxy',
-            refreshIntervalShort: 2,
             authConfig: {
                 issuer: 'app issuer',
                 clientId: 'local client',
