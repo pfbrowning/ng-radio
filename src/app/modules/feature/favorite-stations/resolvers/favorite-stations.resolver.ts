@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core'
-import { Resolve } from '@angular/router'
-import { Observable, combineLatest } from 'rxjs'
-import { map, filter, take } from 'rxjs/operators'
-import { FavoriteStationsFacadeService } from '@core/store'
-import { FavoriteStationsFeatureFacadeService } from '../store/favorite-stations-feature-facade.service'
+import { Injectable } from '@angular/core';
+import { Resolve } from '@angular/router';
+import { Observable, combineLatest } from 'rxjs';
+import { map, filter, take } from 'rxjs/operators';
+import { FavoriteStationsFacadeService } from '@core/store';
+import { FavoriteStationsFeatureFacadeService } from '../store/favorite-stations-feature-facade.service';
 
 @Injectable({ providedIn: 'root' })
 export class FavoriteStationsResolver implements Resolve<void> {
@@ -12,7 +12,7 @@ export class FavoriteStationsResolver implements Resolve<void> {
         private favoriteStationsFacade: FavoriteStationsFacadeService
     ) {}
     resolve(): Observable<void> {
-        this.favoriteStationsFeatureFacadeService.routeResolveInit()
+        this.favoriteStationsFeatureFacadeService.routeResolveInit();
 
         return combineLatest([
             this.favoriteStationsFacade.favoriteStationsArray$,
@@ -21,6 +21,6 @@ export class FavoriteStationsResolver implements Resolve<void> {
             filter(([stations, failed]) => stations != null || failed),
             take(1),
             map(() => null)
-        )
+        );
     }
 }

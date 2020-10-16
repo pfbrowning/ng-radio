@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core'
-import { Observable, forkJoin } from 'rxjs'
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http'
-import { map, switchMap } from 'rxjs/operators'
-import { ConfigService } from '../config/config.service'
-import { Station } from '../../models/player/station'
-import { Country } from '../../models/country'
-import { sortBy } from 'lodash-es'
-import isFalsyOrWhitespace from 'is-falsy-or-whitespace'
+import { Injectable } from '@angular/core';
+import { Observable, forkJoin } from 'rxjs';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { map, switchMap } from 'rxjs/operators';
+import { ConfigService } from '../config/config.service';
+import { Station } from '../../models/player/station';
+import { Country } from '../../models/country';
+import { sortBy } from 'lodash-es';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable({ providedIn: 'root' })
 export class RadioBrowserService {
@@ -17,7 +17,7 @@ export class RadioBrowserService {
 
     private radioBrowserUrl$ = this.configService.appConfig$.pipe(
         map((config) => config.radioBrowserApiUrl)
-    )
+    );
 
     private fetchAllCountries(): Observable<Country[]> {
         return this.httpClient
@@ -26,7 +26,7 @@ export class RadioBrowserService {
                 map((countries) =>
                     sortBy(countries, [(c) => c.code !== 'US', (c) => c.name])
                 )
-            )
+            );
     }
 
     private fetchListedCountryCodes(): Observable<string[]> {
@@ -35,7 +35,7 @@ export class RadioBrowserService {
                 this.httpClient.get<object[]>(`${url}/countrycodes`)
             ),
             map((response) => response.map((o) => o['name']))
-        )
+        );
     }
 
     public fetchListedCountries(): Observable<Country[]> {
@@ -44,19 +44,19 @@ export class RadioBrowserService {
             this.fetchListedCountryCodes(),
         ]).pipe(
             map(([countries, listed]) => {
-                const lowercaseListed = listed.map((c) => c.toLowerCase())
+                const lowercaseListed = listed.map((c) => c.toLowerCase());
 
                 return countries.filter((country) =>
                     lowercaseListed.includes(country.code.toLowerCase())
-                )
+                );
             })
-        )
+        );
     }
 
     public fetchTags(filter: string = null): Observable<string[]> {
-        let params = new HttpParams()
-        params = params.append('order', 'stationcount')
-        params = params.append('reverse', 'true')
+        let params = new HttpParams();
+        params = params.append('order', 'stationcount');
+        params = params.append('reverse', 'true');
 
         return this.radioBrowserUrl$.pipe(
             // All tags in the API appear to be lowercase
@@ -67,7 +67,7 @@ export class RadioBrowserService {
             ),
             switchMap((url) => this.httpClient.get<object[]>(url, { params })),
             map((response) => response.map((o) => o['name']))
-        )
+        );
     }
 
     /**
@@ -83,24 +83,24 @@ export class RadioBrowserService {
         tag: string = null,
         limit: number = 25
     ): Observable<Station[]> {
-        let body = new HttpParams()
+        let body = new HttpParams();
         if (!isFalsyOrWhitespace(name)) {
-            body = body.set('name', name)
+            body = body.set('name', name);
         }
         if (!isFalsyOrWhitespace(countryCode)) {
-            body = body.set('countrycode', countryCode)
+            body = body.set('countrycode', countryCode);
         }
         if (!isFalsyOrWhitespace(tag)) {
-            body = body.set('tag', tag)
+            body = body.set('tag', tag);
         }
         // Limit the results based on the provided param
-        body = body.set('limit', limit.toString())
-        body = body.set('order', 'votes')
-        body = body.set('reverse', 'true')
+        body = body.set('limit', limit.toString());
+        body = body.set('order', 'votes');
+        body = body.set('reverse', 'true');
         const headers = new HttpHeaders().set(
             'Content-Type',
             'application/x-www-form-urlencoded'
-        )
+        );
 
         // Perform the search against the configured radioBrowserUrl
         return this.radioBrowserUrl$.pipe(
@@ -113,7 +113,7 @@ export class RadioBrowserService {
             map((stations) =>
                 stations.map((station) => this.mapStation(station))
             )
-        )
+        );
     }
 
     /**
@@ -128,7 +128,7 @@ export class RadioBrowserService {
             map((stations) =>
                 stations.map((station) => this.mapStation(station))
             )
-        )
+        );
     }
 
     /**
@@ -143,7 +143,7 @@ export class RadioBrowserService {
             map((stations) =>
                 stations.map((station) => this.mapStation(station))
             )
-        )
+        );
     }
 
     /**
@@ -155,7 +155,7 @@ export class RadioBrowserService {
         // If a non-empty tags string was provided, then split it into an array by the comma delimiter
         const tags = !isFalsyOrWhitespace(station.tags)
             ? station.tags.split(',')
-            : null
+            : null;
         return new Station(
             null,
             station.name,
@@ -163,6 +163,6 @@ export class RadioBrowserService {
             null,
             station.favicon,
             tags
-        )
+        );
     }
 }

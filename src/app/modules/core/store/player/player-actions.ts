@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store'
-import { Station } from '../../models/player/station'
+import { createAction, props } from '@ngrx/store';
+import { Station } from '../../models/player/station';
 
 export enum PlayerActions {
     SelectStation = '[Radio Player] Select Station',
@@ -12,15 +12,17 @@ export enum PlayerActions {
 export const selectStation = createAction(
     PlayerActions.SelectStation,
     props<{ station: Station }>()
-)
+);
 
-export const playAudioStart = createAction(PlayerActions.PlayAudioStart)
+export const playAudioStart = createAction(PlayerActions.PlayAudioStart);
 
-export const playAudioSucceeded = createAction(PlayerActions.PlayAudioSucceeded)
+export const playAudioSucceeded = createAction(
+    PlayerActions.PlayAudioSucceeded
+);
 
 export const playAudioFailed = createAction(
     PlayerActions.PlayAudioFailed,
     props<{ station: Station; error: any }>()
-)
+);
 
-export const audioPaused = createAction(PlayerActions.AudioPaused)
+export const audioPaused = createAction(PlayerActions.AudioPaused);

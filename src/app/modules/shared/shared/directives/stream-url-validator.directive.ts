@@ -1,12 +1,12 @@
-import { Directive, ChangeDetectorRef } from '@angular/core'
+import { Directive, ChangeDetectorRef } from '@angular/core';
 import {
     NG_ASYNC_VALIDATORS,
     AbstractControl,
     AsyncValidator,
-} from '@angular/forms'
-import { AudioElementService, AudioProxyService } from '@core/services'
-import { timer } from 'rxjs'
-import { tap, map, switchMap } from 'rxjs/operators'
+} from '@angular/forms';
+import { AudioElementService, AudioProxyService } from '@core/services';
+import { timer } from 'rxjs';
+import { tap, map, switchMap } from 'rxjs/operators';
 
 @Directive({
     selector: '[blrStreamUrlValidator]',
@@ -34,5 +34,5 @@ export class StreamUrlValidatorDirective implements AsyncValidator {
             switchMap(() => this.audioProxyService.validate(control.value)),
             map((result) => (result.success ? null : { invalidStream: true })),
             tap(() => this.changeDetectorRef.markForCheck())
-        )
+        );
 }

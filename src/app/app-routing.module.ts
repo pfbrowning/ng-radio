@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
-import { AuthGuardService } from '@core/services'
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from '@core/services';
 
 const routes: Routes = [
     {
@@ -44,7 +44,7 @@ const routes: Routes = [
         path: '**',
         redirectTo: 'suggested-stations',
     },
-]
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

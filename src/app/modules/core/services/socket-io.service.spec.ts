@@ -1,13 +1,13 @@
-import { TestBed } from '@angular/core/testing'
-import { SocketIOService } from './socket-io.service'
-import { ConfigService } from './config/config.service'
-import { ConfigStubService } from '../testing/stubs/config-stub-service.spec'
-import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service'
-import { LoggingService } from './logging/logging.service'
-import { CoreSpyFactories } from '@core/testing'
+import { TestBed } from '@angular/core/testing';
+import { SocketIOService } from './socket-io.service';
+import { ConfigService } from './config/config.service';
+import { ConfigStubService } from '../testing/stubs/config-stub-service.spec';
+import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
+import { LoggingService } from './logging/logging.service';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('SocketIOService', () => {
-    let service: SocketIOService
+    let service: SocketIOService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -22,11 +22,11 @@ describe('SocketIOService', () => {
                     useValue: CoreSpyFactories.createLoggingServiceSpy(),
                 },
             ],
-        })
-        service = TestBed.inject(SocketIOService)
-    })
+        });
+        service = TestBed.inject(SocketIOService);
+    });
 
     it('should be created', () => {
-        expect(service).toBeTruthy()
-    })
-})
+        expect(service).toBeTruthy();
+    });
+});

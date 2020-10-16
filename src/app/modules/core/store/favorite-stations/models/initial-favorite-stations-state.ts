@@ -1,4 +1,4 @@
-import { FavoriteStationsState } from './favorite-stations-state'
+import { FavoriteStationsState } from './favorite-stations-state';
 
 export const initialFavoriteStationsState: FavoriteStationsState = {
     favoriteStations: null,
@@ -9,4 +9,4 @@ export const initialFavoriteStationsState: FavoriteStationsState = {
     addInProgressUrls: [],
     updateInProgressIds: [],
     removeInProgressIds: [],
-}
+};

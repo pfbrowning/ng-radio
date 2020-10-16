@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
-import { Station } from '@core/models/player'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Station } from '@core/models/player';
 
 @Component({
     selector: 'blr-station-thumbnail',
@@ -8,5 +8,5 @@ import { Station } from '@core/models/player'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StationThumbnailComponent {
-    @Input() station: Station
+    @Input() station: Station;
 }

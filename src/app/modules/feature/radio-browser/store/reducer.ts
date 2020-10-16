@@ -1,10 +1,10 @@
-import { createReducer, on } from '@ngrx/store'
-import { RadioBrowserSearchState } from '../models/radio-browser-search-state'
-import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-search-state'
-import { RadioBrowserResultsActions } from '@core/store'
-import * as RadioBrowserActions from './actions'
+import { createReducer, on } from '@ngrx/store';
+import { RadioBrowserSearchState } from '../models/radio-browser-search-state';
+import { initialRadioBrowserSearchState } from '../models/initial-radio-browser-search-state';
+import { RadioBrowserResultsActions } from '@core/store';
+import * as RadioBrowserActions from './actions';
 
-export const radioBrowserSearchFeatureKey = 'radioBrowserSearch'
+export const radioBrowserSearchFeatureKey = 'radioBrowserSearch';
 
 export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
     initialRadioBrowserSearchState,
@@ -77,4 +77,4 @@ export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
         tagSuggestions: null,
         tagSuggestionsFetchInProgress: false,
     }))
-)
+);

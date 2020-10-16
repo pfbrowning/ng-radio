@@ -1,7 +1,7 @@
-import { createReducer, on } from '@ngrx/store'
-import { initialStreamMetadataState } from './models/initial-stream-metadata-state'
-import { StreamMetadataState } from './models/stream-metadata-state'
-import * as Actions from './actions'
+import { createReducer, on } from '@ngrx/store';
+import { initialStreamMetadataState } from './models/initial-stream-metadata-state';
+import { StreamMetadataState } from './models/stream-metadata-state';
+import * as Actions from './actions';
 
 export const streamMetadataReducer = createReducer<StreamMetadataState>(
     initialStreamMetadataState,
@@ -22,4 +22,4 @@ export const streamMetadataReducer = createReducer<StreamMetadataState>(
             [url]: title,
         },
     }))
-)
+);

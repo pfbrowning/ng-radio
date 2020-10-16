@@ -1,21 +1,21 @@
-import { TestBed } from '@angular/core/testing'
-import { provideMockActions } from '@ngrx/effects/testing'
-import { Observable } from 'rxjs'
-import { SuggestedStationsEffects } from './suggested-stations.effects'
-import { provideMockStore } from '@ngrx/store/testing'
-import { initialSuggestedStationsRootState } from '../models/initial-suggested-stations-root-state'
-import { SuggestedStationsService } from '../services/suggested-stations.service'
-import { createSuggestedStationsServiceSpy } from '../suggested-stations-spy-factories.spec'
-import { CoreSpyFactories, ConfigStubService } from '@core/testing'
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
+import { SuggestedStationsEffects } from './suggested-stations.effects';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialSuggestedStationsRootState } from '../models/initial-suggested-stations-root-state';
+import { SuggestedStationsService } from '../services/suggested-stations.service';
+import { createSuggestedStationsServiceSpy } from '../suggested-stations-spy-factories.spec';
+import { CoreSpyFactories, ConfigStubService } from '@core/testing';
 import {
     NotificationsService,
     RadioBrowserService,
     ConfigService,
-} from '@core/services'
+} from '@core/services';
 
 describe('SuggestedStationsEffects', () => {
-    const actions$: Observable<any> = null
-    let effects: SuggestedStationsEffects
+    const actions$: Observable<any> = null;
+    let effects: SuggestedStationsEffects;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,14 +39,14 @@ describe('SuggestedStationsEffects', () => {
                     useValue: CoreSpyFactories.createNotificationsServiceSpy(),
                 },
             ],
-        })
+        });
 
         effects = TestBed.inject<SuggestedStationsEffects>(
             SuggestedStationsEffects
-        )
-    })
+        );
+    });
 
     it('should be created', () => {
-        expect(effects).toBeTruthy()
-    })
-})
+        expect(effects).toBeTruthy();
+    });
+});

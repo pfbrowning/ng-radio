@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
-import { FavoriteStationsResolver } from './resolvers/favorite-stations.resolver'
-import { FavoriteStationsComponent } from './components/favorite-stations/favorite-stations.component'
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { FavoriteStationsResolver } from './resolvers/favorite-stations.resolver';
+import { FavoriteStationsComponent } from './components/favorite-stations/favorite-stations.component';
 
 const routes: Routes = [
     {
@@ -9,7 +9,7 @@ const routes: Routes = [
         component: FavoriteStationsComponent,
         resolve: { favoriteStations: FavoriteStationsResolver },
     },
-]
+];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

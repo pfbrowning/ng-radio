@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core'
-import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects'
-import { map, catchError, switchMap, tap } from 'rxjs/operators'
-import { of } from 'rxjs'
-import { Action, Store } from '@ngrx/store'
-import { SuggestedStationsRootState } from '../models/suggested-stations-root-state'
-import { SuggestedStationsService } from '../services/suggested-stations.service'
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Action, Store } from '@ngrx/store';
+import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
+import { SuggestedStationsService } from '../services/suggested-stations.service';
 import {
     NotificationsService,
     RadioBrowserService,
     ConfigService,
-} from '@core/services'
-import * as SuggestedStationsActions from './suggested-stations.actions'
+} from '@core/services';
+import * as SuggestedStationsActions from './suggested-stations.actions';
 
 @Injectable()
 export class SuggestedStationsEffects implements OnInitEffects {
@@ -24,7 +24,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 SuggestedStationsActions.topVotedFetchStart(),
             ])
         )
-    )
+    );
 
     fetchDeveloperSuggested$ = createEffect(() =>
         this.actions$.pipe(
@@ -46,7 +46,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 )
             )
         )
-    )
+    );
 
     fetchTopClicked$ = createEffect(() =>
         this.actions$.pipe(
@@ -68,7 +68,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 )
             )
         )
-    )
+    );
 
     fetchTopVoted$ = createEffect(() =>
         this.actions$.pipe(
@@ -90,7 +90,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 )
             )
         )
-    )
+    );
 
     notifyDeveloperSuggestedFetchFailed$ = createEffect(
         () =>
@@ -103,7 +103,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     notifyTopClickedFetchFailed$ = createEffect(
         () =>
@@ -116,7 +116,7 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     notifyTopVotedFailed$ = createEffect(
         () =>
@@ -127,10 +127,10 @@ export class SuggestedStationsEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     ngrxOnInitEffects(): Action {
-        return SuggestedStationsActions.effectsInit()
+        return SuggestedStationsActions.effectsInit();
     }
 
     constructor(

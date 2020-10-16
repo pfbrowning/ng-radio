@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing'
-import { ConfigService } from '../config/config.service'
-import { ConfigStubService } from '@core/testing'
-import { CoreSpyFactories } from '@core/testing'
-import { LoggingService, AppInsightsService } from '@core/services'
+import { TestBed } from '@angular/core/testing';
+import { ConfigService } from '../config/config.service';
+import { ConfigStubService } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
+import { LoggingService, AppInsightsService } from '@core/services';
 
 describe('LoggingService', () => {
-    let loggingService: LoggingService
+    let loggingService: LoggingService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -16,12 +16,12 @@ describe('LoggingService', () => {
                     useValue: CoreSpyFactories.createAppInsightsServiceSpy(),
                 },
             ],
-        })
+        });
 
-        loggingService = TestBed.inject(LoggingService)
-    })
+        loggingService = TestBed.inject(LoggingService);
+    });
 
     it('should be created', () => {
-        expect(loggingService).toBeTruthy()
-    })
-})
+        expect(loggingService).toBeTruthy();
+    });
+});

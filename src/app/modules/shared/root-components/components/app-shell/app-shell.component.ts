@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
     PlayerFacadeService,
     FavoriteStationsFacadeService,
     StreamMetadataFacadeService,
-} from '@core/store'
+} from '@core/store';
 
 @Component({
     selector: 'blr-app-shell',
@@ -19,21 +19,21 @@ export class AppShellComponent {
     ) {}
 
     // Player
-    public currentStation$ = this.playerFacade.currentStation$
-    public playerStatus$ = this.playerFacade.playerStatus$
+    public currentStation$ = this.playerFacade.currentStation$;
+    public playerStatus$ = this.playerFacade.playerStatus$;
 
     // Favorite Stations
     public favoriteMatchingCurrentStation$ = this.favoriteStationsFacade
-        .favoriteMatchingCurrentStation$
+        .favoriteMatchingCurrentStation$;
     public currentStationFavoritesProcessingState$ = this.favoriteStationsFacade
-        .currentStationFavoritesProcessingState$
+        .currentStationFavoritesProcessingState$;
     public editModalSaveInProgress$ = this.favoriteStationsFacade
-        .editModalSaveInProgress$
-    public showEditModal$ = this.favoriteStationsFacade.showEditModal$
+        .editModalSaveInProgress$;
+    public showEditModal$ = this.favoriteStationsFacade.showEditModal$;
     public existingStationForEdit$ = this.favoriteStationsFacade
-        .existingStationForEdit$
+        .existingStationForEdit$;
     public favoritesFetchInProgress$ = this.favoriteStationsFacade
-        .favoritesFetchInProgress$
+        .favoritesFetchInProgress$;
     public metadataForCurrentStation$ = this.metadataFacade
-        .metadataForCurrentStation$
+        .metadataForCurrentStation$;
 }

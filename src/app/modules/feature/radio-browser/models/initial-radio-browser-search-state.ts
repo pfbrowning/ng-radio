@@ -1,4 +1,4 @@
-import { RadioBrowserSearchState } from './radio-browser-search-state'
+import { RadioBrowserSearchState } from './radio-browser-search-state';
 
 export const initialRadioBrowserSearchState: RadioBrowserSearchState = {
     nameTerm: null,
@@ -11,4 +11,4 @@ export const initialRadioBrowserSearchState: RadioBrowserSearchState = {
     countriesFetchFailed: false,
     tagSuggestions: null,
     tagSuggestionsFetchInProgress: false,
-}
+};

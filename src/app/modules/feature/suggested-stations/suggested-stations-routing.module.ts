@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
-import { SuggestedStationsComponent } from './components/suggested-stations/suggested-stations.component'
-import { SuggestedStationsResolver } from './resolvers/suggested-stations.resolver'
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { SuggestedStationsComponent } from './components/suggested-stations/suggested-stations.component';
+import { SuggestedStationsResolver } from './resolvers/suggested-stations.resolver';
 
 const routes: Routes = [
     {
@@ -9,7 +9,7 @@ const routes: Routes = [
         component: SuggestedStationsComponent,
         resolve: { suggestedStations: SuggestedStationsResolver },
     },
-]
+];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { FavoriteStationsActions } from './actions'
-import { RouteResolverActions } from './actions'
-import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.actions'
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { FavoriteStationsActions } from './actions';
+import { RouteResolverActions } from './actions';
+import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.actions';
 import {
     switchMap,
     catchError,
@@ -11,12 +11,12 @@ import {
     filter,
     mergeMap,
     tap,
-} from 'rxjs/operators'
-import { of } from 'rxjs'
-import { selectStation } from '../player/player-actions'
-import { FavoriteStationsService, NotificationsService } from '@core/services'
-import { PlayerFacadeService } from '../player/player-facade.service'
-import { FavoriteStationsFacadeService } from './favorite-stations-facade.service'
+} from 'rxjs/operators';
+import { of } from 'rxjs';
+import { selectStation } from '../player/player-actions';
+import { FavoriteStationsService, NotificationsService } from '@core/services';
+import { PlayerFacadeService } from '../player/player-facade.service';
+import { FavoriteStationsFacadeService } from './favorite-stations-facade.service';
 
 @Injectable()
 export class FavoriteStationsEffects {
@@ -41,14 +41,14 @@ export class FavoriteStationsEffects {
             filter(([, stations, fetching]) => !stations && !fetching),
             map(() => FavoriteStationsActions.fetchStationsStart())
         )
-    )
+    );
 
     fetchOnInitialStationSelect$ = createEffect(() =>
         this.actions$.pipe(
             ofType(selectStation),
             map(() => FavoriteStationsActions.fetchStationsSubmit())
         )
-    )
+    );
 
     fetchStations$ = createEffect(() =>
         this.actions$.pipe(
@@ -70,7 +70,7 @@ export class FavoriteStationsEffects {
                 )
             )
         )
-    )
+    );
 
     addCurrentStationToFavoritesRequested$ = createEffect(() =>
         this.actions$.pipe(
@@ -80,7 +80,7 @@ export class FavoriteStationsEffects {
                 FavoriteStationsActions.addToFavoritesStart({ station })
             )
         )
-    )
+    );
 
     addFavorite$ = createEffect(() =>
         this.actions$.pipe(
@@ -103,7 +103,7 @@ export class FavoriteStationsEffects {
                 )
             )
         )
-    )
+    );
 
     updateFavorite$ = createEffect(() =>
         this.actions$.pipe(
@@ -128,7 +128,7 @@ export class FavoriteStationsEffects {
                     )
             )
         )
-    )
+    );
 
     removeCurrentStationFromFavoritesRequested$ = createEffect(() =>
         this.actions$.pipe(
@@ -142,7 +142,7 @@ export class FavoriteStationsEffects {
                 })
             )
         )
-    )
+    );
 
     removeFavorite$ = createEffect(() =>
         this.actions$.pipe(
@@ -166,7 +166,7 @@ export class FavoriteStationsEffects {
                     )
             )
         )
-    )
+    );
 
     openStationEditCurrent$ = createEffect(() =>
         this.actions$.pipe(
@@ -180,7 +180,7 @@ export class FavoriteStationsEffects {
                 })
             )
         )
-    )
+    );
 
     notifyAddSucceeded$ = createEffect(
         () =>
@@ -194,7 +194,7 @@ export class FavoriteStationsEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     notifyAddFailed$ = createEffect(
         () =>
@@ -208,7 +208,7 @@ export class FavoriteStationsEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     notifyRemoveFailed$ = createEffect(
         () =>
@@ -222,5 +222,5 @@ export class FavoriteStationsEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 }

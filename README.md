@@ -59,7 +59,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Configure [prettier](https://www.npmjs.com/package/prettier)
   * Replace NoSleep.js with an alternative which works with Firefox mobile and which [isn't CommonJS-based](https://angular.io/guide/build#configuring-commonjs-dependencies), or remove the "Keep Awake" feature entirely if it's not worth the trouble.
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture

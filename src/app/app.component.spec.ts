@@ -1,21 +1,21 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing'
-import { AppComponent } from './app.component'
-import { MatIconModule } from '@angular/material/icon'
-import { ToastModule } from 'primeng/toast'
-import { MessageService } from 'primeng/api'
-import { RouterStateService } from '@core/services'
-import { ConfirmDialogModule } from 'primeng/confirmdialog'
-import { ConfirmationService } from 'primeng/api'
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { RouterStateService } from '@core/services';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 import {
     GlobalSpinnerStubComponent,
     ToasterContainerStubComponent,
-} from '@root-components/testing'
-import { RouterStateStubService, CoreSpyFactories } from '@core/testing'
-import { AuthenticationFacadeService } from '@core/store'
+} from '@root-components/testing';
+import { RouterStateStubService, CoreSpyFactories } from '@core/testing';
+import { AuthenticationFacadeService } from '@core/store';
 
 describe('AppComponent', () => {
-    let component: AppComponent
-    let fixture: ComponentFixture<AppComponent>
+    let component: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -37,17 +37,17 @@ describe('AppComponent', () => {
                     useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
                 },
             ],
-        }).compileComponents()
-    }))
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AppComponent)
-        component = fixture.componentInstance
-    })
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+    });
 
     it('should create the app', () => {
-        fixture.detectChanges()
+        fixture.detectChanges();
 
-        expect(component).toBeTruthy()
-    })
-})
+        expect(component).toBeTruthy();
+    });
+});

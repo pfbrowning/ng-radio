@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing'
-import { FavoriteStationsService } from './favorite-stations.service'
-import { ConfigService } from '@core/services'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { ConfigStubService } from '@core/testing'
+import { TestBed } from '@angular/core/testing';
+import { FavoriteStationsService } from './favorite-stations.service';
+import { ConfigService } from '@core/services';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigStubService } from '@core/testing';
 
 describe('FavoriteStationsService', () => {
-    let service: FavoriteStationsService
+    let service: FavoriteStationsService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -13,11 +13,11 @@ describe('FavoriteStationsService', () => {
             providers: [
                 { provide: ConfigService, useClass: ConfigStubService },
             ],
-        })
-        service = TestBed.inject(FavoriteStationsService)
-    })
+        });
+        service = TestBed.inject(FavoriteStationsService);
+    });
 
     it('should be created', () => {
-        expect(service).toBeTruthy()
-    })
-})
+        expect(service).toBeTruthy();
+    });
+});

@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'blr-metadata-text',
@@ -11,5 +11,5 @@ export class MetadataTextComponent {
   however my intention is to update the radio proxy to include extra metadata from the stream header to fall back on when the
   title string is empty.  At that point, this is where that "what should I display" logic will live.  If I decide not to go in
   that direction, then at that point removing this component will be the appropriate thing to do. */
-    @Input() metadata: string
+    @Input() metadata: string;
 }

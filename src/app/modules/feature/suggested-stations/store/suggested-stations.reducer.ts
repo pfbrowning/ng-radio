@@ -1,9 +1,9 @@
-import { Action, createReducer, on } from '@ngrx/store'
-import { initialSuggestedStationsState } from '../models/initial-suggested-stations-state'
-import { SuggestedStationsState } from '../models/suggested-stations-state'
-import * as SuggestedStationsActions from './suggested-stations.actions'
+import { Action, createReducer, on } from '@ngrx/store';
+import { initialSuggestedStationsState } from '../models/initial-suggested-stations-state';
+import { SuggestedStationsState } from '../models/suggested-stations-state';
+import * as SuggestedStationsActions from './suggested-stations.actions';
 
-export const suggestedStationsFeatureKey = 'suggestedStations'
+export const suggestedStationsFeatureKey = 'suggestedStations';
 
 const reducer = createReducer(
     initialSuggestedStationsState,
@@ -58,11 +58,11 @@ const reducer = createReducer(
         topVotedFetchInProgress: false,
         topVotedFetchFailed: true,
     }))
-)
+);
 
 export function suggestedStationsReducer(
     state: SuggestedStationsState | undefined,
     action: Action
 ) {
-    return reducer(state, action)
+    return reducer(state, action);
 }

@@ -1,2 +1,2 @@
-import * as FavoriteStationsPageActions from './favorite-stations-page.actions'
-export { FavoriteStationsPageActions }
+import * as FavoriteStationsPageActions from './favorite-stations-page.actions';
+export { FavoriteStationsPageActions };

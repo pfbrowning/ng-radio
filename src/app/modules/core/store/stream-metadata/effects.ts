@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'
-import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
     map,
     distinctUntilChanged,
@@ -7,11 +7,11 @@ import {
     withLatestFrom,
     filter,
     switchMap,
-} from 'rxjs/operators'
-import { StreamMetadataFacadeService } from './stream-metadata-facade.service'
-import { isEqual } from 'lodash-es'
-import { SocketIOService } from '../../services/socket-io.service'
-import * as StreamMetadataActions from './actions'
+} from 'rxjs/operators';
+import { StreamMetadataFacadeService } from './stream-metadata-facade.service';
+import { isEqual } from 'lodash-es';
+import { SocketIOService } from '../../services/socket-io.service';
+import * as StreamMetadataActions from './actions';
 
 @Injectable()
 export class StreamMetadataEffects {
@@ -30,7 +30,7 @@ export class StreamMetadataEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     metadataReceived$ = createEffect(() =>
         this.socketIOService.metadataReceived$.pipe(
@@ -38,7 +38,7 @@ export class StreamMetadataEffects {
                 StreamMetadataActions.metadataReceived({ url, title })
             )
         )
-    )
+    );
 
     setUrlsOnChanged$ = createEffect(() =>
         this.streamMetadataFacade.urlsSelectedForMetadata$.pipe(
@@ -48,7 +48,7 @@ export class StreamMetadataEffects {
             skip(1),
             map((streams) => StreamMetadataActions.setStreamList({ streams }))
         )
-    )
+    );
 
     // Re-send the url list upon re-connection in case of disconnects
     setUrlsOnSocketInit$ = createEffect(() =>
@@ -59,7 +59,7 @@ export class StreamMetadataEffects {
                 StreamMetadataActions.setStreamList({ streams })
             )
         )
-    )
+    );
 
     // Reconnect to Socket.IO if the server closed the connection while we're subscribed to (a) stream(s)
     reconnect$ = createEffect(
@@ -72,5 +72,5 @@ export class StreamMetadataEffects {
                 switchMap(() => this.socketIOService.connect())
             ),
         { dispatch: false }
-    )
+    );
 }

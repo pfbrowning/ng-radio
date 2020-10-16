@@ -1,4 +1,4 @@
-import { SuggestedStationsState } from './suggested-stations-state'
+import { SuggestedStationsState } from './suggested-stations-state';
 
 export const initialSuggestedStationsState: SuggestedStationsState = {
     developerSuggested: null,
@@ -10,4 +10,4 @@ export const initialSuggestedStationsState: SuggestedStationsState = {
     topVoted: null,
     topVotedFetchInProgress: false,
     topVotedFetchFailed: false,
-}
+};

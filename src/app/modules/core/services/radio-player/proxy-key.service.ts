@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { ConfigService } from '../config/config.service'
-import { Observable } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ConfigService } from '../config/config.service';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ProxyKeyService {
@@ -18,6 +18,6 @@ export class ProxyKeyService {
                     responseType: 'text',
                 })
             )
-        )
+        );
     }
 }

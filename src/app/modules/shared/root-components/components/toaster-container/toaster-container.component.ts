@@ -5,10 +5,10 @@ import {
     ChangeDetectorRef,
     OnDestroy,
     AfterViewInit,
-} from '@angular/core'
-import { MessageService } from 'primeng/api'
-import { SubSink } from 'subsink'
-import { ToasterReadyService } from '@core/services'
+} from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { SubSink } from 'subsink';
+import { ToasterReadyService } from '@core/services';
 
 @Component({
     selector: 'blr-toaster-container',
@@ -24,19 +24,19 @@ export class ToasterContainerComponent
         private toasterReadyService: ToasterReadyService
     ) {}
 
-    private subs = new SubSink()
+    private subs = new SubSink();
 
     public ngOnInit(): void {
         this.subs.sink = this.messageService.messageObserver.subscribe(() => {
-            this.changeDetectorRef.markForCheck()
-        })
+            this.changeDetectorRef.markForCheck();
+        });
     }
 
     public ngOnDestroy(): void {
-        this.subs.unsubscribe()
+        this.subs.unsubscribe();
     }
 
     public ngAfterViewInit(): void {
-        this.toasterReadyService.toasterInitialized()
+        this.toasterReadyService.toasterInitialized();
     }
 }

@@ -1,15 +1,15 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
-import { Store } from '@ngrx/store'
-import { RootState } from '@core'
-import { ConfirmationService } from 'primeng/api'
-import { FavoriteStationsActions } from '@core/store'
-import { Station } from '@core/models/player'
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { RootState } from '@core';
+import { ConfirmationService } from 'primeng/api';
+import { FavoriteStationsActions } from '@core/store';
+import { Station } from '@core/models/player';
 import {
     PlayerActions,
     StreamMetadataFacadeService,
     FavoriteStationsFacadeService,
-} from '@core/store'
-import { FavoriteStationsFeatureFacadeService } from '../../store/favorite-stations-feature-facade.service'
+} from '@core/store';
+import { FavoriteStationsFeatureFacadeService } from '../../store/favorite-stations-feature-facade.service';
 
 @Component({
     selector: 'blr-favorite-stations',
@@ -26,34 +26,34 @@ export class FavoriteStationsComponent {
         private favoriteStationsFeatureFacade: FavoriteStationsFeatureFacadeService
     ) {}
 
-    public columns = ['name', 'now-playing', 'actions']
+    public columns = ['name', 'now-playing', 'actions'];
 
-    public stationRows$ = this.favoriteStationsFacade.favoriteStationRows$
-    public metadata$ = this.streamMetadataFacade.streamsMap$
+    public stationRows$ = this.favoriteStationsFacade.favoriteStationRows$;
+    public metadata$ = this.streamMetadataFacade.streamsMap$;
 
     public onRowClicked(station: Station): void {
-        this.store.dispatch(PlayerActions.selectStation({ station }))
+        this.store.dispatch(PlayerActions.selectStation({ station }));
     }
 
     public onDeleteClicked(station: Station, event): void {
         // Don't propagate up to row click
-        event.stopPropagation()
+        event.stopPropagation();
         this.confirmationService.confirm({
             message: `Are you sure you want to delete ${station.title}?`,
             accept: () =>
                 this.favoriteStationsFeatureFacade.deleteFavoriteConfirmed(
                     station.stationId
                 ),
-        })
+        });
     }
 
     public onEditClicked(station: Station, event): void {
         // Don't propagate up to row click
-        event.stopPropagation()
+        event.stopPropagation();
         this.store.dispatch(
             FavoriteStationsActions.openStationEditExisting({
                 stationId: station.stationId,
             })
-        )
+        );
     }
 }

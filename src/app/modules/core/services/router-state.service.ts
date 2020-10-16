@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 import {
     Router,
     RouterEvent,
@@ -6,23 +6,23 @@ import {
     NavigationEnd,
     NavigationCancel,
     NavigationError,
-} from '@angular/router'
-import { BehaviorSubject } from 'rxjs'
+} from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RouterStateService {
-    private navigationInProgressSource = new BehaviorSubject<boolean>(false)
-    public navigationInProgress$ = this.navigationInProgressSource.asObservable()
+    private navigationInProgressSource = new BehaviorSubject<boolean>(false);
+    public navigationInProgress$ = this.navigationInProgressSource.asObservable();
 
     constructor(private router: Router) {
         this.router.events.subscribe((routerEvent: RouterEvent) =>
             this.onRouterEvent(routerEvent)
-        )
+        );
     }
 
     public onRouterEvent(routerEvent: RouterEvent) {
         if (routerEvent instanceof NavigationStart) {
-            this.navigationInProgressSource.next(true)
+            this.navigationInProgressSource.next(true);
         }
 
         if (
@@ -30,7 +30,7 @@ export class RouterStateService {
             routerEvent instanceof NavigationCancel ||
             routerEvent instanceof NavigationError
         ) {
-            this.navigationInProgressSource.next(false)
+            this.navigationInProgressSource.next(false);
         }
     }
 }

@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
-import { Store } from '@ngrx/store'
-import { RootState } from '@core'
-import { FavoriteStationsActions } from '@core/store'
-import { AuthenticationFacadeService } from '@core/store'
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { RootState } from '@core';
+import { FavoriteStationsActions } from '@core/store';
+import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
     selector: 'blr-side-nav',
@@ -11,7 +11,7 @@ import { AuthenticationFacadeService } from '@core/store'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent {
-    public authenticated$ = this.authenticationFacade.authenticated$
+    public authenticated$ = this.authenticationFacade.authenticated$;
 
     constructor(
         private store: Store<RootState>,
@@ -19,14 +19,14 @@ export class SidenavComponent {
     ) {}
 
     public onCustomStationClicked(): void {
-        this.store.dispatch(FavoriteStationsActions.openStationEditNew())
+        this.store.dispatch(FavoriteStationsActions.openStationEditNew());
     }
 
     public onLogoutClicked() {
-        this.authenticationFacade.logoutButtonClicked()
+        this.authenticationFacade.logoutButtonClicked();
     }
 
     public onLoginClicked() {
-        this.authenticationFacade.logInRedirect()
+        this.authenticationFacade.logInRedirect();
     }
 }

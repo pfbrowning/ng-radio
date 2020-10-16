@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core'
-import { Resolve } from '@angular/router'
-import { Observable } from 'rxjs'
-import { map, filter, take } from 'rxjs/operators'
-import { SuggestedStationsRootState } from '../models/suggested-stations-root-state'
-import { Store, select } from '@ngrx/store'
-import { selectAreSuggestedStationsPresentOrFailed } from '../store/suggested-stations.selectors'
+import { Injectable } from '@angular/core';
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, filter, take } from 'rxjs/operators';
+import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
+import { Store, select } from '@ngrx/store';
+import { selectAreSuggestedStationsPresentOrFailed } from '../store/suggested-stations.selectors';
 
 @Injectable()
 export class SuggestedStationsResolver implements Resolve<void> {
@@ -16,6 +16,6 @@ export class SuggestedStationsResolver implements Resolve<void> {
             filter((resolved) => resolved),
             map(() => null),
             take(1)
-        )
+        );
     }
 }

@@ -1,14 +1,14 @@
-import { createReducer, on } from '@ngrx/store'
+import { createReducer, on } from '@ngrx/store';
 import {
     selectStation,
     playAudioStart,
     playAudioSucceeded,
     playAudioFailed,
     audioPaused,
-} from './player-actions'
-import { initialPlayerState } from './models/initial-player-state'
-import { PlayerStatus } from '../../models/player/player-status'
-import { PlayerState } from './models/player-state'
+} from './player-actions';
+import { initialPlayerState } from './models/initial-player-state';
+import { PlayerStatus } from '../../models/player/player-status';
+import { PlayerState } from './models/player-state';
 
 export const playerReducer = createReducer<PlayerState>(
     initialPlayerState,
@@ -33,4 +33,4 @@ export const playerReducer = createReducer<PlayerState>(
         ...state,
         playerStatus: PlayerStatus.Stopped,
     }))
-)
+);

@@ -1,20 +1,20 @@
-import { TestBed } from '@angular/core/testing'
-import { provideMockActions } from '@ngrx/effects/testing'
-import { Observable } from 'rxjs'
-import { provideMockStore } from '@ngrx/store/testing'
-import { initialRootState } from '@core'
-import { RouterTestingModule } from '@angular/router/testing'
-import { CoreSpyFactories, ConfigStubService } from '@core/testing'
+import { TestBed } from '@angular/core/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Observable } from 'rxjs';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CoreSpyFactories, ConfigStubService } from '@core/testing';
 import {
     NotificationsService,
     RadioBrowserService,
     ConfigService,
-} from '@core/services'
-import { FavoriteStationsFeatureEffects } from './effects'
+} from '@core/services';
+import { FavoriteStationsFeatureEffects } from './effects';
 
 describe('FavoriteStationsFeatureEffects', () => {
-    const actions$: Observable<any> = null
-    let effects: FavoriteStationsFeatureEffects
+    const actions$: Observable<any> = null;
+    let effects: FavoriteStationsFeatureEffects;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -33,14 +33,14 @@ describe('FavoriteStationsFeatureEffects', () => {
                     useValue: CoreSpyFactories.createNotificationsServiceSpy(),
                 },
             ],
-        })
+        });
 
         effects = TestBed.inject<FavoriteStationsFeatureEffects>(
             FavoriteStationsFeatureEffects
-        )
-    })
+        );
+    });
 
     it('should be created', () => {
-        expect(effects).toBeTruthy()
-    })
-})
+        expect(effects).toBeTruthy();
+    });
+});

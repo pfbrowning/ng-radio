@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'
-import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
     switchMap,
     withLatestFrom,
@@ -7,19 +7,19 @@ import {
     catchError,
     tap,
     filter,
-} from 'rxjs/operators'
-import { of } from 'rxjs'
-import { Store, select } from '@ngrx/store'
-import { RadioBrowserSearchRootState } from '../models/radio-browser-search-root-state'
-import { resolverParams } from './selectors'
+} from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { RadioBrowserSearchRootState } from '../models/radio-browser-search-root-state';
+import { resolverParams } from './selectors';
 import {
     NotificationsService,
     RadioBrowserService,
     ConfigService,
-} from '@core/services'
-import { RadioBrowserResultsActions } from '@core/store'
-import * as RadioBrowserSearchActions from './actions'
-import * as RadioBrowserSearchSelectors from './selectors'
+} from '@core/services';
+import { RadioBrowserResultsActions } from '@core/store';
+import * as RadioBrowserSearchActions from './actions';
+import * as RadioBrowserSearchSelectors from './selectors';
 
 @Injectable()
 export class RadioBrowserSearchEffects {
@@ -33,7 +33,7 @@ export class RadioBrowserSearchEffects {
             ),
             map(() => RadioBrowserSearchActions.countriesFetchStart())
         )
-    )
+    );
 
     fetchCountries$ = createEffect(() =>
         this.actions$.pipe(
@@ -55,7 +55,7 @@ export class RadioBrowserSearchEffects {
                 )
             )
         )
-    )
+    );
 
     fetchTagSuggestions$ = createEffect(() =>
         this.actions$.pipe(
@@ -82,7 +82,7 @@ export class RadioBrowserSearchEffects {
                 )
             )
         )
-    )
+    );
 
     searchOnTermsUpdated$ = createEffect(() =>
         this.actions$.pipe(
@@ -93,14 +93,14 @@ export class RadioBrowserSearchEffects {
             ),
             map(() => RadioBrowserSearchActions.searchStart())
         )
-    )
+    );
 
     fetchTagSuggestionsOnTermUpdated$ = createEffect(() =>
         this.actions$.pipe(
             ofType(RadioBrowserSearchActions.tagTermChanged),
             map(() => RadioBrowserSearchActions.tagSuggestionsFetchStart())
         )
-    )
+    );
 
     fetchTagSuggestionsOnInitialFocus$ = createEffect(() =>
         this.actions$.pipe(
@@ -113,7 +113,7 @@ export class RadioBrowserSearchEffects {
             filter(([, suggestions]) => suggestions == null),
             map(() => RadioBrowserSearchActions.tagSuggestionsFetchStart())
         )
-    )
+    );
 
     performSearch$ = createEffect(() =>
         this.actions$.pipe(
@@ -148,7 +148,7 @@ export class RadioBrowserSearchEffects {
                     )
             )
         )
-    )
+    );
 
     notifySearchFailed$ = createEffect(
         () =>
@@ -157,7 +157,7 @@ export class RadioBrowserSearchEffects {
                 tap(() => this.notificationsService.error('Search Failed'))
             ),
         { dispatch: false }
-    )
+    );
 
     notifyTagSuggestionsFetchFailed$ = createEffect(
         () =>
@@ -170,7 +170,7 @@ export class RadioBrowserSearchEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     constructor(
         private actions$: Actions,

@@ -4,8 +4,8 @@ import {
     Output,
     EventEmitter,
     ChangeDetectionStrategy,
-} from '@angular/core'
-import { Station } from '@core/models/player'
+} from '@angular/core';
+import { Station } from '@core/models/player';
 
 @Component({
     selector: 'blr-suggested-stations-section',
@@ -14,11 +14,11 @@ import { Station } from '@core/models/player'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuggestedStationsSectionComponent {
-    @Input() stations: Station[]
-    @Input() header: string
-    @Output() stationSelected = new EventEmitter<Station>()
+    @Input() stations: Station[];
+    @Input() header: string;
+    @Output() stationSelected = new EventEmitter<Station>();
 
     onStationClicked(station: Station) {
-        this.stationSelected.emit(station)
+        this.stationSelected.emit(station);
     }
 }

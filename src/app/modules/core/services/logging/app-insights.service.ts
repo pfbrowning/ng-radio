@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 import {
     ApplicationInsights,
     SeverityLevel as MicrosoftSeverity,
     IExceptionTelemetry,
     ITraceTelemetry,
-} from '@microsoft/applicationinsights-web'
-import { ReplaySubject } from 'rxjs'
-import { take } from 'rxjs/operators'
-import { LoggerSeverity as GenericSeverity } from '../../models/logging/logger-severity'
-import { ConfigService } from '../config/config.service'
-import isFalsyOrWhitespace from 'is-falsy-or-whitespace'
+} from '@microsoft/applicationinsights-web';
+import { ReplaySubject } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { LoggerSeverity as GenericSeverity } from '../../models/logging/logger-severity';
+import { ConfigService } from '../config/config.service';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
 @Injectable({ providedIn: 'root' })
 export class AppInsightsService {
-    private appInsights: ApplicationInsights
-    private initializedSource = new ReplaySubject<void>(1)
-    private loggerReady$ = this.initializedSource.pipe(take(1))
+    private appInsights: ApplicationInsights;
+    private initializedSource = new ReplaySubject<void>(1);
+    private loggerReady$ = this.initializedSource.pipe(take(1));
     private severities = new Map<GenericSeverity, MicrosoftSeverity>([
         [GenericSeverity.Trace, MicrosoftSeverity.Verbose],
         [GenericSeverity.Debug, MicrosoftSeverity.Verbose],
@@ -23,26 +23,26 @@ export class AppInsightsService {
         [GenericSeverity.Warn, MicrosoftSeverity.Warning],
         [GenericSeverity.Error, MicrosoftSeverity.Error],
         [GenericSeverity.Fatal, MicrosoftSeverity.Critical],
-    ])
+    ]);
 
     constructor(private configService: ConfigService) {
         this.configService.appConfig$.subscribe((config) =>
             this.initialize(config.logging.appInsightsInstrumentationKey)
-        )
+        );
     }
 
     public initialize(appInsightsInstrumentationKey: string) {
         if (isFalsyOrWhitespace(appInsightsInstrumentationKey)) {
-            return
+            return;
         }
         this.appInsights = new ApplicationInsights({
             config: {
                 instrumentationKey: appInsightsInstrumentationKey,
                 enableAutoRouteTracking: true,
             },
-        })
-        this.appInsights.loadAppInsights()
-        this.initializedSource.next()
+        });
+        this.appInsights.loadAppInsights();
+        this.initializedSource.next();
     }
 
     /**
@@ -61,9 +61,9 @@ export class AppInsightsService {
                 message,
                 properties,
                 severityLevel: this.severities.get(severityLevel),
-            }
-            this.appInsights.trackTrace(traceTelemetry)
-        })
+            };
+            this.appInsights.trackTrace(traceTelemetry);
+        });
     }
 
     /**
@@ -82,15 +82,15 @@ export class AppInsightsService {
                 exception,
                 properties,
                 severityLevel: this.severities.get(severityLevel),
-            }
-            this.appInsights.trackException(exceptionTelementry)
-        })
+            };
+            this.appInsights.trackException(exceptionTelementry);
+        });
     }
 
     public setAuthenticatedUserContext(userId: string) {
         this.loggerReady$.subscribe(() => {
-            this.appInsights.context.user.id = userId
-            this.appInsights.context.user.authenticatedId = userId
-        })
+            this.appInsights.context.user.id = userId;
+            this.appInsights.context.user.authenticatedId = userId;
+        });
     }
 }

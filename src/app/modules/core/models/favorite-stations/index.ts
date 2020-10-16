@@ -1,1 +1,1 @@
-export { CurrentStationFavoritesProcessingState } from './current-station-favorites-processing-state'
+export { CurrentStationFavoritesProcessingState } from './current-station-favorites-processing-state';

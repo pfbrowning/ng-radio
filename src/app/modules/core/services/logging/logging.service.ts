@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core'
-import { map } from 'rxjs/operators'
-import { ConfigService } from '../config/config.service'
-import { LoggerSeverity } from '../../models/logging/logger-severity'
-import { AppInsightsService } from './app-insights.service'
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { ConfigService } from '../config/config.service';
+import { LoggerSeverity } from '../../models/logging/logger-severity';
+import { AppInsightsService } from './app-insights.service';
 
 /** Serilog-inspired provider-agnostic logging service */
 @Injectable({ providedIn: 'root' })
 export class LoggingService {
     private minLogLevels$ = this.configService.appConfig$.pipe(
         map((config) => config.logging.minLogLevels)
-    )
+    );
 
     constructor(
         private configService: ConfigService,
@@ -36,12 +36,12 @@ export class LoggingService {
                     message,
                     severityLevel,
                     properties
-                )
+                );
             }
             if (minLogLevels.console && severityLevel >= minLogLevels.console) {
-                console.log(LoggerSeverity[severityLevel], message, properties)
+                console.log(LoggerSeverity[severityLevel], message, properties);
             }
-        })
+        });
     }
 
     /**
@@ -64,16 +64,16 @@ export class LoggingService {
                     exception,
                     severityLevel,
                     properties
-                )
+                );
             }
             if (minLogLevels.console && severityLevel >= minLogLevels.console) {
                 console.error(
                     LoggerSeverity[severityLevel],
                     exception,
                     properties
-                )
+                );
             }
-        })
+        });
     }
 
     /**
@@ -82,7 +82,7 @@ export class LoggingService {
      * @param properties Extra information to log as a set of key/value pairs
      */
     public trace(message: string, properties: object = null) {
-        this.log(message, LoggerSeverity.Trace, properties)
+        this.log(message, LoggerSeverity.Trace, properties);
     }
 
     /**
@@ -91,7 +91,7 @@ export class LoggingService {
      * @param properties Extra information to log as a set of key/value pairs
      */
     public debug(message: string, properties: object = null) {
-        this.log(message, LoggerSeverity.Debug, properties)
+        this.log(message, LoggerSeverity.Debug, properties);
     }
 
     /**
@@ -100,7 +100,7 @@ export class LoggingService {
      * @param properties Extra information to log as a set of key/value pairs
      */
     public warn(message: string, properties: object = null) {
-        this.log(message, LoggerSeverity.Warn, properties)
+        this.log(message, LoggerSeverity.Warn, properties);
     }
 
     /**
@@ -109,7 +109,7 @@ export class LoggingService {
      * @param properties Extra information to log as a set of key/value pairs
      */
     public info(message: string, properties: object = null) {
-        this.log(message, LoggerSeverity.Info, properties)
+        this.log(message, LoggerSeverity.Info, properties);
     }
 
     /**
@@ -118,7 +118,7 @@ export class LoggingService {
      * @param properties Extra information to log as a set of key/value pairs
      */
     public error(message: string, properties: object = null) {
-        this.log(message, LoggerSeverity.Error, properties)
+        this.log(message, LoggerSeverity.Error, properties);
     }
 
     /**
@@ -127,6 +127,6 @@ export class LoggingService {
      * @param properties Extra information to log as a set of key/value pairs
      */
     public fatal(message: string, properties: object = null) {
-        this.log(message, LoggerSeverity.Fatal, properties)
+        this.log(message, LoggerSeverity.Fatal, properties);
     }
 }

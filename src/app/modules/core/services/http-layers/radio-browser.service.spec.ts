@@ -1,19 +1,19 @@
-import { TestBed } from '@angular/core/testing'
-import { RadioBrowserService } from './radio-browser.service'
+import { TestBed } from '@angular/core/testing';
+import { RadioBrowserService } from './radio-browser.service';
 import {
     HttpClientTestingModule,
     HttpTestingController,
-} from '@angular/common/http/testing'
-import { HttpParams } from '@angular/common/http'
-import { ConfigService } from '../config/config.service'
-import { Station } from '../../models/player/station'
-import isFalsyOrWhitespace from 'is-falsy-or-whitespace'
-import { ConfigStubService } from '@core/testing'
-import theoretically from 'jasmine-theories'
+} from '@angular/common/http/testing';
+import { HttpParams } from '@angular/common/http';
+import { ConfigService } from '../config/config.service';
+import { Station } from '../../models/player/station';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import { ConfigStubService } from '@core/testing';
+import theoretically from 'jasmine-theories';
 
 describe('RadioBrowserService', () => {
-    let radioBrowserService: RadioBrowserService
-    let httpTestingController: HttpTestingController
+    let radioBrowserService: RadioBrowserService;
+    let httpTestingController: HttpTestingController;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -22,15 +22,15 @@ describe('RadioBrowserService', () => {
                 RadioBrowserService,
                 { provide: ConfigService, useClass: ConfigStubService },
             ],
-        })
+        });
 
-        radioBrowserService = TestBed.inject(RadioBrowserService)
-        httpTestingController = TestBed.inject(HttpTestingController)
-    })
+        radioBrowserService = TestBed.inject(RadioBrowserService);
+        httpTestingController = TestBed.inject(HttpTestingController);
+    });
 
     it('should be created', () => {
-        expect(radioBrowserService).toBeTruthy()
-    })
+        expect(radioBrowserService).toBeTruthy();
+    });
 
     const shouldFormRequestsInput = [
         {
@@ -56,7 +56,7 @@ describe('RadioBrowserService', () => {
             name: 'name 3',
             tag: '',
         },
-    ]
+    ];
     theoretically.it(
         'should properly form requests',
         shouldFormRequestsInput,
@@ -68,34 +68,34 @@ describe('RadioBrowserService', () => {
                 body: HttpParams
             ) => {
                 if (!isFalsyOrWhitespace(paramValue)) {
-                    expect(body.get(paramKey)).toBe(paramValue)
+                    expect(body.get(paramKey)).toBe(paramValue);
                 } else {
-                    expect(body.get(paramKey)).toBeNull()
+                    expect(body.get(paramKey)).toBeNull();
                 }
-            }
+            };
 
             // Act
             radioBrowserService
                 .search(input.name, input.country, input.tag)
                 .subscribe((response) => {
                     // Assert
-                    checkBodyParam('name', input.name, request.request.body)
+                    checkBodyParam('name', input.name, request.request.body);
                     checkBodyParam(
                         'countrycode',
                         input.country,
                         request.request.body
-                    )
-                    checkBodyParam('tag', input.tag, request.request.body)
+                    );
+                    checkBodyParam('tag', input.tag, request.request.body);
                     // Limit should be 25 regardless of what was passed in
-                    checkBodyParam('limit', '25', request.request.body)
+                    checkBodyParam('limit', '25', request.request.body);
 
-                    done()
-                })
+                    done();
+                });
 
             const request = httpTestingController.expectOne(
                 `test.com/stations/search`
-            )
-            expect(request.request.method).toBe('POST')
+            );
+            expect(request.request.method).toBe('POST');
 
             // Flush a dummy response
             request.flush([
@@ -110,9 +110,9 @@ describe('RadioBrowserService', () => {
                     language: 'English',
                     bitrate: '48',
                 },
-            ])
+            ]);
         }
-    )
+    );
 
     const shouldMapResponsesInput = [
         {
@@ -167,7 +167,7 @@ describe('RadioBrowserService', () => {
             },
             expected: new Station(null, 'name 3', 'url 3', null, 'favicon 3'),
         },
-    ]
+    ];
     theoretically.it(
         'should properly map responses',
         shouldMapResponsesInput,
@@ -178,17 +178,17 @@ describe('RadioBrowserService', () => {
                 .subscribe((stations) => {
                     // Assert
                     // The expected test entry should have been returned
-                    expect(stations.length).toBe(1)
-                    expect(stations[0]).toEqual(input.expected)
+                    expect(stations.length).toBe(1);
+                    expect(stations[0]).toEqual(input.expected);
 
-                    done()
-                })
+                    done();
+                });
 
             // Expect and flush the test response from the http testing controller
             const request = httpTestingController.expectOne(
                 `test.com/stations/search`
-            )
-            request.flush([input.response])
+            );
+            request.flush([input.response]);
         }
-    )
-})
+    );
+});

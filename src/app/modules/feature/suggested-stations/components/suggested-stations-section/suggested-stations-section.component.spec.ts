@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { SuggestedStationsSectionComponent } from './suggested-stations-section.component'
-import { StationThumbnailComponent } from '../station-thumbnail/station-thumbnail.component'
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SuggestedStationsSectionComponent } from './suggested-stations-section.component';
+import { StationThumbnailComponent } from '../station-thumbnail/station-thumbnail.component';
 
 describe('SuggestedStationsSectionComponent', () => {
-    let component: SuggestedStationsSectionComponent
-    let fixture: ComponentFixture<SuggestedStationsSectionComponent>
+    let component: SuggestedStationsSectionComponent;
+    let fixture: ComponentFixture<SuggestedStationsSectionComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -12,16 +12,16 @@ describe('SuggestedStationsSectionComponent', () => {
                 SuggestedStationsSectionComponent,
                 StationThumbnailComponent,
             ],
-        }).compileComponents()
-    }))
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SuggestedStationsSectionComponent)
-        component = fixture.componentInstance
-        fixture.detectChanges()
-    })
+        fixture = TestBed.createComponent(SuggestedStationsSectionComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     it('should create', () => {
-        expect(component).toBeTruthy()
-    })
-})
+        expect(component).toBeTruthy();
+    });
+});

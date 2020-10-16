@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { SidenavComponent } from './sidenav.component'
-import { provideMockStore } from '@ngrx/store/testing'
-import { initialRootState } from '@core'
-import { CoreSpyFactories } from '@core/testing'
-import { AuthenticationService } from '@core/services'
-import { AuthenticationFacadeService } from '@core/store'
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SidenavComponent } from './sidenav.component';
+import { provideMockStore } from '@ngrx/store/testing';
+import { initialRootState } from '@core';
+import { CoreSpyFactories } from '@core/testing';
+import { AuthenticationService } from '@core/services';
+import { AuthenticationFacadeService } from '@core/store';
 
 describe('SidenavComponent', () => {
-    let component: SidenavComponent
-    let fixture: ComponentFixture<SidenavComponent>
+    let component: SidenavComponent;
+    let fixture: ComponentFixture<SidenavComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -24,16 +24,16 @@ describe('SidenavComponent', () => {
                 },
                 provideMockStore({ initialState: initialRootState }),
             ],
-        }).compileComponents()
-    }))
+        }).compileComponents();
+    }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SidenavComponent)
-        component = fixture.componentInstance
-        fixture.detectChanges()
-    })
+        fixture = TestBed.createComponent(SidenavComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     it('should create', () => {
-        expect(component).toBeTruthy()
-    })
-})
+        expect(component).toBeTruthy();
+    });
+});

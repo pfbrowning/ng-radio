@@ -1,8 +1,8 @@
-import { Action, createReducer, on } from '@ngrx/store'
-import { FavoriteStationsActions } from './actions'
-import { initialFavoriteStationsState } from './models/initial-favorite-stations-state'
-import { FavoriteStationsState } from './models/favorite-stations-state'
-import { RouteResolverActions } from './actions'
+import { Action, createReducer, on } from '@ngrx/store';
+import { FavoriteStationsActions } from './actions';
+import { initialFavoriteStationsState } from './models/initial-favorite-stations-state';
+import { FavoriteStationsState } from './models/favorite-stations-state';
+import { RouteResolverActions } from './actions';
 
 const reducer = createReducer<FavoriteStationsState>(
     initialFavoriteStationsState,
@@ -119,11 +119,11 @@ const reducer = createReducer<FavoriteStationsState>(
             editingStationId: null,
         })
     )
-)
+);
 
 export function favoriteStationsReducer(
     state: FavoriteStationsState | undefined,
     action: Action
 ) {
-    return reducer(state, action)
+    return reducer(state, action);
 }

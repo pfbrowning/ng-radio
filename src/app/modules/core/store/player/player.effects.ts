@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'
-import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
     tap,
     map,
@@ -9,32 +9,32 @@ import {
     filter,
     distinctUntilChanged,
     debounceTime,
-} from 'rxjs/operators'
-import { of, combineLatest, merge } from 'rxjs'
-import { Store } from '@ngrx/store'
-import { Title } from '@angular/platform-browser'
+} from 'rxjs/operators';
+import { of, combineLatest, merge } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Title } from '@angular/platform-browser';
 import {
     selectStation,
     playAudioStart,
     playAudioSucceeded,
     playAudioFailed,
     audioPaused,
-} from './player-actions'
-import { RootState } from '../../models/root-state'
-import { PlayerActions } from '.'
-import { PlayerStatus } from '../../models/player/player-status'
-import { isEqual } from 'lodash-es'
+} from './player-actions';
+import { RootState } from '../../models/root-state';
+import { PlayerActions } from '.';
+import { PlayerStatus } from '../../models/player/player-status';
+import { isEqual } from 'lodash-es';
 import {
     LoggingService,
     NotificationsService,
     SleepTimerService,
     AudioElementService,
     AudioProxyService,
-} from '@core/services'
-import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service'
-import { PlayerFacadeService } from './player-facade.service'
-import isFalsyOrWhitespace from 'is-falsy-or-whitespace'
-import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.actions'
+} from '@core/services';
+import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service';
+import { PlayerFacadeService } from './player-facade.service';
+import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.actions';
 
 @Injectable()
 export class PlayerEffects {
@@ -53,28 +53,28 @@ export class PlayerEffects {
 
     listenForAudioPaused$ = createEffect(() =>
         this.audio.paused$.pipe(map(() => PlayerActions.audioPaused()))
-    )
+    );
 
     playOnPlayClicked$ = createEffect(() =>
         this.actions$.pipe(
             ofType(PlayerBarActions.playClicked),
             map(() => PlayerActions.playAudioStart())
         )
-    )
+    );
 
     selectStation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(selectStation),
             tap((action) => {
                 if (!isFalsyOrWhitespace(action.station.title)) {
-                    this.titleService.setTitle(action.station.title)
+                    this.titleService.setTitle(action.station.title);
                 } else {
-                    this.titleService.setTitle('Browninglogic Radio')
+                    this.titleService.setTitle('Browninglogic Radio');
                 }
             }),
             map(() => PlayerActions.playAudioStart())
         )
-    )
+    );
 
     playStation$ = createEffect(() =>
         this.actions$.pipe(
@@ -89,7 +89,7 @@ export class PlayerEffects {
                 )
             )
         )
-    )
+    );
 
     pauseAudio$ = createEffect(
         () =>
@@ -98,7 +98,7 @@ export class PlayerEffects {
                 this.sleepTimerService.sleepTimer$
             ).pipe(tap(() => this.audio.pause())),
         { dispatch: false }
-    )
+    );
 
     notifyLogPlayAudioFailed$ = createEffect(
         () =>
@@ -108,15 +108,15 @@ export class PlayerEffects {
                     this.notificationsService.error(
                         'Failed To Play Audio',
                         error.message
-                    )
+                    );
                     this.loggingService.warn('Failed To Play Audio', {
                         station,
                         error,
-                    })
+                    });
                 })
             ),
         { dispatch: false }
-    )
+    );
 
     onCurrentMetadataChanged$ = createEffect(
         () =>
@@ -134,11 +134,11 @@ export class PlayerEffects {
                 distinctUntilChanged((x, y) => isEqual(x, y)),
                 tap((meta) => {
                     if (!isFalsyOrWhitespace(meta.metadataTitle)) {
-                        this.titleService.setTitle(meta.metadataTitle)
+                        this.titleService.setTitle(meta.metadataTitle);
                     } else if (!isFalsyOrWhitespace(meta.stationTitle)) {
-                        this.titleService.setTitle(meta.stationTitle)
+                        this.titleService.setTitle(meta.stationTitle);
                     } else {
-                        this.titleService.setTitle('Browninglogic Radio')
+                        this.titleService.setTitle('Browninglogic Radio');
                     }
 
                     this.notificationsService.info(
@@ -146,11 +146,11 @@ export class PlayerEffects {
                         !isFalsyOrWhitespace(meta.metadataTitle)
                             ? `${meta.metadataTitle} - ${meta.stationTitle}`
                             : meta.stationTitle
-                    )
+                    );
                 })
             ),
         { dispatch: false }
-    )
+    );
 
     clearTitle$ = createEffect(
         () =>
@@ -159,5 +159,5 @@ export class PlayerEffects {
                 tap(() => this.titleService.setTitle('Browninglogic Radio'))
             ),
         { dispatch: false }
-    )
+    );
 }

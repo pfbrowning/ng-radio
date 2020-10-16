@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'
-import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects'
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import {
     switchMap,
     catchError,
@@ -8,18 +8,18 @@ import {
     tap,
     withLatestFrom,
     exhaustMap,
-} from 'rxjs/operators'
-import { of } from 'rxjs'
-import { Action } from '@ngrx/store'
-import { AppInsightsService } from '../../services/logging/app-insights.service'
-import { AuthenticationService } from '../../services/authentication/authentication.service'
-import { AuthenticationFacadeService } from './authentication-facade.service'
+} from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Action } from '@ngrx/store';
+import { AppInsightsService } from '../../services/logging/app-insights.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { AuthenticationFacadeService } from './authentication-facade.service';
 import {
     LoggingService,
     NotificationsService,
     ConfigService,
-} from '@core/services'
-import * as AuthenticationActions from './authentication.actions'
+} from '@core/services';
+import * as AuthenticationActions from './authentication.actions';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {
@@ -39,7 +39,7 @@ export class AuthenticationEffects implements OnInitEffects {
             switchMap(() => this.configService.appConfig$),
             map(() => AuthenticationActions.initializeStart())
         )
-    )
+    );
 
     initialize$ = createEffect(() =>
         this.actions$.pipe(
@@ -64,13 +64,13 @@ export class AuthenticationEffects implements OnInitEffects {
                     )
             )
         )
-    )
+    );
 
     initSilentRefreshOnTokenExpiring$ = createEffect(() =>
         this.authenticationService.accessTokenExpiring$.pipe(
             map(() => AuthenticationActions.silentRefreshStart())
         )
-    )
+    );
 
     silentRefresh$ = createEffect(() =>
         this.actions$.pipe(
@@ -88,13 +88,13 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             )
         )
-    )
+    );
 
     accessTokenExpired$ = createEffect(() =>
         this.authenticationService.accessTokenExpired$.pipe(
             map(() => AuthenticationActions.accessTokenExpired())
         )
-    )
+    );
 
     logoutButtonClicked$ = createEffect(
         () =>
@@ -108,7 +108,7 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     notifyTokenExpired$ = createEffect(
         () =>
@@ -123,7 +123,7 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     logUserInit$ = createEffect(
         () =>
@@ -134,7 +134,7 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     setAppInsightsUser$ = createEffect(
         () =>
@@ -144,7 +144,7 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     logInitializeFailed$ = createEffect(
         () =>
@@ -158,7 +158,7 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     logSilentRefreshFailed$ = createEffect(
         () =>
@@ -172,9 +172,9 @@ export class AuthenticationEffects implements OnInitEffects {
                 )
             ),
         { dispatch: false }
-    )
+    );
 
     ngrxOnInitEffects(): Action {
-        return AuthenticationActions.effectsInit()
+        return AuthenticationActions.effectsInit();
     }
 }

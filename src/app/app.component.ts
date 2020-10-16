@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
-import { RouterStateService } from '@core/services'
-import { AuthenticationFacadeService } from '@core/store'
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterStateService } from '@core/services';
+import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
     selector: 'blr-root',
@@ -14,6 +14,6 @@ export class AppComponent {
         private routerStateService: RouterStateService
     ) {}
 
-    public authInitialized$ = this.authenticationFacade.initialized$
-    public routeResolving$ = this.routerStateService.navigationInProgress$
+    public authInitialized$ = this.authenticationFacade.initialized$;
+    public routeResolving$ = this.routerStateService.navigationInProgress$;
 }
