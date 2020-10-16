@@ -61,20 +61,22 @@ ng serve --open
 * Chores
   * Use radio proxy for custom url validation via `StreamValidatorService`
   * Configure [prettier](https://www.npmjs.com/package/prettier)
-  * Refactor & simplify NGRX store architecture
-  * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
-  * Refactor selector import / export logic
-  * Refactor with smart / dumb components in mind
-  * Separate the models for current station, favorite station, and radio browser result
-  * Update readme
-  * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
-  * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
-  * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
-  * Find a better alternative to the mat spinner button package
   * Replace NoSleep.js with an alternative which works with Firefox mobile and which [isn't CommonJS-based](https://angular.io/guide/build#configuring-commonjs-dependencies), or remove the "Keep Awake" feature entirely if it's not worth the trouble.
+  * App-wide refactor based on things learned recently
+    * Refactor & simplify NGRX store architecture
+      * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)
+      * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
+      * Refactor selector import / export logic
+    * Refactor with smart / dumb components in mind
+    * Separate the models for current station, favorite station, and radio browser result
+  * Update readme
+  * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
+  * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
+  * Investigate whether Websockets might be a better solution than Socket.IO
+  * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
   * Replace `jasmine-theories` tests with vanilla forEach tests
   * Improve test coverage
-  * Investigate whether Websockets might be a better solution than Socket.IO
+  * Find a better alternative to the mat spinner button package
 * Features
   * Show loading indicator for images
   * Non-logged-in experience: Require login only for favorites
