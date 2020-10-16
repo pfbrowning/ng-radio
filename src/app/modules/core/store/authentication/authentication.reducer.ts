@@ -1,13 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { AuthenticationState } from './models/authentication-state';
 import { initialAuthenticationState } from './models/initial-authentication-state';
-import * as Actions from './authentication.actions';
+import { AuthenticationActions } from './actions';
 
 export const authenticationReducer = createReducer<AuthenticationState>(
     initialAuthenticationState,
     on(
-        Actions.initializeSucceeded,
-        Actions.silentRefreshSucceeded,
+        AuthenticationActions.initializeSucceeded,
+        AuthenticationActions.silentRefreshSucceeded,
         (state, { email, accessToken, authenticated }) => ({
             ...state,
             email,
@@ -15,12 +15,20 @@ export const authenticationReducer = createReducer<AuthenticationState>(
             authenticated,
         })
     ),
-    on(Actions.initializeSucceeded, Actions.initializeFailed, state => ({
-        ...state,
-        initialized: true,
-    })),
-    on(Actions.accessTokenExpired, Actions.logoutButtonClicked, state => ({
-        ...state,
-        authenticated: false,
-    }))
+    on(
+        AuthenticationActions.initializeSucceeded,
+        AuthenticationActions.initializeFailed,
+        state => ({
+            ...state,
+            initialized: true,
+        })
+    ),
+    on(
+        AuthenticationActions.accessTokenExpired,
+        AuthenticationActions.logoutButtonClicked,
+        state => ({
+            ...state,
+            authenticated: false,
+        })
+    )
 );

@@ -15,7 +15,7 @@ import {
     LoggingService,
     ConfigService,
 } from '@core/services';
-import * as AuthenticationActions from './authentication.actions';
+import { AuthenticationActions } from './actions';
 
 describe('AuthenticationEffects', () => {
     let actions$: Observable<any> = null;

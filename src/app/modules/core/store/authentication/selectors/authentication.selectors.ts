@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { RootState } from '../../models/root-state';
+import { RootState } from '../../../models/root-state';
 
 const authenticationStateRoot = (state: RootState) => state.authentication;
 

@@ -3,13 +3,13 @@ import { Store, select } from '@ngrx/store';
 import { RootState } from '../../models/root-state';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
-import * as Selectors from './authentication.selectors';
-import * as Actions from './authentication.actions';
+import { AuthenticationActions } from './actions';
+import { AuthenticationSelectors } from './selectors';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationFacadeService {
     private stateOnceInitialized$ = this.store.pipe(
-        select(Selectors.authenticationState),
+        select(AuthenticationSelectors.authenticationState),
         filter(s => s.initialized)
     );
 
@@ -26,7 +26,9 @@ export class AuthenticationFacadeService {
         distinctUntilChanged()
     );
 
-    public initialized$ = this.store.pipe(select(Selectors.isInitialized));
+    public initialized$ = this.store.pipe(
+        select(AuthenticationSelectors.isInitialized)
+    );
 
     constructor(
         private store: Store<RootState>,
@@ -34,7 +36,7 @@ export class AuthenticationFacadeService {
     ) {}
 
     public logoutButtonClicked() {
-        this.store.dispatch(Actions.logoutButtonClicked());
+        this.store.dispatch(AuthenticationActions.logoutButtonClicked());
     }
 
     public logInRedirect() {

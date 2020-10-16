@@ -19,7 +19,7 @@ import {
     NotificationsService,
     ConfigService,
 } from '@core/services';
-import * as AuthenticationActions from './authentication.actions';
+import { AuthenticationActions } from './actions';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {
