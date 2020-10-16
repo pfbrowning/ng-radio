@@ -178,3 +178,4 @@ export class AuthenticationEffects implements OnInitEffects {
         return AuthenticationActions.effectsInit()
     }
 }
+
