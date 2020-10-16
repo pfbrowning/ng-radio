@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { RadioPlayerService } from './radio-player.service';
+import { AudioProxyService } from './audio-proxy.service';
 import { ConfigService } from '../config/config.service';
-import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { AudioElementService } from './audio-element.service';
-import { CoreSpyFactories } from '@core/testing';
 import { ProxyKeyService } from './proxy-key.service';
+import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
+import { CoreSpyFactories } from '@core/testing';
 
-describe('RadioPlayerService', () => {
-  let service: RadioPlayerService;
+describe('AudioProxyService', () => {
+  let service: AudioProxyService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('RadioPlayerService', () => {
         { provide: ProxyKeyService, useValue: CoreSpyFactories.createProxyKeyServiceSpy() }
       ]
     });
-    service = TestBed.inject(RadioPlayerService);
+    service = TestBed.inject(AudioProxyService);
   });
 
   it('should be created', () => {

@@ -1,6 +1,4 @@
-export class ValidateStreamResult {
-    constructor(
-        public readonly success: boolean,
-        public readonly error?: any
-    ) { }
+export interface ValidateStreamResult {
+    success: boolean;
+    error?: any;
 }

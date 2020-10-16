@@ -59,25 +59,25 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Strip out cookies & filter non-image response types via image-proxy
   * Use radio proxy for custom url validation via `StreamValidatorService`
+  * Configure [prettier](https://www.npmjs.com/package/prettier)
   * Refactor & simplify NGRX store architecture
   * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
   * Refactor selector import / export logic
   * Refactor with smart / dumb components in mind
   * Separate the models for current station, favorite station, and radio browser result
-  * Configure [prettier](https://www.npmjs.com/package/prettier)
   * Update readme
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
-* Features
-  * Non-logged-in experience: Require login only for favorites
-  * Browser-based audio recording
-  * HTML5 Notifications
-  * Favorite station tags
-* Chores For Later
+  * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
   * Find a better alternative to the mat spinner button package
   * Replace NoSleep.js with an alternative which works with Firefox mobile and which [isn't CommonJS-based](https://angular.io/guide/build#configuring-commonjs-dependencies), or remove the "Keep Awake" feature entirely if it's not worth the trouble.
   * Replace `jasmine-theories` tests with vanilla forEach tests
   * Improve test coverage
-  * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
+  * Investigate whether Websockets might be a better solution than Socket.IO
+* Features
+  * Show loading indicator for images
+  * Non-logged-in experience: Require login only for favorites
+  * Browser-based audio recording
+  * HTML5 Notifications
+  * Favorite station tags

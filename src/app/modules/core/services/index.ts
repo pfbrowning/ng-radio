@@ -26,4 +26,4 @@ export { ConfigService } from './config/config.service';
 
 // Radio Player Logic
 export { AudioElementService } from './radio-player/audio-element.service';
-export { StreamValidatorService } from './radio-player/stream-validator.service';
+export { AudioProxyService } from './radio-player/audio-proxy.service';
