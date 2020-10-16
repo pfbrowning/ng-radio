@@ -10,10 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-    getElementBySelector,
-    getElementTextBySelector,
-} from '@utilities/testing';
+import { getElementTextBySelector } from '@utilities/testing';
 import { Station } from '@core/models/player';
 import { CoreSpyFactories } from '@core/testing';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
