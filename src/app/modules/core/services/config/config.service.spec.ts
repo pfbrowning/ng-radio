@@ -43,9 +43,6 @@ describe('ConfigService', () => {
             radioBrowserSearchResultsLimit: 25,
             favoriteStationsApiUrl: 'testFavoritesApi',
             corsProxyUrl: 'corsProxyApi',
-            refreshIntervalShort: 1,
-            refreshIntervalLong: 3,
-            metadataFetchTimeout: 2,
             authConfig: {},
             logging: {},
         } as any;
@@ -101,9 +98,6 @@ describe('ConfigService', () => {
             radioBrowserApiUrl: 'testradiobrowserapi',
             radioBrowserSearchResultsLimit: 25,
             favoriteStationsApiUrl: 'testFavoritesApi',
-            refreshIntervalLong: 1,
-            refreshIntervalShort: 2,
-            metadataFetchTimeout: 3,
             authConfig: {
                 issuer: 'app issuer',
                 clientId: 'app client',
@@ -125,9 +119,7 @@ describe('ConfigService', () => {
             radioBrowserSearchResultsLimit: 25,
             favoriteStationsApiUrl: 'testFavoritesApi',
             corsProxyUrl: 'testCorsProxy',
-            refreshIntervalLong: 1,
             refreshIntervalShort: 2,
-            metadataFetchTimeout: 3,
             authConfig: {
                 issuer: 'app issuer',
                 clientId: 'local client',

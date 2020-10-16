@@ -6,9 +6,6 @@ export interface AppConfig {
     favoriteStationsApiUrl: string;
     imageProxyUrl: string;
     radioProxyUrl: string;
-    refreshIntervalShort: number;
-    refreshIntervalLong: number;
-    metadataFetchTimeout: number;
     authConfig: {
         userManager: UserManagerSettings;
         logoutUrl: string;
