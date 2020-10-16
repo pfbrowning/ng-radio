@@ -11,8 +11,11 @@ export class AudioElementService {
     this.audio.preload = 'none';
   }
 
-  public error = new Subject<any>();
-  public paused = new Subject<void>();
+  private errorSource = new Subject<any>();
+  private pausedSource = new Subject<void>();
+
+  public paused$ = this.pausedSource.asObservable();
+  public error$ = this.errorSource.asObservable();
 
   public set src(value: string) {
     this.audio.src = value;
@@ -31,13 +34,13 @@ export class AudioElementService {
   }
 
   private onError(error: any) {
-    this.ngZone.run(() => this.error.next(error));
+    this.ngZone.run(() => this.errorSource.next(error));
   }
 
   private onPaused() {
     /* We have to explicitly dispatch this within the Angular zone in order for change detection
     to work properly because the HTML5 audio element which the event originated from was not in
     the Angular Zone. */
-    this.ngZone.run(() => this.paused.next());
+    this.ngZone.run(() => this.pausedSource.next());
   }
 }
