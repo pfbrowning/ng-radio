@@ -5,7 +5,7 @@ import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { NotificationsService, RadioBrowserService, LoggingService, SleepTimerService, AudioElementService, AudioProxyService } from '@core/services';
+import { NotificationsService, RadioBrowserService, LoggingService, SleepTimerService, AudioElementService } from '@core/services';
 import { EnvironmentService } from '../services/config/environment.service';
 import { ProxyKeyService } from '../services/radio-player/proxy-key.service';
 import { PlayerBarFacadeService } from '../store/dispatch-facades/player-bar/player-bar-facade.service';

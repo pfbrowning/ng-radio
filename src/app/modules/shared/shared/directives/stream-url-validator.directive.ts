@@ -1,7 +1,7 @@
 import { Directive, ChangeDetectorRef } from '@angular/core';
-import { NG_ASYNC_VALIDATORS, ValidationErrors, AbstractControl, AsyncValidator } from '@angular/forms';
+import { NG_ASYNC_VALIDATORS, AbstractControl, AsyncValidator } from '@angular/forms';
 import { AudioElementService, AudioProxyService } from '@core/services';
-import { Observable, timer } from 'rxjs';
+import { timer } from 'rxjs';
 import { tap, map, switchMap } from 'rxjs/operators';
 
 @Directive({
