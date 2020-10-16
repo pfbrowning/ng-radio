@@ -44,7 +44,7 @@ export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
         this.subs.sink = this.windowService.resize.subscribe(() =>
             this.changeDetectorRef.detectChanges()
         );
-        this.subs.sink = this.router.events.subscribe((event) =>
+        this.subs.sink = this.router.events.subscribe(event =>
             this.onRouterEvent(event)
         );
     }

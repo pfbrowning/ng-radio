@@ -5,10 +5,10 @@ const authenticationStateRoot = (state: RootState) => state.authentication;
 
 export const authenticationState = createSelector(
     authenticationStateRoot,
-    (state) => state
+    state => state
 );
 
 export const isInitialized = createSelector(
     authenticationState,
-    (state) => state.initialized
+    state => state.initialized
 );

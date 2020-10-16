@@ -6,5 +6,5 @@ export const radioBrowserResultsState = (state: RootState) =>
 
 export const radioBrowserResults = createSelector(
     radioBrowserResultsState,
-    (state) => state.results
+    state => state.results
 );

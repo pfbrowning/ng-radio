@@ -32,7 +32,7 @@ export class StreamUrlValidatorDirective implements AsyncValidator {
     validate = (control: AbstractControl) =>
         timer(400).pipe(
             switchMap(() => this.audioProxyService.validate(control.value)),
-            map((result) => (result.success ? null : { invalidStream: true })),
+            map(result => (result.success ? null : { invalidStream: true })),
             tap(() => this.changeDetectorRef.markForCheck())
         );
 }

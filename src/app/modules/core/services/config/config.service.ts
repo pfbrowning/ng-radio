@@ -23,7 +23,7 @@ export class ConfigService {
                 : of(null),
         ]).pipe(
             // Use lodash to deep merge local config into app config
-            map((forkData) => merge({}, forkData[0], forkData[1]))
+            map(forkData => merge({}, forkData[0], forkData[1]))
         );
     }
 
@@ -50,7 +50,7 @@ export class ConfigService {
                 headers: this.noCacheHeaders(),
             })
             .pipe(
-                catchError((error) => {
+                catchError(error => {
                     // If local config doesn't exist, then continue silently.  This isn't an error condition.
                     if (error.status === 404) {
                         return of(null);

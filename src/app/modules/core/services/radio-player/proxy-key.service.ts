@@ -13,7 +13,7 @@ export class ProxyKeyService {
 
     public fetchNew(): Observable<string> {
         return this.configService.appConfig$.pipe(
-            switchMap((config) =>
+            switchMap(config =>
                 this.httpClient.post(`${config.radioProxyUrl}/proxyKey`, null, {
                     responseType: 'text',
                 })

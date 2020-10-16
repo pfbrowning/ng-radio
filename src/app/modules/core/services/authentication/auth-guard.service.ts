@@ -11,7 +11,7 @@ export class AuthGuardService implements CanActivate {
     canActivate(): Observable<boolean> {
         return this.authenticationFacade.authenticated$.pipe(
             take(1),
-            switchMap((authenticated) => {
+            switchMap(authenticated => {
                 if (authenticated) {
                     return of(true);
                 }

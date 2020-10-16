@@ -44,7 +44,7 @@ describe('SleepTimerService', () => {
 
     describe('minutesToSleep$', () => {
         it('should emit the number of minutes until expiration once per minute until sleepTime', () => {
-            testScheduler.run((helpers) => {
+            testScheduler.run(helpers => {
                 // Arrange
                 currentTimeService.unixMs.and.returnValue(1596391847549);
                 const expectedDiagram =
@@ -69,7 +69,7 @@ describe('SleepTimerService', () => {
         });
 
         it('should account for a remainder if the subscription was not started on an exact multiple of 60ms before sleep time', () => {
-            testScheduler.run((helpers) => {
+            testScheduler.run(helpers => {
                 // Arrange
                 currentTimeService.unixMs.and.returnValue(1596391847549);
                 const expectedDiagram =
@@ -95,7 +95,7 @@ describe('SleepTimerService', () => {
         });
 
         it('should emit null if no sleep timer is set', () => {
-            testScheduler.run((helpers) => {
+            testScheduler.run(helpers => {
                 // Arrange
                 currentTimeService.unixMs.and.returnValue(1596391847549);
                 const expectedDiagram = 'a';
@@ -111,9 +111,7 @@ describe('SleepTimerService', () => {
         it('should emit null and then stop emitting if the sleep timer is cleared before sleepTime', fakeAsync(() => {
             // Arrange
             const minutesSpy = jasmine.createSpy('minutes');
-            sleepTimerService.minutesToSleep$.subscribe((val) =>
-                minutesSpy(val)
-            );
+            sleepTimerService.minutesToSleep$.subscribe(val => minutesSpy(val));
             currentTimeService.unixMs.and.returnValue(1596391847549);
 
             // Act
@@ -139,9 +137,7 @@ describe('SleepTimerService', () => {
         it('should emit after the designated sleep delay', fakeAsync(() => {
             // Arrange
             const sleepTimerSpy = jasmine.createSpy('sleepTimer');
-            sleepTimerService.sleepTimer$.subscribe((val) =>
-                sleepTimerSpy(val)
-            );
+            sleepTimerService.sleepTimer$.subscribe(val => sleepTimerSpy(val));
             currentTimeService.unixMs.and.returnValue(1596391847549);
 
             // Act
@@ -160,9 +156,7 @@ describe('SleepTimerService', () => {
         it('should not emit if the timer was cleared before sleepTime', fakeAsync(() => {
             // Arrange
             const sleepTimerSpy = jasmine.createSpy('sleepTimer');
-            sleepTimerService.sleepTimer$.subscribe((val) =>
-                sleepTimerSpy(val)
-            );
+            sleepTimerService.sleepTimer$.subscribe(val => sleepTimerSpy(val));
             currentTimeService.unixMs.and.returnValue(1596391847549);
 
             // Act
@@ -183,9 +177,7 @@ describe('SleepTimerService', () => {
         it('should do nothing if no sleep timer is set', fakeAsync(() => {
             // Arrange
             const sleepTimerSpy = jasmine.createSpy('sleepTimer');
-            sleepTimerService.sleepTimer$.subscribe((val) =>
-                sleepTimerSpy(val)
-            );
+            sleepTimerService.sleepTimer$.subscribe(val => sleepTimerSpy(val));
             currentTimeService.unixMs.and.returnValue(1596391847549);
 
             // Act

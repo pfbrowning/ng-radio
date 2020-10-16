@@ -15,7 +15,7 @@ export class RadioBrowserResolver implements Resolve<void> {
         this.store.dispatch(resolveSubmit());
         return this.store.pipe(
             select(resolverParams),
-            filter((selected) => selected.countries != null || selected.failed),
+            filter(selected => selected.countries != null || selected.failed),
             take(1),
             map(() => null)
         );

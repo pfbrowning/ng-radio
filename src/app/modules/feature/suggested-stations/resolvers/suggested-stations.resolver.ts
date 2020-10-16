@@ -13,7 +13,7 @@ export class SuggestedStationsResolver implements Resolve<void> {
     resolve(): Observable<void> {
         return this.store.pipe(
             select(selectAreSuggestedStationsPresentOrFailed),
-            filter((resolved) => resolved),
+            filter(resolved => resolved),
             map(() => null),
             take(1)
         );

@@ -77,7 +77,7 @@ describe('RadioBrowserService', () => {
             // Act
             radioBrowserService
                 .search(input.name, input.country, input.tag)
-                .subscribe((response) => {
+                .subscribe(response => {
                     // Assert
                     checkBodyParam('name', input.name, request.request.body);
                     checkBodyParam(
@@ -175,7 +175,7 @@ describe('RadioBrowserService', () => {
             // Act: Initiate a dummy request.  We don't care about what's passed in or how the request is formed.
             radioBrowserService
                 .search('name', 'country', 'tag')
-                .subscribe((stations) => {
+                .subscribe(stations => {
                     // Assert
                     // The expected test entry should have been returned
                     expect(stations.length).toBe(1);

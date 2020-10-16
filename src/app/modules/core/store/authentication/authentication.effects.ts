@@ -45,16 +45,16 @@ export class AuthenticationEffects implements OnInitEffects {
         this.actions$.pipe(
             ofType(AuthenticationActions.initializeStart),
             switchMap(() => this.configService.appConfig$),
-            switchMap((config) =>
+            switchMap(config =>
                 this.authenticationService
                     .initialize(config.authConfig.userManager)
                     .pipe(
-                        map((result) =>
+                        map(result =>
                             AuthenticationActions.initializeSucceeded({
                                 ...result,
                             })
                         ),
-                        catchError((error) =>
+                        catchError(error =>
                             of(
                                 AuthenticationActions.initializeFailed({
                                     error,
@@ -77,12 +77,12 @@ export class AuthenticationEffects implements OnInitEffects {
             ofType(AuthenticationActions.silentRefreshStart),
             exhaustMap(() =>
                 this.authenticationService.attemptSilentRefresh().pipe(
-                    map((result) =>
+                    map(result =>
                         AuthenticationActions.silentRefreshSucceeded({
                             ...result,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(AuthenticationActions.silentRefreshFailed({ error }))
                     )
                 )
@@ -101,7 +101,7 @@ export class AuthenticationEffects implements OnInitEffects {
             this.actions$.pipe(
                 ofType(AuthenticationActions.logoutButtonClicked),
                 switchMap(() => this.configService.appConfig$),
-                tap((config) =>
+                tap(config =>
                     this.authenticationService.logOut(
                         config.authConfig.logoutUrl
                     )
@@ -128,8 +128,8 @@ export class AuthenticationEffects implements OnInitEffects {
     logUserInit$ = createEffect(
         () =>
             this.authenticationFacade.email$.pipe(
-                filter((email) => email != null),
-                tap((email) =>
+                filter(email => email != null),
+                tap(email =>
                     this.loggingService.info('User Logged In', { email })
                 )
             ),
@@ -139,7 +139,7 @@ export class AuthenticationEffects implements OnInitEffects {
     setAppInsightsUser$ = createEffect(
         () =>
             this.authenticationFacade.email$.pipe(
-                tap((email) =>
+                tap(email =>
                     this.appInsightsService.setAuthenticatedUserContext(email)
                 )
             ),

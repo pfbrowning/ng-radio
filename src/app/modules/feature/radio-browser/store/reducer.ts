@@ -24,7 +24,7 @@ export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
         ...state,
         country,
     })),
-    on(RadioBrowserActions.searchStart, (state) => ({
+    on(RadioBrowserActions.searchStart, state => ({
         ...state,
         results: null,
         searchInProgress: true,
@@ -33,20 +33,20 @@ export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
         ...state,
         searchInProgress: false,
     })),
-    on(RadioBrowserActions.searchFailed, (state) => ({
+    on(RadioBrowserActions.searchFailed, state => ({
         ...state,
         searchInProgress: false,
     })),
-    on(RadioBrowserActions.resolveSubmit, (state) => ({
+    on(RadioBrowserActions.resolveSubmit, state => ({
         ...state,
         countriesFetchFailed: false,
     })),
-    on(RadioBrowserActions.countriesFetchStart, (state) => ({
+    on(RadioBrowserActions.countriesFetchStart, state => ({
         ...state,
         countriesFetchInProgress: true,
         countriesFetchFailed: false,
     })),
-    on(RadioBrowserActions.countriesFetchFailed, (state) => ({
+    on(RadioBrowserActions.countriesFetchFailed, state => ({
         ...state,
         countriesFetchInProgress: false,
         countriesFetchFailed: true,
@@ -57,7 +57,7 @@ export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
         countriesFetchFailed: false,
         countries,
     })),
-    on(RadioBrowserActions.tagSuggestionsFetchStart, (state) => ({
+    on(RadioBrowserActions.tagSuggestionsFetchStart, state => ({
         ...state,
         tagSuggestionsFetchInProgress: true,
     })),
@@ -72,7 +72,7 @@ export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
             tagSuggestionsFetchInProgress: false,
         })
     ),
-    on(RadioBrowserActions.tagSuggestionsFetchFailed, (state) => ({
+    on(RadioBrowserActions.tagSuggestionsFetchFailed, state => ({
         ...state,
         tagSuggestions: null,
         tagSuggestionsFetchInProgress: false,

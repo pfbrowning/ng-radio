@@ -9,7 +9,7 @@ export const radioBrowserSearchState = createFeatureSelector<
 
 export const selectedCountry = createSelector(
     radioBrowserSearchState,
-    (state) => state.country
+    state => state.country
 );
 
 export const searchCriteria = createSelector(
@@ -24,17 +24,17 @@ export const searchCriteria = createSelector(
 
 export const selectIsSearchInProgress = createSelector(
     radioBrowserSearchState,
-    (state) => state.searchInProgress
+    state => state.searchInProgress
 );
 
 export const listedCountries = createSelector(
     radioBrowserSearchState,
-    (state) => state.countries
+    state => state.countries
 );
 
 export const countryFilter = createSelector(
     radioBrowserSearchState,
-    (state) => state.countryFilter
+    state => state.countryFilter
 );
 
 export const filteredCountries = createSelector(
@@ -43,7 +43,7 @@ export const filteredCountries = createSelector(
     (filter, countries) =>
         isFalsyOrWhitespace(filter)
             ? countries
-            : countries.filter((c) =>
+            : countries.filter(c =>
                   c.name.toLowerCase().includes(filter.toLowerCase())
               )
 );
@@ -60,10 +60,10 @@ export const resolverParams = createSelector(
 
 export const tagSuggestions = createSelector(
     radioBrowserSearchState,
-    (state) => state.tagSuggestions
+    state => state.tagSuggestions
 );
 
 export const fetchingTagSuggestions = createSelector(
     radioBrowserSearchState,
-    (state) => state.tagSuggestionsFetchInProgress
+    state => state.tagSuggestionsFetchInProgress
 );

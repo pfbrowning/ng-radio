@@ -65,7 +65,7 @@ export class PlayerEffects {
     selectStation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(selectStation),
-            tap((action) => {
+            tap(action => {
                 if (!isFalsyOrWhitespace(action.station.title)) {
                     this.titleService.setTitle(action.station.title);
                 } else {
@@ -83,9 +83,7 @@ export class PlayerEffects {
             switchMap(([, station]) =>
                 this.audioProxyService.play(station.url).pipe(
                     map(() => playAudioSucceeded()),
-                    catchError((error) =>
-                        of(playAudioFailed({ error, station }))
-                    )
+                    catchError(error => of(playAudioFailed({ error, station })))
                 )
             )
         )
@@ -132,7 +130,7 @@ export class PlayerEffects {
                     metadataTitle,
                 })),
                 distinctUntilChanged((x, y) => isEqual(x, y)),
-                tap((meta) => {
+                tap(meta => {
                     if (!isFalsyOrWhitespace(meta.metadataTitle)) {
                         this.titleService.setTitle(meta.metadataTitle);
                     } else if (!isFalsyOrWhitespace(meta.stationTitle)) {

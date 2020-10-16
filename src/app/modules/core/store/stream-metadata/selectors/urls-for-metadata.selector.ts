@@ -26,12 +26,12 @@ export const urlsSelectedForMetadata = createSelector(
         switch (currentRoute) {
             case '/favorites':
                 if (favorites) {
-                    urls.push(...favorites.map((s) => s.url));
+                    urls.push(...favorites.map(s => s.url));
                 }
                 break;
             case '/radio-browser':
                 if (radioBrowserResults) {
-                    urls.push(...radioBrowserResults.map((s) => s.url));
+                    urls.push(...radioBrowserResults.map(s => s.url));
                 }
                 break;
         }

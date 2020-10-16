@@ -46,7 +46,7 @@ export class StreamMetadataEffects {
             /* The initial value will be an empty array that we don't want to call the server about,
     but we do want to call the server about subsequent empty arrays, so skip is better than filter. */
             skip(1),
-            map((streams) => StreamMetadataActions.setStreamList({ streams }))
+            map(streams => StreamMetadataActions.setStreamList({ streams }))
         )
     );
 

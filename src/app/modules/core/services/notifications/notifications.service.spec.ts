@@ -58,7 +58,7 @@ describe('NotificationsService', () => {
     theoretically.it(
         'Should pass notifications to messageService',
         testNotifications,
-        (notification) => {
+        notification => {
             // Arrange
             toasterReadyService.toasterReadySource.next();
 

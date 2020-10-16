@@ -26,7 +26,7 @@ export class AppInsightsService {
     ]);
 
     constructor(private configService: ConfigService) {
-        this.configService.appConfig$.subscribe((config) =>
+        this.configService.appConfig$.subscribe(config =>
             this.initialize(config.logging.appInsightsInstrumentationKey)
         );
     }

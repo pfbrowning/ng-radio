@@ -5,10 +5,10 @@ export const selectPlayerState = (state: RootState) => state.player;
 
 export const currentStation = createSelector(
     selectPlayerState,
-    (state) => state.currentStation
+    state => state.currentStation
 );
 
 export const playerStatus = createSelector(
     selectPlayerState,
-    (state) => state.playerStatus
+    state => state.playerStatus
 );

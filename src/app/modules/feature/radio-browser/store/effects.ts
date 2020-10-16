@@ -40,12 +40,12 @@ export class RadioBrowserSearchEffects {
             ofType(RadioBrowserSearchActions.countriesFetchStart),
             switchMap(() =>
                 this.radioBrowserService.fetchListedCountries().pipe(
-                    map((countries) =>
+                    map(countries =>
                         RadioBrowserSearchActions.countriesFetchSucceeded({
                             countries,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             RadioBrowserSearchActions.countriesFetchFailed({
                                 error,
@@ -67,12 +67,12 @@ export class RadioBrowserSearchEffects {
             ),
             switchMap(([, { tagTerm }]) =>
                 this.radioBrowserService.fetchTags(tagTerm).pipe(
-                    map((tagSuggestions) =>
+                    map(tagSuggestions =>
                         RadioBrowserSearchActions.tagSuggestionsFetchSucceeded({
                             tagSuggestions,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             RadioBrowserSearchActions.tagSuggestionsFetchFailed(
                                 { error }
@@ -133,12 +133,12 @@ export class RadioBrowserSearchEffects {
                         config.radioBrowserSearchResultsLimit
                     )
                     .pipe(
-                        map((results) =>
+                        map(results =>
                             RadioBrowserResultsActions.searchSucceeded({
                                 results,
                             })
                         ),
-                        catchError((error) =>
+                        catchError(error =>
                             of(
                                 RadioBrowserSearchActions.searchFailed({
                                     error,

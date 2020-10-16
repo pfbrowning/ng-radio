@@ -10,29 +10,29 @@ export const selectFavoriteStationsState = (state: RootState) =>
 
 export const favoriteStationsArray = createSelector(
     selectFavoriteStationsState,
-    (state) => state.favoriteStations
+    state => state.favoriteStations
 );
 
 export const selectFavoriteStationsMap = createSelector(
     favoriteStationsArray,
-    (favorites) =>
+    favorites =>
         favorites &&
-        new Map<number, Station>(favorites.map((f) => [f.stationId, f]))
+        new Map<number, Station>(favorites.map(f => [f.stationId, f]))
 );
 
 export const selectAddInProgressUrls = createSelector(
     selectFavoriteStationsState,
-    (state) => state.addInProgressUrls
+    state => state.addInProgressUrls
 );
 
 export const selectRemoveInProgressIds = createSelector(
     selectFavoriteStationsState,
-    (state) => state.removeInProgressIds
+    state => state.removeInProgressIds
 );
 
 export const updateInProgressIds = createSelector(
     selectFavoriteStationsState,
-    (state) => state.updateInProgressIds
+    state => state.updateInProgressIds
 );
 
 export const favoriteStationRows = createSelector(
@@ -41,18 +41,18 @@ export const favoriteStationRows = createSelector(
     (stations, removing) =>
         stations &&
         stations.map(
-            (s) => new FavoriteStationRow(s, removing.includes(s.stationId))
+            s => new FavoriteStationRow(s, removing.includes(s.stationId))
         )
 );
 
 export const favoritesFetchInProgress = createSelector(
     selectFavoriteStationsState,
-    (state) => state.fetchInProgress
+    state => state.fetchInProgress
 );
 
 export const favoritesFetchFailed = createSelector(
     selectFavoriteStationsState,
-    (state) => state.fetchFailed
+    state => state.fetchFailed
 );
 
 export const addCurrentStationToFavoritesInProgress = createSelector(
@@ -69,7 +69,7 @@ export const favoriteMatchingCurrentStation = createSelector(
         favorites &&
         current &&
         favorites.find(
-            (f) => f.stationId === current.stationId || f.url === current.url
+            f => f.stationId === current.stationId || f.url === current.url
         )
 );
 
@@ -109,7 +109,7 @@ export const existingStationForEdit = createSelector(
 
 export const showEditModal = createSelector(
     selectFavoriteStationsState,
-    (state) => state.showEditModal
+    state => state.showEditModal
 );
 
 export const editModalSaveInProgress = createSelector(

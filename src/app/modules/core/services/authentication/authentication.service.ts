@@ -19,7 +19,7 @@ export class AuthenticationService {
     public accessTokenExpired$ = this.accessTokenExpiredSource.asObservable();
     public silentRefreshError$ = this.silentRefreshErrorSource.asObservable();
     public silentRefreshSucceeded$ = this.userLoadedSource.pipe(
-        map((user) => this.userToTokenReceivedResult(user))
+        map(user => this.userToTokenReceivedResult(user))
     );
 
     constructor(private windowService: WindowService) {}
@@ -30,13 +30,13 @@ export class AuthenticationService {
         this.userManager = new UserManager(config);
         this.registerEvents();
         return from(this.userManager.getUser()).pipe(
-            map((user) => this.userToTokenReceivedResult(user))
+            map(user => this.userToTokenReceivedResult(user))
         );
     }
 
     private silentRefresh(): Observable<TokenReceivedResult> {
         return from(this.userManager.signinSilent()).pipe(
-            map((user) => this.userToTokenReceivedResult(user))
+            map(user => this.userToTokenReceivedResult(user))
         );
     }
 
@@ -55,7 +55,7 @@ export class AuthenticationService {
     }
 
     private registerEvents() {
-        this.userManager.events.addUserLoaded((user) =>
+        this.userManager.events.addUserLoaded(user =>
             this.userLoadedSource.next(user)
         );
         this.userManager.events.addAccessTokenExpiring(() =>
@@ -64,7 +64,7 @@ export class AuthenticationService {
         this.userManager.events.addAccessTokenExpired(() =>
             this.accessTokenExpiredSource.next()
         );
-        this.userManager.events.addSilentRenewError((error) =>
+        this.userManager.events.addSilentRenewError(error =>
             this.silentRefreshErrorSource.next()
         );
     }
@@ -77,7 +77,7 @@ export class AuthenticationService {
             this.windowService.locationReplace(customLogoutUrl);
         }
         // If an OIDC standard end session endpoint is configured, then navigate via userManager
-        this.userManager.metadataService.getEndSessionEndpoint().then((url) => {
+        this.userManager.metadataService.getEndSessionEndpoint().then(url => {
             if (!isFalsyOrWhitespace(url)) {
                 this.userManager.signoutRedirect();
             }

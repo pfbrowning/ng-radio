@@ -48,7 +48,7 @@ export class SocketIOService {
         title: string;
     }> = fromEvent(this.socket, 'metadata');
     public serverDisconnect$ = this.disconnect$.pipe(
-        filter((reason) => reason === 'io server disconnect')
+        filter(reason => reason === 'io server disconnect')
     );
     public socketInitialized$ = fromEvent(this.socket, 'socketInitialized');
 
@@ -57,12 +57,12 @@ export class SocketIOService {
         private authenticationFacade: AuthenticationFacadeService,
         private loggingService: LoggingService
     ) {
-        this.authenticateOnConnect$.subscribe((authenticated) =>
+        this.authenticateOnConnect$.subscribe(authenticated =>
             this.loggingService.info(
                 `Authentication ${authenticated ? 'Succeeded' : 'Failed'}`
             )
         );
-        this.disconnect$.subscribe((reason) =>
+        this.disconnect$.subscribe(reason =>
             this.loggingService.info('Disconnected', { reason })
         );
     }

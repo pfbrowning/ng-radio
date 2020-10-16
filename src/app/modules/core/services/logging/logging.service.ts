@@ -8,7 +8,7 @@ import { AppInsightsService } from './app-insights.service';
 @Injectable({ providedIn: 'root' })
 export class LoggingService {
     private minLogLevels$ = this.configService.appConfig$.pipe(
-        map((config) => config.logging.minLogLevels)
+        map(config => config.logging.minLogLevels)
     );
 
     constructor(
@@ -27,7 +27,7 @@ export class LoggingService {
         severityLevel: LoggerSeverity,
         properties: object = null
     ) {
-        this.minLogLevels$.subscribe((minLogLevels) => {
+        this.minLogLevels$.subscribe(minLogLevels => {
             if (
                 minLogLevels.appInsights &&
                 severityLevel >= minLogLevels.appInsights
@@ -55,7 +55,7 @@ export class LoggingService {
         severityLevel: LoggerSeverity,
         properties: object = null
     ) {
-        this.minLogLevels$.subscribe((minLogLevels) => {
+        this.minLogLevels$.subscribe(minLogLevels => {
             if (
                 minLogLevels.appInsights &&
                 severityLevel >= minLogLevels.appInsights

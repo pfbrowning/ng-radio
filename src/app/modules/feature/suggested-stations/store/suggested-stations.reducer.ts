@@ -6,7 +6,7 @@ export const suggestedStationsFeatureKey = 'suggestedStations';
 
 export const suggestedStationsReducer = createReducer(
     initialSuggestedStationsState,
-    on(SuggestedStationsActions.developerSuggestedFetchStart, (state) => ({
+    on(SuggestedStationsActions.developerSuggestedFetchStart, state => ({
         ...state,
         developerSuggestedFetchInProgress: true,
     })),
@@ -18,12 +18,12 @@ export const suggestedStationsReducer = createReducer(
             developerSuggested: stations,
         })
     ),
-    on(SuggestedStationsActions.developerSuggestedFetchFailed, (state) => ({
+    on(SuggestedStationsActions.developerSuggestedFetchFailed, state => ({
         ...state,
         developerSuggestedFetchInProgress: false,
         developerSuggestedFetchFailed: true,
     })),
-    on(SuggestedStationsActions.topClickedFetchStart, (state) => ({
+    on(SuggestedStationsActions.topClickedFetchStart, state => ({
         ...state,
         topClickedFetchInProgress: true,
     })),
@@ -35,12 +35,12 @@ export const suggestedStationsReducer = createReducer(
             topClicked: stations,
         })
     ),
-    on(SuggestedStationsActions.topClickedFetchFailed, (state) => ({
+    on(SuggestedStationsActions.topClickedFetchFailed, state => ({
         ...state,
         topClickedFetchInProgress: false,
         topClickedFetchFailed: true,
     })),
-    on(SuggestedStationsActions.topVotedFetchStart, (state) => ({
+    on(SuggestedStationsActions.topVotedFetchStart, state => ({
         ...state,
         topVotedFetchInProgress: true,
     })),
@@ -52,7 +52,7 @@ export const suggestedStationsReducer = createReducer(
             topVoted: stations,
         })
     ),
-    on(SuggestedStationsActions.topVotedFetchFailed, (state) => ({
+    on(SuggestedStationsActions.topVotedFetchFailed, state => ({
         ...state,
         topVotedFetchInProgress: false,
         topVotedFetchFailed: true,

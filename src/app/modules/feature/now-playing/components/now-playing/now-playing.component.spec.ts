@@ -78,7 +78,7 @@ describe('NowPlayingComponent', () => {
         { title: 'another station title' } as Station,
         { title: 'Radio Caprice: Speed Metal' } as Station,
     ];
-    nowPlayingTemplateInput.forEach((station) => {
+    nowPlayingTemplateInput.forEach(station => {
         it('should update the template to reflect changes in station title', () => {
             // Act
             currentStation$ = of(station);

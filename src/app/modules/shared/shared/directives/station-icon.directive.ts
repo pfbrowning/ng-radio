@@ -28,12 +28,12 @@ export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
     private subs = new SubSink();
 
     private proxiedIconUrl$ = this.iconUrlAsync.pipe(
-        filter((url) => !isFalsyOrWhitespace(url)),
+        filter(url => !isFalsyOrWhitespace(url)),
         distinctUntilChanged(),
-        switchMap((iconUrl) =>
+        switchMap(iconUrl =>
             this.configService.appConfig$.pipe(
                 map(
-                    (appConfig) =>
+                    appConfig =>
                         `${appConfig.imageProxyUrl}/image?url=${iconUrl}`
                 )
             )
@@ -50,7 +50,7 @@ export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subs.sink = this.proxiedIconUrl$.subscribe(
-            (url) => (this.src = url)
+            url => (this.src = url)
         );
     }
 

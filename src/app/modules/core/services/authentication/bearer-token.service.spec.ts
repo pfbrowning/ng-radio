@@ -63,7 +63,7 @@ describe('BearerTokenService', () => {
         'mockRadioProxyUrl',
         'mockRadioProxyUrl/somePath',
     ];
-    shouldAddTokenCases.forEach((url) => {
+    shouldAddTokenCases.forEach(url => {
         it(`should add a bearer token if the request is for an API url specified in the config: ${url}`, (done: DoneFn) => {
             // Arrange
             const expectedHeader = 'Bearer mockAccessToken';
@@ -79,7 +79,7 @@ describe('BearerTokenService', () => {
 
             // Assert
             const request = httpTestingController.expectOne(
-                (req) => req.headers.get('Authorization') === expectedHeader
+                req => req.headers.get('Authorization') === expectedHeader
             );
             request.flush({ data: 'test' });
 
@@ -96,7 +96,7 @@ describe('BearerTokenService', () => {
         },
         { requestedUrl: 'mockFavoritesUrl/somePath', accessToken: '   ' },
     ];
-    shouldNotAddTokenCases.forEach((input) => {
+    shouldNotAddTokenCases.forEach(input => {
         it(`should not add a token: ${JSON.stringify(
             input
         )}`, (done: DoneFn) => {
@@ -113,7 +113,7 @@ describe('BearerTokenService', () => {
 
             // Assert
             const request = httpTestingController.expectOne(
-                (req) => !req.headers.has('Authorization')
+                req => !req.headers.has('Authorization')
             );
             request.flush({ data: 'test' });
 
@@ -125,7 +125,7 @@ describe('BearerTokenService', () => {
         '/assets/config/app.config.json',
         '/assets/config/local.config.json',
     ];
-    shouldShortCircuitConfigFetchCases.forEach((requestedUrl) => {
+    shouldShortCircuitConfigFetchCases.forEach(requestedUrl => {
         it(`should short-circuit config fetch: ${requestedUrl}`, (done: DoneFn) => {
             // Arrange
             configService.appConfig$ = NEVER;
@@ -140,7 +140,7 @@ describe('BearerTokenService', () => {
 
             // Assert
             const request = httpTestingController.expectOne(
-                (req) => !req.headers.has('Authorization')
+                req => !req.headers.has('Authorization')
             );
             request.flush({ data: 'test' });
 

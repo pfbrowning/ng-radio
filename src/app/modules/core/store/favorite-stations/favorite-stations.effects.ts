@@ -55,12 +55,12 @@ export class FavoriteStationsEffects {
             ofType(FavoriteStationsActions.fetchStationsStart),
             switchMap(() =>
                 this.favoriteStationsService.fetchAll().pipe(
-                    map((stations) =>
+                    map(stations =>
                         FavoriteStationsActions.fetchStationsSucceeded({
                             stations,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             FavoriteStationsActions.fetchStationsFailed({
                                 error,
@@ -85,14 +85,14 @@ export class FavoriteStationsEffects {
     addFavorite$ = createEffect(() =>
         this.actions$.pipe(
             ofType(FavoriteStationsActions.addToFavoritesStart),
-            mergeMap((action) =>
+            mergeMap(action =>
                 this.favoriteStationsService.addFavorite(action.station).pipe(
-                    map((station) =>
+                    map(station =>
                         FavoriteStationsActions.addToFavoritesSucceeded({
                             station,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             FavoriteStationsActions.addToFavoritesFailed({
                                 station: action.station,
@@ -112,12 +112,12 @@ export class FavoriteStationsEffects {
                 this.favoriteStationsService
                     .updateFavorite(station.stationId, station)
                     .pipe(
-                        map((updated) =>
+                        map(updated =>
                             FavoriteStationsActions.stationUpdateSucceeded({
                                 updated,
                             })
                         ),
-                        catchError((error) =>
+                        catchError(error =>
                             of(
                                 FavoriteStationsActions.stationUpdateFailed({
                                     station,
@@ -147,7 +147,7 @@ export class FavoriteStationsEffects {
     removeFavorite$ = createEffect(() =>
         this.actions$.pipe(
             ofType(FavoriteStationsActions.removeFromFavoritesStart),
-            mergeMap((action) =>
+            mergeMap(action =>
                 this.favoriteStationsService
                     .removeFavorite(action.stationId)
                     .pipe(
@@ -156,7 +156,7 @@ export class FavoriteStationsEffects {
                                 { stationId: action.stationId }
                             )
                         ),
-                        catchError((error) =>
+                        catchError(error =>
                             of(
                                 FavoriteStationsActions.removeFromFavoritesFailed(
                                     { stationId: action.stationId, error }
@@ -186,7 +186,7 @@ export class FavoriteStationsEffects {
         () =>
             this.actions$.pipe(
                 ofType(FavoriteStationsActions.addToFavoritesSucceeded),
-                tap((action) =>
+                tap(action =>
                     this.notificationsService.success(
                         'Added To Favorites',
                         `${action.station.title} has been added to favorites.`
@@ -200,7 +200,7 @@ export class FavoriteStationsEffects {
         () =>
             this.actions$.pipe(
                 ofType(FavoriteStationsActions.addToFavoritesFailed),
-                tap((action) =>
+                tap(action =>
                     this.notificationsService.error(
                         'Failed to Add To Favorites',
                         `${action.station.title} was not added to favorites.`

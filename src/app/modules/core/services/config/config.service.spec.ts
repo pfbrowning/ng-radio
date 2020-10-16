@@ -52,7 +52,7 @@ describe('ConfigService', () => {
 
         // Listen to the initialize observable
         configService.appConfig$.subscribe({
-            next: (config) => {
+            next: config => {
                 expect(config).toEqual(dummyConfig as any);
                 fetchNextSpy(config);
             },
@@ -76,7 +76,7 @@ describe('ConfigService', () => {
 
     it('should properly handle failed config fetch', (done: DoneFn) => {
         configService.appConfig$.subscribe({
-            error: (error) => {
+            error: error => {
                 expect(error).toBeTruthy();
                 // Lastly, verify that there are no outstanding http requests
                 httpTestingController.verify();
@@ -139,7 +139,7 @@ describe('ConfigService', () => {
         } as any;
 
         configService.appConfig$.subscribe({
-            next: (config) => {
+            next: config => {
                 // Assert
                 expect(config).toEqual(mergedConfig);
                 fetchNextSpy(config);
@@ -166,7 +166,7 @@ describe('ConfigService', () => {
 
     it('should resolve app config if no local config is found', (done: DoneFn) => {
         configService.appConfig$.subscribe({
-            next: (config) => {
+            next: config => {
                 // Assert
                 expect(config).toEqual({} as AppConfig);
                 fetchNextSpy(config);
@@ -195,7 +195,7 @@ describe('ConfigService', () => {
 
     it('should fail if local config fetch failed with anything other than a 404', (done: DoneFn) => {
         configService.appConfig$.subscribe({
-            next: (config) => fetchNextSpy(config),
+            next: config => fetchNextSpy(config),
             error: () => {
                 expect(fetchNextSpy).not.toHaveBeenCalled();
 
@@ -224,7 +224,7 @@ describe('ConfigService', () => {
 
         // Listen to the initialize observable
         configService.appConfig$.subscribe({
-            next: (config) => {
+            next: config => {
                 fetchNextSpy(config);
             },
             complete: () => {
@@ -252,7 +252,7 @@ describe('ConfigService', () => {
 
         // Listen to the initialize observable
         configService.appConfig$.subscribe({
-            next: (config) => {
+            next: config => {
                 fetchNextSpy(config);
             },
             complete: () => {
@@ -283,8 +283,8 @@ describe('ConfigService', () => {
         const fourthRequest = jasmine.createSpy('fourthRequest');
 
         // Request the config twice before flushing to test that the response is replayed for concurrent requests
-        configService.appConfig$.subscribe((config) => firstRequest(config));
-        configService.appConfig$.subscribe((config) => secondRequest(config));
+        configService.appConfig$.subscribe(config => firstRequest(config));
+        configService.appConfig$.subscribe(config => secondRequest(config));
 
         expect(firstRequest).not.toHaveBeenCalled();
         expect(secondRequest).not.toHaveBeenCalled();
@@ -295,8 +295,8 @@ describe('ConfigService', () => {
         appConfigRequest.flush({});
 
         // Request the config another two times after flushing to test that the response is replayed for subsequent requests
-        configService.appConfig$.subscribe((config) => thirdRequest(config));
-        configService.appConfig$.subscribe((config) => fourthRequest(config));
+        configService.appConfig$.subscribe(config => thirdRequest(config));
+        configService.appConfig$.subscribe(config => fourthRequest(config));
 
         expect(firstRequest).toHaveBeenCalledTimes(1);
         expect(secondRequest).toHaveBeenCalledTimes(1);

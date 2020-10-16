@@ -6,11 +6,11 @@ import { RouteResolverActions } from './actions';
 
 export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
     initialFavoriteStationsState,
-    on(RouteResolverActions.init, (state) => ({
+    on(RouteResolverActions.init, state => ({
         ...state,
         fetchFailed: false,
     })),
-    on(FavoriteStationsActions.fetchStationsStart, (state) => ({
+    on(FavoriteStationsActions.fetchStationsStart, state => ({
         ...state,
         fetchInProgress: true,
     })),
@@ -22,7 +22,7 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
             fetchInProgress: false,
         })
     ),
-    on(FavoriteStationsActions.fetchStationsFailed, (state) => ({
+    on(FavoriteStationsActions.fetchStationsFailed, state => ({
         ...state,
         fetchInProgress: false,
         fetchFailed: true,
@@ -36,7 +36,7 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
         (state, { station }) => ({
             ...state,
             addInProgressUrls: state.addInProgressUrls.filter(
-                (p) => p !== station.url
+                p => p !== station.url
             ),
             favoriteStations: state.favoriteStations.concat(station),
             showEditModal: false,
@@ -45,7 +45,7 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
     on(FavoriteStationsActions.addToFavoritesFailed, (state, { station }) => ({
         ...state,
         addInProgressUrls: state.addInProgressUrls.filter(
-            (p) => p !== station.url
+            p => p !== station.url
         ),
     })),
     on(
@@ -60,10 +60,10 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
         (state, { stationId }) => ({
             ...state,
             removeInProgressIds: state.removeInProgressIds.filter(
-                (ip) => ip !== stationId
+                ip => ip !== stationId
             ),
             favoriteStations: state.favoriteStations.filter(
-                (f) => f.stationId !== stationId
+                f => f.stationId !== stationId
             ),
         })
     ),
@@ -72,11 +72,11 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
         (state, { stationId }) => ({
             ...state,
             removeInProgressIds: state.removeInProgressIds.filter(
-                (ip) => ip !== stationId
+                ip => ip !== stationId
             ),
         })
     ),
-    on(FavoriteStationsActions.openStationEditNew, (state) => ({
+    on(FavoriteStationsActions.openStationEditNew, state => ({
         ...state,
         showEditModal: true,
         editingStationId: null,
@@ -89,7 +89,7 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
             editingStationId: stationId,
         })
     ),
-    on(FavoriteStationsActions.closeStationEdit, (state) => ({
+    on(FavoriteStationsActions.closeStationEdit, state => ({
         ...state,
         showEditModal: false,
         editingStationId: null,
@@ -103,7 +103,7 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
     on(FavoriteStationsActions.stationUpdateFailed, (state, { station }) => ({
         ...state,
         updateInProgressIds: state.updateInProgressIds.filter(
-            (s) => s !== station.stationId
+            s => s !== station.stationId
         ),
     })),
     on(
@@ -111,9 +111,9 @@ export const favoriteStationsReducer = createReducer<FavoriteStationsState>(
         (state, { updated }) => ({
             ...state,
             updateInProgressIds: state.updateInProgressIds.filter(
-                (s) => s !== updated.stationId
+                s => s !== updated.stationId
             ),
-            favoriteStations: state.favoriteStations.map((f) =>
+            favoriteStations: state.favoriteStations.map(f =>
                 f.stationId === updated.stationId ? updated : f
             ),
             editingStationId: null,

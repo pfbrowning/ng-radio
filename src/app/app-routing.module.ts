@@ -9,7 +9,7 @@ const routes: Routes = [
         loadChildren: () =>
             import(
                 '../app/modules/feature/suggested-stations/suggested-stations.module'
-            ).then((m) => m.SuggestedStationsModule),
+            ).then(m => m.SuggestedStationsModule),
     },
     {
         path: 'now-playing',
@@ -17,7 +17,7 @@ const routes: Routes = [
         loadChildren: () =>
             import(
                 '../app/modules/feature/now-playing/now-playing.module'
-            ).then((m) => m.NowPlayingModule),
+            ).then(m => m.NowPlayingModule),
     },
     {
         path: 'radio-browser',
@@ -25,7 +25,7 @@ const routes: Routes = [
         loadChildren: () =>
             import(
                 '../app/modules/feature/radio-browser/radio-browser.module'
-            ).then((m) => m.RadioBrowserModule),
+            ).then(m => m.RadioBrowserModule),
     },
     {
         path: 'favorites',
@@ -33,7 +33,7 @@ const routes: Routes = [
         loadChildren: () =>
             import(
                 '../app/modules/feature/favorite-stations/favorite-stations.module'
-            ).then((m) => m.FavoriteStationsModule),
+            ).then(m => m.FavoriteStationsModule),
     },
     {
         path: '',

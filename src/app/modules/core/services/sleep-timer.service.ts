@@ -27,20 +27,20 @@ export class SleepTimerService {
         map(() => null)
     );
     public sleepTimer$: Observable<void> = this.sleepTime.pipe(
-        map((sleepTime) => this.msUntilSleep(sleepTime)),
-        filter((msUntilSleep) => msUntilSleep != null),
-        switchMap((msUntilSleep) =>
+        map(sleepTime => this.msUntilSleep(sleepTime)),
+        filter(msUntilSleep => msUntilSleep != null),
+        switchMap(msUntilSleep =>
             timer(msUntilSleep).pipe(
                 // Cancel when sleepTime is cleared
-                takeUntil(this.sleepTime.pipe(filter((st) => st == null)))
+                takeUntil(this.sleepTime.pipe(filter(st => st == null)))
             )
         ),
         map(() => null),
         share()
     );
     public minutesToSleep$ = this.sleepTime.pipe(
-        map((sleepTime) => this.msUntilSleep(sleepTime)),
-        switchMap((msUntilSleep) => {
+        map(sleepTime => this.msUntilSleep(sleepTime)),
+        switchMap(msUntilSleep => {
             if (msUntilSleep == null) {
                 return of(null);
             }
@@ -51,9 +51,9 @@ export class SleepTimerService {
 
             // Emit the minutes remaining once-per-minute until sleepTime
             const countdown = timer(remainder, 60000).pipe(
-                map((iteration) => initialFullMinutesRemaining - iteration - 1),
-                takeWhile((minutesRemaining) => minutesRemaining >= -1),
-                map((remaining) => (remaining >= 0 ? remaining : null))
+                map(iteration => initialFullMinutesRemaining - iteration - 1),
+                takeWhile(minutesRemaining => minutesRemaining >= -1),
+                map(remaining => (remaining >= 0 ? remaining : null))
             );
             // Include a starting value if time remains before the next full minute mark
             return remainder > 0

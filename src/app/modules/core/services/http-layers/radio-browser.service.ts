@@ -16,25 +16,25 @@ export class RadioBrowserService {
     ) {}
 
     private radioBrowserUrl$ = this.configService.appConfig$.pipe(
-        map((config) => config.radioBrowserApiUrl)
+        map(config => config.radioBrowserApiUrl)
     );
 
     private fetchAllCountries(): Observable<Country[]> {
         return this.httpClient
             .get<Country[]>('/assets/data/countries.json')
             .pipe(
-                map((countries) =>
-                    sortBy(countries, [(c) => c.code !== 'US', (c) => c.name])
+                map(countries =>
+                    sortBy(countries, [c => c.code !== 'US', c => c.name])
                 )
             );
     }
 
     private fetchListedCountryCodes(): Observable<string[]> {
         return this.radioBrowserUrl$.pipe(
-            switchMap((url) =>
+            switchMap(url =>
                 this.httpClient.get<object[]>(`${url}/countrycodes`)
             ),
-            map((response) => response.map((o) => o['name']))
+            map(response => response.map(o => o['name']))
         );
     }
 
@@ -44,9 +44,9 @@ export class RadioBrowserService {
             this.fetchListedCountryCodes(),
         ]).pipe(
             map(([countries, listed]) => {
-                const lowercaseListed = listed.map((c) => c.toLowerCase());
+                const lowercaseListed = listed.map(c => c.toLowerCase());
 
-                return countries.filter((country) =>
+                return countries.filter(country =>
                     lowercaseListed.includes(country.code.toLowerCase())
                 );
             })
@@ -60,13 +60,13 @@ export class RadioBrowserService {
 
         return this.radioBrowserUrl$.pipe(
             // All tags in the API appear to be lowercase
-            map((url) =>
+            map(url =>
                 !isFalsyOrWhitespace(filter)
                     ? `${url}/tags/${filter.toLowerCase()}`
                     : `${url}/tags`
             ),
-            switchMap((url) => this.httpClient.get<object[]>(url, { params })),
-            map((response) => response.map((o) => o['name']))
+            switchMap(url => this.httpClient.get<object[]>(url, { params })),
+            map(response => response.map(o => o['name']))
         );
     }
 
@@ -104,15 +104,13 @@ export class RadioBrowserService {
 
         // Perform the search against the configured radioBrowserUrl
         return this.radioBrowserUrl$.pipe(
-            switchMap((url) =>
+            switchMap(url =>
                 this.httpClient.post<any[]>(`${url}/stations/search`, body, {
                     headers,
                 })
             ),
             // Map the results to our own station format
-            map((stations) =>
-                stations.map((station) => this.mapStation(station))
-            )
+            map(stations => stations.map(station => this.mapStation(station)))
         );
     }
 
@@ -122,12 +120,10 @@ export class RadioBrowserService {
      */
     public fetchTopClicked(count: number = 15): Observable<Station[]> {
         return this.radioBrowserUrl$.pipe(
-            switchMap((url) =>
+            switchMap(url =>
                 this.httpClient.get<any[]>(`${url}/stations/topclick/${count}`)
             ),
-            map((stations) =>
-                stations.map((station) => this.mapStation(station))
-            )
+            map(stations => stations.map(station => this.mapStation(station)))
         );
     }
 
@@ -137,12 +133,10 @@ export class RadioBrowserService {
      */
     public fetchTopVoted(count: number = 15): Observable<Station[]> {
         return this.radioBrowserUrl$.pipe(
-            switchMap((url) =>
+            switchMap(url =>
                 this.httpClient.get<any[]>(`${url}/stations/topvote/${count}`)
             ),
-            map((stations) =>
-                stations.map((station) => this.mapStation(station))
-            )
+            map(stations => stations.map(station => this.mapStation(station)))
         );
     }
 

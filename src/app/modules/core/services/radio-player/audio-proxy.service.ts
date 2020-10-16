@@ -46,7 +46,7 @@ export class AudioProxyService {
                 this.audioElementService.src = '';
             }),
             map((): ValidateStreamResult => ({ success: true })),
-            catchError((error) =>
+            catchError(error =>
                 of<ValidateStreamResult>({ success: false, error })
             )
         );

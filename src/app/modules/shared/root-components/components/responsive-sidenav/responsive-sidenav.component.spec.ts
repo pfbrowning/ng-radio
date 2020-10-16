@@ -81,7 +81,7 @@ describe('ResponsiveSidenavComponent', () => {
         ];
 
         // For each test entry
-        testEntries.forEach((testEntry) => {
+        testEntries.forEach(testEntry => {
             // Arrange: Set the screen width
             windowService.innerWidth = testEntry.screenSize;
             windowService.resize.emit();
@@ -99,7 +99,7 @@ describe('ResponsiveSidenavComponent', () => {
     theoretically.it(
         'should properly use provided non-default values for screenSizeCutoff',
         nonDefaultCutoffInput,
-        (input) => {
+        input => {
             // Arrange
             // Set up test entries for a small & large screen
             // Specify an arbitrary screenSizeCutoff

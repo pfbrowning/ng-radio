@@ -31,17 +31,17 @@ export class BearerTokenService implements HttpInterceptor {
         }
         // Wait for the config to load if it isn't loaded already
         return this.configService.appConfig$.pipe(
-            switchMap((config) => {
+            switchMap(config => {
                 // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
                 if (
                     [
                         config.favoriteStationsApiUrl,
                         config.radioProxyUrl,
-                    ].some((authUrl) => req.url.startsWith(authUrl))
+                    ].some(authUrl => req.url.startsWith(authUrl))
                 ) {
                     return this.authenticationFacade.accessToken$.pipe(
                         take(1),
-                        switchMap((accessToken) =>
+                        switchMap(accessToken =>
                             !isFalsyOrWhitespace(accessToken)
                                 ? // If an access token is present, then append it to the Authorization header
                                   next.handle(

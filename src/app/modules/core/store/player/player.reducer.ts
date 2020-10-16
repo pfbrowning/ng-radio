@@ -17,19 +17,19 @@ export const playerReducer = createReducer<PlayerState>(
         currentStation: station,
         playerStatus: PlayerStatus.Stopped,
     })),
-    on(playAudioStart, (state) => ({
+    on(playAudioStart, state => ({
         ...state,
         playerStatus: PlayerStatus.LoadingAudio,
     })),
-    on(playAudioSucceeded, (state) => ({
+    on(playAudioSucceeded, state => ({
         ...state,
         playerStatus: PlayerStatus.Playing,
     })),
-    on(playAudioFailed, (state) => ({
+    on(playAudioFailed, state => ({
         ...state,
         playerStatus: PlayerStatus.Stopped,
     })),
-    on(audioPaused, (state) => ({
+    on(audioPaused, state => ({
         ...state,
         playerStatus: PlayerStatus.Stopped,
     }))

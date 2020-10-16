@@ -15,11 +15,11 @@ export const reducer = createReducer<AuthenticationState>(
             authenticated,
         })
     ),
-    on(Actions.initializeSucceeded, Actions.initializeFailed, (state) => ({
+    on(Actions.initializeSucceeded, Actions.initializeFailed, state => ({
         ...state,
         initialized: true,
     })),
-    on(Actions.accessTokenExpired, Actions.logoutButtonClicked, (state) => ({
+    on(Actions.accessTokenExpired, Actions.logoutButtonClicked, state => ({
         ...state,
         authenticated: false,
     }))

@@ -31,12 +31,12 @@ export class SuggestedStationsEffects implements OnInitEffects {
             ofType(SuggestedStationsActions.developerSuggestedFetchStart),
             switchMap(() =>
                 this.suggestedStationsService.fetchDeveloperSuggestions().pipe(
-                    map((stations) =>
+                    map(stations =>
                         SuggestedStationsActions.developerSuggestedFetchSucceeded(
                             { stations }
                         )
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             SuggestedStationsActions.developerSuggestedFetchFailed(
                                 { error }
@@ -53,12 +53,12 @@ export class SuggestedStationsEffects implements OnInitEffects {
             ofType(SuggestedStationsActions.topClickedFetchStart),
             switchMap(() =>
                 this.radioBrowserService.fetchTopClicked().pipe(
-                    map((stations) =>
+                    map(stations =>
                         SuggestedStationsActions.topClickedFetchSucceeded({
                             stations,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             SuggestedStationsActions.topClickedFetchFailed({
                                 error,
@@ -75,12 +75,12 @@ export class SuggestedStationsEffects implements OnInitEffects {
             ofType(SuggestedStationsActions.topVotedFetchStart),
             switchMap(() =>
                 this.radioBrowserService.fetchTopVoted().pipe(
-                    map((stations) =>
+                    map(stations =>
                         SuggestedStationsActions.topVotedFetchSucceeded({
                             stations,
                         })
                     ),
-                    catchError((error) =>
+                    catchError(error =>
                         of(
                             SuggestedStationsActions.topVotedFetchFailed({
                                 error,

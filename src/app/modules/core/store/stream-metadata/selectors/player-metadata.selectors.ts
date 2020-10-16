@@ -4,8 +4,8 @@ import * as MetadataSelectors from './selectors';
 
 export const streamsMap = createSelector(
     MetadataSelectors.streamViewModels,
-    (viewModels) =>
-        new Map<string, string>(viewModels.map((vm) => [vm.url, vm.title]))
+    viewModels =>
+        new Map<string, string>(viewModels.map(vm => [vm.url, vm.title]))
 );
 
 export const metadataForCurrentStation = createSelector(

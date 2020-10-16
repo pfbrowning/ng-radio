@@ -10,19 +10,19 @@ import * as Actions from './authentication.actions';
 export class AuthenticationFacadeService {
     private stateOnceInitialized$ = this.store.pipe(
         select(Selectors.authenticationState),
-        filter((s) => s.initialized)
+        filter(s => s.initialized)
     );
 
     public email$ = this.stateOnceInitialized$.pipe(
-        map((s) => s.email),
+        map(s => s.email),
         distinctUntilChanged()
     );
     public authenticated$ = this.stateOnceInitialized$.pipe(
-        map((s) => s.authenticated),
+        map(s => s.authenticated),
         distinctUntilChanged()
     );
     public accessToken$ = this.stateOnceInitialized$.pipe(
-        map((s) => s.accessToken),
+        map(s => s.accessToken),
         distinctUntilChanged()
     );
 

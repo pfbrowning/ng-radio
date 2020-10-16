@@ -6,7 +6,7 @@ export class AudioElementService {
     private readonly audio: HTMLAudioElement = new Audio();
 
     constructor(private ngZone: NgZone) {
-        this.audio.onerror = (error) => this.onError(error);
+        this.audio.onerror = error => this.onError(error);
         this.audio.onpause = () => this.onPaused();
         this.audio.preload = 'none';
     }

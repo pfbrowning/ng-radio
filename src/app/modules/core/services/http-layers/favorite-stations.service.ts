@@ -13,18 +13,18 @@ export class FavoriteStationsService {
     ) {}
 
     private stationsResource$ = this.configService.appConfig$.pipe(
-        map((config) => `${config.favoriteStationsApiUrl}/userstations`)
+        map(config => `${config.favoriteStationsApiUrl}/userstations`)
     );
 
     public fetchAll(): Observable<Station[]> {
         return this.stationsResource$.pipe(
-            switchMap((baseUrl) => this.httpClient.get<Station[]>(baseUrl))
+            switchMap(baseUrl => this.httpClient.get<Station[]>(baseUrl))
         );
     }
 
     public addFavorite(station: Station): Observable<Station> {
         return this.stationsResource$.pipe(
-            switchMap((baseUrl) =>
+            switchMap(baseUrl =>
                 this.httpClient.post<Station>(baseUrl, station)
             )
         );
@@ -35,7 +35,7 @@ export class FavoriteStationsService {
         station: Station
     ): Observable<Station> {
         return this.stationsResource$.pipe(
-            switchMap((baseUrl) =>
+            switchMap(baseUrl =>
                 this.httpClient.put<Station>(`${baseUrl}/${stationId}`, station)
             )
         );
@@ -43,7 +43,7 @@ export class FavoriteStationsService {
 
     public removeFavorite(stationId: number): Observable<void> {
         return this.stationsResource$.pipe(
-            switchMap((baseUrl) =>
+            switchMap(baseUrl =>
                 this.httpClient.delete<void>(`${baseUrl}/${stationId}`)
             )
         );

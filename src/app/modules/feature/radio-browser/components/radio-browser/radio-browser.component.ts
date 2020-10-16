@@ -40,7 +40,7 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     public columns = ['name', 'now-playing', 'tags', 'icon'];
 
     public resultsLimit$ = this.configService.appConfig$.pipe(
-        map((config) => config.radioBrowserSearchResultsLimit)
+        map(config => config.radioBrowserSearchResultsLimit)
     );
     public searchResults$ = this.radioBrowserFacade.searchResults$;
     public isSearchInProgress$ = this.radioBrowserFacade.isSearchInProgress$;
@@ -61,22 +61,20 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subs.sink = this.nameSearch$
             .pipe(debounceTime(this.debounceTime), distinctUntilChanged())
-            .subscribe((term) => this.radioBrowserFacade.nameTermChanged(term));
+            .subscribe(term => this.radioBrowserFacade.nameTermChanged(term));
         this.subs.sink = this.tagSearch$
             .pipe(
                 // Debounce conditionally
-                debounce((t) =>
-                    t.debounce ? timer(this.debounceTime) : EMPTY
-                ),
-                map((t) => t.tag.toLowerCase()),
+                debounce(t => (t.debounce ? timer(this.debounceTime) : EMPTY)),
+                map(t => t.tag.toLowerCase()),
                 distinctUntilChanged()
             )
-            .subscribe((term) => this.radioBrowserFacade.tagTermChanged(term));
+            .subscribe(term => this.radioBrowserFacade.tagTermChanged(term));
 
         // Load any pre-existing search criteria from state on init
         this.radioBrowserFacade.searchCriteria$
             .pipe(take(1))
-            .subscribe((criteria) => {
+            .subscribe(criteria => {
                 this.nameSearch = criteria.nameTerm;
                 this.tagSearch = criteria.tagTerm;
             });

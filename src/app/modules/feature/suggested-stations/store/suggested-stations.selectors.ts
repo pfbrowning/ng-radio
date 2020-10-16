@@ -8,17 +8,17 @@ export const selectSuggestedStationsState = createFeatureSelector<
 
 export const selectDeveloperSuggested = createSelector(
     selectSuggestedStationsState,
-    (state) => state.developerSuggested
+    state => state.developerSuggested
 );
 
 export const selectTopClicked = createSelector(
     selectSuggestedStationsState,
-    (state) => state.topClicked
+    state => state.topClicked
 );
 
 export const selectTopVoted = createSelector(
     selectSuggestedStationsState,
-    (state) => state.topVoted
+    state => state.topVoted
 );
 
 export const selectAreSuggestedStationsPresentOrFailed = createSelector(

@@ -33,7 +33,7 @@ describe('AuthenticationFacadeService', () => {
                 'complete',
             ]);
             authenticationFacade.authenticated$.subscribe({
-                next: (val) => authenticatedSpy.next(val),
+                next: val => authenticatedSpy.next(val),
                 complete: () => authenticatedSpy.complete(),
             });
             expect(authenticatedSpy.next).not.toHaveBeenCalled();
