@@ -57,6 +57,8 @@ ng serve --open
 ```
 
 ## Backlog
+* Bugs
+  * When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
 * Chores
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture
@@ -64,7 +66,7 @@ ng serve --open
       * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
       * Refactor selector import / export logic
     * Refactor with smart / dumb components in mind
-    * Separate the models for current station, favorite station, and radio browser result
+  * Separate the models for current station, favorite station, and radio browser result
   * Update readme
   * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
