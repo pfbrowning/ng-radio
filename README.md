@@ -59,6 +59,7 @@ ng serve --open
 ## Backlog
 * Bugs
   * When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
+  * Duplicate "Now Playing" toaster notifications
 * Chores
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture
