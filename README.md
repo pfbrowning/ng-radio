@@ -61,6 +61,7 @@ ng serve --open
   * When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   * Duplicate "Now Playing" toaster notifications
 * Chores
+  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture
       * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)
