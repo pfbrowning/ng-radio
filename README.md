@@ -58,7 +58,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Upgrade tslint-etc
   * Upgrade to Angular 11
   * Upgrade to Angular 12
   * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio
