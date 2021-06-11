@@ -58,7 +58,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Upgrade NGRX
   * Upgrade tslint-etc
   * Upgrade to Angular 11
   * Upgrade to Angular 12

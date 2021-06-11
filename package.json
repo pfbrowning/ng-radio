@@ -80,7 +80,7 @@
     "puppeteer": "5.2.1",
     "ts-node": "~8.10.2",
     "tslint": "~6.1.2",
-    "tslint-etc": "^1.13.0",
+    "tslint-etc": "^1.13.10",
     "typescript": "3.9.7",
     "webpack-bundle-analyzer": "^3.8.0"
   }
