@@ -58,7 +58,10 @@ ng serve --open
 
 ## Backlog
 * Chores
+  * Upgrade NGRX
+  * Upgrade tslint-etc
   * Upgrade to Angular 11
+  * Upgrade to Angular 12
   * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture
