@@ -42,7 +42,7 @@
     "lodash-es": "^4.17.15",
     "mat-progress-buttons": "^9.2.1",
     "material-design-icons": "^3.0.1",
-    "ngx-mat-select-search": "^3.0.1",
+    "ngx-mat-select-search": "^3.3.0",
     "oidc-client": "^1.10.1",
     "primeicons": "^4.0.0",
     "primeng": "^11.4.2",
