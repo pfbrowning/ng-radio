@@ -68,7 +68,7 @@ ng serve --open
     * Refactor with smart / dumb components in mind
   * Separate the models for current station, favorite station, and radio browser result
   * Update readme
-  * Implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
+  * Decide whether to implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   * Investigate whether Websockets might be a better solution than Socket.IO
   * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
@@ -76,10 +76,11 @@ ng serve --open
   * Improve test coverage
   * Find a better alternative to the mat spinner button package
 * Bugs
+  * Silent refresh failures
   * When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   * Duplicate "Now Playing" toaster notifications
 * Features
-  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio
+  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio in order to keep the Heroku app from sleeping
   * Show loading indicator for images
   * Non-logged-in experience: Require login only for favorites
   * Browser-based audio recording
