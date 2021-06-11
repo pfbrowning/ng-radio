@@ -60,7 +60,6 @@ ng serve --open
 * Chores
   * Upgrade to Angular 11
   * Upgrade to Angular 12
-  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio
   * App-wide refactor based on things learned recently
     * Refactor & simplify NGRX store architecture
       * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)
@@ -80,6 +79,7 @@ ng serve --open
   * When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   * Duplicate "Now Playing" toaster notifications
 * Features
+  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio
   * Show loading indicator for images
   * Non-logged-in experience: Require login only for favorites
   * Browser-based audio recording
