@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SuggestedStationsComponent } from './suggested-stations.component';
 import { SuggestedStationsSectionComponent } from '../suggested-stations-section/suggested-stations-section.component';
 import { StationThumbnailComponent } from '../station-thumbnail/station-thumbnail.component';
@@ -9,7 +9,7 @@ describe('SuggestedStationsComponent', () => {
     let component: SuggestedStationsComponent;
     let fixture: ComponentFixture<SuggestedStationsComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 SuggestedStationsComponent,

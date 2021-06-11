@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RadioBrowserComponent } from './radio-browser.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +20,7 @@ describe('RadioBrowserComponent', () => {
     let component: RadioBrowserComponent;
     let fixture: ComponentFixture<RadioBrowserComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [RadioBrowserComponent, StationIconStubDirective],
             imports: [

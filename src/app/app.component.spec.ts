@@ -1,4 +1,4 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastModule } from 'primeng/toast';
@@ -17,7 +17,7 @@ describe('AppComponent', () => {
     let component: AppComponent;
     let fixture: ComponentFixture<AppComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [MatIconModule, ToastModule, ConfirmDialogModule],
             declarations: [

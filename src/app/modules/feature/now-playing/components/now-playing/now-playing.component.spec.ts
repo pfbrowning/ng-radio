@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NowPlayingComponent } from './now-playing.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -30,7 +30,7 @@ describe('NowPlayingComponent', () => {
     let metadataFacade: StreamMetadataFacadeStub;
     let playerFacade: PlayerFacadeStub;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
         sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 

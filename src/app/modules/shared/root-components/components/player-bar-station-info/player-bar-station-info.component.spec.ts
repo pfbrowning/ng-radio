@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { PlayerBarStationInfoComponent } from './player-bar-station-info.component';
 import { getElementTextBySelector } from '@utilities/testing';
 import { Station, PlayerStatus } from '@core/models/player';
@@ -8,7 +8,7 @@ describe('PlayerBarStationInfoComponent', () => {
     let component: PlayerBarStationInfoComponent;
     let fixture: ComponentFixture<PlayerBarStationInfoComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [PlayerBarStationInfoComponent],
             imports: [SharedModule],

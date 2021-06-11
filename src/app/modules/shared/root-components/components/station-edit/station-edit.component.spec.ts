@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { StationEditComponent } from './station-edit.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
@@ -14,7 +14,7 @@ describe('StationEditComponent', () => {
     let component: StationEditComponent;
     let fixture: ComponentFixture<StationEditComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [StationEditComponent],
             imports: [

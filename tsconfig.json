@@ -1,20 +1,42 @@
-/*
-  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
-  It is not intended to be used to perform a compilation.
-
-  To learn more about this file see: https://angular.io/config/solution-tsconfig.
-*/
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./src/tsconfig.app.json"
-    },
-    {
-      "path": "./src/tsconfig.spec.json"
-    },
-    {
-      "path": "./e2e/tsconfig.e2e.json"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "esModuleInterop": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@environment": [ "src/environments/environment"],
+      "@core": ["src/app/modules/core/index"],
+      "@core/constants": ["src/app/modules/core/constants/index"],
+      "@core/models": ["src/app/modules/core/models/index"],
+      "@core/store": ["src/app/modules/core/store/index"],
+      "@core/services": ["src/app/modules/core/services"],
+      "@core/models/player": ["src/app/modules/core/models/player/index"],
+      "@core/store/config/selectors": ["src/app/modules/core/store/config/config.selectors"],
+      "@core/models/favorite-stations": ["src/app/modules/core/models/favorite-stations/index"],
+      "@core/store/favorite-stations": ["src/app/modules/core/store/favorite-stations/index"],
+      "@core/store/sleep-timer": ["src/app/modules/core/store/sleep-timer/index"],
+      "@core/testing": ["src/app/modules/core/index.spec"],
+      "@shared": ["src/app/modules/shared/shared/index"],
+      "@shared/testing": ["src/app/modules/shared/shared/testing/index.spec"],
+      "@root-components": ["src/app/modules/shared/root-components/index"],
+      "@root-components/testing": ["src/app/modules/shared/root-components/testing/index.spec"],
+      "@utilities/testing": ["src/app/utilities/index.spec"]
     }
-  ]
+  }
 }

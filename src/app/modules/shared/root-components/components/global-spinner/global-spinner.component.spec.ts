@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { GlobalSpinnerComponent } from './global-spinner.component';
 import { DialogModule } from 'primeng/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,7 +8,7 @@ describe('GlobalSpinnerComponent', () => {
     let component: GlobalSpinnerComponent;
     let fixture: ComponentFixture<GlobalSpinnerComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [GlobalSpinnerComponent],
             imports: [
