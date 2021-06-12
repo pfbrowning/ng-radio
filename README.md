@@ -58,9 +58,13 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Upgrade to Angular 11
+  * Research & decide whether to
+    * Opt-in to Webpack 5
+    * Use strict mode
+    * Use corrected `relativeLinkResolution`
+    * Use `ViewEncapsulation.ShadowDom`
   * Upgrade to Angular 12
-  * App-wide refactor based on things learned recently
+  * App-wide refactor based on things learned since writing what we have thus far
     * Refactor & simplify NGRX store architecture
       * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)
       * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
