@@ -64,6 +64,8 @@ ng serve --open
     * Use corrected `relativeLinkResolution`
     * Use `ViewEncapsulation.ShadowDom`
   * Upgrade to Angular 12
+  * Upgrade dependencies
+  * Audit fix
   * App-wide refactor based on things learned since writing what we have thus far
     * Refactor & simplify NGRX store architecture
       * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)
