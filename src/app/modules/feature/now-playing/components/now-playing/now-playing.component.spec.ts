@@ -30,37 +30,39 @@ describe('NowPlayingComponent', () => {
     let metadataFacade: StreamMetadataFacadeStub;
     let playerFacade: PlayerFacadeStub;
 
-    beforeEach(waitForAsync(() => {
-        sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
-        sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
+    beforeEach(
+        waitForAsync(() => {
+            sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
+            sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
-        metadataFacade = new StreamMetadataFacadeStub();
+            metadataFacade = new StreamMetadataFacadeStub();
 
-        playerFacade = new PlayerFacadeStub();
-        playerFacade.currentStation$ = defer(() => currentStation$);
-        playerFacade.playerStatus$ = defer(() => playerStatus$);
+            playerFacade = new PlayerFacadeStub();
+            playerFacade.currentStation$ = defer(() => currentStation$);
+            playerFacade.playerStatus$ = defer(() => playerStatus$);
 
-        TestBed.configureTestingModule({
-            declarations: [NowPlayingComponent, StationIconStubDirective],
-            imports: [
-                RouterTestingModule,
-                MatMenuModule,
-                MatFormFieldModule,
-                MatInputModule,
-                NoopAnimationsModule,
-                FormsModule,
-            ],
-            providers: [
-                provideMockStore({ initialState: initialRootState }),
-                { provide: SleepTimerService, useValue: sleepTimerService },
-                {
-                    provide: StreamMetadataFacadeService,
-                    useValue: metadataFacade,
-                },
-                { provide: PlayerFacadeService, useValue: playerFacade },
-            ],
-        }).compileComponents();
-    }));
+            TestBed.configureTestingModule({
+                declarations: [NowPlayingComponent, StationIconStubDirective],
+                imports: [
+                    RouterTestingModule,
+                    MatMenuModule,
+                    MatFormFieldModule,
+                    MatInputModule,
+                    NoopAnimationsModule,
+                    FormsModule,
+                ],
+                providers: [
+                    provideMockStore({ initialState: initialRootState }),
+                    { provide: SleepTimerService, useValue: sleepTimerService },
+                    {
+                        provide: StreamMetadataFacadeService,
+                        useValue: metadataFacade,
+                    },
+                    { provide: PlayerFacadeService, useValue: playerFacade },
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NowPlayingComponent);

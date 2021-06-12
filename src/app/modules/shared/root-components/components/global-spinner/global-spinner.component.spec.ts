@@ -8,16 +8,18 @@ describe('GlobalSpinnerComponent', () => {
     let component: GlobalSpinnerComponent;
     let fixture: ComponentFixture<GlobalSpinnerComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [GlobalSpinnerComponent],
-            imports: [
-                DialogModule,
-                NoopAnimationsModule,
-                MatProgressSpinnerModule,
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [GlobalSpinnerComponent],
+                imports: [
+                    DialogModule,
+                    NoopAnimationsModule,
+                    MatProgressSpinnerModule,
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(GlobalSpinnerComponent);

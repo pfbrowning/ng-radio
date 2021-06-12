@@ -8,12 +8,14 @@ describe('PlayerBarStationInfoComponent', () => {
     let component: PlayerBarStationInfoComponent;
     let fixture: ComponentFixture<PlayerBarStationInfoComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [PlayerBarStationInfoComponent],
-            imports: [SharedModule],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [PlayerBarStationInfoComponent],
+                imports: [SharedModule],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PlayerBarStationInfoComponent);

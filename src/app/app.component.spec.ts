@@ -17,28 +17,30 @@ describe('AppComponent', () => {
     let component: AppComponent;
     let fixture: ComponentFixture<AppComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            imports: [MatIconModule, ToastModule, ConfirmDialogModule],
-            declarations: [
-                AppComponent,
-                GlobalSpinnerStubComponent,
-                ToasterContainerStubComponent,
-            ],
-            providers: [
-                MessageService,
-                ConfirmationService,
-                {
-                    provide: RouterStateService,
-                    useClass: RouterStateStubService,
-                },
-                {
-                    provide: AuthenticationFacadeService,
-                    useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
-                },
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [MatIconModule, ToastModule, ConfirmDialogModule],
+                declarations: [
+                    AppComponent,
+                    GlobalSpinnerStubComponent,
+                    ToasterContainerStubComponent,
+                ],
+                providers: [
+                    MessageService,
+                    ConfirmationService,
+                    {
+                        provide: RouterStateService,
+                        useClass: RouterStateStubService,
+                    },
+                    {
+                        provide: AuthenticationFacadeService,
+                        useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
+                    },
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppComponent);

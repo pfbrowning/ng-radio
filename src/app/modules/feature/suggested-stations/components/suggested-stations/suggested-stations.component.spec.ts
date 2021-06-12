@@ -9,20 +9,22 @@ describe('SuggestedStationsComponent', () => {
     let component: SuggestedStationsComponent;
     let fixture: ComponentFixture<SuggestedStationsComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                SuggestedStationsComponent,
-                SuggestedStationsSectionComponent,
-                StationThumbnailComponent,
-            ],
-            providers: [
-                provideMockStore({
-                    initialState: initialSuggestedStationsRootState,
-                }),
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [
+                    SuggestedStationsComponent,
+                    SuggestedStationsSectionComponent,
+                    StationThumbnailComponent,
+                ],
+                providers: [
+                    provideMockStore({
+                        initialState: initialSuggestedStationsRootState,
+                    }),
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SuggestedStationsComponent);

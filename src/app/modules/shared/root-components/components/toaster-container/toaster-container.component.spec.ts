@@ -10,19 +10,21 @@ describe('ToasterContainerComponent', () => {
     let component: ToasterContainerComponent;
     let fixture: ComponentFixture<ToasterContainerComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [ToasterContainerComponent],
-            imports: [ToastModule],
-            providers: [
-                {
-                    provide: MessageService,
-                    useValue: CoreSpyFactories.createMessageServiceSpy(),
-                },
-                provideMockStore({ initialState: initialRootState }),
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [ToasterContainerComponent],
+                imports: [ToastModule],
+                providers: [
+                    {
+                        provide: MessageService,
+                        useValue: CoreSpyFactories.createMessageServiceSpy(),
+                    },
+                    provideMockStore({ initialState: initialRootState }),
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ToasterContainerComponent);

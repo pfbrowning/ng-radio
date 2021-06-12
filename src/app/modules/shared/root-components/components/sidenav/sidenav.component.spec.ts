@@ -10,22 +10,24 @@ describe('SidenavComponent', () => {
     let component: SidenavComponent;
     let fixture: ComponentFixture<SidenavComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [SidenavComponent],
-            providers: [
-                {
-                    provide: AuthenticationService,
-                    useValue: CoreSpyFactories.createAuthenticationServiceSpy(),
-                },
-                {
-                    provide: AuthenticationFacadeService,
-                    useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
-                },
-                provideMockStore({ initialState: initialRootState }),
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [SidenavComponent],
+                providers: [
+                    {
+                        provide: AuthenticationService,
+                        useValue: CoreSpyFactories.createAuthenticationServiceSpy(),
+                    },
+                    {
+                        provide: AuthenticationFacadeService,
+                        useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
+                    },
+                    provideMockStore({ initialState: initialRootState }),
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SidenavComponent);

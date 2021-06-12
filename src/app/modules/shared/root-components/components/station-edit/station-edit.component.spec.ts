@@ -14,21 +14,25 @@ describe('StationEditComponent', () => {
     let component: StationEditComponent;
     let fixture: ComponentFixture<StationEditComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [StationEditComponent],
-            imports: [
-                RouterTestingModule,
-                FormsModule,
-                MatInputModule,
-                NoopAnimationsModule,
-                MatProgressSpinnerModule,
-                MatProgressButtonsModule.forRoot(),
-                DialogModule,
-            ],
-            providers: [provideMockStore({ initialState: initialRootState })],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [StationEditComponent],
+                imports: [
+                    RouterTestingModule,
+                    FormsModule,
+                    MatInputModule,
+                    NoopAnimationsModule,
+                    MatProgressSpinnerModule,
+                    MatProgressButtonsModule.forRoot(),
+                    DialogModule,
+                ],
+                providers: [
+                    provideMockStore({ initialState: initialRootState }),
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(StationEditComponent);

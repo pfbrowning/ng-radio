@@ -19,19 +19,21 @@ describe('ResponsiveSidenavComponent', () => {
         { path: 'route2', component: ResponsiveSidenavComponent },
     ];
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [ResponsiveSidenavComponent],
-            imports: [
-                MatSidenavModule,
-                NoopAnimationsModule,
-                RouterTestingModule.withRoutes(dummyTestingRoutes),
-            ],
-            providers: [
-                { provide: WindowService, useClass: WindowServiceStub },
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [ResponsiveSidenavComponent],
+                imports: [
+                    MatSidenavModule,
+                    NoopAnimationsModule,
+                    RouterTestingModule.withRoutes(dummyTestingRoutes),
+                ],
+                providers: [
+                    { provide: WindowService, useClass: WindowServiceStub },
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ResponsiveSidenavComponent);

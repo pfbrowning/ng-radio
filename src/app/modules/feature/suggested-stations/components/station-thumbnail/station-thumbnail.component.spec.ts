@@ -6,11 +6,16 @@ describe('StationThumbnailComponent', () => {
     let component: StationThumbnailComponent;
     let fixture: ComponentFixture<StationThumbnailComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [StationThumbnailComponent, StationIconStubDirective],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [
+                    StationThumbnailComponent,
+                    StationIconStubDirective,
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(StationThumbnailComponent);

@@ -27,42 +27,44 @@ describe('PlayerBarComponent', () => {
     let sleepTimerService: jasmine.SpyObj<SleepTimerService>;
     let minutesUntilSleep$: Observable<number>;
 
-    beforeEach(waitForAsync(() => {
-        sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
-        sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
+    beforeEach(
+        waitForAsync(() => {
+            sleepTimerService = CoreSpyFactories.createSleepTimerServiceSpy();
+            sleepTimerService.minutesToSleep$ = defer(() => minutesUntilSleep$);
 
-        TestBed.configureTestingModule({
-            declarations: [
-                PlayerBarComponent,
-                PlayerBarStationInfoStubComponent,
-            ],
-            imports: [
-                RouterTestingModule,
-                MatMenuModule,
-                MatToolbarModule,
-                MatButtonModule,
-                MatIconModule,
-                MatFormFieldModule,
-                MatInputModule,
-                MatTooltipModule,
-                FormsModule,
-                NoopAnimationsModule,
-                MatProgressSpinnerModule,
-                MatProgressButtonsModule.forRoot(),
-            ],
-            providers: [
-                {
-                    provide: PlayerBarFacadeService,
-                    useValue: CoreSpyFactories.createPlayerBarFacadeSpy(),
-                },
-                { provide: SleepTimerService, useValue: sleepTimerService },
-            ],
-        })
-            .overrideComponent(PlayerBarComponent, {
-                set: { changeDetection: ChangeDetectionStrategy.Default },
+            TestBed.configureTestingModule({
+                declarations: [
+                    PlayerBarComponent,
+                    PlayerBarStationInfoStubComponent,
+                ],
+                imports: [
+                    RouterTestingModule,
+                    MatMenuModule,
+                    MatToolbarModule,
+                    MatButtonModule,
+                    MatIconModule,
+                    MatFormFieldModule,
+                    MatInputModule,
+                    MatTooltipModule,
+                    FormsModule,
+                    NoopAnimationsModule,
+                    MatProgressSpinnerModule,
+                    MatProgressButtonsModule.forRoot(),
+                ],
+                providers: [
+                    {
+                        provide: PlayerBarFacadeService,
+                        useValue: CoreSpyFactories.createPlayerBarFacadeSpy(),
+                    },
+                    { provide: SleepTimerService, useValue: sleepTimerService },
+                ],
             })
-            .compileComponents();
-    }));
+                .overrideComponent(PlayerBarComponent, {
+                    set: { changeDetection: ChangeDetectionStrategy.Default },
+                })
+                .compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PlayerBarComponent);

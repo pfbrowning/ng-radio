@@ -24,31 +24,36 @@ describe('AppShellComponent', () => {
     let component: AppShellComponent;
     let fixture: ComponentFixture<AppShellComponent>;
 
-    beforeEach(waitForAsync(() => {
-        TestBed.configureTestingModule({
-            declarations: [
-                AppShellComponent,
-                ResponsiveSidenavStubComponent,
-                SidenavStubComponent,
-            ],
-            imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
-            providers: [
-                { provide: PlayerFacadeService, useClass: PlayerFacadeStub },
-                {
-                    provide: SleepTimerService,
-                    useValue: CoreSpyFactories.createSleepTimerServiceSpy(),
-                },
-                {
-                    provide: FavoriteStationsFacadeService,
-                    useClass: FavoriteStationsFacadeStub,
-                },
-                {
-                    provide: StreamMetadataFacadeService,
-                    useClass: StreamMetadataFacadeStub,
-                },
-            ],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [
+                    AppShellComponent,
+                    ResponsiveSidenavStubComponent,
+                    SidenavStubComponent,
+                ],
+                imports: [RouterTestingModule, MatIconModule, MatToolbarModule],
+                providers: [
+                    {
+                        provide: PlayerFacadeService,
+                        useClass: PlayerFacadeStub,
+                    },
+                    {
+                        provide: SleepTimerService,
+                        useValue: CoreSpyFactories.createSleepTimerServiceSpy(),
+                    },
+                    {
+                        provide: FavoriteStationsFacadeService,
+                        useClass: FavoriteStationsFacadeStub,
+                    },
+                    {
+                        provide: StreamMetadataFacadeService,
+                        useClass: StreamMetadataFacadeStub,
+                    },
+                ],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AppShellComponent);
