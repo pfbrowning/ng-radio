@@ -20,7 +20,7 @@ export class PlayerBarComponent {
         private sleepTimerService: SleepTimerService
     ) {}
 
-    @Input() favoriteMatchingCurrentStation: Station[];
+    @Input() favoriteMatchingCurrentStation: Station;
     @Input() currentStation: Station;
     @Input() playerStatus: PlayerStatus;
     @Input() favoritesProcessingState: CurrentStationFavoritesProcessingState;

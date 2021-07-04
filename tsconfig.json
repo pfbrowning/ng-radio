@@ -12,6 +12,10 @@
     "importHelpers": true,
     "target": "es2015",
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -38,5 +42,10 @@
       "@root-components/testing": ["src/app/modules/shared/root-components/testing/index.spec"],
       "@utilities/testing": ["src/app/utilities/index.spec"]
     }
-  }
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
 }
