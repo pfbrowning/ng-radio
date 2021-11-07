@@ -9,7 +9,7 @@ Browninglogic Radio is an internet radio app written as a Single-Page Applicatio
 The in-progress demo version of the app can be accessed at [radio.browninglogic.com](https://radio.browninglogic.com).
 
 ## Current Features
-* Display of the current "Now Playing" stream info as provided by [node-internet-radio](https://github.com/gabek/node-internet-radio) and fetched via [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api)
+* Display of the current "Now Playing" stream info as provided by [icy](https://www.npmjs.com/package/icy) via [radio-proxy](https://github.com/pfbrowning/radio-proxy)
 * Integration with the [Radio Browser API](https://de1.api.radio-browser.info/) as a backend data source to easily search for internet radio stations
 * Sleep timer
 * Support for opening and playing custom station URLs
