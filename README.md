@@ -58,9 +58,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Research & decide whether to
-    * Use corrected `relativeLinkResolution`
-    * Use `ViewEncapsulation.ShadowDom`
   * Upgrade to Angular 12
   * Confirm that we're using Webpack 5
   * Upgrade to Angular 13
