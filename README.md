@@ -65,14 +65,15 @@ ng serve --open
   * Audit fix
   * Update readme
   * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
+  * Find a better alternative to the mat spinner button package
   * Replace `jasmine-theories` tests with vanilla forEach tests
-  * App-wide code review & refactor based on things learned since writing what we have thus far
+  * Migrate to `eslint`
   * Separate the models for current station, favorite station, and radio browser result
   * Write a strict CSP
   * Replace silent refresh with (hardened) refresh tokens
-  * Configure Storybook *or* Angular Playground
-  * Find a better alternative to the mat spinner button package
+  * App-wide code review & refactor based on things learned since writing what we have thus far
   * Improve test coverage
+  * Configure Storybook *or* Angular Playground
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   * Investigate whether Websockets might be a better solution than Socket.IO
   * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
