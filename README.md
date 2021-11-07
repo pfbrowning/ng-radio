@@ -36,11 +36,11 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Configuration
 To get your own instance of this application configured and running locally, you'll obviously want to start by cloning the repo.  Then take a look at `src\assets\config\app.config.json`.  There are a few things that you'll need to set up and configure in `app.config.json` in order to get the app running.  You can also configure any settings that you want `gitignore`d in `local.config.json`: any config entries in local config will automatically override matching entries in app config.
 
-### Metadata API
-You'll need to configure your own instance of the [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api).  Follow the instructions to get it set up and running on `http://localhost:3000`.  Alternatively you can host it somewhere else and specify the alternate path in `app.config.json`.
+### Radio Proxy
+You'll need to configure your own instance of [radio-proxy](https://github.com/pfbrowning/radio-proxy).  Follow the instructions to get it set up and running on `http://localhost:3000`.  Alternatively you can host it somewhere else and specify the alternate path in `app.config.json`.
 
 ### Azure Application Insights
-If you want to log stuff to Azure Application Insights, then provide your instrumentation key in `app.config.json`.  Otherwise leave it as null: this is completely optional.
+If you want diagnostic details logged to Azure Application Insights, then provide your instrumentation key in `app.config.json`.  Otherwise leave it as null: this is completely optional.
 
 ### Authentication
 You'll need to configure your own Oauth 2.0 + OpenID Connect identity provider.  In addition, you'll need to use an Oauth 2.0 provider which issues a JWT-based access token (this is not mandated by the Oauth 2.0 spec, but it's a common implementation).  This is required due to the "Favorites" functionality.  The quickest, easiest, and cheapest route would probably be to use an [Auth0](https://auth0.com/) free account.  A basic level of knowledge regarding authentication in Single Page Applications via OpenID Connect is required.
@@ -61,32 +61,28 @@ ng serve --open
   * Upgrade to Angular 12
   * Confirm that we're using Webpack 5
   * Upgrade to Angular 13
-  * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
   * Upgrade dependencies
   * Audit fix
-  * App-wide refactor based on things learned since writing what we have thus far
-    * Refactor & simplify NGRX store architecture
-      * Improve [action hygiene](https://www.youtube.com/watch?v=JmnsEvoy-gY)
-      * Implement [NGRX Facades](https://medium.com/@thomasburlesonIA/ngrx-facades-better-state-management-82a04b9a1e39) pattern
-      * Refactor selector import / export logic
-    * Refactor with smart / dumb components in mind
-  * Separate the models for current station, favorite station, and radio browser result
   * Update readme
+  * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
+  * Replace `jasmine-theories` tests with vanilla forEach tests
+  * App-wide code review & refactor based on things learned since writing what we have thus far
+  * Separate the models for current station, favorite station, and radio browser result
   * Write a strict CSP
   * Replace silent refresh with (hardened) refresh tokens
   * Configure Storybook *or* Angular Playground
+  * Find a better alternative to the mat spinner button package
+  * Improve test coverage
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   * Investigate whether Websockets might be a better solution than Socket.IO
   * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
-  * Replace `jasmine-theories` tests with vanilla forEach tests
-  * Improve test coverage
-  * Find a better alternative to the mat spinner button package
 * Bugs
-  * Silent refresh failures
+  * Error toasters show up before redirecting to the IDP
   * When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   * Duplicate "Now Playing" toaster notifications
+  * Silent refresh failures
 * Features
-  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio in order to keep the Heroku app from sleeping
+  * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio in order to keep the Heroku app from going to sleep
   * Show loading indicator for images
   * Non-logged-in experience: Require login only for favorites
   * Browser-based audio recording
