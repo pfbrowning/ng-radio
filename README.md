@@ -58,8 +58,6 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Upgrade to Angular 12
-  * Confirm that we're using Webpack 5
   * Upgrade to Angular 13
   * Upgrade dependencies
   * Audit fix
