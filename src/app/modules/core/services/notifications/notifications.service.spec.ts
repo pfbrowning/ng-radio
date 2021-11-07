@@ -4,7 +4,6 @@ import { MessageService } from 'primeng/api';
 import { CoreSpyFactories } from '@core/testing';
 import { ToasterReadyStubService } from '@core/testing';
 import { NotificationsService, ToasterReadyService } from '@core/services';
-import theoretically from 'jasmine-theories';
 
 describe('NotificationsService', () => {
     let notificationsService: NotificationsService;
@@ -55,10 +54,7 @@ describe('NotificationsService', () => {
             life: 9001,
         },
     ];
-    theoretically.it(
-        'Should pass notifications to messageService',
-        testNotifications,
-        notification => {
+    testNotifications.forEach((notification) => it('Should pass notifications to messageService', () => {
             // Arrange
             toasterReadyService.toasterReadySource.next();
 
@@ -104,8 +100,8 @@ describe('NotificationsService', () => {
                     life: notification.life,
                 },
             ]);
-        }
-    );
+
+    }))
 
     it('Should wait for toaster initialization before passing a message', () => {
         // Arrange

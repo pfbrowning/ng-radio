@@ -6,7 +6,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, Router } from '@angular/router';
 import { WindowService } from '@core/services';
 import { WindowServiceStub } from '@core/testing';
-import theoretically from 'jasmine-theories';
 
 describe('ResponsiveSidenavComponent', () => {
     let component: ResponsiveSidenavComponent;
@@ -98,23 +97,19 @@ describe('ResponsiveSidenavComponent', () => {
         { screenSize: 699, shouldShowSidenav: false },
         { screenSize: 700, shouldShowSidenav: true },
     ];
-    theoretically.it(
-        'should properly use provided non-default values for screenSizeCutoff',
-        nonDefaultCutoffInput,
-        input => {
-            // Arrange
-            // Set up test entries for a small & large screen
-            // Specify an arbitrary screenSizeCutoff
-            component.screenSizeCutoff = 700;
+    nonDefaultCutoffInput.forEach(({screenSize, shouldShowSidenav}) => it('should properly use provided non-default values for screenSizeCutoff', () => {
+        // Arrange
+        // Set up test entries for a small & large screen
+        // Specify an arbitrary screenSizeCutoff
+        component.screenSizeCutoff = 700;
 
-            // Arrange: Set the screen width
-            windowService.innerWidth = input.screenSize;
-            // Act: Detect changes
-            fixture.detectChanges();
-            // Assert that the sidenav state matches our expectation
-            expect(component.sideNav.opened).toBe(input.shouldShowSidenav);
-        }
-    );
+        // Arrange: Set the screen width
+        windowService.innerWidth = screenSize;
+        // Act: Detect changes
+        fixture.detectChanges();
+        // Assert that the sidenav state matches our expectation
+        expect(component.sideNav.opened).toBe(shouldShowSidenav);
+    }))
 
     it('should properly toggle the sidenav when told to do so', () => {
         // Arrange: Specify the screen width & detect changes
