@@ -73,6 +73,7 @@ ng serve --open
   * Replace silent refresh with (hardened) refresh tokens
   * App-wide code review & refactor based on things learned since writing what we have thus far
   * Improve test coverage
+  * Research to decide whether to utilize NX
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   * Investigate whether Websockets might be a better solution than Socket.IO
   * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
