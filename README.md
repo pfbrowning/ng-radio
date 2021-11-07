@@ -64,6 +64,7 @@ ng serve --open
     * Use `ViewEncapsulation.ShadowDom`
   * Upgrade to Angular 12
   * Confirm that we're using Webpack 5
+  * Upgrade to Angular 13
   * Upgrade dependencies
   * Audit fix
   * App-wide refactor based on things learned since writing what we have thus far
@@ -74,7 +75,9 @@ ng serve --open
     * Refactor with smart / dumb components in mind
   * Separate the models for current station, favorite station, and radio browser result
   * Update readme
-  * Decide whether to implement [BFF](https://leastprivilege.com/2019/01/18/an-alternative-way-to-secure-spas-with-asp-net-core-openid-connect-oauth-2-0-and-proxykit/)-based authentication
+  * Write a strict CSP
+  * Replace silent refresh with (hardened) refresh tokens
+  * Configure Storybook *or* Angular Playground
   * Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   * Investigate whether Websockets might be a better solution than Socket.IO
   * Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
