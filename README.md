@@ -61,6 +61,7 @@ ng serve --open
   * Upgrade to Angular 13
   * Upgrade dependencies
   * Audit fix
+  * Troubleshoot failing CI build
   * Update readme
   * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
   * Find a better alternative to the mat spinner button package
