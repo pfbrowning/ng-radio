@@ -14,11 +14,11 @@ The in-progress demo version of the app can be accessed at [radio.browninglogic.
 * Sleep timer
 * Support for opening and playing custom station URLs
 * Saving of "Favorite" stations
-* Automatic retry of Shoutcast streams which fail due to missing the trailing`/;` which is [required to listen from a web browser](https://stackoverflow.com/a/1759607)
 * Responsive & mobile-friendly
 * Logging to Azure Application Insights
 
 ## Planned Features
+* Automatic retry of Shoutcast streams which fail due to missing the trailing`/;` which is [required to listen from a web browser](https://stackoverflow.com/a/1759607)
 * Tagging of "Favorite" stations
 * [HTML5 Notifications](https://developer.mozilla.org/en-US/docs/Web/API/notification)
 
