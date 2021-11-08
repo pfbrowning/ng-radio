@@ -58,13 +58,11 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Configure linter
-  * Fix tests
-  * Run formatter
   * Upgrade to Angular 13
   * Upgrade dependencies
   * Audit fix
   * Troubleshoot failing CI build
+  * Investigate CommonJS dependencies
   * Update readme
   * Configure Storybook *or* Angular Playground
   * Find or write a better alternative to the mat spinner button package
