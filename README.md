@@ -59,6 +59,7 @@ ng serve --open
 ## Backlog
 * Chores
   * Upgrade to Angular 13
+  * Remove TSLint & Codelyzer
   * Upgrade dependencies
   * Audit fix
   * Troubleshoot failing CI build
@@ -82,6 +83,7 @@ ng serve --open
   * Duplicate "Now Playing" toaster notifications
   * Silent refresh failures
 * Features
+  * Fallback experience for when the radio browser API is down or not responding
   * Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio in order to keep the Heroku app from going to sleep
   * Show loading indicator for images
   * Non-logged-in experience: Require login only for favorites
