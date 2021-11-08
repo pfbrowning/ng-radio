@@ -5,8 +5,8 @@
       [currentStation]="currentStation" [metadataForCurrentStation]="metadataForCurrentStation">
     </blr-player-bar-station-info>
   </div>
-  <div [class.off-white]="(minutesToSleep$ | async) == null" [matMenuTriggerFor]="sleepTimerMenu" 
-    [matTooltip]="(minutesToSleep$ | async) == null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
+  <div [class.off-white]="(minutesToSleep$ | async) === null" [matMenuTriggerFor]="sleepTimerMenu" 
+    [matTooltip]="(minutesToSleep$ | async) === null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
     class="indicator-icon selectable large-screen-only" >
     <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesToSleep$ | async }}</span>
   </div>
