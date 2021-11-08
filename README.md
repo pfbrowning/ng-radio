@@ -58,15 +58,16 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Check lint
-  * Check format
+  * Configure linter
+  * Fix tests
+  * Run formatter
+  * Upgrade to Angular 13
   * Upgrade dependencies
   * Audit fix
   * Troubleshoot failing CI build
   * Update readme
   * Configure Storybook *or* Angular Playground
   * Find or write a better alternative to the mat spinner button package
-  * Migrate to `eslint`
   * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
   * Separate the models for current station, favorite station, and radio browser result
   * Write a strict CSP
