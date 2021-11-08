@@ -21,8 +21,10 @@ module.exports = function (config) {
     },
     coverageReporter: {
       dir: require('path').join(__dirname, '../coverage'),
-      type: 'lcov',
-      fixWebpackSourcePaths: true
+      reporters: [
+        { type: 'text-summary' },
+        { type: 'lcov', subdir: '.' }
+      ]
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
