@@ -58,16 +58,14 @@ ng serve --open
 
 ## Backlog
 * Chores
-  * Upgrade to Angular 13
-  * Remove TSLint & Codelyzer
+  * Troubleshoot & fix the build
   * Upgrade dependencies
   * Audit fix
-  * Troubleshoot failing CI build
   * Investigate CommonJS dependencies
   * Update readme
+  * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
   * Configure Storybook *or* Angular Playground
   * Find or write a better alternative to the mat spinner button package
-  * Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
   * Separate the models for current station, favorite station, and radio browser result
   * Write a strict CSP
   * Replace silent refresh with (hardened) refresh tokens
