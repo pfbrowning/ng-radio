@@ -54,7 +54,8 @@ describe('NotificationsService', () => {
             life: 9001,
         },
     ];
-    testNotifications.forEach((notification) => it('Should pass notifications to messageService', () => {
+    testNotifications.forEach(notification =>
+        it('Should pass notifications to messageService', () => {
             // Arrange
             toasterReadyService.toasterReadySource.next();
 
@@ -100,8 +101,8 @@ describe('NotificationsService', () => {
                     life: notification.life,
                 },
             ]);
-
-    }))
+        })
+    );
 
     it('Should wait for toaster initialization before passing a message', () => {
         // Arrange

@@ -56,7 +56,8 @@ describe('RadioBrowserService', () => {
             tag: '',
         },
     ];
-    shouldFormRequestsInput.forEach(({name, tag, country}) => it('should properly form requests', (done: DoneFn) => {        
+    shouldFormRequestsInput.forEach(({ name, tag, country }) =>
+        it('should properly form requests', (done: DoneFn) => {
             // Arrange
             const checkBodyParam = (
                 paramKey: string,
@@ -107,7 +108,8 @@ describe('RadioBrowserService', () => {
                     bitrate: '48',
                 },
             ]);
-    }));
+        })
+    );
 
     const shouldMapResponsesInput = [
         {
@@ -163,7 +165,8 @@ describe('RadioBrowserService', () => {
             expected: new Station(null, 'name 3', 'url 3', null, 'favicon 3'),
         },
     ];
-    shouldMapResponsesInput.forEach(({response, expected}) => it('should properly map responses', (done: DoneFn) => {
+    shouldMapResponsesInput.forEach(({ response, expected }) =>
+        it('should properly map responses', (done: DoneFn) => {
             // Act: Initiate a dummy request.  We don't care about what's passed in or how the request is formed.
             radioBrowserService
                 .search('name', 'country', 'tag')
@@ -181,6 +184,6 @@ describe('RadioBrowserService', () => {
                 `test.com/stations/search`
             );
             request.flush([response]);
-
-    }))
+        })
+    );
 });
