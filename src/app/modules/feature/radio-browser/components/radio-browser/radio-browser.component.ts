@@ -49,8 +49,8 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
     public countryFilter$ = this.radioBrowserFacade.countryFilter$;
     public countries$ = this.radioBrowserFacade.filteredCountries$;
     public tagSuggestions$ = this.radioBrowserFacade.tagSuggestions$;
-    public fetchingTagSuggestions$ = this.radioBrowserFacade
-        .fetchingTagSuggestions$;
+    public fetchingTagSuggestions$ =
+        this.radioBrowserFacade.fetchingTagSuggestions$;
     public nameSearch$ = new Subject<string>();
     public tagSearch$ = new Subject<{ tag: string; debounce: boolean }>();
     public nameSearch: string;

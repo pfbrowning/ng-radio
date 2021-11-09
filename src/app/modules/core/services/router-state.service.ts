@@ -12,7 +12,8 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class RouterStateService {
     private navigationInProgressSource = new BehaviorSubject<boolean>(false);
-    public navigationInProgress$ = this.navigationInProgressSource.asObservable();
+    public navigationInProgress$ =
+        this.navigationInProgressSource.asObservable();
 
     constructor(private router: Router) {
         this.router.events.subscribe((routerEvent: RouterEvent) =>

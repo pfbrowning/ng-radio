@@ -35,7 +35,8 @@ describe('AppComponent', () => {
                     },
                     {
                         provide: AuthenticationFacadeService,
-                        useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
+                        useValue:
+                            CoreSpyFactories.createAuthenticationFacadeSpy(),
                     },
                 ],
             }).compileComponents();

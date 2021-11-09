@@ -34,10 +34,9 @@ export class BearerTokenService implements HttpInterceptor {
             switchMap(config => {
                 // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
                 if (
-                    [
-                        config.favoriteStationsApiUrl,
-                        config.radioProxyUrl,
-                    ].some(authUrl => req.url.startsWith(authUrl))
+                    [config.favoriteStationsApiUrl, config.radioProxyUrl].some(
+                        authUrl => req.url.startsWith(authUrl)
+                    )
                 ) {
                     return this.authenticationFacade.accessToken$.pipe(
                         take(1),

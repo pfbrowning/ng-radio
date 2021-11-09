@@ -2,9 +2,8 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { SuggestedStationsState } from '../models/suggested-stations-state';
 import { suggestedStationsFeatureKey } from './suggested-stations.reducer';
 
-export const selectSuggestedStationsState = createFeatureSelector<
-    SuggestedStationsState
->(suggestedStationsFeatureKey);
+export const selectSuggestedStationsState =
+    createFeatureSelector<SuggestedStationsState>(suggestedStationsFeatureKey);
 
 export const selectDeveloperSuggested = createSelector(
     selectSuggestedStationsState,

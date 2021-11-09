@@ -17,11 +17,13 @@ describe('SidenavComponent', () => {
                 providers: [
                     {
                         provide: AuthenticationService,
-                        useValue: CoreSpyFactories.createAuthenticationServiceSpy(),
+                        useValue:
+                            CoreSpyFactories.createAuthenticationServiceSpy(),
                     },
                     {
                         provide: AuthenticationFacadeService,
-                        useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
+                        useValue:
+                            CoreSpyFactories.createAuthenticationFacadeSpy(),
                     },
                     provideMockStore({ initialState: initialRootState }),
                 ],

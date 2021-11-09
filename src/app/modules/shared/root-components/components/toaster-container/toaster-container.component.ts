@@ -17,7 +17,8 @@ import { ToasterReadyService } from '@core/services';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToasterContainerComponent
-    implements OnInit, OnDestroy, AfterViewInit {
+    implements OnInit, OnDestroy, AfterViewInit
+{
     constructor(
         private messageService: MessageService,
         private changeDetectorRef: ChangeDetectorRef,

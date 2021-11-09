@@ -19,7 +19,8 @@ describe('FavoriteStationsEffects', () => {
                 provideMockStore({ initialState: initialRootState }),
                 {
                     provide: FavoriteStationsService,
-                    useValue: CoreSpyFactories.createFavoriteStationsServiceSpy(),
+                    useValue:
+                        CoreSpyFactories.createFavoriteStationsServiceSpy(),
                 },
                 {
                     provide: NotificationsService,

@@ -20,7 +20,8 @@ import { WindowService } from '@core/services';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerBarStationInfoComponent
-    implements OnInit, OnDestroy, AfterViewChecked {
+    implements OnInit, OnDestroy, AfterViewChecked
+{
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         private windowService: WindowService

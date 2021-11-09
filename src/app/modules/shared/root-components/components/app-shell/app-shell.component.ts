@@ -23,17 +23,17 @@ export class AppShellComponent {
     public playerStatus$ = this.playerFacade.playerStatus$;
 
     // Favorite Stations
-    public favoriteMatchingCurrentStation$ = this.favoriteStationsFacade
-        .favoriteMatchingCurrentStation$;
-    public currentStationFavoritesProcessingState$ = this.favoriteStationsFacade
-        .currentStationFavoritesProcessingState$;
-    public editModalSaveInProgress$ = this.favoriteStationsFacade
-        .editModalSaveInProgress$;
+    public favoriteMatchingCurrentStation$ =
+        this.favoriteStationsFacade.favoriteMatchingCurrentStation$;
+    public currentStationFavoritesProcessingState$ =
+        this.favoriteStationsFacade.currentStationFavoritesProcessingState$;
+    public editModalSaveInProgress$ =
+        this.favoriteStationsFacade.editModalSaveInProgress$;
     public showEditModal$ = this.favoriteStationsFacade.showEditModal$;
-    public existingStationForEdit$ = this.favoriteStationsFacade
-        .existingStationForEdit$;
-    public favoritesFetchInProgress$ = this.favoriteStationsFacade
-        .favoritesFetchInProgress$;
-    public metadataForCurrentStation$ = this.metadataFacade
-        .metadataForCurrentStation$;
+    public existingStationForEdit$ =
+        this.favoriteStationsFacade.existingStationForEdit$;
+    public favoritesFetchInProgress$ =
+        this.favoriteStationsFacade.favoritesFetchInProgress$;
+    public metadataForCurrentStation$ =
+        this.metadataFacade.metadataForCurrentStation$;
 }

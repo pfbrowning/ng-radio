@@ -3,9 +3,10 @@ import { RadioBrowserSearchState } from '../models/radio-browser-search-state';
 import { radioBrowserSearchFeatureKey } from './reducer';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
-export const radioBrowserSearchState = createFeatureSelector<
-    RadioBrowserSearchState
->(radioBrowserSearchFeatureKey);
+export const radioBrowserSearchState =
+    createFeatureSelector<RadioBrowserSearchState>(
+        radioBrowserSearchFeatureKey
+    );
 
 export const selectedCountry = createSelector(
     radioBrowserSearchState,
