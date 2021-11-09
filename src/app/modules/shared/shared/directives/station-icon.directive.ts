@@ -14,9 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 import { SubSink } from 'subsink';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 
-@Directive({
-  selector: '[blrStationIcon]',
-})
+@Directive({ selector: '[blrStationIcon]' })
 export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
   @Input() iconUrl: string;
   @Input() minWidth = 35;
@@ -24,10 +22,10 @@ export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
   @HostBinding() src;
 
   private fallbackImage = '/assets/images/radio.svg';
-  private iconUrlAsync = new BehaviorSubject<string>(undefined);
+  private iconUrlSource = new BehaviorSubject<string | null>(null);
   private subs = new SubSink();
 
-  private proxiedIconUrl$ = this.iconUrlAsync.pipe(
+  private proxiedIconUrl$ = this.iconUrlSource.pipe(
     filter(url => !isFalsyOrWhitespace(url)),
     distinctUntilChanged(),
     switchMap(iconUrl =>
@@ -41,7 +39,7 @@ export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.iconUrl) {
-      this.iconUrlAsync.next(changes.iconUrl.currentValue);
+      this.iconUrlSource.next(changes.iconUrl.currentValue);
     }
   }
 

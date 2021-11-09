@@ -37,7 +37,7 @@
     "@ngrx/store-devtools": "^12.5.1",
     "core-js": "^3.19.1",
     "dayjs": "1.10.7",
-    "is-falsy-or-whitespace": "0.0.16",
+    "is-falsy-or-whitespace": "0.0.17",
     "lodash-es": "^4.17.21",
     "mat-progress-buttons": "^9.3.1",
     "material-design-icons": "^3.0.1",

@@ -71,13 +71,16 @@ ng serve --open
 ## Backlog
 
 -   Chores
-    -   Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     -   Update readme
     -   Write a strict CSP
     -   Replace silent refresh with (hardened) refresh tokens
     -   Configure Storybook _or_ Angular Playground
     -   Find or write a better alternative to the mat spinner button package
     -   Separate the models for current station, favorite station, and radio browser result
+    -   Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
+        - Fix non-configurable errors
+        - Enable strictPropertyInitialization
+        - Enable noImplicitAny
     -   App-wide code review & refactor based on things learned since writing what we have thus far
     -   Improve test coverage
     -   Research to decide whether to utilize NX
