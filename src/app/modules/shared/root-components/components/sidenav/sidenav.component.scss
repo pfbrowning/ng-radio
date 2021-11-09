@@ -1,31 +1,31 @@
 @import 'variables';
 
 .sidebar-header {
-    font-size: 22px;
-    color: white;
+  font-size: 22px;
+  color: white;
 }
 
 .sidebar-nav {
-    padding: 0px 10px;
-    font-size: 20px;
+  padding: 0px 10px;
+  font-size: 20px;
 
-    ul {
-        padding: 0px;
-    }
+  ul {
+    padding: 0px;
+  }
 
-    li {
-        list-style-type: none;
-        margin: 15px 0px;
-    }
+  li {
+    list-style-type: none;
+    margin: 15px 0px;
+  }
 
-    a {
-        text-decoration: none;
-        color: $offWhite;
-        font-weight: bold;
-    }
+  a {
+    text-decoration: none;
+    color: $offWhite;
+    font-weight: bold;
+  }
 
-    a.active-route,
-    a:hover {
-        color: white;
-    }
+  a.active-route,
+  a:hover {
+    color: white;
+  }
 }

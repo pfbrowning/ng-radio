@@ -6,18 +6,15 @@ import { switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ProxyKeyService {
-    constructor(
-        private httpClient: HttpClient,
-        private configService: ConfigService
-    ) {}
+  constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
-    public fetchNew(): Observable<string> {
-        return this.configService.appConfig$.pipe(
-            switchMap(config =>
-                this.httpClient.post(`${config.radioProxyUrl}/proxyKey`, null, {
-                    responseType: 'text',
-                })
-            )
-        );
-    }
+  public fetchNew(): Observable<string> {
+    return this.configService.appConfig$.pipe(
+      switchMap(config =>
+        this.httpClient.post(`${config.radioProxyUrl}/proxyKey`, null, {
+          responseType: 'text',
+        })
+      )
+    );
+  }
 }

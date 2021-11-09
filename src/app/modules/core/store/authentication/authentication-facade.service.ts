@@ -8,40 +8,38 @@ import { AuthenticationSelectors } from './selectors';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationFacadeService {
-    private stateOnceInitialized$ = this.store.pipe(
-        select(AuthenticationSelectors.authenticationState),
-        filter(s => s.initialized)
-    );
+  private stateOnceInitialized$ = this.store.pipe(
+    select(AuthenticationSelectors.authenticationState),
+    filter(s => s.initialized)
+  );
 
-    public email$ = this.stateOnceInitialized$.pipe(
-        map(s => s.email),
-        distinctUntilChanged()
-    );
-    public authenticated$ = this.stateOnceInitialized$.pipe(
-        map(s => s.authenticated),
-        distinctUntilChanged()
-    );
-    public accessToken$ = this.stateOnceInitialized$.pipe(
-        map(s => s.accessToken),
-        distinctUntilChanged()
-    );
+  public email$ = this.stateOnceInitialized$.pipe(
+    map(s => s.email),
+    distinctUntilChanged()
+  );
+  public authenticated$ = this.stateOnceInitialized$.pipe(
+    map(s => s.authenticated),
+    distinctUntilChanged()
+  );
+  public accessToken$ = this.stateOnceInitialized$.pipe(
+    map(s => s.accessToken),
+    distinctUntilChanged()
+  );
 
-    public initialized$ = this.store.pipe(
-        select(AuthenticationSelectors.isInitialized)
-    );
+  public initialized$ = this.store.pipe(select(AuthenticationSelectors.isInitialized));
 
-    constructor(
-        private store: Store<RootState>,
-        private authenticationService: AuthenticationService
-    ) {}
+  constructor(
+    private store: Store<RootState>,
+    private authenticationService: AuthenticationService
+  ) {}
 
-    public logoutButtonClicked() {
-        this.store.dispatch(AuthenticationActions.logoutButtonClicked());
-    }
+  public logoutButtonClicked() {
+    this.store.dispatch(AuthenticationActions.logoutButtonClicked());
+  }
 
-    public logInRedirect() {
-        /* This operation doesn't really have anything to do with the store, but the fact that that is the
+  public logInRedirect() {
+    /* This operation doesn't really have anything to do with the store, but the fact that that is the
     case is an implementation detail that the rest of the application shouldn't have to care about */
-        this.authenticationService.logIn();
-    }
+    this.authenticationService.logIn();
+  }
 }

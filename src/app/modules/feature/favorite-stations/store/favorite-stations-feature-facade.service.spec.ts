@@ -4,16 +4,16 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 
 describe('FavoriteStationsFeatureFacadeService', () => {
-    let service: FavoriteStationsFeatureFacadeService;
+  let service: FavoriteStationsFeatureFacadeService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [provideMockStore({ initialState: initialRootState })],
-        });
-        service = TestBed.inject(FavoriteStationsFeatureFacadeService);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideMockStore({ initialState: initialRootState })],
     });
+    service = TestBed.inject(FavoriteStationsFeatureFacadeService);
+  });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

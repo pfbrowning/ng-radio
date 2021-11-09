@@ -1,5 +1,5 @@
 import { NEVER, Observable } from 'rxjs';
 
 export class StreamMetadataFacadeStub {
-    metadataForCurrentStation$: Observable<string> = NEVER;
+  metadataForCurrentStation$: Observable<string> = NEVER;
 }

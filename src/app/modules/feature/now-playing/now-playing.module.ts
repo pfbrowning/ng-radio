@@ -7,13 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '@shared';
 
 @NgModule({
-    declarations: [NowPlayingComponent],
-    imports: [
-        CommonModule,
-        NowPlayingRoutingModule,
-        MatButtonModule,
-        MatMenuModule,
-        SharedModule,
-    ],
+  declarations: [NowPlayingComponent],
+  imports: [CommonModule, NowPlayingRoutingModule, MatButtonModule, MatMenuModule, SharedModule],
 })
 export class NowPlayingModule {}

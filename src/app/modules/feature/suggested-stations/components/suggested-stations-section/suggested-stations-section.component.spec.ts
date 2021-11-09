@@ -3,27 +3,24 @@ import { SuggestedStationsSectionComponent } from './suggested-stations-section.
 import { StationThumbnailComponent } from '../station-thumbnail/station-thumbnail.component';
 
 describe('SuggestedStationsSectionComponent', () => {
-    let component: SuggestedStationsSectionComponent;
-    let fixture: ComponentFixture<SuggestedStationsSectionComponent>;
+  let component: SuggestedStationsSectionComponent;
+  let fixture: ComponentFixture<SuggestedStationsSectionComponent>;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [
-                    SuggestedStationsSectionComponent,
-                    StationThumbnailComponent,
-                ],
-            }).compileComponents();
-        })
-    );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [SuggestedStationsSectionComponent, StationThumbnailComponent],
+      }).compileComponents();
+    })
+  );
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(SuggestedStationsSectionComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SuggestedStationsSectionComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

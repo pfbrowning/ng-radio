@@ -17,34 +17,34 @@ import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        HttpClientModule,
-        StoreModule.forRoot(reducers, {
-            runtimeChecks: {
-                strictStateImmutability: true,
-                strictActionImmutability: true,
-                strictActionWithinNgZone: true,
-            },
-        }),
-        EffectsModule.forRoot([
-            FavoriteStationsEffects,
-            PlayerEffects,
-            AuthenticationEffects,
-            StreamMetadataEffects,
-        ]),
-        StoreRouterConnectingModule.forRoot(),
-        !environment.production ? StoreDevtoolsModule.instrument() : [],
-    ],
-    providers: [
-        MessageService,
-        NotificationsService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: BearerTokenService,
-            multi: true,
-        },
-        { provide: ErrorHandler, useClass: UnhandledErrorService },
-    ],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionWithinNgZone: true,
+      },
+    }),
+    EffectsModule.forRoot([
+      FavoriteStationsEffects,
+      PlayerEffects,
+      AuthenticationEffects,
+      StreamMetadataEffects,
+    ]),
+    StoreRouterConnectingModule.forRoot(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+  ],
+  providers: [
+    MessageService,
+    NotificationsService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BearerTokenService,
+      multi: true,
+    },
+    { provide: ErrorHandler, useClass: UnhandledErrorService },
+  ],
 })
 export class CoreModule {}

@@ -12,17 +12,17 @@ import { EffectsModule } from '@ngrx/effects';
 import { FavoriteStationsFeatureEffects } from './store/effects';
 
 @NgModule({
-    declarations: [FavoriteStationsComponent],
-    imports: [
-        CommonModule,
-        FavoriteStationsRoutingModule,
-        SharedModule,
-        MatTableModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        EffectsModule.forFeature([FavoriteStationsFeatureEffects]),
-    ],
+  declarations: [FavoriteStationsComponent],
+  imports: [
+    CommonModule,
+    FavoriteStationsRoutingModule,
+    SharedModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    EffectsModule.forFeature([FavoriteStationsFeatureEffects]),
+  ],
 })
 export class FavoriteStationsModule {}

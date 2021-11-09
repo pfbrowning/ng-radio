@@ -3,6 +3,6 @@ import { initialRootState } from '@core';
 import { initialSuggestedStationsState } from './initial-suggested-stations-state';
 
 export const initialSuggestedStationsRootState: SuggestedStationsRootState = {
-    ...initialRootState,
-    suggestedStations: initialSuggestedStationsState,
+  ...initialRootState,
+  suggestedStations: initialSuggestedStationsState,
 };

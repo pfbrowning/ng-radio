@@ -1,21 +1,21 @@
 :host {
-    display: inline-block;
-    max-width: 100%;
-    cursor: pointer;
+  display: inline-block;
+  max-width: 100%;
+  cursor: pointer;
 }
 
 .marquee {
-    animation: marquee 10s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 
 @keyframes marquee {
-    0% {
-        transform: translate(0, 0);
-    }
-    25% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-100%, 0);
-    }
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
 }

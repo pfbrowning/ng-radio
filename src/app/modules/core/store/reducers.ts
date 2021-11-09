@@ -8,10 +8,10 @@ import { streamMetadataReducer } from './stream-metadata/reducer';
 import { radioBrowserResultsReducer } from './radio-browser-results/reducer';
 
 export const reducers: ActionReducerMap<RootState> = {
-    router: routerReducer,
-    favoriteStations: favoriteStationsReducer,
-    player: playerReducer,
-    authentication: authenticationReducer,
-    streamMetadata: streamMetadataReducer,
-    radioBrowserResults: radioBrowserResultsReducer,
+  router: routerReducer,
+  favoriteStations: favoriteStationsReducer,
+  player: playerReducer,
+  authentication: authenticationReducer,
+  streamMetadata: streamMetadataReducer,
+  radioBrowserResults: radioBrowserResultsReducer,
 };

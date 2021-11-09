@@ -7,26 +7,26 @@ import { LoggingService } from './logging/logging.service';
 import { CoreSpyFactories } from '@core/testing';
 
 describe('SocketIOService', () => {
-    let service: SocketIOService;
+  let service: SocketIOService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                { provide: ConfigService, useClass: ConfigStubService },
-                {
-                    provide: AuthenticationFacadeService,
-                    useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
-                },
-                {
-                    provide: LoggingService,
-                    useValue: CoreSpyFactories.createLoggingServiceSpy(),
-                },
-            ],
-        });
-        service = TestBed.inject(SocketIOService);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ConfigService, useClass: ConfigStubService },
+        {
+          provide: AuthenticationFacadeService,
+          useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
+        },
+        {
+          provide: LoggingService,
+          useValue: CoreSpyFactories.createLoggingServiceSpy(),
+        },
+      ],
     });
+    service = TestBed.inject(SocketIOService);
+  });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

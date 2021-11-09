@@ -1,40 +1,40 @@
 @import 'variables';
 
 .station-info-container {
-    font-size: 12px;
-    line-height: 18px;
-    overflow: hidden;
-    flex: 1 1 auto;
+  font-size: 12px;
+  line-height: 18px;
+  overflow: hidden;
+  flex: 1 1 auto;
 }
 
 .indicator-icon {
-    align-items: center;
-    display: flex;
+  align-items: center;
+  display: flex;
 
-    mat-icon {
-        margin: 0px 4px;
-    }
+  mat-icon {
+    margin: 0px 4px;
+  }
 }
 
 .selectable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .play-pause-button {
-    flex: 0 0 auto;
-    overflow: hidden;
+  flex: 0 0 auto;
+  overflow: hidden;
 }
 
 :host ::ng-deep .mat-spinner circle {
-    stroke: $offWhite;
+  stroke: $offWhite;
 }
 
 .spinner-container {
-    display: inline-block;
-    margin-right: 16px;
-    vertical-align: middle;
+  display: inline-block;
+  margin-right: 16px;
+  vertical-align: middle;
 }
 
 mat-toolbar {
-    height: 100%;
+  height: 100%;
 }

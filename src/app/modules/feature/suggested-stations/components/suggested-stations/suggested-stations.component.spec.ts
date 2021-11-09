@@ -6,33 +6,33 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { initialSuggestedStationsRootState } from '../../models/initial-suggested-stations-root-state';
 
 describe('SuggestedStationsComponent', () => {
-    let component: SuggestedStationsComponent;
-    let fixture: ComponentFixture<SuggestedStationsComponent>;
+  let component: SuggestedStationsComponent;
+  let fixture: ComponentFixture<SuggestedStationsComponent>;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [
-                    SuggestedStationsComponent,
-                    SuggestedStationsSectionComponent,
-                    StationThumbnailComponent,
-                ],
-                providers: [
-                    provideMockStore({
-                        initialState: initialSuggestedStationsRootState,
-                    }),
-                ],
-            }).compileComponents();
-        })
-    );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          SuggestedStationsComponent,
+          SuggestedStationsSectionComponent,
+          StationThumbnailComponent,
+        ],
+        providers: [
+          provideMockStore({
+            initialState: initialSuggestedStationsRootState,
+          }),
+        ],
+      }).compileComponents();
+    })
+  );
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(SuggestedStationsComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SuggestedStationsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

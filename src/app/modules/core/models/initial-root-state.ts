@@ -6,10 +6,10 @@ import { initialStreamMetadataState } from '../store/stream-metadata/models/init
 import { initialRadioBrowserResultsState } from '../store/radio-browser-results/models/initial-radio-browser-results-state';
 
 export const initialRootState: RootState = {
-    router: null,
-    favoriteStations: initialFavoriteStationsState,
-    player: initialPlayerState,
-    authentication: initialAuthenticationState,
-    streamMetadata: initialStreamMetadataState,
-    radioBrowserResults: initialRadioBrowserResultsState,
+  router: null,
+  favoriteStations: initialFavoriteStationsState,
+  player: initialPlayerState,
+  authentication: initialAuthenticationState,
+  streamMetadata: initialStreamMetadataState,
+  radioBrowserResults: initialRadioBrowserResultsState,
 };

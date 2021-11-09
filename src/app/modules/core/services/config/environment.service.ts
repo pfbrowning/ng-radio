@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class EnvironmentService {
-    public isProduction() {
-        return environment.production;
-    }
+  public isProduction() {
+    return environment.production;
+  }
 }

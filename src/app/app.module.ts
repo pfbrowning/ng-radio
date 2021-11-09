@@ -15,22 +15,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        CoreModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        ToastModule,
-        ConfirmDialogModule,
-        SharedModule,
-        RootComponentsModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatButtonModule,
-    ],
-    providers: [ConfirmationService],
-    bootstrap: [AppComponent],
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    CoreModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastModule,
+    ConfirmDialogModule,
+    SharedModule,
+    RootComponentsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
+  providers: [ConfirmationService],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

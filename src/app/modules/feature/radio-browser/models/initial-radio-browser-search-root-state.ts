@@ -3,6 +3,6 @@ import { initialRadioBrowserSearchState } from './initial-radio-browser-search-s
 import { initialRootState } from '@core';
 
 export const initialRadioBrowserSearchRootState: RadioBrowserSearchRootState = {
-    ...initialRootState,
-    radioBrowserSearch: initialRadioBrowserSearchState,
+  ...initialRootState,
+  radioBrowserSearch: initialRadioBrowserSearchState,
 };

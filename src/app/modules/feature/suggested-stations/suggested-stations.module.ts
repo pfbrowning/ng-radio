@@ -7,27 +7,24 @@ import { StationThumbnailComponent } from './components/station-thumbnail/statio
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import {
-    suggestedStationsFeatureKey,
-    suggestedStationsReducer,
+  suggestedStationsFeatureKey,
+  suggestedStationsReducer,
 } from './store/suggested-stations.reducer';
 import { SuggestedStationsEffects } from './store/suggested-stations.effects';
 import { SharedModule } from '@shared';
 
 @NgModule({
-    declarations: [
-        SuggestedStationsComponent,
-        SuggestedStationsSectionComponent,
-        StationThumbnailComponent,
-    ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        SuggestedStationsRoutingModule,
-        StoreModule.forFeature(
-            suggestedStationsFeatureKey,
-            suggestedStationsReducer
-        ),
-        EffectsModule.forFeature([SuggestedStationsEffects]),
-    ],
+  declarations: [
+    SuggestedStationsComponent,
+    SuggestedStationsSectionComponent,
+    StationThumbnailComponent,
+  ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    SuggestedStationsRoutingModule,
+    StoreModule.forFeature(suggestedStationsFeatureKey, suggestedStationsReducer),
+    EffectsModule.forFeature([SuggestedStationsEffects]),
+  ],
 })
 export class SuggestedStationsModule {}

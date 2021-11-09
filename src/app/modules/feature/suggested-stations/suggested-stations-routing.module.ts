@@ -4,16 +4,16 @@ import { SuggestedStationsComponent } from './components/suggested-stations/sugg
 import { SuggestedStationsResolver } from './resolvers/suggested-stations.resolver';
 
 const routes: Routes = [
-    {
-        path: '',
-        component: SuggestedStationsComponent,
-        resolve: { suggestedStations: SuggestedStationsResolver },
-    },
+  {
+    path: '',
+    component: SuggestedStationsComponent,
+    resolve: { suggestedStations: SuggestedStationsResolver },
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
-    providers: [SuggestedStationsResolver],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+  providers: [SuggestedStationsResolver],
 })
 export class SuggestedStationsRoutingModule {}

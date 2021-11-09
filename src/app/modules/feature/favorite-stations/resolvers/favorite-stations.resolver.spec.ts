@@ -4,16 +4,16 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 
 describe('FavoriteStationsResolver', () => {
-    let resolver: FavoriteStationsResolver;
+  let resolver: FavoriteStationsResolver;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [provideMockStore({ initialState: initialRootState })],
-        });
-        resolver = TestBed.inject(FavoriteStationsResolver);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideMockStore({ initialState: initialRootState })],
     });
+    resolver = TestBed.inject(FavoriteStationsResolver);
+  });
 
-    it('should be created', () => {
-        expect(resolver).toBeTruthy();
-    });
+  it('should be created', () => {
+    expect(resolver).toBeTruthy();
+  });
 });

@@ -6,10 +6,10 @@ import { StreamMetadataState } from '../store/stream-metadata/models/stream-meta
 import { RadioBrowserResultsState } from '../store/radio-browser-results/models/radio-browser-results-state';
 
 export interface RootState {
-    router: RouterReducerState;
-    favoriteStations: FavoriteStationsState;
-    player: PlayerState;
-    authentication: AuthenticationState;
-    streamMetadata: StreamMetadataState;
-    radioBrowserResults: RadioBrowserResultsState;
+  router: RouterReducerState;
+  favoriteStations: FavoriteStationsState;
+  player: PlayerState;
+  authentication: AuthenticationState;
+  streamMetadata: StreamMetadataState;
+  radioBrowserResults: RadioBrowserResultsState;
 }

@@ -1,5 +1,5 @@
 export interface TokenReceivedResult {
-    email: string;
-    authenticated: boolean;
-    accessToken: string;
+  email: string;
+  authenticated: boolean;
+  accessToken: string;
 }

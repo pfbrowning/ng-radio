@@ -6,16 +6,8 @@ import { StationIconDirective } from './directives/station-icon.directive';
 import { MetadataTextComponent } from './components/metadata-text/metadata-text.component';
 
 @NgModule({
-    imports: [CommonModule, MatMenuModule],
-    declarations: [
-        StreamUrlValidatorDirective,
-        StationIconDirective,
-        MetadataTextComponent,
-    ],
-    exports: [
-        MetadataTextComponent,
-        StreamUrlValidatorDirective,
-        StationIconDirective,
-    ],
+  imports: [CommonModule, MatMenuModule],
+  declarations: [StreamUrlValidatorDirective, StationIconDirective, MetadataTextComponent],
+  exports: [MetadataTextComponent, StreamUrlValidatorDirective, StationIconDirective],
 })
 export class SharedModule {}

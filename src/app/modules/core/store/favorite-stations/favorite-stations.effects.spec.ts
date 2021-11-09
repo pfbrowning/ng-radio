@@ -8,33 +8,30 @@ import { CoreSpyFactories } from '@core/testing';
 import { NotificationsService, FavoriteStationsService } from '@core/services';
 
 describe('FavoriteStationsEffects', () => {
-    const actions$: Observable<any> = null;
-    let effects: FavoriteStationsEffects;
+  const actions$: Observable<any> = null;
+  let effects: FavoriteStationsEffects;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                FavoriteStationsEffects,
-                provideMockActions(() => actions$),
-                provideMockStore({ initialState: initialRootState }),
-                {
-                    provide: FavoriteStationsService,
-                    useValue:
-                        CoreSpyFactories.createFavoriteStationsServiceSpy(),
-                },
-                {
-                    provide: NotificationsService,
-                    useValue: CoreSpyFactories.createNotificationsServiceSpy(),
-                },
-            ],
-        });
-
-        effects = TestBed.inject<FavoriteStationsEffects>(
-            FavoriteStationsEffects
-        );
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        FavoriteStationsEffects,
+        provideMockActions(() => actions$),
+        provideMockStore({ initialState: initialRootState }),
+        {
+          provide: FavoriteStationsService,
+          useValue: CoreSpyFactories.createFavoriteStationsServiceSpy(),
+        },
+        {
+          provide: NotificationsService,
+          useValue: CoreSpyFactories.createNotificationsServiceSpy(),
+        },
+      ],
     });
 
-    it('should be created', () => {
-        expect(effects).toBeTruthy();
-    });
+    effects = TestBed.inject<FavoriteStationsEffects>(FavoriteStationsEffects);
+  });
+
+  it('should be created', () => {
+    expect(effects).toBeTruthy();
+  });
 });

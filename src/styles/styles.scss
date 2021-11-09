@@ -2,103 +2,103 @@
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 body {
-    margin: 0;
-    font-family: Roboto, 'Helvetica Neue', sans-serif;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .fill-remaining {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 table.mat-table.selectable-rows .mat-row,
 table.mat-table .mat-row.selectable-row {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 @media (min-width: $smallScreenCutoff) {
-    .small-screen-only,
-    .mat-toolbar.small-screen-only,
-    .mat-icon-button.small-screen-only,
-    .mat-menu-item.small-screen-only {
-        display: none;
-    }
+  .small-screen-only,
+  .mat-toolbar.small-screen-only,
+  .mat-icon-button.small-screen-only,
+  .mat-menu-item.small-screen-only {
+    display: none;
+  }
 }
 
 @media (max-width: $smallScreenCutoff - 1) {
-    .large-screen-only,
-    div.indicator-icon.large-screen-only {
-        display: none;
-    }
+  .large-screen-only,
+  div.indicator-icon.large-screen-only {
+    display: none;
+  }
 }
 
 .mat-toolbar .mat-raised-button {
-    margin: 0px 6px;
+  margin: 0px 6px;
 }
 
 table.mat-table {
-    width: 100%;
-    /* Use a fixed layout for mat-tables on small screens 
+  width: 100%;
+  /* Use a fixed layout for mat-tables on small screens 
     to prevent them from overflowing. */
-    @media (max-width: $smallScreenCutoff - 1) {
-        table-layout: fixed;
-    }
+  @media (max-width: $smallScreenCutoff - 1) {
+    table-layout: fixed;
+  }
 }
 
 .station-icon-thumb {
-    max-width: 56px;
-    max-height: 56px;
-    margin: 4px;
+  max-width: 56px;
+  max-height: 56px;
+  margin: 4px;
 }
 
 .flex-grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .flex-column-third,
 .flex-column-half {
-    flex-basis: 100%;
-    max-width: 100%;
-    padding: 10px;
+  flex-basis: 100%;
+  max-width: 100%;
+  padding: 10px;
 }
 
 @media (min-width: $smallScreenCutoff) {
-    .flex-column-third {
-        flex-basis: 33%;
-    }
+  .flex-column-third {
+    flex-basis: 33%;
+  }
 
-    .flex-column-half {
-        flex-basis: 50%;
-    }
+  .flex-column-half {
+    flex-basis: 50%;
+  }
 }
 
 .bulletless-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
-    li {
-        margin: 5px;
-    }
+  li {
+    margin: 5px;
+  }
 }
 
 fieldset {
-    border: none;
+  border: none;
 }
 
 .off-white {
-    color: $offWhite;
+  color: $offWhite;
 }
 
 /* Show a bit of padding between cells because text runs
 too closely together otherwise. */
 .mat-table th.mat-header-cell,
 .mat-table td.mat-cell {
-    padding: 0 8px;
+  padding: 0 8px;
 }
 
 /* On small screens use the same padding for all columns
@@ -106,10 +106,10 @@ so that:
 1) Padding isn't inconsistent when columns are hidden
 2) We're not taking up quite so much width when width is limited. */
 @media (max-width: $smallScreenCutoff - 1) {
-    .mat-table th.mat-header-cell:first-of-type,
-    .mat-table th.mat-header-cell:last-of-type,
-    .mat-table td.mat-cell:first-of-type,
-    .mat-table td.mat-cell:last-of-type {
-        padding: 0 8px;
-    }
+  .mat-table th.mat-header-cell:first-of-type,
+  .mat-table th.mat-header-cell:last-of-type,
+  .mat-table td.mat-cell:first-of-type,
+  .mat-table td.mat-cell:last-of-type {
+    padding: 0 8px;
+  }
 }

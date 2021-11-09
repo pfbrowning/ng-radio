@@ -5,23 +5,23 @@ import { CoreSpyFactories } from '@core/testing';
 import { LoggingService, AppInsightsService } from '@core/services';
 
 describe('LoggingService', () => {
-    let loggingService: LoggingService;
+  let loggingService: LoggingService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                { provide: ConfigService, useClass: ConfigStubService },
-                {
-                    provide: AppInsightsService,
-                    useValue: CoreSpyFactories.createAppInsightsServiceSpy(),
-                },
-            ],
-        });
-
-        loggingService = TestBed.inject(LoggingService);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ConfigService, useClass: ConfigStubService },
+        {
+          provide: AppInsightsService,
+          useValue: CoreSpyFactories.createAppInsightsServiceSpy(),
+        },
+      ],
     });
 
-    it('should be created', () => {
-        expect(loggingService).toBeTruthy();
-    });
+    loggingService = TestBed.inject(LoggingService);
+  });
+
+  it('should be created', () => {
+    expect(loggingService).toBeTruthy();
+  });
 });

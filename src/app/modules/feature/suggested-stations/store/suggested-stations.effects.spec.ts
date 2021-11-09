@@ -7,46 +7,40 @@ import { initialSuggestedStationsRootState } from '../models/initial-suggested-s
 import { SuggestedStationsService } from '../services/suggested-stations.service';
 import { createSuggestedStationsServiceSpy } from '../suggested-stations-spy-factories.spec';
 import { CoreSpyFactories, ConfigStubService } from '@core/testing';
-import {
-    NotificationsService,
-    RadioBrowserService,
-    ConfigService,
-} from '@core/services';
+import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 
 describe('SuggestedStationsEffects', () => {
-    const actions$: Observable<any> = null;
-    let effects: SuggestedStationsEffects;
+  const actions$: Observable<any> = null;
+  let effects: SuggestedStationsEffects;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            providers: [
-                SuggestedStationsEffects,
-                provideMockActions(() => actions$),
-                provideMockStore({
-                    initialState: initialSuggestedStationsRootState,
-                }),
-                { provide: ConfigService, useClass: ConfigStubService },
-                {
-                    provide: SuggestedStationsService,
-                    useValue: createSuggestedStationsServiceSpy(),
-                },
-                {
-                    provide: RadioBrowserService,
-                    useValue: CoreSpyFactories.createRadioBrowserServiceSpy(),
-                },
-                {
-                    provide: NotificationsService,
-                    useValue: CoreSpyFactories.createNotificationsServiceSpy(),
-                },
-            ],
-        });
-
-        effects = TestBed.inject<SuggestedStationsEffects>(
-            SuggestedStationsEffects
-        );
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        SuggestedStationsEffects,
+        provideMockActions(() => actions$),
+        provideMockStore({
+          initialState: initialSuggestedStationsRootState,
+        }),
+        { provide: ConfigService, useClass: ConfigStubService },
+        {
+          provide: SuggestedStationsService,
+          useValue: createSuggestedStationsServiceSpy(),
+        },
+        {
+          provide: RadioBrowserService,
+          useValue: CoreSpyFactories.createRadioBrowserServiceSpy(),
+        },
+        {
+          provide: NotificationsService,
+          useValue: CoreSpyFactories.createNotificationsServiceSpy(),
+        },
+      ],
     });
 
-    it('should be created', () => {
-        expect(effects).toBeTruthy();
-    });
+    effects = TestBed.inject<SuggestedStationsEffects>(SuggestedStationsEffects);
+  });
+
+  it('should be created', () => {
+    expect(effects).toBeTruthy();
+  });
 });

@@ -5,19 +5,17 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigStubService } from '@core/testing';
 
 describe('FavoriteStationsService', () => {
-    let service: FavoriteStationsService;
+  let service: FavoriteStationsService;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [
-                { provide: ConfigService, useClass: ConfigStubService },
-            ],
-        });
-        service = TestBed.inject(FavoriteStationsService);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: ConfigService, useClass: ConfigStubService }],
     });
+    service = TestBed.inject(FavoriteStationsService);
+  });
 
-    it('should be created', () => {
-        expect(service).toBeTruthy();
-    });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
 });

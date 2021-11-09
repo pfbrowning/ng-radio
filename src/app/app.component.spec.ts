@@ -7,50 +7,45 @@ import { RouterStateService } from '@core/services';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import {
-    GlobalSpinnerStubComponent,
-    ToasterContainerStubComponent,
+  GlobalSpinnerStubComponent,
+  ToasterContainerStubComponent,
 } from '@root-components/testing';
 import { RouterStateStubService, CoreSpyFactories } from '@core/testing';
 import { AuthenticationFacadeService } from '@core/store';
 
 describe('AppComponent', () => {
-    let component: AppComponent;
-    let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                imports: [MatIconModule, ToastModule, ConfirmDialogModule],
-                declarations: [
-                    AppComponent,
-                    GlobalSpinnerStubComponent,
-                    ToasterContainerStubComponent,
-                ],
-                providers: [
-                    MessageService,
-                    ConfirmationService,
-                    {
-                        provide: RouterStateService,
-                        useClass: RouterStateStubService,
-                    },
-                    {
-                        provide: AuthenticationFacadeService,
-                        useValue:
-                            CoreSpyFactories.createAuthenticationFacadeSpy(),
-                    },
-                ],
-            }).compileComponents();
-        })
-    );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [MatIconModule, ToastModule, ConfirmDialogModule],
+        declarations: [AppComponent, GlobalSpinnerStubComponent, ToasterContainerStubComponent],
+        providers: [
+          MessageService,
+          ConfirmationService,
+          {
+            provide: RouterStateService,
+            useClass: RouterStateStubService,
+          },
+          {
+            provide: AuthenticationFacadeService,
+            useValue: CoreSpyFactories.createAuthenticationFacadeSpy(),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AppComponent);
-        component = fixture.componentInstance;
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+  });
 
-    it('should create the app', () => {
-        fixture.detectChanges();
+  it('should create the app', () => {
+    fixture.detectChanges();
 
-        expect(component).toBeTruthy();
-    });
+    expect(component).toBeTruthy();
+  });
 });

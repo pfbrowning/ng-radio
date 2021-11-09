@@ -2,38 +2,38 @@
 
 // Special styles for small screens
 @media (max-width: $smallScreenCutoff - 1) {
-    /* We want the Station title to take up a little bit less
+  /* We want the Station title to take up a little bit less
     space than the now playing text. */
-    .mat-column-name {
-        width: 40%;
-    }
+  .mat-column-name {
+    width: 40%;
+  }
 
-    .mat-column-tags,
-    .mat-column-icon {
-        display: none;
-    }
+  .mat-column-tags,
+  .mat-column-icon {
+    display: none;
+  }
 }
 
 .tag-list {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 
-    li {
-        list-style-type: none;
-        display: inline-block;
-        margin: 4px;
-        background-color: $offWhite;
-        padding: 7px;
-        border-radius: 15px;
-    }
+  li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 4px;
+    background-color: $offWhite;
+    padding: 7px;
+    border-radius: 15px;
+  }
 }
 
 .mat-table-spinner,
 ::ng-deep .mat-autocomplete .loading .mat-option-text {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 ::ng-deep .mat-option.loading {
-    height: 60px;
+  height: 60px;
 }

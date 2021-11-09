@@ -17,43 +17,43 @@ import { ConfigStubService } from '@core/testing';
 import { StationIconStubDirective } from '@shared/testing';
 
 describe('RadioBrowserComponent', () => {
-    let component: RadioBrowserComponent;
-    let fixture: ComponentFixture<RadioBrowserComponent>;
+  let component: RadioBrowserComponent;
+  let fixture: ComponentFixture<RadioBrowserComponent>;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [RadioBrowserComponent, StationIconStubDirective],
-                imports: [
-                    MatFormFieldModule,
-                    MatTableModule,
-                    MatFormFieldModule,
-                    MatInputModule,
-                    MatProgressSpinnerModule,
-                    MatCardModule,
-                    MatSelectModule,
-                    MatAutocompleteModule,
-                    NgxMatSelectSearchModule,
-                    FormsModule,
-                    NoopAnimationsModule,
-                ],
-                providers: [
-                    provideMockStore({
-                        initialState: initialRadioBrowserSearchRootState,
-                    }),
-                    { provide: ConfigService, useClass: ConfigStubService },
-                ],
-            }).compileComponents();
-        })
-    );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [RadioBrowserComponent, StationIconStubDirective],
+        imports: [
+          MatFormFieldModule,
+          MatTableModule,
+          MatFormFieldModule,
+          MatInputModule,
+          MatProgressSpinnerModule,
+          MatCardModule,
+          MatSelectModule,
+          MatAutocompleteModule,
+          NgxMatSelectSearchModule,
+          FormsModule,
+          NoopAnimationsModule,
+        ],
+        providers: [
+          provideMockStore({
+            initialState: initialRadioBrowserSearchRootState,
+          }),
+          { provide: ConfigService, useClass: ConfigStubService },
+        ],
+      }).compileComponents();
+    })
+  );
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(RadioBrowserComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RadioBrowserComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -6,18 +6,18 @@ import { AuthenticationFacadeService } from '../../store/authentication/authenti
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuardService implements CanActivate {
-    constructor(private authenticationFacade: AuthenticationFacadeService) {}
+  constructor(private authenticationFacade: AuthenticationFacadeService) {}
 
-    canActivate(): Observable<boolean> {
-        return this.authenticationFacade.authenticated$.pipe(
-            take(1),
-            switchMap(authenticated => {
-                if (authenticated) {
-                    return of(true);
-                }
-                this.authenticationFacade.logInRedirect();
-                return NEVER;
-            })
-        );
-    }
+  canActivate(): Observable<boolean> {
+    return this.authenticationFacade.authenticated$.pipe(
+      take(1),
+      switchMap(authenticated => {
+        if (authenticated) {
+          return of(true);
+        }
+        this.authenticationFacade.logInRedirect();
+        return NEVER;
+      })
+    );
+  }
 }

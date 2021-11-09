@@ -5,12 +5,10 @@ import { Station } from '@core/models/player';
 
 @Injectable({ providedIn: 'root' })
 export class SuggestedStationsService {
-    constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-    /** Retrieves the 'Developer-Suggested' stations from the JSON file stored in 'assets' */
-    public fetchDeveloperSuggestions(): Observable<Station[]> {
-        return this.httpClient.get<Station[]>(
-            '/assets/data/suggested-stations.json'
-        );
-    }
+  /** Retrieves the 'Developer-Suggested' stations from the JSON file stored in 'assets' */
+  public fetchDeveloperSuggestions(): Observable<Station[]> {
+    return this.httpClient.get<Station[]>('/assets/data/suggested-stations.json');
+  }
 }

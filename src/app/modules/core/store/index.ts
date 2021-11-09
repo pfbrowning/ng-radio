@@ -15,6 +15,6 @@ export { RadioBrowserResultsActions, RadioBrowserResultsSelectors };
 // Favorite Stations
 export { FavoriteStationsFacadeService } from './favorite-stations/favorite-stations-facade.service';
 export {
-    FavoriteStationsActions,
-    RouteResolverActions as FavoriteStationsRouteResolverActions,
+  FavoriteStationsActions,
+  RouteResolverActions as FavoriteStationsRouteResolverActions,
 } from './favorite-stations/actions';

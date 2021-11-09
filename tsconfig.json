@@ -15,15 +15,10 @@
     "strict": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@environment": [ "src/environments/environment"],
+      "@environment": ["src/environments/environment"],
       "@core": ["src/app/modules/core/index"],
       "@core/constants": ["src/app/modules/core/constants/index"],
       "@core/models": ["src/app/modules/core/models/index"],
@@ -46,5 +41,5 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  },
+  }
 }

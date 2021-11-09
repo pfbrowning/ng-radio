@@ -1,112 +1,112 @@
 [
-    {
-        "title": "BBC World Service",
-        "url": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
-        "genre": "News",
-        "tags": null
-    },
-    {
-        "title": "NPR 24 Hour Program Stream",
-        "url": "http://npr-ice.streamguys1.com/live.mp3",
-        "genre": "Public Radio",
-        "iconUrl": "https://media.npr.org/chrome_svg/npr-logo.svg",
-        "tags": null
-    },
-    {
-        "title": "NPR News Summary",
-        "url": "http://pd.npr.org/anon.npr-mp3/npr/news/newscast.mp3",
-        "genre": "Public Radio",
-        "iconUrl": "https://lh4.ggpht.com/AnC8LtJK3CzWLuMrVee3FMgNrGcKXDPjtygeNfkLmV078Tu5C9L_bxcR0tEnnluu_e8=w300",
-        "tags": null
-    },
-    {
-        "title": "WQXR",
-        "url": "http://stream.wqxr.org/wqxr",
-        "genre": "Classical",
-        "iconUrl": "https://media2.wnyc.org/i/300/300/c/80/1/wqxr_square_logo.png",
-        "tags": null
-    },
-    {
-        "title": "Radio Metal On: The Heavy",
-        "url": "http://188.165.212.92:8000/heavy128mp3",
-        "genre": "Heavy Metal",
-        "iconUrl": "http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg",
-        "tags": null
-    },
-    {
-        "title": "Radio Metal On: The Thrasher",
-        "url": "http://188.165.212.92:8020/thrasher128mp3",
-        "genre": "Thrash Metal",
-        "iconUrl": "http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg",
-        "tags": null
-    },
-    {
-        "title": "Prog Palace Radio",
-        "url": "http://69.162.103.66/proxy/gstaffor?mp=/stream",
-        "genre": "Progressive Metal",
-        "iconUrl": "https://cdn-radiotime-logos.tunein.com/s95477q.png",
-        "tags": null
-    },
-    {
-        "title": "Radio Caprice Speed Metal",
-        "url": "http://79.111.119.111:9107/;",
-        "genre": "Speed Metal",
-        "iconUrl": "http://radcap.ru/graf2/rclogo.png",
-        "tags": null
-    },
-    {
-        "title": "Radio Caprice Thrash Metal",
-        "url": "http://79.120.77.11:9101/;",
-        "genre": "Thrash Metal",
-        "iconUrl": "https://static.radio.net/images/broadcasts/c6/bf/103695/1/c175.png",
-        "tags": null
-    },
-    {
-        "title": "Radio Caprice Heavy Metal",
-        "url": "http://79.111.14.76:9061/;",
-        "genre": "Heavy Metal",
-        "iconUrl": "http://radcap.ru/graf2/rclogo.png",
-        "tags": null
-    },
-    {
-        "title": "Radio Caprice Power Metal",
-        "url": "http://79.120.77.11:9099/;",
-        "genre": "Power Metal",
-        "iconUrl": "https://static.radio.net/images/broadcasts/71/96/103673/1/c175.png",
-        "tags": null
-    },
-    {
-        "title": "Beatles Radio",
-        "url": "http://www.beatlesradio.com:8000/stream/1/",
-        "genre": "Classic Rock",
-        "iconUrl": "https://static.radio.net/images/broadcasts/ea/a3/1436/c300.png",
-        "tags": null
-    },
-    {
-        "title": "Radio Caprice Hard Bop",
-        "url": "http://79.111.14.76:9047/;",
-        "genre": "Jazz",
-        "iconUrl": "https://static.radio.net/images/broadcasts/0e/6a/103740/1/c300.png",
-        "tags": null
-    },
-    {
-        "title": "Gutter Punk Radio",
-        "url": "http://www.gutter-punk-radio.com:8000/;",
-        "genre": "Punk Rock",
-        "tags": null
-    },
-    {
-        "title": "Abacus Rain",
-        "url": "http://185.80.221.113:8000/stream",
-        "genre": "Ambient",
-        "iconUrl": null,
-        "tags": null
-    },
-    {
-        "title": "Abacus Ocean",
-        "url": "http://185.80.221.113:8023/stream",
-        "genre": "Ambient",
-        "iconUrl": null,
-        "tags": null
-    }
+  {
+    "title": "BBC World Service",
+    "url": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+    "genre": "News",
+    "tags": null
+  },
+  {
+    "title": "NPR 24 Hour Program Stream",
+    "url": "http://npr-ice.streamguys1.com/live.mp3",
+    "genre": "Public Radio",
+    "iconUrl": "https://media.npr.org/chrome_svg/npr-logo.svg",
+    "tags": null
+  },
+  {
+    "title": "NPR News Summary",
+    "url": "http://pd.npr.org/anon.npr-mp3/npr/news/newscast.mp3",
+    "genre": "Public Radio",
+    "iconUrl": "https://lh4.ggpht.com/AnC8LtJK3CzWLuMrVee3FMgNrGcKXDPjtygeNfkLmV078Tu5C9L_bxcR0tEnnluu_e8=w300",
+    "tags": null
+  },
+  {
+    "title": "WQXR",
+    "url": "http://stream.wqxr.org/wqxr",
+    "genre": "Classical",
+    "iconUrl": "https://media2.wnyc.org/i/300/300/c/80/1/wqxr_square_logo.png",
+    "tags": null
+  },
+  {
+    "title": "Radio Metal On: The Heavy",
+    "url": "http://188.165.212.92:8000/heavy128mp3",
+    "genre": "Heavy Metal",
+    "iconUrl": "http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg",
+    "tags": null
+  },
+  {
+    "title": "Radio Metal On: The Thrasher",
+    "url": "http://188.165.212.92:8020/thrasher128mp3",
+    "genre": "Thrash Metal",
+    "iconUrl": "http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg",
+    "tags": null
+  },
+  {
+    "title": "Prog Palace Radio",
+    "url": "http://69.162.103.66/proxy/gstaffor?mp=/stream",
+    "genre": "Progressive Metal",
+    "iconUrl": "https://cdn-radiotime-logos.tunein.com/s95477q.png",
+    "tags": null
+  },
+  {
+    "title": "Radio Caprice Speed Metal",
+    "url": "http://79.111.119.111:9107/;",
+    "genre": "Speed Metal",
+    "iconUrl": "http://radcap.ru/graf2/rclogo.png",
+    "tags": null
+  },
+  {
+    "title": "Radio Caprice Thrash Metal",
+    "url": "http://79.120.77.11:9101/;",
+    "genre": "Thrash Metal",
+    "iconUrl": "https://static.radio.net/images/broadcasts/c6/bf/103695/1/c175.png",
+    "tags": null
+  },
+  {
+    "title": "Radio Caprice Heavy Metal",
+    "url": "http://79.111.14.76:9061/;",
+    "genre": "Heavy Metal",
+    "iconUrl": "http://radcap.ru/graf2/rclogo.png",
+    "tags": null
+  },
+  {
+    "title": "Radio Caprice Power Metal",
+    "url": "http://79.120.77.11:9099/;",
+    "genre": "Power Metal",
+    "iconUrl": "https://static.radio.net/images/broadcasts/71/96/103673/1/c175.png",
+    "tags": null
+  },
+  {
+    "title": "Beatles Radio",
+    "url": "http://www.beatlesradio.com:8000/stream/1/",
+    "genre": "Classic Rock",
+    "iconUrl": "https://static.radio.net/images/broadcasts/ea/a3/1436/c300.png",
+    "tags": null
+  },
+  {
+    "title": "Radio Caprice Hard Bop",
+    "url": "http://79.111.14.76:9047/;",
+    "genre": "Jazz",
+    "iconUrl": "https://static.radio.net/images/broadcasts/0e/6a/103740/1/c300.png",
+    "tags": null
+  },
+  {
+    "title": "Gutter Punk Radio",
+    "url": "http://www.gutter-punk-radio.com:8000/;",
+    "genre": "Punk Rock",
+    "tags": null
+  },
+  {
+    "title": "Abacus Rain",
+    "url": "http://185.80.221.113:8000/stream",
+    "genre": "Ambient",
+    "iconUrl": null,
+    "tags": null
+  },
+  {
+    "title": "Abacus Ocean",
+    "url": "http://185.80.221.113:8023/stream",
+    "genre": "Ambient",
+    "iconUrl": null,
+    "tags": null
+  }
 ]

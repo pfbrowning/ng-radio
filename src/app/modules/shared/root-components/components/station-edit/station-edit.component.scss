@@ -1,18 +1,18 @@
 .form-field-spinner-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-    mat-form-field {
-        flex: 1 0 auto;
-    }
+  mat-form-field {
+    flex: 1 0 auto;
+  }
 
-    mat-spinner {
-        flex: 0 0 auto;
-    }
+  mat-spinner {
+    flex: 0 0 auto;
+  }
 }
 
 :host ::ng-deep .station-modal {
-    width: 1200px;
-    max-width: 90vw;
+  width: 1200px;
+  max-width: 90vw;
 }

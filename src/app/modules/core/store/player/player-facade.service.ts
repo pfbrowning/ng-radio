@@ -5,12 +5,8 @@ import { PlayerSelectors } from './selectors';
 
 @Injectable({ providedIn: 'root' })
 export class PlayerFacadeService {
-    public playerStatus$ = this.store.pipe(
-        select(PlayerSelectors.playerStatus)
-    );
-    public currentStation$ = this.store.pipe(
-        select(PlayerSelectors.currentStation)
-    );
+  public playerStatus$ = this.store.pipe(select(PlayerSelectors.playerStatus));
+  public currentStation$ = this.store.pipe(select(PlayerSelectors.currentStation));
 
-    constructor(private store: Store<RootState>) {}
+  constructor(private store: Store<RootState>) {}
 }

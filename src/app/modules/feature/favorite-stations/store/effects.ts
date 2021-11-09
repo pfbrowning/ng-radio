@@ -6,14 +6,12 @@ import { FavoriteStationsActions } from '@core/store';
 
 @Injectable()
 export class FavoriteStationsFeatureEffects {
-    deleteStationOnConfirmed$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(FavoriteStationsPageActions.deleteFavoriteConfirmed),
-            map(({ stationId }) =>
-                FavoriteStationsActions.removeFromFavoritesStart({ stationId })
-            )
-        )
-    );
+  deleteStationOnConfirmed$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FavoriteStationsPageActions.deleteFavoriteConfirmed),
+      map(({ stationId }) => FavoriteStationsActions.removeFromFavoritesStart({ stationId }))
+    )
+  );
 
-    constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions) {}
 }

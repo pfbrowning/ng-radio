@@ -7,34 +7,32 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('FavoriteStationsComponent', () => {
-    let component: FavoriteStationsComponent;
-    let fixture: ComponentFixture<FavoriteStationsComponent>;
+  let component: FavoriteStationsComponent;
+  let fixture: ComponentFixture<FavoriteStationsComponent>;
 
-    beforeEach(
-        waitForAsync(() => {
-            TestBed.configureTestingModule({
-                declarations: [FavoriteStationsComponent],
-                imports: [MatTableModule, MatIconModule],
-                providers: [
-                    provideMockStore({ initialState: initialRootState }),
-                    {
-                        provide: ConfirmationService,
-                        useValue: jasmine.createSpyObj('confirmationService', [
-                            'confirm',
-                        ]),
-                    },
-                ],
-            }).compileComponents();
-        })
-    );
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [FavoriteStationsComponent],
+        imports: [MatTableModule, MatIconModule],
+        providers: [
+          provideMockStore({ initialState: initialRootState }),
+          {
+            provide: ConfirmationService,
+            useValue: jasmine.createSpyObj('confirmationService', ['confirm']),
+          },
+        ],
+      }).compileComponents();
+    })
+  );
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(FavoriteStationsComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FavoriteStationsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
