@@ -35,7 +35,7 @@ Authentication is required to utilize the application for two reasons:
 * To identify who the current user is in order to facilitate the "Favorite Stations" feature
 * To ensure that users of my personal _hosted_ version of [radio-proxy](https://github.com/pfbrowning/radio-proxy) and [image-proxy](https://github.com/pfbrowning/image-proxy) are legitimate users of the Browninglogic Radio app, as opposed to using it for their own separate purposes and increasing my hosting bill.
 
-As a future state I would like to modify the app such that authentication is required only for the "favorite stations" feature, but in order to do so I'll need to find a good solution to the second bullet point above first.
+As a future state I would like to modify the app such that authentication is required only for the "favorite stations" feature, but in order to do so I'll need to find a better solution to the second bullet point above first.
 
 ## Supported URL Format
 The app should play any audio stream which can be played by [icy](https://www.npmjs.com/package/icy).
@@ -71,8 +71,15 @@ ng serve --open
 Support for legacy browsers is not a concern at all in developing this application. I develop and test against Firefox and Chrome primarily, and I prefer using cutting edge native browser functionality when it's preferable to legacy alternatives.
 
 ## Backlog
+- Features
+  - Radio-Proxy "Keep Alive" ping every 25 minutes while actively streaming audio in order to keep the Heroku app from going to sleep
+  - Fallback experience for when the radio browser API is down or not responding
+  - Show loading indicator for images
+  - Non-logged-in experience: Require login only for favorites
+  - Browser-based audio recording
+  - HTML5 Notifications
+  - Favorite station tags
 - Chores
-  - Update readme
   - Write a strict CSP
   - Replace silent refresh with (hardened) refresh tokens
   - Configure Storybook _or_ Angular Playground
@@ -94,11 +101,3 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   - Duplicate "Now Playing" toaster notifications
   - Silent refresh failures
-- Features
-  - Fallback experience for when the radio browser API is down or not responding
-  - Radio-Proxy "Keep Alive" ping every 15 minutes while actively streaming audio in order to keep the Heroku app from going to sleep
-  - Show loading indicator for images
-  - Non-logged-in experience: Require login only for favorites
-  - Browser-based audio recording
-  - HTML5 Notifications
-  - Favorite station tags
