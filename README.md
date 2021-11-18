@@ -80,6 +80,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - HTML5 Notifications
   - Favorite station tags
 - Chores
+  - Configure linter to yell about unused imports
   - Write a strict CSP
   - Replace silent refresh with (hardened) refresh tokens
   - Configure Storybook _or_ Angular Playground
