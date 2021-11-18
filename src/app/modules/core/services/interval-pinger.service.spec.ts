@@ -78,7 +78,7 @@ describe('IntervalPingerService', () => {
     expect(proxyKeyService.fetchNew).toHaveBeenCalledTimes(1);
   });
 
-  it('should log a successful ping');
+  it('should log a successful ping, including how long the request took');
 
   it('should emit and log a notification upon the start of a ping request');
 
