@@ -1,8 +1,7 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { PlayerStatus } from '@core/models/player';
 import { PlayerFacadeService } from '@core/store';
-import { EMPTY, NEVER, Observable, timer } from 'rxjs';
+import { NEVER, Observable, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { PingResult } from '../models/interval-pinger/ping-result';
 import { PingResultStatus } from '../models/interval-pinger/ping-result-status';
