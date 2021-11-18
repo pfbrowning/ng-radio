@@ -15,6 +15,7 @@ import { BearerTokenService } from './services/authentication/bearer-token.servi
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { IntervalPingerService } from './services/interval-pinger.service';
 
 @NgModule({
   imports: [
@@ -47,4 +48,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     { provide: ErrorHandler, useClass: UnhandledErrorService },
   ],
 })
-export class CoreModule {}
+export class CoreModule {
+  // Background processing services
+  constructor(private intervalPingerService: IntervalPingerService) {}
+}
