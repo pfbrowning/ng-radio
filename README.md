@@ -76,6 +76,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Fallback experience for when the radio browser API is down or not responding
   - Show loading indicator for images
   - Non-logged-in experience: Require login only for favorites
+  - Native app functionality: PWA or Electron
   - Browser-based audio recording
   - HTML5 Notifications
   - Favorite station tags
