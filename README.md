@@ -74,6 +74,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
 - Features
   - Radio-Proxy "Keep Alive" ping every 25 minutes while actively streaming audio in order to keep the Heroku app from going to sleep
   - Fallback experience for when the radio browser API is down or not responding
+  - "You have been listening to X station for Y minutes" logging
   - Show loading indicator for images
   - Non-logged-in experience: Require login only for favorites
   - Native app functionality: PWA or Electron
@@ -87,6 +88,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Configure Storybook _or_ Angular Playground
   - Find or write a better alternative to the mat spinner button package
   - Separate the models for current station, favorite station, and radio browser result
+  - Change detection performance logging
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
     - Enable strictPropertyInitialization
