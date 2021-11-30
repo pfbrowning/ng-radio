@@ -8,15 +8,24 @@ import { of } from 'rxjs';
 import { PlayerStatus } from '@core/models/player';
 import { PingResult } from '../models/interval-pinger/ping-result';
 import { PingResultStatus } from '../models/interval-pinger/ping-result-status';
+import { CurrentTimeService } from '@core';
+import { LoggingService } from '.';
 
 describe('IntervalPingerService', () => {
   let service: IntervalPingerService;
   let playerFacade: PlayerFacadeStub;
   let proxyKeyService: jasmine.SpyObj<ProxyKeyService>;
   let testScheduler: TestScheduler;
+  let currentTimeService: jasmine.SpyObj<CurrentTimeService>;
+  let loggingService: jasmine.SpyObj<LoggingService>;
 
   const initializeService = () =>
-    (service = new IntervalPingerService(playerFacade as PlayerFacadeService, proxyKeyService));
+    (service = new IntervalPingerService(
+      playerFacade as PlayerFacadeService,
+      proxyKeyService,
+      currentTimeService,
+      loggingService
+    ));
 
   beforeEach(() => {
     testScheduler = new TestScheduler((actual, expected) => {
@@ -24,9 +33,9 @@ describe('IntervalPingerService', () => {
     });
 
     playerFacade = new PlayerFacadeStub();
-    playerFacade.playerStatus$ = of(PlayerStatus.Playing);
-
+    currentTimeService = CoreSpyFactories.createCurrentTimeServiceSpy();
     proxyKeyService = CoreSpyFactories.createProxyKeyServiceSpy();
+    loggingService = CoreSpyFactories.createLoggingServiceSpy();
   });
 
   it('should be created', () => {
@@ -47,9 +56,7 @@ describe('IntervalPingerService', () => {
       initializeService();
 
       // Act & Assert
-      helpers
-        .expectObservable(service.pingRadioProxyOnIntervalWhilePlaying$)
-        .toBe(expectedDiagram, expectedValues);
+      helpers.expectObservable(service.playTimeInterval$).toBe(expectedDiagram, expectedValues);
     });
     expect(proxyKeyService.fetchNew).not.toHaveBeenCalled();
   });
@@ -77,6 +84,8 @@ describe('IntervalPingerService', () => {
     });
     expect(proxyKeyService.fetchNew).toHaveBeenCalledTimes(1);
   });
+
+  it('should not perform duplicate HTTP requests if there are multiple subscribers');
 
   it('should log a successful ping, including how long the request took');
 
