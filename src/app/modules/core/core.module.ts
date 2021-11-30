@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -16,6 +16,7 @@ import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { IntervalPingerService } from './services/interval-pinger.service';
+import { AppInitializerService } from './services/app-initializer.service';
 
 @NgModule({
   imports: [
@@ -46,9 +47,12 @@ import { IntervalPingerService } from './services/interval-pinger.service';
       multi: true,
     },
     { provide: ErrorHandler, useClass: UnhandledErrorService },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (service: AppInitializerService) => () => service.initialize(),
+      deps: [AppInitializerService],
+      multi: true
+    }
   ],
 })
-export class CoreModule {
-  // Background processing services
-  constructor(private intervalPingerService: IntervalPingerService) {}
-}
+export class CoreModule {}
