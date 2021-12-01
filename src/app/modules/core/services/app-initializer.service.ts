@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { IntervalPingerService } from './interval-pinger.service';
+import { RadioProxyPingerService } from './radio-player/radio-proxy-pinger.service';
 
 @Injectable({ providedIn: 'root' })
 export class AppInitializerService {
-  constructor(private intervalPingerService: IntervalPingerService) {}
+  constructor(private radioProxyPinger: RadioProxyPingerService) {}
 
   public initialize = (): Observable<void> =>
     of(null).pipe(tap(() => this.onAppInitializerStarted()));
 
   private onAppInitializerStarted() {
-    this.intervalPingerService.initialize();
+    this.radioProxyPinger.initialize();
   }
 }

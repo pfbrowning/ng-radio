@@ -71,19 +71,17 @@ ng serve --open
 Support for legacy browsers is not a concern at all in developing this application. I develop and test against Firefox and Chrome primarily, and I prefer using cutting edge native browser functionality when it's preferable to legacy alternatives.
 
 ## Backlog
-- Features
-  - Radio-Proxy "Keep Alive" ping every 25 minutes while actively streaming audio in order to keep the Heroku app from going to sleep
-  - Fallback experience for when the radio browser API is down or not responding
-  - "You have been listening to X station for Y minutes" logging
-  - Show loading indicator for images
-  - Non-logged-in experience: Require login only for favorites
-  - Native app functionality: PWA or Electron
-  - Browser-based audio recording
-  - HTML5 Notifications
-  - Favorite station tags
+- Bugs
+  - The Heroku app goes to sleep after 30 minutes
+  - The main page fails to load when the radio browser API is down.
+  - Error toasters show up before redirecting to the IDP
+  - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
+  - Duplicate "Now Playing" toaster notifications
+  - Silent refresh failures
 - Chores
   - Configure linter to yell about unused imports
   - Write a strict CSP
+  - Move `index.spec.ts` to the testing directory
   - Move init logic to AppInitializerService
     - Config fetch logic
     - Logger init logic
@@ -92,7 +90,9 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Configure Storybook _or_ Angular Playground
   - Find or write a better alternative to the mat spinner button package
   - Separate the models for current station, favorite station, and radio browser result
-  - Change detection performance logging
+  - Change detection performance
+    - Logging
+    - Tuning
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
     - Enable strictPropertyInitialization
@@ -104,8 +104,11 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   - Investigate whether Websockets might be a better solution than Socket.IO
   - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
-- Bugs
-  - Error toasters show up before redirecting to the IDP
-  - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
-  - Duplicate "Now Playing" toaster notifications
-  - Silent refresh failures
+- Features
+  - "You have been listening to X station for Y minutes" logging
+  - Show loading indicator for images
+  - Non-logged-in experience: Require login only for favorites
+  - Native app functionality: PWA or Electron
+  - Browser-based audio recording
+  - HTML5 Notifications
+  - Favorite station tags

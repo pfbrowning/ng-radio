@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { RadioProxyPingerStubService } from '@core/testing';
 import { AppInitializerService } from './app-initializer.service';
+import { RadioProxyPingerService } from './radio-player/radio-proxy-pinger.service';
 
 describe('AppInitializerService', () => {
   let service: AppInitializerService;
+  let radioProxyPinger: RadioProxyPingerStubService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AppInitializerService);
+    radioProxyPinger = new RadioProxyPingerStubService();
+    service = new AppInitializerService(radioProxyPinger as RadioProxyPingerService);
   });
 
   it('should be created', () => {

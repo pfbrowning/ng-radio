@@ -15,7 +15,6 @@ import { BearerTokenService } from './services/authentication/bearer-token.servi
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { IntervalPingerService } from './services/interval-pinger.service';
 import { AppInitializerService } from './services/app-initializer.service';
 
 @NgModule({
@@ -47,12 +46,12 @@ import { AppInitializerService } from './services/app-initializer.service';
       multi: true,
     },
     { provide: ErrorHandler, useClass: UnhandledErrorService },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (service: AppInitializerService) => () => service.initialize(),
-      deps: [AppInitializerService],
-      multi: true
-    }
+    // {
+    //   provide: APP_INITIALIZER,
+    //   deps: [AppInitializerService],
+    //   useFactory: (service: AppInitializerService) => () => service.initialize(),
+    //   multi: true,
+    // },
   ],
 })
 export class CoreModule {}
