@@ -38,7 +38,7 @@ export class RadioProxyPingerService {
   }
 
   public startPing$ = this.playTimeIntervalService.playTimeInMinutes$.pipe(
-    filter(playTime => playTime % this.pingIntervalInMinutes === 0),
+    filter(playTime => playTime > 0 && playTime % this.pingIntervalInMinutes === 0),
     map(() => ({ pingStartTime: this.currentTimeService.unixMs() }))
   );
 
@@ -59,5 +59,10 @@ export class RadioProxyPingerService {
       };
     }),
     share()
+  );
+
+  public pingSucceeded$ = this.pingRadioProxyOnInterval$.pipe(
+    filter(result => result.successful),
+    map(({ pingDuration }) => ({ pingDuration }))
   );
 }

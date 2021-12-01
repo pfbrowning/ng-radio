@@ -71,13 +71,6 @@ ng serve --open
 Support for legacy browsers is not a concern at all in developing this application. I develop and test against Firefox and Chrome primarily, and I prefer using cutting edge native browser functionality when it's preferable to legacy alternatives.
 
 ## Backlog
-- Bugs
-  - The Heroku app goes to sleep after 30 minutes
-  - The main page fails to load when the radio browser API is down.
-  - Error toasters show up before redirecting to the IDP
-  - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
-  - Duplicate "Now Playing" toaster notifications
-  - Silent refresh failures
 - Chores
   - Wrap Up Proxy Pinger Logic
     - Tests
@@ -109,6 +102,12 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   - Investigate whether Websockets might be a better solution than Socket.IO
   - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
+- Bugs
+  - The main page fails to load when the radio browser API is down.
+  - Error toasters show up before redirecting to the IDP
+  - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
+  - Duplicate "Now Playing" toaster notifications
+  - Silent refresh failures
 - Features
   - "You have been listening to X station for Y minutes" logging
   - Show loading indicator for images
