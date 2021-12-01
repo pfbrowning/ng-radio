@@ -31,12 +31,14 @@ export class RadioProxyPingerService {
     private currentTimeService: CurrentTimeService
   ) {}
 
+  private pingIntervalInMinutes = 25;
+
   public initialize() {
     this.pingRadioProxyOnInterval$.subscribe();
   }
 
   public startPing$ = this.playTimeIntervalService.playTimeInMinutes$.pipe(
-    filter(playTime => playTime % 25 === 0),
+    filter(playTime => playTime % this.pingIntervalInMinutes === 0),
     map(() => ({ pingStartTime: this.currentTimeService.unixMs() }))
   );
 

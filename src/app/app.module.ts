@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { SharedModule } from '@shared';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AppInitializerService } from './modules/core/services/app-initializer.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,15 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule,
   ],
-  providers: [ConfirmationService],
+  providers: [
+    ConfirmationService,
+    {
+      provide: APP_INITIALIZER,
+      deps: [AppInitializerService],
+      useFactory: (service: AppInitializerService) => service.initialize,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

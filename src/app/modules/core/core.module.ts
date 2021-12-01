@@ -16,6 +16,7 @@ import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AppInitializerService } from './services/app-initializer.service';
+import { Observable } from 'rxjs';
 
 @NgModule({
   imports: [
@@ -46,12 +47,6 @@ import { AppInitializerService } from './services/app-initializer.service';
       multi: true,
     },
     { provide: ErrorHandler, useClass: UnhandledErrorService },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   deps: [AppInitializerService],
-    //   useFactory: (service: AppInitializerService) => () => service.initialize(),
-    //   multi: true,
-    // },
   ],
 })
 export class CoreModule {}

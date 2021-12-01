@@ -79,13 +79,18 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Duplicate "Now Playing" toaster notifications
   - Silent refresh failures
 - Chores
+  - Wrap Up Proxy Pinger Logic
+    - Tests
+    - Logging layer
   - Configure linter to yell about unused imports
-  - Write a strict CSP
   - Move `index.spec.ts` to the testing directory
+  - Move `HTTP_INTERCEPTORS` and `ErrorHandler` to `app.module.ts`
+  - Improve console logging severities
   - Move init logic to AppInitializerService
     - Config fetch logic
     - Logger init logic
     - Auth init logic
+  - Write a strict CSP
   - Replace silent refresh with (hardened) refresh tokens
   - Configure Storybook _or_ Angular Playground
   - Find or write a better alternative to the mat spinner button package
