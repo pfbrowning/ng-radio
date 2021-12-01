@@ -15,6 +15,14 @@ import {
 import { PlayTimeIntervalService } from './play-time-interval.service';
 import { ProxyKeyService } from './proxy-key.service';
 
+/**
+ * This service performs an HTTP request to the Radio Proxy service on 25 minute intervals
+ * during audio play.
+ *
+ * This is necessary because the free version of the Heroku app goes to sleep after 30 minutes of
+ * "inactivity" with no HTTP requests logged, even if we're still in the process of streaming audio.
+ * As a result the audio stream itself is killed after 30 minutes unless we keep performing HTTP requests.
+ */
 @Injectable({ providedIn: 'root' })
 export class RadioProxyPingerService {
   constructor(
