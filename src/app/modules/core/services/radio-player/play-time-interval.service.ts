@@ -20,7 +20,7 @@ export class PlayTimeIntervalService {
   public playTimeInMinutes$: Observable<number> = this.playerFacade.isAudioPlaying$.pipe(
     switchMap(isPlaying => {
       if (isPlaying) {
-        return timer(this.oneMinuteInMs, this.oneMinuteInMs).pipe(map(sequence => sequence + 1));
+        return timer(0, this.oneMinuteInMs);
       }
       return NEVER;
     }),
