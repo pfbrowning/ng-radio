@@ -65,4 +65,9 @@ export class RadioProxyPingerService {
     filter(result => result.successful),
     map(({ pingDuration }) => ({ pingDuration }))
   );
+
+  public pingFailed$ = this.pingRadioProxyOnInterval$.pipe(
+    filter(result => !result.successful),
+    map(({ error, pingDuration }) => ({ error, pingDuration }))
+  );
 }
