@@ -36,15 +36,6 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [
-    MessageService,
-    NotificationsService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: BearerTokenService,
-      multi: true,
-    },
-    { provide: ErrorHandler, useClass: UnhandledErrorService },
-  ],
+  providers: [MessageService, NotificationsService],
 })
 export class CoreModule {}

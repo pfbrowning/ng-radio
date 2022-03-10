@@ -4,6 +4,7 @@ export { WindowService } from './browser-apis/window.service';
 // Authentication
 export { AuthenticationService } from './authentication/authentication.service';
 export { AuthGuardService } from './authentication/auth-guard.service';
+export { BearerTokenService } from './authentication/bearer-token.service';
 
 // HTTP Layers
 export { FavoriteStationsService } from './http-layers/favorite-stations.service';
