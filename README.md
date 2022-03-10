@@ -81,6 +81,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Auth init logic
   - Write a strict CSP
   - Replace silent refresh with (hardened) refresh tokens
+  - Add `npm audit` to build pipeline
   - Configure Storybook _or_ Angular Playground
   - Find or write a better alternative to the mat spinner button package
   - Separate the models for current station, favorite station, and radio browser result
