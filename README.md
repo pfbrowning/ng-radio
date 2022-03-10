@@ -72,7 +72,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Move `index.spec.ts` to the testing directory
   - Move `HTTP_INTERCEPTORS` and `ErrorHandler` to `app.module.ts`
   - Improve console logging severities
   - Move init logic to AppInitializerService

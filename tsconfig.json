@@ -31,7 +31,7 @@
       "@core/models/favorite-stations": ["src/app/modules/core/models/favorite-stations/index"],
       "@core/store/favorite-stations": ["src/app/modules/core/store/favorite-stations/index"],
       "@core/store/sleep-timer": ["src/app/modules/core/store/sleep-timer/index"],
-      "@core/testing": ["src/app/modules/core/index.spec"],
+      "@core/testing": ["src/app/modules/core/testing/index.spec"],
       "@shared": ["src/app/modules/shared/shared/index"],
       "@shared/testing": ["src/app/modules/shared/shared/testing/index.spec"],
       "@root-components": ["src/app/modules/shared/root-components/index"],
