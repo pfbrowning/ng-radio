@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NEVER, Observable, timer } from 'rxjs';
-import { map, share, switchMap } from 'rxjs/operators';
+import { share, switchMap } from 'rxjs/operators';
 import { PlayerFacadeService } from '../../store/player/player-facade.service';
 
 @Injectable({ providedIn: 'root' })

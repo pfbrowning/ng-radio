@@ -29,7 +29,7 @@ export const radioBrowserSearchReducer = createReducer<RadioBrowserSearchState>(
     results: null,
     searchInProgress: true,
   })),
-  on(RadioBrowserResultsActions.searchSucceeded, (state, { results }) => ({
+  on(RadioBrowserResultsActions.searchSucceeded, state => ({
     ...state,
     searchInProgress: false,
   })),

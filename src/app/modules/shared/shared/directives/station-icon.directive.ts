@@ -51,7 +51,7 @@ export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  @HostListener('error', ['$event']) onError(event) {
+  @HostListener('error', ['$event']) onError() {
     this.src = this.fallbackImage;
   }
 

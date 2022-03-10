@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { TestScheduler } from 'rxjs/testing';
 import { PlayerFacadeService } from '../../store/player/player-facade.service';
 import { PlayerFacadeStub } from '../../testing/stubs/player-facade-stub.service.spec';

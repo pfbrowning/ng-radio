@@ -53,7 +53,7 @@ export class AuthenticationService {
     this.userManager.events.addUserLoaded(user => this.userLoadedSource.next(user));
     this.userManager.events.addAccessTokenExpiring(() => this.accessTokenExpiringSource.next());
     this.userManager.events.addAccessTokenExpired(() => this.accessTokenExpiredSource.next());
-    this.userManager.events.addSilentRenewError(error => this.silentRefreshErrorSource.next());
+    this.userManager.events.addSilentRenewError(() => this.silentRefreshErrorSource.next());
   }
 
   public logOut(customLogoutUrl: string): void {

@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -15,8 +15,6 @@ import { BearerTokenService } from './services/authentication/bearer-token.servi
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { AppInitializerService } from './services/app-initializer.service';
-import { Observable } from 'rxjs';
 
 @NgModule({
   imports: [

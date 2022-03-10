@@ -1,9 +1,7 @@
-import { TestBed } from '@angular/core/testing';
 import { CurrentTimeService } from '@core';
 import { CoreSpyFactories } from '@core/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { of, Subject } from 'rxjs';
-import { TestScheduler } from 'rxjs/testing';
+import { Subject } from 'rxjs';
 import { PlayTimeIntervalStubService } from '../../testing/stubs/play-time-interval-stub.service.spec';
 import { PlayTimeIntervalService } from './play-time-interval.service';
 import { ProxyKeyService } from './proxy-key.service';
@@ -14,7 +12,6 @@ describe('RadioProxyPingerService', () => {
   let playTimeIntervalService: PlayTimeIntervalStubService;
   let proxyKeyService: jasmine.SpyObj<ProxyKeyService>;
   let currentTimeService: jasmine.SpyObj<CurrentTimeService>;
-  let testScheduler: TestScheduler;
 
   const constructService = () =>
     (service = new RadioProxyPingerService(

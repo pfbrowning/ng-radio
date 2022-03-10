@@ -62,7 +62,7 @@ describe('RadioBrowserService', () => {
       };
 
       // Act
-      radioBrowserService.search(name, country, tag).subscribe(response => {
+      radioBrowserService.search(name, country, tag).subscribe(() => {
         // Assert
         checkBodyParam('name', name, request.request.body);
         checkBodyParam('countrycode', country, request.request.body);

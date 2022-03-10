@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { RadioProxyPingerStubService } from '@core/testing';
 import { AppInitializerService } from './app-initializer.service';
 import { RadioProxyPingerService } from './radio-player/radio-proxy-pinger.service';

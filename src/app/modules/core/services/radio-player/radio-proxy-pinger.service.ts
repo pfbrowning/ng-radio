@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CurrentTimeService } from '@core';
-import { PlayerStatus } from '@core/models/player';
-import { PlayerFacadeService } from '@core/store';
-import { merge, NEVER, Observable, of, timer } from 'rxjs';
+import { of } from 'rxjs';
 import {
   catchError,
-  distinctUntilChanged,
   filter,
   map,
   share,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import { PlayTimeIntervalService } from './play-time-interval.service';
 import { ProxyKeyService } from './proxy-key.service';
