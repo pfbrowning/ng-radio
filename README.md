@@ -72,8 +72,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Move `HTTP_INTERCEPTORS` and `ErrorHandler` to `app.module.ts`
-  - Improve console logging severities
   - Move init logic to AppInitializerService
     - Config fetch logic
     - Logger init logic
@@ -91,6 +89,9 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Fix non-configurable errors
     - Enable strictPropertyInitialization
     - Enable noImplicitAny
+  - Refactor LoggingService as desired
+    - Genericize logging providers with a contract interface
+    - Simplify logic
   - App-wide code review & refactor based on things learned since writing what we have thus far
   - Improve test coverage
   - Research to decide whether to utilize NX

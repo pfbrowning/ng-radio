@@ -28,7 +28,26 @@ export class LoggingService {
         this.appInsightsService.logTrace(message, severityLevel, properties);
       }
       if (minLogLevels.console && severityLevel >= minLogLevels.console) {
-        console.log(LoggerSeverity[severityLevel], message, properties);
+        switch (severityLevel) {
+          case LoggerSeverity.Fatal:
+          case LoggerSeverity.Error:
+            console.error(LoggerSeverity[severityLevel], message, properties);
+            break;
+          case LoggerSeverity.Warn:
+            console.warn(LoggerSeverity[severityLevel], message, properties);
+            break;
+          case LoggerSeverity.Info:
+            console.info(LoggerSeverity[severityLevel], message, properties);
+            break;
+          case LoggerSeverity.Debug:
+            console.debug(LoggerSeverity[severityLevel], message, properties);
+            break;
+          case LoggerSeverity.Trace:
+            console.trace(LoggerSeverity[severityLevel], message, properties);
+            break;
+          default:
+            console.log(LoggerSeverity[severityLevel], message, properties);
+        }
       }
     });
   }
