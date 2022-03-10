@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CurrentTimeService } from '@core';
 import { of } from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  share,
-  switchMap,
-} from 'rxjs/operators';
+import { catchError, filter, map, share, switchMap } from 'rxjs/operators';
 import { PlayTimeIntervalService } from './play-time-interval.service';
 import { ProxyKeyService } from './proxy-key.service';
 
