@@ -28,21 +28,21 @@
   },
   {
     "title": "Radio Metal On: The Heavy",
-    "url": "http://188.165.212.92:8000/heavy128mp3",
+    "url": "https://radiometalon.com/radio/8000/radio.mp3",
     "genre": "Heavy Metal",
     "iconUrl": "http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg",
     "tags": null
   },
   {
     "title": "Radio Metal On: The Thrasher",
-    "url": "http://188.165.212.92:8020/thrasher128mp3",
+    "url": "https://radiometalon.com/radio/8020/radio.mp3",
     "genre": "Thrash Metal",
     "iconUrl": "http://metalon.org/wordpress/wp-content/uploads/2016/06/cropped-metalon-logo-2-270x270.jpg",
     "tags": null
   },
   {
     "title": "Prog Palace Radio",
-    "url": "http://69.162.103.66/proxy/gstaffor?mp=/stream",
+    "url": "https://cheetah.streemlion.com:4775/stream",
     "genre": "Progressive Metal",
     "iconUrl": "https://cdn-radiotime-logos.tunein.com/s95477q.png",
     "tags": null
@@ -87,12 +87,6 @@
     "url": "http://79.111.14.76:9047/;",
     "genre": "Jazz",
     "iconUrl": "https://static.radio.net/images/broadcasts/0e/6a/103740/1/c300.png",
-    "tags": null
-  },
-  {
-    "title": "Gutter Punk Radio",
-    "url": "http://www.gutter-punk-radio.com:8000/;",
-    "genre": "Punk Rock",
     "tags": null
   },
   {
