@@ -33,16 +33,14 @@ export class RadioProxyPingerService {
 
   private pingIntervalInMinutes = 25;
 
-  public initialize() {
-    this.pingRadioProxyOnInterval$.subscribe();
-  }
+  public initialize = () => this.pingRadioProxyOnInterval$.subscribe();
 
   public startPing$ = this.playTimeIntervalService.playTimeInMinutes$.pipe(
     filter(playTime => playTime > 0 && playTime % this.pingIntervalInMinutes === 0),
     map(() => ({ pingStartTime: this.currentTimeService.unixMs() }))
   );
 
-  private pingRadioProxyOnInterval$ = this.startPing$.pipe(
+  public pingRadioProxyOnInterval$ = this.startPing$.pipe(
     switchMap(({ pingStartTime }) =>
       this.proxyKeyService.fetchNew().pipe(
         map(() => ({ successful: true, error: null, pingStartTime })),

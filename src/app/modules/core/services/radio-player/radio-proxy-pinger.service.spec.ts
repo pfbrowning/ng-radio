@@ -200,29 +200,24 @@ describe('RadioProxyPingerService', () => {
 
   it('should continue gracefully if any of the proxy key calls fail', () => {
     // Arrange
-    const playTimeDiagram = '         a--b--c';
+    const playTimeDiagram = 'a--b--c';
+    const expectedDiagram = '-a--b--a';
+
     const playTimeValues = { a: 25, b: 50, c: 75 };
-    const expectedSucceededDiagram = '-a-----a';
-    const expectedSucceededValues = { a: { pingDuration: 0 } };
-    const expectedFailedDiagram = '   ----a';
-    const expectedFailedValues = { a: null };
+    const expectedValues = {
+      a: { successful: true, pingDuration: 0, error: null },
+      b: { successful: false, error: 'Mock Error', pingDuration: 0 },
+    };
 
     playTimeIntervalService.playTimeInMinutes$ = hot(playTimeDiagram, playTimeValues);
-    const expectedSuccessStream$ = hot(expectedSucceededDiagram, expectedSucceededValues);
-    const expectedFailureStream$ = hot(expectedFailedDiagram, expectedFailedValues);
+    const expected$ = hot(expectedDiagram, expectedValues);
 
     // Fail on the second call
     const createProxyKeyFetchClosure = () => {
       let count = 0;
       return () => {
         count++;
-        console.log('count', count);
-        if (count === 2) {
-          console.log('failing');
-          return cold('-#', {}, 'Mock Error');
-        } else {
-          return cold('-(a|)', { a: 'value' });
-        }
+        return count === 2 ? cold('-#', {}, 'Mock Error') : cold('-(a|)', { a: 'value' });
       };
     };
     proxyKeyService.fetchNew.and.callFake(createProxyKeyFetchClosure());
@@ -231,14 +226,39 @@ describe('RadioProxyPingerService', () => {
     constructService();
 
     // Act
-    const successStreamResult$ = service.pingSucceeded$;
-    const failureStreamResult$ = service.pingFailed$;
+    const result$ = service.pingRadioProxyOnInterval$;
 
     // Assert
-    expect(successStreamResult$).toBeObservable(expectedSuccessStream$);
-    expect(failureStreamResult$).toBeObservable(expectedFailureStream$);
+    expect(result$).toBeObservable(expected$);
     expect(proxyKeyService.fetchNew).toHaveBeenCalledTimes(3);
   });
 
-  it('should gracefully handle a ping call which lasts for longer than the interval time');
+  it('should cancel a ping call which lasts for longer than the interval time', () => {
+    // Arrange
+    const playTimeDiagram = 'a-b';
+    const expectedDiagram = '---a';
+
+    const playTimeValues = { a: 25, b: 50 };
+    const expectedValues = {
+      a: { successful: true, pingDuration: 0, error: null },
+    };
+
+    const createProxyKeyFetchClosure = () => {
+      let count = 0;
+      return () => {
+        count++;
+        return count === 1 ? cold('-----(a|)', { a: 'value' }) : cold('-(a|)', { a: 'value' });
+      };
+    };
+    proxyKeyService.fetchNew.and.callFake(createProxyKeyFetchClosure());
+    currentTimeService.unixMs.and.returnValue(0);
+
+    playTimeIntervalService.playTimeInMinutes$ = hot(playTimeDiagram, playTimeValues);
+    const expected$ = hot(expectedDiagram, expectedValues);
+
+    constructService();
+
+    // Act & Assert
+    expect(service.pingRadioProxyOnInterval$).toBeObservable(expected$);
+  });
 });

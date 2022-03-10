@@ -72,9 +72,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Wrap Up Proxy Pinger Logic
-    - Tests
-    - Logging layer
   - Configure linter to yell about unused imports
   - Move `index.spec.ts` to the testing directory
   - Move `HTTP_INTERCEPTORS` and `ErrorHandler` to `app.module.ts`
