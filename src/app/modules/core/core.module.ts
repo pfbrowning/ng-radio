@@ -1,6 +1,6 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@environment';
@@ -9,9 +9,7 @@ import { PlayerEffects } from './store/player/player.effects';
 import { AuthenticationEffects } from './store/authentication/authentication.effects';
 import { StreamMetadataEffects } from './store/stream-metadata/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { UnhandledErrorService } from './services/unhandled-error.service';
 import { MessageService } from 'primeng/api';
-import { BearerTokenService } from './services/authentication/bearer-token.service';
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
