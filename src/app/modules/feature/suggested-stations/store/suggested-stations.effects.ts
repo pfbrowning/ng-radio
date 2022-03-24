@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, catchError, switchMap, tap, filter, take } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
 import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
 import * as SuggestedStationsActions from './suggested-stations.actions';
+import { AuthenticationFacadeService } from '@core/store';
 
 @Injectable()
 export class SuggestedStationsEffects implements OnInitEffects {
   onEffectsInit$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(SuggestedStationsActions.effectsInit),
-      switchMap(() => this.configService.appConfig$),
+    this.authenticationFacade.authenticated$.pipe(
+      take(1),
+      filter(authenticated => authenticated),
       switchMap(() => [
         SuggestedStationsActions.developerSuggestedFetchStart(),
         SuggestedStationsActions.topClickedFetchStart(),
@@ -111,10 +112,9 @@ export class SuggestedStationsEffects implements OnInitEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store<SuggestedStationsRootState>,
-    private configService: ConfigService,
     private suggestedStationsService: SuggestedStationsService,
     private radioBrowserService: RadioBrowserService,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private authenticationFacade: AuthenticationFacadeService
   ) {}
 }
