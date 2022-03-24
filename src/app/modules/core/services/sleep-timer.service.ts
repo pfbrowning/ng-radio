@@ -9,6 +9,7 @@ import {
   takeWhile,
   takeUntil,
   startWith,
+  shareReplay,
 } from 'rxjs/operators';
 import { CurrentTimeService } from './current-time.service';
 import { Actions, ofType } from '@ngrx/effects';
@@ -56,7 +57,7 @@ export class SleepTimerService {
       // Include a starting value if time remains before the next full minute mark
       return remainder > 0 ? countdown.pipe(startWith(initialFullMinutesRemaining)) : countdown;
     }),
-    share()
+    shareReplay()
   );
 
   constructor(
