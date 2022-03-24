@@ -72,12 +72,9 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Move init logic to AppInitializerService
-    - Config fetch logic
-    - Logger init logic
-    - Auth init logic
-  - Write a strict CSP
+  - Research BFF, token handler pattern, etc, to decide what to do about cross-site cookie blocking
   - Replace silent refresh with (hardened) refresh tokens
+  - Write a strict CSP
   - Add `npm audit` to build pipeline
   - Configure Storybook _or_ Angular Playground
   - Find or write a better alternative to the mat spinner button package
@@ -92,16 +89,15 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Refactor LoggingService as desired
     - Genericize logging providers with a contract interface
     - Simplify logic
+  - Investigate whether Websockets might be a better solution than Socket.IO
+  - Upgrade Socket.IO client & server
   - App-wide code review & refactor based on things learned since writing what we have thus far
   - Improve test coverage
-  - Research to decide whether to utilize NX
-  - Upgrade Socket.IO client & server
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
-  - Investigate whether Websockets might be a better solution than Socket.IO
   - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
+  - Research to decide whether to utilize NX
 - Bugs
   - The main page fails to load when the radio browser API is down.
-  - Error toasters show up before redirecting to the IDP
   - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   - Duplicate "Now Playing" toaster notifications
   - Silent refresh failures
