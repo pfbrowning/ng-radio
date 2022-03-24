@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { map, catchError, switchMap, tap, filter, take } from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
-import { SuggestedStationsRootState } from '../models/suggested-stations-root-state';
+import { of } from 'rxjs';
+import { Action } from '@ngrx/store';
 import { SuggestedStationsService } from '../services/suggested-stations.service';
-import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
+import { NotificationsService, RadioBrowserService } from '@core/services';
 import * as SuggestedStationsActions from './suggested-stations.actions';
 import { AuthenticationFacadeService } from '@core/store';
 
