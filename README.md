@@ -72,6 +72,10 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
+  - Upgrade to Angular 14
+  - Upgrade to Angular 15
+  - Upgrade to Angular 16
+  - Upgrade to Angular 17
   - Remove 'mat-progress-buttons.  Find or write a better alternative to the mat spinner button package
   - Research BFF, token handler pattern, etc, to decide what to do about cross-site cookie blocking
   - Replace silent refresh with (hardened) refresh tokens
