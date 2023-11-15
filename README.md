@@ -72,16 +72,13 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - [Upgrade to Angular 14](https://update.angular.io/?l=3&v=13.0-14.0)
-    - `ng update @angular/material@14`
-    - Fix linter
   - Upgrade to Angular 15
   - Upgrade to Angular 16
   - Upgrade to Angular 17
   - Remove 'mat-progress-buttons.  Find or write a better alternative to the mat spinner button package
-  - Research BFF, token handler pattern, etc, to decide what to do about cross-site cookie blocking
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
+  - Research BFF, token handler pattern, etc, to decide what to do about cross-site cookie blocking
   - Add `npm audit` to build pipeline
   - Configure Storybook _or_ Angular Playground
   - Separate the models for current station, favorite station, and radio browser result
