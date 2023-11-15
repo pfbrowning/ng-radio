@@ -73,9 +73,8 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - [Upgrade to Angular 14](https://update.angular.io/?l=3&v=13.0-14.0)
-    - `ng update @angular/core@14 @angular/cli@14`
     - `ng update @angular/material@14`
-    - If you are defining routes with pathMatch, you may have to cast it to Route or Routes explicitly. Route.pathMatch is no longer compatible with string type.
+    - Fix linter
   - Upgrade to Angular 15
   - Upgrade to Angular 16
   - Upgrade to Angular 17
