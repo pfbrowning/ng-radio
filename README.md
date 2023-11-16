@@ -73,6 +73,10 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Upgrade to Angular 15
+    - `ng update @angular/material@15`
+    - Finish going through [the checklist](https://update.angular.io/?v=14.0-15.0)
+    - Update `@angular-eslint/schematics` to 15
+    - Update PrimeNG
   - Upgrade to Angular 16
   - Upgrade to Angular 17
   - Remove 'mat-progress-buttons.  Find or write a better alternative to the mat spinner button package
