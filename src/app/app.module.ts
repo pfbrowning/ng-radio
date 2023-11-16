@@ -12,7 +12,7 @@ import { RootComponentsModule } from '@root-components';
 import { SharedModule } from '@shared';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { AppInitializerService } from './modules/core/services/app-initializer.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenService } from '@core/services';
