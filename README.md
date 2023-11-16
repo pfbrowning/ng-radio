@@ -73,7 +73,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Upgrade to Angular 15
-    - `ng update @angular/material@15`
     - Finish going through [the checklist](https://update.angular.io/?v=14.0-15.0)
     - Upgrade NGRX
     - Update `@angular-eslint/schematics` to 15
