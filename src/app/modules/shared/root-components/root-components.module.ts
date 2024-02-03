@@ -18,14 +18,8 @@ import { ToastModule } from 'primeng/toast';
 import { StationEditComponent } from './components/station-edit/station-edit.component';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-<<<<<<< HEAD
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-=======
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressButtonsModule } from 'mat-progress-buttons';
->>>>>>> master
 import { GlobalSpinnerComponent } from './components/global-spinner/global-spinner.component';
 import { AppShellComponent } from './components/app-shell/app-shell.component';
 
