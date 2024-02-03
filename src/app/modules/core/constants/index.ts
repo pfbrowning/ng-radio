@@ -1,1 +1,1 @@
-export { matProgressButtonDefaults } from './mat-progress-button-defaults';
+export * from './mat-progress-button-defaults';
