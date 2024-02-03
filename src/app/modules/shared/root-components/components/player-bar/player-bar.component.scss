@@ -25,7 +25,7 @@
   overflow: hidden;
 }
 
-:host ::ng-deep .mat-spinner circle {
+:host ::ng-deep .mat-mdc-progress-spinner circle {
   stroke: $offWhite;
 }
 

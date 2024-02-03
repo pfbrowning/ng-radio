@@ -28,12 +28,13 @@
   }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version.*/
 .mat-table-spinner,
-::ng-deep .mat-autocomplete .loading .mat-option-text {
+::ng-deep .mat-mdc-autocomplete .loading .mat-option-text {
   display: flex;
   justify-content: center;
 }
 
-::ng-deep .mat-option.loading {
+::ng-deep .mat-mdc-option.loading {
   height: 60px;
 }
