@@ -4,11 +4,11 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { DialogModule } from 'primeng/dialog';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('StationEditComponent', () => {
   let component: StationEditComponent;

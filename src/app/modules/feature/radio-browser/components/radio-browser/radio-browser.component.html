@@ -1,4 +1,4 @@
-<h1 class="mat-headline">Radio Browser API Search</h1>
+<h1 class="mat-headline-5">Radio Browser API Search</h1>
 
 <div class="flex-grid">
   <mat-form-field class="flex-column-third">
@@ -55,9 +55,9 @@
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let station; columns: columns" (click)="onRowClicked(station)"></tr>
 </table>
-<mat-card *ngIf="isSearchInProgress$ | async" class="mat-table-spinner mat-elevation-z2">
+<mat-card appearance="outlined" *ngIf="isSearchInProgress$ | async" class="mat-table-spinner mat-elevation-z2">
   <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
 </mat-card>
-<mat-card *ngIf="(searchResults$ | async) !== null && (searchResults$ | async).length >= (resultsLimit$ | async)" class="mat-elevation-z2">
+<mat-card appearance="outlined" *ngIf="(searchResults$ | async) !== null && (searchResults$ | async).length >= (resultsLimit$ | async)" class="mat-elevation-z2">
   <p>Search limited to the first {{resultsLimit$ | async}} results.</p>
 </mat-card>
