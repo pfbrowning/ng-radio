@@ -73,8 +73,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Upgrade to Angular 15
-    - Smoke-test
-    - Finish going through [the checklist](https://update.angular.io/?v=14.0-15.0)
     - Upgrade NGRX
     - Update `@angular-eslint/schematics` to 15
     - Update PrimeNG
@@ -84,6 +82,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
   - Research BFF, token handler pattern, etc, to decide what to do about cross-site cookie blocking
+  - Refactor deprecated Material components 
   - Add `npm audit` to build pipeline
   - Configure Storybook _or_ Angular Playground
   - Separate the models for current station, favorite station, and radio browser result
