@@ -20,7 +20,6 @@ import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { GlobalSpinnerComponent } from './components/global-spinner/global-spinner.component';
 import { AppShellComponent } from './components/app-shell/app-shell.component';
 
@@ -39,7 +38,6 @@ import { AppShellComponent } from './components/app-shell/app-shell.component';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatProgressButtonsModule.forRoot(),
     ToastModule,
     DialogModule,
   ],

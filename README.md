@@ -79,7 +79,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Upgrade to Angular 17
   - Upgrade remaining dependencies
   - Configure Storybook _or_ Angular Playground
-  - Remove 'mat-progress-buttons.  Find or write a better alternative to the mat spinner button package
+  - Find or write a better alternative to the mat-progress-buttons package
   - Upgrade Socket.IO client & server
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP

@@ -26,21 +26,6 @@ export class StationEditComponent implements OnInit {
   @Input() fetchingFavorites: boolean;
   public stationPending: Station;
 
-  public openBtnOptions = {
-    ...matProgressButtonDefaults,
-    text: 'Open',
-  };
-
-  public saveBtnOptions = {
-    ...matProgressButtonDefaults,
-    text: 'Save',
-  };
-
-  public cancelBtnOptions = {
-    ...matProgressButtonDefaults,
-    text: 'Cancel',
-  };
-
   public ngOnInit(): void {
     if (this.existingStation) {
       this.stationPending = cloneDeep(this.existingStation);

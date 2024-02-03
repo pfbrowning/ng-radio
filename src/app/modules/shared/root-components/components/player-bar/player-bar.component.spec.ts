@@ -13,7 +13,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementTextBySelector } from '@utilities/testing';
 import { Station } from '@core/models/player';
 import { CoreSpyFactories } from '@core/testing';
-import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { PlayerBarFacadeService } from '@core/store';
 import { PlayerBarStationInfoStubComponent } from '../../testing/stubs/player-bar-station-info-stub.component.spec';
@@ -46,7 +45,6 @@ describe('PlayerBarComponent', () => {
           FormsModule,
           NoopAnimationsModule,
           MatProgressSpinnerModule,
-          MatProgressButtonsModule.forRoot(),
         ],
         providers: [
           {

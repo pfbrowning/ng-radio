@@ -4,7 +4,6 @@ import { PlayerStatus, Station } from '@core/models/player';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 import { PlayerBarFacadeService } from '@core/store';
 import { matProgressButtonDefaults } from '@core/constants';
-import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { SleepTimerService } from '@core/services';
 
 @Component({
@@ -29,25 +28,6 @@ export class PlayerBarComponent {
   public playerStatusEnum = PlayerStatus;
 
   public minutesToSleep$ = this.sleepTimerService.minutesToSleep$;
-
-  private circleButtonDefaults: MatProgressButtonOptions = {
-    ...matProgressButtonDefaults,
-    fab: true,
-    buttonColor: 'accent',
-  };
-  public playBtnOptions: MatProgressButtonOptions = {
-    ...this.circleButtonDefaults,
-    icon: {
-      fontIcon: 'play_arrow',
-    },
-  };
-
-  public pauseBtnOptions: MatProgressButtonOptions = {
-    ...this.circleButtonDefaults,
-    icon: {
-      fontIcon: 'pause',
-    },
-  };
 
   public onNowPlayingClicked(): void {
     /* When the user clicks on the now playing info in the player bar,
