@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, timer, EMPTY } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take, debounce, map } from 'rxjs/operators';
-import { MatInput } from '@angular/material/input';
+import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
 import { Store } from '@ngrx/store';
 import { PlayerActions, StreamMetadataFacadeService } from '@core/store';
 import { Station } from '@core/models/player';

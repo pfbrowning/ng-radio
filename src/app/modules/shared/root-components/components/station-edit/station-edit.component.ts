@@ -6,7 +6,7 @@ import { RootState } from '@core';
 import { Store } from '@ngrx/store';
 import { PlayerActions } from '@core/store';
 import { FavoriteStationsActions } from '@core/store';
-import { MatInput } from '@angular/material/input';
+import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
 import { matProgressButtonDefaults } from '@core/constants';
 import { cloneDeep } from 'lodash-es';
 
