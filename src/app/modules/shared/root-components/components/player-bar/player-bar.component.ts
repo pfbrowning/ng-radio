@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { PlayerStatus, Station } from '@core/models/player';
 import { CurrentStationFavoritesProcessingState } from '@core/models/favorite-stations';
 import { PlayerBarFacadeService } from '@core/store';
-import { matProgressButtonDefaults } from '@core/constants';
 import { SleepTimerService } from '@core/services';
 
 @Component({
