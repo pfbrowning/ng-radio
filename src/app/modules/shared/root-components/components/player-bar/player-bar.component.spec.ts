@@ -13,12 +13,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementTextBySelector } from '@utilities/testing';
 import { Station } from '@core/models/player';
 import { CoreSpyFactories } from '@core/testing';
-<<<<<<< HEAD
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
-=======
-import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
->>>>>>> master
 import { PlayerBarFacadeService } from '@core/store';
 import { PlayerBarStationInfoStubComponent } from '../../testing/stubs/player-bar-station-info-stub.component.spec';
 import { SleepTimerService } from '@core/services';
