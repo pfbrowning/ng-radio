@@ -13,7 +13,7 @@ body {
   flex: 1 1 auto;
 }
 
-table.mat-table.selectable-rows .mat-row,
+table.mat-mdc-table.selectable-rows .mat-mdc-row,
 table.mat-table .mat-row.selectable-row {
   cursor: pointer;
 }
@@ -21,8 +21,8 @@ table.mat-table .mat-row.selectable-row {
 @media (min-width: $smallScreenCutoff) {
   .small-screen-only,
   .mat-toolbar.small-screen-only,
-  .mat-icon-button.small-screen-only,
-  .mat-menu-item.small-screen-only {
+  .mat-mdc-icon-button.small-screen-only,
+  .mat-mdc-menu-item.small-screen-only {
     display: none;
   }
 }
@@ -34,11 +34,11 @@ table.mat-table .mat-row.selectable-row {
   }
 }
 
-.mat-toolbar .mat-raised-button {
+.mat-toolbar .mat-mdc-raised-button {
   margin: 0px 6px;
 }
 
-table.mat-table {
+table.mat-mdc-table {
   width: 100%;
   /* Use a fixed layout for mat-tables on small screens 
     to prevent them from overflowing. */
@@ -96,8 +96,8 @@ fieldset {
 
 /* Show a bit of padding between cells because text runs
 too closely together otherwise. */
-.mat-table th.mat-header-cell,
-.mat-table td.mat-cell {
+.mat-mdc-table th.mat-mdc-header-cell,
+.mat-table td.mat-mdc-cell {
   padding: 0 8px;
 }
 
@@ -106,9 +106,9 @@ so that:
 1) Padding isn't inconsistent when columns are hidden
 2) We're not taking up quite so much width when width is limited. */
 @media (max-width: $smallScreenCutoff - 1) {
-  .mat-table th.mat-header-cell:first-of-type,
+  .mat-mdc-table th.mat-mdc-header-cell:first-of-type,
   .mat-table th.mat-header-cell:last-of-type,
-  .mat-table td.mat-cell:first-of-type,
+  .mat-table td.mat-mdc-cell:first-of-type,
   .mat-table td.mat-cell:last-of-type {
     padding: 0 8px;
   }

@@ -1,19 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerBarComponent } from './player-bar.component';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getElementTextBySelector } from '@utilities/testing';
 import { Station } from '@core/models/player';
 import { CoreSpyFactories } from '@core/testing';
+<<<<<<< HEAD
 import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+=======
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+>>>>>>> master
 import { PlayerBarFacadeService } from '@core/store';
 import { PlayerBarStationInfoStubComponent } from '../../testing/stubs/player-bar-station-info-stub.component.spec';
 import { SleepTimerService } from '@core/services';

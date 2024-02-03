@@ -1,4 +1,4 @@
-<h1 class="mat-headline">Suggested Stations</h1>
+<h1 class="mat-headline-5">Suggested Stations</h1>
 
 <blr-suggested-stations-section *ngIf="developerSuggested$ | async" [stations]="developerSuggested$ | async" (stationSelected)="onStationSelected($event)" header="Developer Suggested Stations"></blr-suggested-stations-section>
 <blr-suggested-stations-section *ngIf="topClicked$ | async" [stations]="topClicked$ | async" (stationSelected)="onStationSelected($event)" header="Top Clicked Stations From Radio Browser API"></blr-suggested-stations-section>

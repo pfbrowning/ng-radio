@@ -5,21 +5,27 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { PlayerBarComponent } from './components/player-bar/player-bar.component';
 import { PlayerBarStationInfoComponent } from './components/player-bar-station-info/player-bar-station-info.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from '@shared';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { ToasterContainerComponent } from './components/toaster-container/toaster-container.component';
 import { ToastModule } from 'primeng/toast';
 import { StationEditComponent } from './components/station-edit/station-edit.component';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
+<<<<<<< HEAD
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+=======
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
+>>>>>>> master
 import { GlobalSpinnerComponent } from './components/global-spinner/global-spinner.component';
 import { AppShellComponent } from './components/app-shell/app-shell.component';
 

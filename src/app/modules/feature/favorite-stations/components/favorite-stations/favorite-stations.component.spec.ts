@@ -3,7 +3,7 @@ import { FavoriteStationsComponent } from './favorite-stations.component';
 import { provideMockStore } from '@ngrx/store/testing';
 import { initialRootState } from '@core';
 import { ConfirmationService } from 'primeng/api';
-import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('FavoriteStationsComponent', () => {
