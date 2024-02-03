@@ -77,29 +77,29 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Update `@angular-eslint/schematics` to 15
     - Update PrimeNG
   - Upgrade to Angular 16
+    - Go through the upgrade guide as normal
+    - Upgrade NGRX
+    - Upgrade `@angular-eslint/schematics`
+    - Update PrimeNG
   - Upgrade to Angular 17
+  - Upgrade remaining dependencies
   - Remove 'mat-progress-buttons.  Find or write a better alternative to the mat spinner button package
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
-  - Research BFF, token handler pattern, etc, to decide what to do about cross-site cookie blocking
-  - Refactor deprecated Material components 
-  - Add `npm audit` to build pipeline
-  - Configure Storybook _or_ Angular Playground
-  - Separate the models for current station, favorite station, and radio browser result
-  - Change detection performance
-    - Logging
-    - Tuning
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
     - Enable strictPropertyInitialization
     - Enable noImplicitAny
+  - Refactor deprecated Material components 
+  - Configure Storybook _or_ Angular Playground
+  - Separate the models for current station, favorite station, and radio browser result
+  - Research BFF, token handler pattern, etc, to decide whether it's a good fit for my app
   - Refactor LoggingService as desired
     - Genericize logging providers with a contract interface
     - Simplify logic
   - Investigate whether Websockets might be a better solution than Socket.IO
   - Upgrade Socket.IO client & server
   - App-wide code review & refactor based on things learned since writing what we have thus far
-  - Improve test coverage
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
   - Research to decide whether to utilize NX
