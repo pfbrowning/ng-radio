@@ -29,13 +29,13 @@
     <mat-icon>more_vert</mat-icon>
   </button>
   <div class="play-pause-button">
-    <mat-spinner-button *ngIf="playerStatus === playerStatusEnum.Playing; else pauseBtn"
-      (btnClick)="onPauseClicked()" [options]="pauseBtnOptions">
-    </mat-spinner-button>
+    <button mat-fab color="accent" *ngIf="playerStatus === playerStatusEnum.Playing; else pauseBtn" (click)="onPauseClicked()">
+      <mat-icon>pause</mat-icon>
+    </button>
     <ng-template #pauseBtn>
-      <mat-spinner-button [active]="playerStatus === playerStatusEnum.LoadingAudio"
-        (btnClick)="onPlayClicked()" [options]="playBtnOptions">
-      </mat-spinner-button>
+      <button mat-fab color="accent" [disabled]="playerStatus === playerStatusEnum.LoadingAudio" (click)="onPlayClicked()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
     </ng-template>
   </div>
 </mat-toolbar>

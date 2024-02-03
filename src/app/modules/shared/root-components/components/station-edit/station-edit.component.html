@@ -21,8 +21,8 @@
     </fieldset>
   </form>
   <p-footer>
-    <mat-spinner-button *ngIf="!existingStation" (btnClick)="onOpenClicked()" [options]="openBtnOptions" [disabled]="saveInProgress"></mat-spinner-button>
-    <mat-spinner-button (btnClick)="onSaveClicked()" [options]="saveBtnOptions" [active]="saveInProgress || fetchingFavorites"></mat-spinner-button>
-    <mat-spinner-button (btnClick)="closeEditor()" [options]="cancelBtnOptions" [disabled]="saveInProgress"></mat-spinner-button>
+    <button mat-button *ngIf="!existingStation" (click)="onOpenClicked()" [disabled]="saveInProgress">Open</button>
+    <button mat-button (click)="onSaveClicked()" [disabled]="saveInProgress || fetchingFavorites">Save</button>
+    <button mat-button (click)="closeEditor()" [disabled]="saveInProgress">Cancel</button>
   </p-footer>
 </p-dialog>

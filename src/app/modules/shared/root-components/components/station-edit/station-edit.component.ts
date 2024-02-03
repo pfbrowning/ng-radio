@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import { PlayerActions } from '@core/store';
 import { FavoriteStationsActions } from '@core/store';
 import { MatInput } from '@angular/material/input';
-import { matProgressButtonDefaults } from '@core/constants';
 import { cloneDeep } from 'lodash-es';
 
 @Component({
@@ -25,21 +24,6 @@ export class StationEditComponent implements OnInit {
   @Input() saveInProgress: boolean;
   @Input() fetchingFavorites: boolean;
   public stationPending: Station;
-
-  public openBtnOptions = {
-    ...matProgressButtonDefaults,
-    text: 'Open',
-  };
-
-  public saveBtnOptions = {
-    ...matProgressButtonDefaults,
-    text: 'Save',
-  };
-
-  public cancelBtnOptions = {
-    ...matProgressButtonDefaults,
-    text: 'Cancel',
-  };
 
   public ngOnInit(): void {
     if (this.existingStation) {
