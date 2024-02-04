@@ -43,7 +43,7 @@
     "ngx-mat-select-search": "^7.0.5",
     "oidc-client": "^1.11.5",
     "primeicons": "^5.0.0",
-    "primeng": "^15.4.1",
+    "primeng": "^16.4.3",
     "rxjs": "^6.6.7",
     "socket.io-client": "^2.3.0",
     "subsink": "^1.0.2",
