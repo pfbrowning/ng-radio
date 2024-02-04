@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+
 import { Observable, of, NEVER } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService  {
   constructor(private authenticationFacade: AuthenticationFacadeService) {}
 
   canActivate(): Observable<boolean> {
