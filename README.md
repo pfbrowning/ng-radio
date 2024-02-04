@@ -74,6 +74,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
 - Chores
   - Upgrade to Angular 16
     - Go through the upgrade guide as normal
+    - Upgrade @angular-eslint/schematics to 16
     - Upgrade NGRX
     - Update PrimeNG
   - Upgrade to Angular 17
