@@ -3,4 +3,4 @@ import { RootState } from '../../models/root-state';
 
 export const routerState = (state: RootState) => state.router;
 
-export const currentUrl = fromRouter.getSelectors(routerState).selectUrl;
+export const currentUrl = fromRouter.getRouterSelectors(routerState).selectUrl;
