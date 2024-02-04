@@ -8,7 +8,7 @@ import { resolverParams } from '../store/selectors';
 import { resolveSubmit } from '../store/actions';
 
 @Injectable({ providedIn: 'root' })
-export class RadioBrowserResolver  {
+export class RadioBrowserResolver {
   constructor(private store: Store<RadioBrowserSearchRootState>) {}
 
   resolve(): Observable<void> {

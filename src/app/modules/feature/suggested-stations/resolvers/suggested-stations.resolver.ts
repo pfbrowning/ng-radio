@@ -7,7 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { selectAreSuggestedStationsPresentOrFailed } from '../store/suggested-stations.selectors';
 
 @Injectable()
-export class SuggestedStationsResolver  {
+export class SuggestedStationsResolver {
   constructor(private store: Store<SuggestedStationsRootState>) {}
 
   resolve(): Observable<void> {
