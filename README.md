@@ -79,8 +79,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Update PrimeNG
   - Upgrade to Angular 17
   - Upgrade remaining dependencies
-  - Configure Storybook _or_ Angular Playground
-  - Find or write a better alternative to the mat-progress-buttons package
+  - Investigate whether Websockets might be a better solution than Socket.IO
   - Upgrade Socket.IO client & server
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
@@ -88,16 +87,19 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Fix non-configurable errors
     - Enable strictPropertyInitialization
     - Enable noImplicitAny
-  - Refactor deprecated Material components 
   - Separate the models for current station, favorite station, and radio browser result
-  - Research BFF, token handler pattern, etc, to decide whether it's a good fit for my app
+  - Move "stateful "now-playing" query logic for everything other than the streaming
+  station from radio proxy back to the app.
   - Refactor LoggingService as desired
     - Genericize logging providers with a contract interface
     - Simplify logic
-  - Investigate whether Websockets might be a better solution than Socket.IO
   - App-wide code review & refactor based on things learned since writing what we have thus far
+    - General
+    - Store normalization
+    - Action hygiene
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
+  - Research BFF, token handler pattern, etc, to decide whether it's a good fit for my app
   - Research to decide whether to utilize NX
 - Bugs
   - The main page fails to load when the radio browser API is down.
@@ -105,10 +107,10 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Duplicate "Now Playing" toaster notifications
   - Silent refresh failures
 - Features
-  - "You have been listening to X station for Y minutes" logging
+  - Configure Storybook _or_ Angular Playground
+  - Material-based spinner button for the play button & custom station save-in-progress button
+  - "You have been listening to X station for Y minutes" display
   - Show loading indicator for images
-  - Non-logged-in experience: Require login only for favorites
   - Native app functionality: PWA or Electron
-  - Browser-based audio recording
   - HTML5 Notifications
   - Favorite station tags
