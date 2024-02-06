@@ -72,9 +72,11 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Upgrade to Angular 17
-    - Fix tests
   - Upgrade Socket.IO client & server
+    - Upgrade server to 3
+    - Upgrade client to 3
+    - Upgrade server to 4
+    - Upgrade client to 4
   - Upgrade remaining dependencies
   - Learn about:
     - Angular Signals
