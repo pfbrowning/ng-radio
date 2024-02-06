@@ -32,7 +32,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
       StreamMetadataEffects,
     ]),
     StoreRouterConnectingModule.forRoot(),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production ? StoreDevtoolsModule.instrument({connectInZone: true}) : [],
   ],
   providers: [MessageService, NotificationsService],
 })
