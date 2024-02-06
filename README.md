@@ -72,10 +72,9 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Upgrade to Angular 16
-    - Fix eslint-plugin-unused-imports peer dependency problem
   - Upgrade to Angular 17
     - Go through the upgrade guide as normal
+    - Upgrade Material
     - Upgrade NGRX
     - Update PrimeNG
   - Upgrade remaining dependencies
