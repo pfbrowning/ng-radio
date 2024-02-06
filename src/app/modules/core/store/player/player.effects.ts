@@ -11,7 +11,6 @@ import {
   debounceTime,
 } from 'rxjs/operators';
 import { of, combineLatest, merge } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
 import {
   selectStation,
@@ -20,7 +19,6 @@ import {
   playAudioFailed,
   audioPaused,
 } from './player-actions';
-import { RootState } from '../../models/root-state';
 import { PlayerActions } from '.';
 import { PlayerStatus } from '../../models/player/player-status';
 import { isEqual } from 'lodash-es';

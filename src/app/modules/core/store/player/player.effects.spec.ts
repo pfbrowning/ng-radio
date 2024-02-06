@@ -2,17 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
 import { PlayerEffects } from './player.effects';
-import { provideMockStore } from '@ngrx/store/testing';
-import { initialRootState } from '../../models/initial-root-state';
 import { CurrentTimeService } from '../../services/current-time.service';
 import { CoreSpyFactories, PlayerFacadeStub, StreamMetadataFacadeStub } from '@core/testing';
 import { AudioElementStub } from '../../testing/AudioElementStub.spec';
-import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import {
   NotificationsService,
   LoggingService,
   AudioElementService,
-  ConfigService,
   AudioProxyService,
   SleepTimerService,
 } from '@core/services';
