@@ -82,6 +82,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Learn about:
     - Angular Signals
     - Control flow syntax
+    - Standalone components
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
