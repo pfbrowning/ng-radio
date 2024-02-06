@@ -73,12 +73,13 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Upgrade to Angular 17
-    - Go through the upgrade guide as normal
     - Upgrade Material
     - Upgrade NGRX
-    - Update PrimeNG
   - Upgrade Socket.IO client & server
   - Upgrade remaining dependencies
+  - Learn about:
+    - Angular Signals
+    - Control flow syntax
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
