@@ -73,8 +73,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Upgrade to Angular 17
-    - Autoformat
-    - Lint Fix
     - Fix tests
   - Upgrade Socket.IO client & server
   - Upgrade remaining dependencies

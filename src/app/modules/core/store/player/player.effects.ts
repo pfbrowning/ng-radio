@@ -40,7 +40,6 @@ import * as PlayerBarActions from '../dispatch-facades/player-bar/player-bar.act
 export class PlayerEffects {
   constructor(
     private actions$: Actions,
-    private store: Store<RootState>,
     private notificationsService: NotificationsService,
     private loggingService: LoggingService,
     private titleService: Title,
