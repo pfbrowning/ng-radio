@@ -72,15 +72,16 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Upgrade to Angular 16
-    - Fix eslint-plugin-unused-imports peer dependency problem
-  - Upgrade to Angular 17
-    - Go through the upgrade guide as normal
-    - Upgrade NGRX
-    - Update PrimeNG
-  - Upgrade remaining dependencies
-  - Investigate whether Websockets might be a better solution than Socket.IO
   - Upgrade Socket.IO client & server
+    - Upgrade server to 3
+    - Upgrade client to 3
+    - Upgrade server to 4
+    - Upgrade client to 4
+  - Upgrade remaining dependencies
+  - Learn about:
+    - Angular Signals
+    - Control flow syntax
+    - Standalone components
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
@@ -99,8 +100,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Action hygiene
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
   - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
-  - Research BFF, token handler pattern, etc, to decide whether it's a good fit for my app
-  - Research to decide whether to utilize NX
 - Bugs
   - The main page fails to load when the radio browser API is down.
   - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
@@ -111,6 +110,9 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Material-based spinner button for the play button & custom station save-in-progress button
   - "You have been listening to X station for Y minutes" display
   - Show loading indicator for images
+- Post-Completion
+  - Research BFF, token handler pattern, etc, to decide whether it's a good fit for my app
+  - Research to decide whether to utilize NX
   - Native app functionality: PWA or Electron
   - HTML5 Notifications
   - Favorite station tags

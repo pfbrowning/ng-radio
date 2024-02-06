@@ -13,7 +13,7 @@ export class AuthenticationService {
   private userLoadedSource = new Subject<User>();
   private accessTokenExpiringSource = new Subject<void>();
   private accessTokenExpiredSource = new Subject<void>();
-  private silentRefreshErrorSource = new Subject<any>();
+  private silentRefreshErrorSource = new Subject<void>();
 
   public accessTokenExpiring$ = this.accessTokenExpiringSource.asObservable();
   public accessTokenExpired$ = this.accessTokenExpiredSource.asObservable();
