@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { filter, take } from 'rxjs';
+import { filter, map, take } from 'rxjs';
 import { RootState } from '@core';
 import { Store } from '@ngrx/store';
 import { ConfigSelectors } from '../../store/config/selectors';
@@ -15,6 +15,7 @@ export class ConfigProviderService {
   public getConfigOnceLoaded = () =>
     this.configState$.pipe(
       filter(state => !state.fetchFailed && !state.fetchInProgress && state.appConfig != null),
+      map(state => state.appConfig),
       take(1)
     );
 }

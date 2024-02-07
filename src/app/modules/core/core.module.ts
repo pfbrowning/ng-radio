@@ -14,6 +14,7 @@ import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ConfigEffects } from './store/config/config.effects';
+import { SocketIOMessageListenerEffects } from './store/socket-io/effects/socket-io-message-listener.effects';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { ConfigEffects } from './store/config/config.effects';
       AuthenticationEffects,
       StreamMetadataEffects,
       ConfigEffects,
+      SocketIOMessageListenerEffects,
     ]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
