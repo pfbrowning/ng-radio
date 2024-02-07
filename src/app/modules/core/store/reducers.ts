@@ -6,10 +6,10 @@ import { playerReducer } from './player/player.reducer';
 import { authenticationReducer } from './authentication/authentication.reducer';
 import { streamMetadataReducer } from './stream-metadata/reducer';
 import { radioBrowserResultsReducer } from './radio-browser-results/reducer';
-
-// TODO create a reducer slice for our Socket.IO state
+import { configReducer } from './config/config.reducer';
 
 export const reducers: ActionReducerMap<RootState> = {
+  config: configReducer,
   router: routerReducer,
   favoriteStations: favoriteStationsReducer,
   player: playerReducer,

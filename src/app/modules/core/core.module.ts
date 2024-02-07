@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { reducers } from './store/reducers';
 import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { ConfigEffects } from './store/config/config.effects';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
       PlayerEffects,
       AuthenticationEffects,
       StreamMetadataEffects,
+      ConfigEffects,
     ]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],

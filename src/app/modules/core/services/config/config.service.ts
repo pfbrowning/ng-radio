@@ -10,17 +10,11 @@ import { EnvironmentService } from './environment.service';
 export class ConfigService {
   constructor(private httpClient: HttpClient, private environmentService: EnvironmentService) {}
 
-  public appConfig$ = defer(() => this.fetch()).pipe(shareReplay(1), take(1));
-
-  private fetch(): Observable<AppConfig> {
-    return forkJoin([
+  public fetch = (): Observable<{ appConfig: AppConfig; localConfig: AppConfig }> =>
+    forkJoin([
       this.fetchAppConfig(),
       !this.environmentService.isProduction() ? this.fetchLocalConfig() : of(null),
-    ]).pipe(
-      // Use lodash to deep merge local config into app config
-      map(forkData => merge({}, forkData[0], forkData[1]))
-    );
-  }
+    ]).pipe(map(forkData => ({ appConfig: forkData[0], localConfig: forkData[1] })));
 
   // Set headers to disable caching: We always want clients to fetch the latest config values
   private noCacheHeaders() {
