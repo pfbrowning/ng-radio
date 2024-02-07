@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, distinctUntilChanged, skip, withLatestFrom, filter, switchMap } from 'rxjs/operators';
+import {
+  map,
+  distinctUntilChanged,
+  skip,
+  withLatestFrom,
+  filter,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { StreamMetadataFacadeService } from './stream-metadata-facade.service';
 import { isEqual } from 'lodash-es';
 import { SocketIOService } from '../../services/socket-io.service';
@@ -18,7 +26,7 @@ export class StreamMetadataEffects {
     () =>
       this.actions$.pipe(
         ofType(StreamMetadataActions.setStreamList),
-        switchMap(({ streams }) => this.socketIOService.emit('setStreams', streams))
+        tap(({ streams }) => this.socketIOService.setStreams(streams))
       ),
     { dispatch: false }
   );
@@ -51,10 +59,13 @@ export class StreamMetadataEffects {
   // Reconnect to Socket.IO if the server closed the connection while we're subscribed to (a) stream(s)
   reconnect$ = createEffect(
     () =>
+      // TODO listen on the Disconnect action and filter for the 'io server disconnect' reason.
+      // Maybe we should abstract the reason string behind a constant or an enum?
       this.socketIOService.serverDisconnect$.pipe(
         withLatestFrom(this.streamMetadataFacade.urlsSelectedForMetadata$),
         filter(([, urls]) => urls.length > 0),
-        switchMap(() => this.socketIOService.connect())
+        // TODO should we map connect behind a connectStart action as a stretch goal?
+        tap(() => this.socketIOService.connect())
       ),
     { dispatch: false }
   );

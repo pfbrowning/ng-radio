@@ -7,6 +7,8 @@ import { authenticationReducer } from './authentication/authentication.reducer';
 import { streamMetadataReducer } from './stream-metadata/reducer';
 import { radioBrowserResultsReducer } from './radio-browser-results/reducer';
 
+// TODO create a reducer slice for our Socket.IO state
+
 export const reducers: ActionReducerMap<RootState> = {
   router: routerReducer,
   favoriteStations: favoriteStationsReducer,
