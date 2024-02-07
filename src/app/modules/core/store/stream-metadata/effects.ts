@@ -6,7 +6,6 @@ import {
   skip,
   withLatestFrom,
   filter,
-  switchMap,
   tap,
 } from 'rxjs/operators';
 import { StreamMetadataFacadeService } from './stream-metadata-facade.service';

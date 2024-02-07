@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, take, shareReplay } from 'rxjs/operators';
-import { forkJoin, throwError, of, Observable, defer } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { forkJoin, throwError, of, Observable } from 'rxjs';
 import { AppConfig } from '../../models/config/app-config';
-import { merge } from 'lodash-es';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({ providedIn: 'root' })

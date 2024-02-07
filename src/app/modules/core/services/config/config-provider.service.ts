@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, filter, take } from 'rxjs';
-import { AppConfig } from '../../models/config/app-config';
+import { filter, take } from 'rxjs';
 import { RootState } from '@core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { ConfigSelectors } from '../../store/config/selectors';
 
 @Injectable({

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from './config/config.service';
-import { Observable, fromEvent, merge, defer, Subject, forkJoin, ReplaySubject } from 'rxjs';
-import { take, switchMap, tap, map, shareReplay, filter, withLatestFrom } from 'rxjs/operators';
-import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
-import { LoggingService } from './logging/logging.service';
+import { Observable, fromEvent, merge, ReplaySubject } from 'rxjs';
+import { take, switchMap, tap, map, withLatestFrom } from 'rxjs/operators';
 import { io } from 'socket.io-client';
 import { AppConfig } from '../models/config/app-config';
 import { ConfigProviderService } from './config/config-provider.service';
