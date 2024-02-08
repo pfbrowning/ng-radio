@@ -29,6 +29,7 @@ export class SocketIOService {
   public metadataReceived$ = this.createStreamFromSocketEvent<MetadataRecievedDto>('metadata');
 
   public initialize(url: string): void {
+    // TODO use this for authentication https://github.com/Thream/socketio-jwt
     this.socket = io(url);
     this.socketReferenceInitialized$.next();
   }
