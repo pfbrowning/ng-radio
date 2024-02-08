@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, fromEvent, merge, ReplaySubject } from 'rxjs';
-import { take, switchMap, tap, map, withLatestFrom } from 'rxjs/operators';
-import { io } from 'socket.io-client';
-import { AppConfig } from '../models/config/app-config';
-import { ConfigProviderService } from './config/config-provider.service';
+import { Observable, fromEvent, ReplaySubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import io from 'socket.io-client';
 import { MetadataRecievedDto } from '../models/socket-io/metadata-recieved-dto';
 
 @Injectable({ providedIn: 'root' })
@@ -30,8 +28,8 @@ export class SocketIOService {
   );
   public metadataReceived$ = this.createStreamFromSocketEvent<MetadataRecievedDto>('metadata');
 
-  public initialize(config: AppConfig): void {
-    this.socket = io(config.radioProxyUrl, { autoConnect: false });
+  public initialize(url: string): void {
+    this.socket = io(url);
     this.socketReferenceInitialized$.next();
     // TODO do we need to call connect here??
   }

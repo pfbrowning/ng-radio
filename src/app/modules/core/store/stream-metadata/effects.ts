@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, distinctUntilChanged, skip, withLatestFrom, filter, tap } from 'rxjs/operators';
+import { map, distinctUntilChanged, skip, tap } from 'rxjs/operators';
 import { StreamMetadataFacadeService } from './stream-metadata-facade.service';
 import { isEqual } from 'lodash-es';
 import { SocketIOService } from '../../services/socket-io.service';
@@ -23,13 +23,6 @@ export class StreamMetadataEffects {
     { dispatch: false }
   );
 
-  metadataReceived$ = createEffect(() =>
-    this.socketIOService.metadataReceived$.pipe(
-      // TODO de-duplicate this duplicated action
-      map(({ url, title }) => StreamMetadataActions.metadataReceived({ url, title }))
-    )
-  );
-
   setUrlsOnChanged$ = createEffect(() =>
     this.streamMetadataFacade.urlsSelectedForMetadata$.pipe(
       distinctUntilChanged((x, y) => isEqual(x, y)),
@@ -37,15 +30,6 @@ export class StreamMetadataEffects {
     but we do want to call the server about subsequent empty arrays, so skip is better than filter. */
       skip(1),
       map(streams => StreamMetadataActions.setStreamList({ streams }))
-    )
-  );
-
-  // Re-send the url list upon re-connection in case of disconnects
-  setUrlsOnSocketInit$ = createEffect(() =>
-    this.socketIOService.socketInitialized$.pipe(
-      withLatestFrom(this.streamMetadataFacade.urlsSelectedForMetadata$),
-      filter(([, urls]) => urls.length > 0),
-      map(([, streams]) => StreamMetadataActions.setStreamList({ streams }))
     )
   );
 }

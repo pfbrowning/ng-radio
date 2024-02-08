@@ -1,14 +1,19 @@
 import { createAction, props } from '@ngrx/store';
-import { AppConfig } from '../../../models/config/app-config';
 import { MetadataRecievedDto } from '../../../models/socket-io/metadata-recieved-dto';
 
 enum SocketIOActions {
+  InitializeStart = '[SocketIO] Initialize Start',
   Disconnected = '[SocketIO] Disconnected',
   Connected = '[SocketIO] Connected',
   Unauthorized = '[SocketIO] Unauthorized',
   SocketInitializedServerSide = '[SocketIO] Socket Initialized Server-Side',
   MetadataReceived = '[SocketIO] Metadata Received',
 }
+
+export const initializeStart = createAction(
+  SocketIOActions.InitializeStart,
+  props<{ url: string }>()
+);
 
 export const disconnected = createAction(
   SocketIOActions.Disconnected,

@@ -15,6 +15,7 @@ import { NotificationsService } from '@core/services';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ConfigEffects } from './store/config/config.effects';
 import { SocketIOMessageListenerEffects } from './store/socket-io/effects/socket-io-message-listener.effects';
+import { SocketIOConnectionManagementEffects } from './store/socket-io/effects/socket-io-connection-management.effects';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SocketIOMessageListenerEffects } from './store/socket-io/effects/socket
       StreamMetadataEffects,
       ConfigEffects,
       SocketIOMessageListenerEffects,
+      SocketIOConnectionManagementEffects,
     ]),
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],

@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
-import { ConfigActions } from './actions';
-import { switchMap, catchError, map, tap, withLatestFrom, filter } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ConfigService } from '@core/services';
-import { Action } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { switchMap, map, tap, withLatestFrom, filter } from 'rxjs/operators';
 import { SocketIOService } from '../../../services/socket-io.service';
 import { SocketIOActions } from '../actions';
 import { ConfigProviderService } from '../../../services/config/config-provider.service';
@@ -22,11 +18,18 @@ export class SocketIOConnectionManagementEffects {
     private playerFacade: PlayerFacadeService
   ) {}
 
+  initializeOnConfigLoaded$ = createEffect(() =>
+    this.configProvider
+      .getConfigOnceLoaded()
+      .pipe(map(config => SocketIOActions.initializeStart({ url: config.radioProxyUrl })))
+  );
+
   initialize$ = createEffect(
     () =>
-      this.configProvider
-        .getConfigOnceLoaded()
-        .pipe(tap(config => this.socketIOService.initialize(config))),
+      this.actions$.pipe(
+        ofType(SocketIOActions.initializeStart),
+        tap(({ url }) => this.socketIOService.initialize(url))
+      ),
     { dispatch: false }
   );
 

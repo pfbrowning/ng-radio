@@ -9,8 +9,3 @@ export const setStreamList = createAction(
   StreamMetadataActions.SetStreamList,
   props<{ streams: string[] }>()
 );
-
-export const metadataReceived = createAction(
-  StreamMetadataActions.MetadataReceived,
-  props<{ url: string; title: string }>()
-);

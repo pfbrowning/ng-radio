@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
-import { ConfigActions } from './actions';
-import { switchMap, catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { ConfigService } from '@core/services';
-import { Action } from '@ngrx/store';
+import { createEffect } from '@ngrx/effects';
+import { map } from 'rxjs/operators';
 import { SocketIOService } from '../../../services/socket-io.service';
 import { SocketIOActions } from '../actions';
 
