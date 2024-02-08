@@ -31,6 +31,5 @@ export class SocketIOService {
   public initialize(url: string): void {
     this.socket = io(url);
     this.socketReferenceInitialized$.next();
-    // TODO do we need to call connect here??
   }
 }
