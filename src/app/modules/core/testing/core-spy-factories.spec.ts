@@ -60,6 +60,7 @@ export const createConfigProviderSpy = () => {
   const spy = jasmine.createSpyObj<ConfigProviderService>('configProvider', [
     'getConfigOnceLoaded',
   ]);
+  spy.getConfigOnceLoaded.and.returnValue(of({} as any));
   return spy;
 };
 
