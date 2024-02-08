@@ -9,11 +9,7 @@ import { RootState } from '../../models/root-state';
 import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
-import {
-  NotificationsService,
-  LoggingService,
-  ConfigProviderService,
-} from '@core/services';
+import { NotificationsService, LoggingService, ConfigProviderService } from '@core/services';
 import { AuthenticationActions } from './actions';
 
 describe('AuthenticationEffects', () => {
