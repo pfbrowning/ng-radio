@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, fromEvent, ReplaySubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { MetadataRecievedDto } from '../models/socket-io/metadata-recieved-dto';
 
 @Injectable({ providedIn: 'root' })
