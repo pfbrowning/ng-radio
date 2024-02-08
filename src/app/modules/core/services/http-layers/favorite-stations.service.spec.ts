@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { FavoriteStationsService } from './favorite-stations.service';
-import { ConfigProviderService, ConfigService } from '@core/services';
+import { ConfigProviderService } from '@core/services';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigStubService, CoreSpyFactories } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('FavoriteStationsService', () => {
   let service: FavoriteStationsService;

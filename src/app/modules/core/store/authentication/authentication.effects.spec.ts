@@ -8,12 +8,10 @@ import { initialRootState } from '@core';
 import { RootState } from '../../models/root-state';
 import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
-import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
 import {
   NotificationsService,
   LoggingService,
-  ConfigService,
   ConfigProviderService,
 } from '@core/services';
 import { AuthenticationActions } from './actions';

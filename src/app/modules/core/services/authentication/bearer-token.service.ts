@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 import { ConfigProviderService } from '../config/config-provider.service';
 import { AccessTokenProviderService } from './access-token-provider.service';

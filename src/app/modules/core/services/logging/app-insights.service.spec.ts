@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { AppInsightsService } from './app-insights.service';
-import { ConfigService } from '../config/config.service';
-import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { of } from 'rxjs';
 import { ConfigProviderService } from '../config/config-provider.service';
 import { CoreSpyFactories } from '@core/testing';

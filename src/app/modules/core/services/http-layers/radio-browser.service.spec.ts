@@ -2,10 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { RadioBrowserService } from './radio-browser.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpParams } from '@angular/common/http';
-import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
-import { ConfigStubService, CoreSpyFactories } from '@core/testing';
+import { CoreSpyFactories } from '@core/testing';
 import { ConfigProviderService } from '../config/config-provider.service';
 
 describe('RadioBrowserService', () => {
