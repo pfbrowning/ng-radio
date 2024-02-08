@@ -5,12 +5,13 @@ import { switchMap, take } from 'rxjs/operators';
 import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 import { ConfigProviderService } from '../config/config-provider.service';
+import { AccessTokenProviderService } from './access-token-provider.service';
 
 @Injectable()
 export class BearerTokenService implements HttpInterceptor {
   constructor(
     private configProvider: ConfigProviderService,
-    private authenticationFacade: AuthenticationFacadeService
+    private accessTokenProvider: AccessTokenProviderService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,7 +31,7 @@ export class BearerTokenService implements HttpInterceptor {
             req.url.startsWith(authUrl)
           )
         ) {
-          return this.authenticationFacade.accessToken$.pipe(
+          return this.accessTokenProvider.getAccessTokenOnceAuthenticated().pipe(
             take(1),
             switchMap(accessToken =>
               !isFalsyOrWhitespace(accessToken)
