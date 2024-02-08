@@ -60,7 +60,11 @@ export const createConfigProviderSpy = () => {
   const spy = jasmine.createSpyObj<ConfigProviderService>('configProvider', [
     'getConfigOnceLoaded',
   ]);
-  spy.getConfigOnceLoaded.and.returnValue(of({} as any));
+  spy.getConfigOnceLoaded.and.returnValue(
+    of({
+      radioBrowserApiUrl: 'test.com',
+    } as any)
+  );
   return spy;
 };
 

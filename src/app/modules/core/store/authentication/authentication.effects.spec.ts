@@ -10,24 +10,29 @@ import { hot, cold } from 'jasmine-marbles';
 import { CoreSpyFactories } from '@core/testing';
 import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
-import { NotificationsService, LoggingService, ConfigService } from '@core/services';
+import {
+  NotificationsService,
+  LoggingService,
+  ConfigService,
+  ConfigProviderService,
+} from '@core/services';
 import { AuthenticationActions } from './actions';
 
 describe('AuthenticationEffects', () => {
   let actions$: Observable<any> = null;
   let effects: AuthenticationEffects;
   let store: MockStore<RootState>;
-  let configService: ConfigStubService;
+  let configService: jasmine.SpyObj<ConfigProviderService>;
 
   beforeEach(() => {
-    configService = new ConfigStubService();
+    configService = CoreSpyFactories.createConfigProviderSpy();
 
     TestBed.configureTestingModule({
       providers: [
         AuthenticationEffects,
         provideMockActions(() => actions$),
         provideMockStore({ initialState: initialRootState }),
-        { provide: ConfigService, useValue: configService },
+        { provide: ConfigProviderService, useValue: configService },
         {
           provide: CurrentTimeService,
           useValue: CoreSpyFactories.createCurrentTimeServiceSpy(),
@@ -64,9 +69,11 @@ describe('AuthenticationEffects', () => {
     // Simulate the standard effects initialization
     actions$ = hot('a', { a: AuthenticationActions.effectsInit() });
     // Simulate waiting 1 frame before the config fetch completes
-    configService.appConfig$ = cold('-(a|)', {
-      a: { authConfig: { issuer: 'dummyUrl' } },
-    });
+    configService.getConfigOnceLoaded.and.returnValue(
+      cold('-(a|)', {
+        a: { authConfig: { issuer: 'dummyUrl' } },
+      })
+    );
 
     // Act & Assert
     // The passage of 1 frame before initializeStart occurs tells us that we're waiting for the config before proceeding

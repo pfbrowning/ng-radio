@@ -5,7 +5,8 @@ import { HttpParams } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
-import { ConfigStubService } from '@core/testing';
+import { ConfigStubService, CoreSpyFactories } from '@core/testing';
+import { ConfigProviderService } from '../config/config-provider.service';
 
 describe('RadioBrowserService', () => {
   let radioBrowserService: RadioBrowserService;
@@ -14,7 +15,10 @@ describe('RadioBrowserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [RadioBrowserService, { provide: ConfigService, useClass: ConfigStubService }],
+      providers: [
+        RadioBrowserService,
+        { provide: ConfigProviderService, useValue: CoreSpyFactories.createConfigProviderSpy() },
+      ],
     });
 
     radioBrowserService = TestBed.inject(RadioBrowserService);
