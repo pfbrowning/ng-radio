@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
 import { LoggerSeverity } from '../../models/logging/logger-severity';
 import { AppInsightsService } from './app-insights.service';
+import { ConfigProviderService } from '../config/config-provider.service';
 
 /** Serilog-inspired provider-agnostic logging service */
 @Injectable({ providedIn: 'root' })
 export class LoggingService {
-  private minLogLevels$ = this.configService.appConfig$.pipe(
-    map(config => config.logging.minLogLevels)
-  );
+  private minLogLevels$ = this.configProvider
+    .getConfigOnceLoaded()
+    .pipe(map(config => config.logging.minLogLevels));
 
   constructor(
-    private configService: ConfigService,
+    private configProvider: ConfigProviderService,
     private appInsightsService: AppInsightsService
   ) {}
 

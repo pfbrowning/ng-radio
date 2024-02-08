@@ -7,8 +7,8 @@ import { PlayerActions, StreamMetadataFacadeService } from '@core/store';
 import { Station } from '@core/models/player';
 import { SubSink } from 'subsink';
 import { RadioBrowserSearchFacadeService } from '../../store/radio-browser-search-facade.service';
-import { ConfigService } from '@core/services';
 import { RadioBrowserSearchRootState } from '../../models/radio-browser-search-root-state';
+import { ConfigProviderService } from '@core/services';
 
 @Component({
   templateUrl: './radio-browser.component.html',
@@ -18,7 +18,7 @@ import { RadioBrowserSearchRootState } from '../../models/radio-browser-search-r
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<RadioBrowserSearchRootState>,
-    private configService: ConfigService,
+    private configProvider: ConfigProviderService,
     private streamMetadataFacade: StreamMetadataFacadeService,
     private radioBrowserFacade: RadioBrowserSearchFacadeService
   ) {}
@@ -27,9 +27,9 @@ export class RadioBrowserComponent implements OnInit, OnDestroy {
 
   public columns = ['name', 'now-playing', 'tags', 'icon'];
 
-  public resultsLimit$ = this.configService.appConfig$.pipe(
-    map(config => config.radioBrowserSearchResultsLimit)
-  );
+  public resultsLimit$ = this.configProvider
+    .getConfigOnceLoaded()
+    .pipe(map(config => config.radioBrowserSearchResultsLimit));
   public searchResults$ = this.radioBrowserFacade.searchResults$;
   public isSearchInProgress$ = this.radioBrowserFacade.isSearchInProgress$;
   public streamInfo$ = this.streamMetadataFacade.streamsMap$;

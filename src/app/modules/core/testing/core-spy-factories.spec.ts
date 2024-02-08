@@ -5,10 +5,11 @@ import { WindowService } from '../services/browser-apis/window.service';
 import { AppInsightsService } from '../services/logging/app-insights.service';
 import { AuthenticationFacadeService } from '../store/authentication/authentication-facade.service';
 import { AuthenticationService } from '../services/authentication/authentication.service';
-import { SleepTimerService, AudioElementService } from '@core/services';
+import { SleepTimerService, AudioElementService, ConfigProviderService } from '@core/services';
 import { EnvironmentService } from '../services/config/environment.service';
 import { ProxyKeyService } from '../services/radio-player/proxy-key.service';
 import { PlayerBarFacadeService } from '../store/dispatch-facades/player-bar/player-bar-facade.service';
+import { AccessTokenProviderService } from '../services/authentication/access-token-provider.service';
 
 export const createRadioBrowserServiceSpy = () =>
   jasmine.createSpyObj('radioBrowserService', ['searchStations', 'getTopClicked', 'getTopVoted']);
@@ -45,6 +46,25 @@ export const createAuthenticationFacadeSpy = () => {
   ]);
   spy.authenticated$ = NEVER;
   spy.accessToken$ = NEVER;
+  return spy;
+};
+
+export const createAccessTokenProviderSpy = () => {
+  const spy = jasmine.createSpyObj<AccessTokenProviderService>('accessTokenProvider', [
+    'getAccessTokenOnceAuthenticated',
+  ]);
+  return spy;
+};
+
+export const createConfigProviderSpy = () => {
+  const spy = jasmine.createSpyObj<ConfigProviderService>('configProvider', [
+    'getConfigOnceLoaded',
+  ]);
+  spy.getConfigOnceLoaded.and.returnValue(
+    of({
+      radioBrowserApiUrl: 'test.com',
+    } as any)
+  );
   return spy;
 };
 

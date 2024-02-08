@@ -8,8 +8,8 @@ import {
 import { ReplaySubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LoggerSeverity as GenericSeverity } from '../../models/logging/logger-severity';
-import { ConfigService } from '../config/config.service';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import { ConfigProviderService } from '../config/config-provider.service';
 
 @Injectable({ providedIn: 'root' })
 export class AppInsightsService {
@@ -25,10 +25,10 @@ export class AppInsightsService {
     [GenericSeverity.Fatal, MicrosoftSeverity.Critical],
   ]);
 
-  constructor(private configService: ConfigService) {
-    this.configService.appConfig$.subscribe(config =>
-      this.initialize(config.logging.appInsightsInstrumentationKey)
-    );
+  constructor(private configProvider: ConfigProviderService) {
+    this.configProvider
+      .getConfigOnceLoaded()
+      .subscribe(config => this.initialize(config.logging.appInsightsInstrumentationKey));
   }
 
   public initialize(appInsightsInstrumentationKey: string) {

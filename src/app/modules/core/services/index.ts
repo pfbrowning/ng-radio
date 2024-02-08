@@ -24,6 +24,7 @@ export { SleepTimerService } from './sleep-timer.service';
 
 // Config
 export { ConfigService } from './config/config.service';
+export * from './config/config-provider.service';
 
 // Radio Player Logic
 export { AudioElementService } from './radio-player/audio-element.service';

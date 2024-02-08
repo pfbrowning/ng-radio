@@ -1,21 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { AppInsightsService } from './app-insights.service';
-import { ConfigService } from '../config/config.service';
-import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
 import { of } from 'rxjs';
+import { ConfigProviderService } from '../config/config-provider.service';
+import { CoreSpyFactories } from '@core/testing';
 
 describe('AppInsightsService', () => {
   let service: AppInsightsService;
-  let configService: ConfigStubService;
+  let configProvider: jasmine.SpyObj<ConfigProviderService>;
 
   beforeEach(() => {
-    configService = new ConfigStubService();
-    configService.appConfig$ = of({
-      logging: { appInsightsInstrumentationKey: null },
-    } as any);
+    configProvider = CoreSpyFactories.createConfigProviderSpy();
+    configProvider.getConfigOnceLoaded.and.returnValue(
+      of({ logging: { appInsightsInstrumentationKey: null } } as any)
+    );
 
     TestBed.configureTestingModule({
-      providers: [{ provide: ConfigService, useValue: configService }],
+      providers: [{ provide: ConfigProviderService, useValue: configProvider }],
     });
     service = TestBed.inject(AppInsightsService);
   });

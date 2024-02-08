@@ -2,19 +2,19 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
 import { Station } from '../../models/player/station';
 import { Country } from '../../models/country';
 import { sortBy } from 'lodash-es';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import { ConfigProviderService } from '../config/config-provider.service';
 
 @Injectable({ providedIn: 'root' })
 export class RadioBrowserService {
-  constructor(private configService: ConfigService, private httpClient: HttpClient) {}
+  constructor(private configProvider: ConfigProviderService, private httpClient: HttpClient) {}
 
-  private radioBrowserUrl$ = this.configService.appConfig$.pipe(
-    map(config => config.radioBrowserApiUrl)
-  );
+  private radioBrowserUrl$ = this.configProvider
+    .getConfigOnceLoaded()
+    .pipe(map(config => config.radioBrowserApiUrl));
 
   private fetchAllCountries(): Observable<Country[]> {
     return this.httpClient

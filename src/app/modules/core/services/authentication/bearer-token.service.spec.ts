@@ -1,17 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { BearerTokenService } from './bearer-token.service';
-import { ConfigService } from '../config/config.service';
 import { CoreSpyFactories } from '@core/testing';
 import { of, NEVER } from 'rxjs';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ConfigStubService } from '../../testing/stubs/config-stub-service.spec';
-import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
+import { AccessTokenProviderService } from './access-token-provider.service';
+import { ConfigProviderService } from '../config/config-provider.service';
 
 describe('BearerTokenService', () => {
   let bearerTokenService: BearerTokenService;
-  let configService: ConfigStubService;
-  let authenticationFacade: jasmine.SpyObj<AuthenticationFacadeService>;
+  let configProvider: jasmine.SpyObj<ConfigProviderService>;
+  let accessTokenProvider: jasmine.SpyObj<AccessTokenProviderService>;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
   const config: any = Object.freeze({
@@ -20,17 +19,17 @@ describe('BearerTokenService', () => {
   });
 
   beforeEach(() => {
-    authenticationFacade = CoreSpyFactories.createAuthenticationFacadeSpy();
-    configService = new ConfigStubService();
+    accessTokenProvider = CoreSpyFactories.createAccessTokenProviderSpy();
+    configProvider = CoreSpyFactories.createConfigProviderSpy();
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
         BearerTokenService,
-        { provide: ConfigService, useValue: configService },
+        { provide: ConfigProviderService, useValue: configProvider },
         {
-          provide: AuthenticationFacadeService,
-          useValue: authenticationFacade,
+          provide: AccessTokenProviderService,
+          useValue: accessTokenProvider,
         },
         {
           provide: HTTP_INTERCEPTORS,
@@ -41,11 +40,11 @@ describe('BearerTokenService', () => {
     });
 
     bearerTokenService = TestBed.inject(BearerTokenService);
-    authenticationFacade = TestBed.inject(AuthenticationFacadeService) as any;
+    accessTokenProvider = TestBed.inject(AccessTokenProviderService) as any;
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
 
-    configService.appConfig$ = of(config);
+    configProvider.getConfigOnceLoaded.and.returnValue(of(config));
   });
 
   it('should be created', () => {
@@ -62,7 +61,7 @@ describe('BearerTokenService', () => {
     it(`should add a bearer token if the request is for an API url specified in the config: ${url}`, (done: DoneFn) => {
       // Arrange
       const expectedHeader = 'Bearer mockAccessToken';
-      authenticationFacade.accessToken$ = of('mockAccessToken');
+      accessTokenProvider.getAccessTokenOnceAuthenticated.and.returnValue(of('mockAccessToken'));
 
       // Act
       httpClient.get(url).subscribe(() => {
@@ -92,7 +91,7 @@ describe('BearerTokenService', () => {
   shouldNotAddTokenCases.forEach(input => {
     it(`should not add a token: ${JSON.stringify(input)}`, (done: DoneFn) => {
       // Arrange
-      authenticationFacade.accessToken$ = of(input.accessToken);
+      accessTokenProvider.getAccessTokenOnceAuthenticated.and.returnValue(of(input.accessToken));
 
       // Act
       httpClient.get(input.requestedUrl).subscribe(() => {
@@ -117,7 +116,7 @@ describe('BearerTokenService', () => {
   shouldShortCircuitConfigFetchCases.forEach(requestedUrl => {
     it(`should short-circuit config fetch: ${requestedUrl}`, (done: DoneFn) => {
       // Arrange
-      configService.appConfig$ = NEVER;
+      configProvider.getConfigOnceLoaded.and.returnValue(NEVER);
 
       // Act
       httpClient.get(requestedUrl).subscribe(() => {

@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
-import { ConfigService } from '@core/services';
-import { AuthenticationFacadeService } from '../../store/authentication/authentication-facade.service';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import { ConfigProviderService } from '../config/config-provider.service';
+import { AccessTokenProviderService } from './access-token-provider.service';
 
 @Injectable()
 export class BearerTokenService implements HttpInterceptor {
   constructor(
-    private configService: ConfigService,
-    private authenticationFacade: AuthenticationFacadeService
+    private configProvider: ConfigProviderService,
+    private accessTokenProvider: AccessTokenProviderService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,7 +22,7 @@ export class BearerTokenService implements HttpInterceptor {
       return next.handle(req);
     }
     // Wait for the config to load if it isn't loaded already
-    return this.configService.appConfig$.pipe(
+    return this.configProvider.getConfigOnceLoaded().pipe(
       switchMap(config => {
         // If the URL is one of our configured URLs which requires authentication, then provide a bearer token.
         if (
@@ -30,7 +30,7 @@ export class BearerTokenService implements HttpInterceptor {
             req.url.startsWith(authUrl)
           )
         ) {
-          return this.authenticationFacade.accessToken$.pipe(
+          return this.accessTokenProvider.getAccessTokenOnceAuthenticated().pipe(
             take(1),
             switchMap(accessToken =>
               !isFalsyOrWhitespace(accessToken)
