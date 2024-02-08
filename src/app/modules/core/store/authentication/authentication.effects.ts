@@ -14,14 +14,15 @@ import { Action } from '@ngrx/store';
 import { AppInsightsService } from '../../services/logging/app-insights.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { AuthenticationFacadeService } from './authentication-facade.service';
-import { LoggingService, NotificationsService, ConfigService } from '@core/services';
+import { LoggingService, NotificationsService } from '@core/services';
 import { AuthenticationActions } from './actions';
+import { ConfigProviderService } from '../../services/config/config-provider.service';
 
 @Injectable()
 export class AuthenticationEffects implements OnInitEffects {
   constructor(
     private actions$: Actions,
-    private configService: ConfigService,
+    private configProvider: ConfigProviderService,
     private authenticationFacade: AuthenticationFacadeService,
     private authenticationService: AuthenticationService,
     private notificationsService: NotificationsService,
@@ -32,7 +33,7 @@ export class AuthenticationEffects implements OnInitEffects {
   initAuthOnConfigLoad$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthenticationActions.effectsInit),
-      switchMap(() => this.configService.appConfig$),
+      switchMap(() => this.configProvider.getConfigOnceLoaded()),
       map(() => AuthenticationActions.initializeStart())
     )
   );
@@ -40,7 +41,7 @@ export class AuthenticationEffects implements OnInitEffects {
   initialize$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthenticationActions.initializeStart),
-      switchMap(() => this.configService.appConfig$),
+      switchMap(() => this.configProvider.getConfigOnceLoaded()),
       switchMap(config =>
         this.authenticationService.initialize(config.authConfig.userManager).pipe(
           map(result =>
@@ -92,7 +93,7 @@ export class AuthenticationEffects implements OnInitEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthenticationActions.logoutButtonClicked),
-        switchMap(() => this.configService.appConfig$),
+        switchMap(() => this.configProvider.getConfigOnceLoaded()),
         tap(config => this.authenticationService.logOut(config.authConfig.logoutUrl))
       ),
     { dispatch: false }

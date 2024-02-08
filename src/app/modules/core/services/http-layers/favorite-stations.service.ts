@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../config/config.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Station } from '../../models/player/station';
 import { map, switchMap } from 'rxjs/operators';
+import { ConfigProviderService } from '../config/config-provider.service';
 
 @Injectable({ providedIn: 'root' })
 export class FavoriteStationsService {
-  constructor(private configService: ConfigService, private httpClient: HttpClient) {}
+  constructor(private configProvider: ConfigProviderService, private httpClient: HttpClient) {}
 
-  private stationsResource$ = this.configService.appConfig$.pipe(
-    map(config => `${config.favoriteStationsApiUrl}/userstations`)
-  );
+  private stationsResource$ = this.configProvider
+    .getConfigOnceLoaded()
+    .pipe(map(config => `${config.favoriteStationsApiUrl}/userstations`));
 
   public fetchAll(): Observable<Station[]> {
     return this.stationsResource$.pipe(

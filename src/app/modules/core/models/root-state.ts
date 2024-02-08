@@ -4,8 +4,10 @@ import { FavoriteStationsState } from '../store/favorite-stations/models/favorit
 import { PlayerState } from '../store/player/models/player-state';
 import { StreamMetadataState } from '../store/stream-metadata/models/stream-metadata-state';
 import { RadioBrowserResultsState } from '../store/radio-browser-results/models/radio-browser-results-state';
+import { ConfigState } from '../store/config/config-state';
 
 export interface RootState {
+  config: ConfigState;
   router: RouterReducerState;
   favoriteStations: FavoriteStationsState;
   player: PlayerState;

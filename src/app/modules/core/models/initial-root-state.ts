@@ -4,9 +4,11 @@ import { initialPlayerState } from '../store/player/models/initial-player-state'
 import { initialAuthenticationState } from '../store/authentication/models/initial-authentication-state';
 import { initialStreamMetadataState } from '../store/stream-metadata/models/initial-stream-metadata-state';
 import { initialRadioBrowserResultsState } from '../store/radio-browser-results/models/initial-radio-browser-results-state';
+import { initialConfigState } from '../store/config/initial-config-state';
 
 export const initialRootState: RootState = {
   router: null,
+  config: initialConfigState,
   favoriteStations: initialFavoriteStationsState,
   player: initialPlayerState,
   authentication: initialAuthenticationState,

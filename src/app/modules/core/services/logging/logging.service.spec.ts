@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { ConfigService } from '../config/config.service';
-import { ConfigStubService } from '@core/testing';
 import { CoreSpyFactories } from '@core/testing';
-import { LoggingService, AppInsightsService } from '@core/services';
+import { LoggingService, AppInsightsService, ConfigProviderService } from '@core/services';
 
 describe('LoggingService', () => {
   let loggingService: LoggingService;
@@ -10,7 +8,7 @@ describe('LoggingService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: ConfigService, useClass: ConfigStubService },
+        { provide: ConfigProviderService, useValue: CoreSpyFactories.createConfigProviderSpy() },
         {
           provide: AppInsightsService,
           useValue: CoreSpyFactories.createAppInsightsServiceSpy(),

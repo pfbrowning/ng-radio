@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserSearchRootState } from '../models/radio-browser-search-root-state';
 import { resolverParams } from './selectors';
-import { NotificationsService, RadioBrowserService, ConfigService } from '@core/services';
+import { ConfigProviderService, NotificationsService, RadioBrowserService } from '@core/services';
 import { RadioBrowserResultsActions } from '@core/store';
 import * as RadioBrowserSearchActions from './actions';
 import * as RadioBrowserSearchSelectors from './selectors';
@@ -92,7 +92,7 @@ export class RadioBrowserSearchEffects {
       ofType(RadioBrowserSearchActions.searchStart),
       withLatestFrom(
         this.store.pipe(select(RadioBrowserSearchSelectors.searchCriteria)),
-        this.configService.appConfig$
+        this.configProvider.getConfigOnceLoaded()
       ),
       switchMap(([, criteria, config]) =>
         this.radioBrowserService
@@ -141,7 +141,7 @@ export class RadioBrowserSearchEffects {
   constructor(
     private actions$: Actions,
     private store: Store<RadioBrowserSearchRootState>,
-    private configService: ConfigService,
+    private configProvider: ConfigProviderService,
     private radioBrowserService: RadioBrowserService,
     private notificationsService: NotificationsService
   ) {}

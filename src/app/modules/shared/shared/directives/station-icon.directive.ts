@@ -8,11 +8,11 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { ConfigService } from '@core/services';
 import { map, switchMap, distinctUntilChanged, filter } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { SubSink } from 'subsink';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
+import { ConfigProviderService } from '@core/services';
 
 @Directive({ selector: '[blrStationIcon]' })
 export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
@@ -29,13 +29,13 @@ export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
     filter(url => !isFalsyOrWhitespace(url)),
     distinctUntilChanged(),
     switchMap(iconUrl =>
-      this.configService.appConfig$.pipe(
-        map(appConfig => `${appConfig.imageProxyUrl}/image?url=${iconUrl}`)
-      )
+      this.configProvider
+        .getConfigOnceLoaded()
+        .pipe(map(appConfig => `${appConfig.imageProxyUrl}/image?url=${iconUrl}`))
     )
   );
 
-  constructor(private configService: ConfigService) {}
+  constructor(private configProvider: ConfigProviderService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.iconUrl) {
