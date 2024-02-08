@@ -12,7 +12,7 @@ import { map, switchMap, distinctUntilChanged, filter } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { SubSink } from 'subsink';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
-import { ConfigProviderService } from 'src/app/modules/core/services/config/config-provider.service';
+import { ConfigProviderService } from '@core/services';
 
 @Directive({ selector: '[blrStationIcon]' })
 export class StationIconDirective implements OnChanges, OnInit, OnDestroy {

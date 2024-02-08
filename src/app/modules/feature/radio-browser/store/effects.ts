@@ -5,11 +5,10 @@ import { of } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { RadioBrowserSearchRootState } from '../models/radio-browser-search-root-state';
 import { resolverParams } from './selectors';
-import { NotificationsService, RadioBrowserService } from '@core/services';
+import { ConfigProviderService, NotificationsService, RadioBrowserService } from '@core/services';
 import { RadioBrowserResultsActions } from '@core/store';
 import * as RadioBrowserSearchActions from './actions';
 import * as RadioBrowserSearchSelectors from './selectors';
-import { ConfigProviderService } from 'src/app/modules/core/services/config/config-provider.service';
 
 @Injectable()
 export class RadioBrowserSearchEffects {
