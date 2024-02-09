@@ -1,46 +1,23 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Subject, Observable, from } from 'rxjs';
+import { Subject, Observable, from, NEVER } from 'rxjs';
+import IcecastMetadataPlayer from 'icecast-metadata-player';
 
 @Injectable({ providedIn: 'root' })
 export class AudioElementService {
-  private readonly audio: HTMLAudioElement = new Audio();
+  private player: IcecastMetadataPlayer;
 
-  constructor(private ngZone: NgZone) {
-    this.audio.onerror = error => this.onError(error);
-    this.audio.onpause = () => this.onPaused();
-    this.audio.preload = 'none';
+  public play(url: string): Observable<void> {
+    this.player = new IcecastMetadataPlayer(url, {
+      onMetadata: metadata => {
+        console.log('metadata', metadata);
+      },
+    });
+    return from(this.player.play());
   }
 
-  private errorSource = new Subject<any>();
-  private pausedSource = new Subject<void>();
-
-  public paused$ = this.pausedSource.asObservable();
-  public error$ = this.errorSource.asObservable();
-
-  public set src(value: string) {
-    this.audio.src = value;
+  public stop(): Observable<void> {
+    return from(this.player.stop());
   }
 
-  public play(): Observable<void> {
-    return from(this.audio.play());
-  }
-
-  public pause(): void {
-    this.audio.pause();
-  }
-
-  public set muted(value: boolean) {
-    this.audio.muted = value;
-  }
-
-  private onError(error: any) {
-    this.ngZone.run(() => this.errorSource.next(error));
-  }
-
-  private onPaused() {
-    /* We have to explicitly dispatch this within the Angular zone in order for change detection
-    to work properly because the HTML5 audio element which the event originated from was not in
-    the Angular Zone. */
-    this.ngZone.run(() => this.pausedSource.next());
-  }
+  public validate = (url: string): Observable<{ success: boolean }> => NEVER;
 }

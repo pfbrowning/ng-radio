@@ -37,6 +37,7 @@
     "@ngrx/store-devtools": "^17.1.0",
     "core-js": "^3.21.1",
     "dayjs": "1.10.8",
+    "icecast-metadata-player": "^1.17.2",
     "is-falsy-or-whitespace": "0.0.17",
     "lodash-es": "^4.17.21",
     "material-design-icons": "^3.0.1",

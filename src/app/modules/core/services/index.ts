@@ -28,4 +28,3 @@ export * from './config/config-provider.service';
 
 // Radio Player Logic
 export { AudioElementService } from './radio-player/audio-element.service';
-export { AudioProxyService } from './radio-player/audio-proxy.service';
