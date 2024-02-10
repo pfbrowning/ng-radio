@@ -7,7 +7,8 @@ export class AudioElementService {
   private player: IcecastMetadataPlayer;
 
   public play(url: string): Observable<void> {
-    this.player = new IcecastMetadataPlayer(url, {
+    const proxiedUrl = `http://localhost:3000/listen?url=${url}`;
+    this.player = new IcecastMetadataPlayer(proxiedUrl, {
       onMetadata: metadata => {
         console.log('metadata', metadata);
       },
