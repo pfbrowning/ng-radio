@@ -27,7 +27,6 @@ import {
   NotificationsService,
   SleepTimerService,
   AudioElementService,
-  AudioProxyService,
 } from '@core/services';
 import { StreamMetadataFacadeService } from '../stream-metadata/stream-metadata-facade.service';
 import { PlayerFacadeService } from './player-facade.service';
@@ -42,15 +41,14 @@ export class PlayerEffects {
     private loggingService: LoggingService,
     private titleService: Title,
     private sleepTimerService: SleepTimerService,
-    private audio: AudioElementService,
-    private audioProxyService: AudioProxyService,
+    private audioElement: AudioElementService,
     private playerFacade: PlayerFacadeService,
     private metadataFacade: StreamMetadataFacadeService
   ) {}
 
-  listenForAudioPaused$ = createEffect(() =>
-    this.audio.paused$.pipe(map(() => PlayerActions.audioPaused()))
-  );
+  // listenForAudioPaused$ = createEffect(() =>
+  //   this.audio.paused$.pipe(map(() => PlayerActions.audioPaused()))
+  // );
 
   playOnPlayClicked$ = createEffect(() =>
     this.actions$.pipe(
@@ -78,7 +76,7 @@ export class PlayerEffects {
       ofType(playAudioStart),
       withLatestFrom(this.playerFacade.currentStation$),
       switchMap(([, station]) =>
-        this.audioProxyService.play(station.url).pipe(
+        this.audioElement.play(station.url).pipe(
           map(() => playAudioSucceeded()),
           catchError(error => of(playAudioFailed({ error, station })))
         )
@@ -86,14 +84,14 @@ export class PlayerEffects {
     )
   );
 
-  pauseAudio$ = createEffect(
-    () =>
-      merge(
-        this.actions$.pipe(ofType(PlayerBarActions.pauseClicked)),
-        this.sleepTimerService.sleepTimer$
-      ).pipe(tap(() => this.audio.pause())),
-    { dispatch: false }
-  );
+  // pauseAudio$ = createEffect(
+  //   () =>
+  //     merge(
+  //       this.actions$.pipe(ofType(PlayerBarActions.pauseClicked)),
+  //       this.sleepTimerService.sleepTimer$
+  //     ).pipe(tap(() => this.audio.pause())),
+  //   { dispatch: false }
+  // );
 
   notifyLogPlayAudioFailed$ = createEffect(
     () =>

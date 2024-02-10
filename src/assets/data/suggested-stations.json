@@ -1,5 +1,12 @@
 [
   {
+    "title": "Proxy Test",
+    "url": "http://localhost:3000/listen",
+    "genre": "News",
+    "tags": null
+  },
+
+  {
     "title": "BBC World Service",
     "url": "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
     "genre": "News",
