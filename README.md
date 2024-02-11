@@ -72,12 +72,10 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Upgrade Socket.IO client & server
-    - Upgrade server to 3
-    - Upgrade client to 3
-    - Upgrade server to 4
-    - Upgrade client to 4
+  - Decompose build pipeline into a "check" pipeline for PRs and a "check and deploy" pipeline for merges into master
   - Upgrade remaining dependencies
+  - Implement Socket.IO for the currently-playing station with v4.x against [radio-proxy-2](https://github.com/pfbrowning/radio-proxy-2)
+  - Re-implement now-playing polling logic for radio-browser & favorite stations pages
   - Learn about:
     - Angular Signals
     - Control flow syntax
@@ -89,8 +87,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Enable strictPropertyInitialization
     - Enable noImplicitAny
   - Separate the models for current station, favorite station, and radio browser result
-  - Move "stateful "now-playing" query logic for everything other than the streaming
-  station from radio proxy back to the app.
   - Refactor LoggingService as desired
     - Genericize logging providers with a contract interface
     - Simplify logic
