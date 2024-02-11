@@ -72,11 +72,8 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Upgrade Socket.IO client & server
-    - Upgrade server to 3
-    - Upgrade client to 3
-    - Upgrade server to 4
-    - Upgrade client to 4
+  - Decompose build pipeline into a "check" pipeline for PRs and a "check and deploy" pipeline for merges into master
+  - Implement Socket.IO for the currently-playing station with v4.x against [radio-proxy-2](https://github.com/pfbrowning/radio-proxy-2)
   - Upgrade remaining dependencies
   - Learn about:
     - Angular Signals
