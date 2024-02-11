@@ -10,8 +10,12 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
 
     strategy:
       matrix:
