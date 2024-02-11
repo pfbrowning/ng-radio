@@ -9,6 +9,6 @@ export class ProxyKeyService {
   constructor(private httpClient: HttpClient, private configProvider: ConfigProviderService) {}
 
   public fetchNew(): Observable<string> {
-    return this.configProvider.getConfigOnceLoaded().pipe(switchMap(config => of('placeholder')));
+    return this.configProvider.getConfigOnceLoaded().pipe(switchMap(() => of('placeholder')));
   }
 }
