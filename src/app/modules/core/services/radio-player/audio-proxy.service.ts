@@ -19,7 +19,7 @@ export class AudioProxyService {
   private loadAudio = (streamUrl: string) =>
     forkJoin([this.configProvider.getConfigOnceLoaded(), this.proxyKeyService.fetchNew()]).pipe(
       tap(([{ radioProxyUrl }, proxyKey]) => {
-        const url = new URL(`${radioProxyUrl}/stream`);
+        const url = new URL(`${radioProxyUrl}/listen`);
         url.searchParams.append('url', streamUrl);
         url.searchParams.append('key', proxyKey);
         this.audioElementService.src = url.toString();

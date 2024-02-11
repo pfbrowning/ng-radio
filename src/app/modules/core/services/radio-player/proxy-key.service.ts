@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ConfigProviderService } from '../config/config-provider.service';
 
@@ -9,12 +9,6 @@ export class ProxyKeyService {
   constructor(private httpClient: HttpClient, private configProvider: ConfigProviderService) {}
 
   public fetchNew(): Observable<string> {
-    return this.configProvider.getConfigOnceLoaded().pipe(
-      switchMap(config =>
-        this.httpClient.post(`${config.radioProxyUrl}/proxyKey`, null, {
-          responseType: 'text',
-        })
-      )
-    );
+    return this.configProvider.getConfigOnceLoaded().pipe(switchMap(() => of('placeholder')));
   }
 }
