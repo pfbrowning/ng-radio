@@ -74,7 +74,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 - Chores
   - Decompose build pipeline into a "check" pipeline for PRs and a "check and deploy" pipeline for merges into master
   - Upgrade remaining dependencies
-  - Implement Socket.IO for the currently-playing station with v4.x against [radio-proxy-2](https://github.com/pfbrowning/radio-proxy-2)
   - Re-implement now-playing polling logic for radio-browser & favorite stations pages
   - Learn about:
     - Angular Signals
@@ -94,8 +93,8 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - General
     - Store normalization
     - Action hygiene
+  - Finish [radio-proxy-2](https://github.com/pfbrowning/radio-proxy-2)
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
-  - Finish [radio-proxy](https://github.com/pfbrowning/radio-proxy)
 - Bugs
   - The main page fails to load when the radio browser API is down.
   - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
