@@ -1,0 +1,12 @@
+# .github/workflows/build-on-pull-request.yml
+name: Build On Pull Request
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      node-version: '18.13.0'
