@@ -12,7 +12,6 @@ jobs:
     uses: ./.github/workflows/build-template.yml
     with:
       node-version: '18.13.0'
-      publish-test-coverage: true
     concurrency:
       group: build-and-deploy
       cancel-in-progress: true
