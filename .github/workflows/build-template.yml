@@ -43,10 +43,6 @@ jobs:
           imageProxyUrl: https://fast-everglades-74198.herokuapp.com
           favoriteStationsApiUrl: https://favorite-stations-api.azurewebsites.net
           radioProxyUrl: https://radio-proxy-2-91a50a6e0820.herokuapp.com
-      - run: npm run test:coveralls
-        name: Publish Test Coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.coveralls }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
