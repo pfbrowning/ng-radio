@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/build-template.yml
     with:
       node-version: '18.13.0'
   deploy:
@@ -24,10 +24,6 @@ jobs:
         with:
           name: ${{ env.artifactName }}
           path: ./buildArtifact
-      - run: npm run test:coveralls
-        name: Publish Test Coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.coveralls }}
       - name: Write Configuration
         uses: microsoft/variable-substitution@v1
         with:
