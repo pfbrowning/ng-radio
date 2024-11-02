@@ -10,3 +10,4 @@ jobs:
     uses: ./.github/workflows/build-template.yml
     with:
       node-version: '18.13.0'
+      publish-test-coverage: false

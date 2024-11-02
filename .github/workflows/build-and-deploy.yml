@@ -12,6 +12,7 @@ jobs:
     uses: ./.github/workflows/build-template.yml
     with:
       node-version: '18.13.0'
+      publish-test-coverage: true
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -24,22 +25,6 @@ jobs:
         with:
           name: ${{ env.artifactName }}
           path: ./buildArtifact
-      - name: Write Configuration
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: 'dist/ng-radio/assets/config/app.config.json'
-        env:
-          appInsightsInstrumentationKey: ${{ secrets.appinsights_instrumentation_key }}
-          authConfig.userManager.client_id: OUO72IMzQPFkpXz5IkVMAnaDM0iKtK3t
-          authConfig.userManager.authority: https://browninglogic.auth0.com/
-          authConfig.userManager.redirect_uri: https://radio.browninglogic.com/login-callback.html
-          authConfig.userManager.post_logout_redirect_uri: https://radio.browninglogic.com
-          authConfig.userManager.silent_redirect_uri: https://radio.browninglogic.com/silent-refresh.html
-          authConfig.userManager.extraQueryParams.audience: browninglogic-radio
-          authConfig.logoutUrl: https://browninglogic.auth0.com/v2/logout?returnTo=http%3A%2F%2Fradio.browninglogic.com
-          imageProxyUrl: https://fast-everglades-74198.herokuapp.com
-          favoriteStationsApiUrl: https://favorite-stations-api.azurewebsites.net
-          radioProxyUrl: https://radio-proxy-2-91a50a6e0820.herokuapp.com
       - name: FTP Deploy
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
         with:
