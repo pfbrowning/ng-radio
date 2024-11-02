@@ -12,8 +12,9 @@ jobs:
       group: build-and-deploy
       cancel-in-progress: false
     steps:
-      - uses: ./.github/workflows/build.yml
-        name: Call Reusable Build Workflow
+      - uses: actions/checkout@v2
+      - name: Call Reusable Build Workflow
+        uses: ./.github/workflows/build.yml
         with:
           node-version: '18.13.0'
   deploy:
