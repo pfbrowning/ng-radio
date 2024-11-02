@@ -33,7 +33,7 @@ jobs:
           ftp_host: ${{ secrets.ftp_host }}
           ftp_username: ${{ secrets.ftp_username }}
           ftp_password: ${{ secrets.ftp_password }}
-          local_source_dir: 'dist/ng-radio'
+          local_source_dir: './dist/ng-radio'
           dist_target_dir: '/'
           disable_ssl_certificate_verification: true
           delete: true
