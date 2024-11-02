@@ -4,6 +4,8 @@ name: Build and Deploy
 on:
   push:
     branches: [master]
+env:
+  artifactName: buildArtifact
 
 jobs:
   build:
@@ -17,7 +19,11 @@ jobs:
       group: build-and-deploy
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.artifactName }}
+          path: ./buildArtifact
       - run: npm run test:coveralls
         name: Publish Test Coverage
         env:
