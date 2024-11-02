@@ -13,12 +13,15 @@ jobs:
     with:
       node-version: '18.13.0'
       publish-test-coverage: true
+    concurrency:
+      group: build-and-deploy
+      cancel-in-progress: true
   deploy:
     runs-on: ubuntu-latest
     needs: build
     concurrency:
       group: build-and-deploy
-      cancel-in-progress: false
+      cancel-in-progress: true
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
