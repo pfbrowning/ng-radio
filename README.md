@@ -73,6 +73,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Decompose build pipeline into a "check" pipeline for PRs and a "check and deploy" pipeline for merges into master
+  - Upgrade to Angular 18
   - Upgrade remaining dependencies
   - Re-implement now-playing polling logic for radio-browser & favorite stations pages
   - Learn about:
