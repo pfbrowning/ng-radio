@@ -57,6 +57,11 @@ jobs:
     needs: build
     if: inputs.publish-test-coverage == true
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.artifactName }}
+          path: ./buildArtifact
       - run: npm run test:coveralls
         name: Publish Test Coverage
         env:
