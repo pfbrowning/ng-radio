@@ -1,5 +1,5 @@
-# .github/workflows/build.yml
-name: Build
+# .github/workflows/build-template.yml
+name: Build Template
 
 on:
   workflow_call:
