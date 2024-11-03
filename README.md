@@ -74,6 +74,10 @@ Support for legacy browsers is not a concern at all in developing this applicati
 - Chores
   - [Upgrade to Angular 18](https://angular.dev/update-guide?v=17.0-18.0&l=3)
     - Upgrade @angular-eslint/schematics or otherwise fix peer dependency
+    - ng update @angular/material@18
+    - Update TypeScript to versions 5.4 or newer.
+    - Upgrade NGRX
+    - Upgrade PrimeNG
   - Upgrade remaining dependencies
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
