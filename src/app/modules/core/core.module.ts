@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@environment';
@@ -17,29 +17,23 @@ import { ConfigEffects } from './store/config/config.effects';
 import { SocketIOMessageListenerEffects } from './store/socket-io/effects/socket-io-message-listener.effects';
 import { SocketIOConnectionManagementEffects } from './store/socket-io/effects/socket-io-connection-management.effects';
 
-@NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    StoreModule.forRoot(reducers, {
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictActionWithinNgZone: true,
-      },
-    }),
-    EffectsModule.forRoot([
-      FavoriteStationsEffects,
-      PlayerEffects,
-      AuthenticationEffects,
-      StreamMetadataEffects,
-      ConfigEffects,
-      SocketIOMessageListenerEffects,
-      SocketIOConnectionManagementEffects,
-    ]),
-    StoreRouterConnectingModule.forRoot(),
-    !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
-  ],
-  providers: [MessageService, NotificationsService],
-})
+@NgModule({ imports: [CommonModule,
+        StoreModule.forRoot(reducers, {
+            runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true,
+                strictActionWithinNgZone: true,
+            },
+        }),
+        EffectsModule.forRoot([
+            FavoriteStationsEffects,
+            PlayerEffects,
+            AuthenticationEffects,
+            StreamMetadataEffects,
+            ConfigEffects,
+            SocketIOMessageListenerEffects,
+            SocketIOConnectionManagementEffects,
+        ]),
+        StoreRouterConnectingModule.forRoot(),
+        !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : []], providers: [MessageService, NotificationsService, provideHttpClient(withInterceptorsFromDi())] })
 export class CoreModule {}

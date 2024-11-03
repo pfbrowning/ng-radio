@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RadioBrowserService } from './radio-browser.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpParams } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { Station } from '../../models/player/station';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 import { CoreSpyFactories } from '@core/testing';
@@ -13,12 +13,14 @@ describe('RadioBrowserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         RadioBrowserService,
         { provide: ConfigProviderService, useValue: CoreSpyFactories.createConfigProviderSpy() },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
 
     radioBrowserService = TestBed.inject(RadioBrowserService);
     httpTestingController = TestBed.inject(HttpTestingController);
