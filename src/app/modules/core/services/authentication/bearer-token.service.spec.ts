@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { BearerTokenService } from './bearer-token.service';
 import { CoreSpyFactories } from '@core/testing';
 import { of, NEVER } from 'rxjs';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AccessTokenProviderService } from './access-token-provider.service';
 import { ConfigProviderService } from '../config/config-provider.service';
 
@@ -23,21 +23,23 @@ describe('BearerTokenService', () => {
     configProvider = CoreSpyFactories.createConfigProviderSpy();
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [],
+    providers: [
         BearerTokenService,
         { provide: ConfigProviderService, useValue: configProvider },
         {
-          provide: AccessTokenProviderService,
-          useValue: accessTokenProvider,
+            provide: AccessTokenProviderService,
+            useValue: accessTokenProvider,
         },
         {
-          provide: HTTP_INTERCEPTORS,
-          useClass: BearerTokenService,
-          multi: true,
+            provide: HTTP_INTERCEPTORS,
+            useClass: BearerTokenService,
+            multi: true,
         },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+    ]
+});
 
     bearerTokenService = TestBed.inject(BearerTokenService);
     accessTokenProvider = TestBed.inject(AccessTokenProviderService) as any;

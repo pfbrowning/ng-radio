@@ -9,4 +9,7 @@ jobs:
   build:
     uses: ./.github/workflows/build-template.yml
     with:
-      node-version: '18.13.0'
+      node-version: '22.11.0'
+    concurrency:
+      group: pull-request-build
+      cancel-in-progress: false
