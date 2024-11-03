@@ -15,18 +15,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js ${{ inputs.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ inputs.node-version }}
+
       - run: npm ci
         name: Install
+
       - run: npm run test-single-headless
         name: Test
+
       - run: npm run lint
         name: Lint
+
       - run: npm run build
         name: Build
+
       - name: Write Configuration
         uses: microsoft/variable-substitution@v1
         with:
@@ -43,6 +49,10 @@ jobs:
           imageProxyUrl: https://fast-everglades-74198.herokuapp.com
           favoriteStationsApiUrl: https://favorite-stations-api.azurewebsites.net
           radioProxyUrl: https://radio-proxy-2-91a50a6e0820.herokuapp.com
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2.3.4
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
