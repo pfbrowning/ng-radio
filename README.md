@@ -72,8 +72,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Configure [coveralls](https://github.com/marketplace/actions/coveralls-github-action) via Github Actions
-  - Optimize the size of the build artifact
   - Upgrade to Angular 18
   - Upgrade remaining dependencies
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
