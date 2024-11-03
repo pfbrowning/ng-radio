@@ -12,4 +12,4 @@ jobs:
       node-version: '22.11.0'
     concurrency:
       group: pull-request-build
-      cancel-in-progress: true
+      cancel-in-progress: false
