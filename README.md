@@ -72,20 +72,21 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Decompose build pipeline into a "check" pipeline for PRs and a "check and deploy" pipeline for merges into master
+  - Configure [coveralls](https://github.com/marketplace/actions/coveralls-github-action) via Github Actions
+  - Optimize the size of the build artifact
   - Upgrade to Angular 18
   - Upgrade remaining dependencies
-  - Re-implement now-playing polling logic for radio-browser & favorite stations pages
-  - Learn about:
-    - Angular Signals
-    - Control flow syntax
-    - Standalone components
-  - Replace silent refresh with (hardened) refresh tokens
-  - Write a strict CSP
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
     - Enable strictPropertyInitialization
     - Enable noImplicitAny
+  - Learn about:
+    - Angular Signals
+    - Control flow syntax
+    - Standalone components
+  - Re-implement now-playing polling logic for radio-browser & favorite stations pages
+  - Replace silent refresh with (hardened) refresh tokens
+  - Write a strict CSP
   - Separate the models for current station, favorite station, and radio browser result
   - Refactor LoggingService as desired
     - Genericize logging providers with a contract interface
@@ -97,6 +98,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Finish [radio-proxy-2](https://github.com/pfbrowning/radio-proxy-2)
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
 - Bugs
+  - 500 on refresh
   - The main page fails to load when the radio browser API is down.
   - When you go from a station with an image to a station with no image, the image of the former is still displayed in the toolbar
   - Duplicate "Now Playing" toaster notifications
