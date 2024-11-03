@@ -28,9 +28,6 @@ jobs:
           name: ${{ env.artifactName }}
           path: ./buildArtifact
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2.3.4
-
       - name: FTP Deploy
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.0.1
         with:
