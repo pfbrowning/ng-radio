@@ -73,8 +73,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - [Upgrade to Angular 18](https://angular.dev/update-guide?v=17.0-18.0&l=3)
-    - Upgrade PrimeNG
-    - Upgrade ngx-mat-select-search
     - Fix any outstanding peer dependency problems
     - Continue following the official upgrade guide
   - Upgrade remaining dependencies
