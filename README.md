@@ -76,6 +76,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - ng update @angular/material@18
     - Upgrade PrimeNG
     - Fix any outstanding peer dependency problems
+    - Continue following the official upgrade guide
   - Upgrade remaining dependencies
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
