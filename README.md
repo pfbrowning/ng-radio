@@ -73,8 +73,8 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - [Upgrade to Angular 18](https://angular.dev/update-guide?v=17.0-18.0&l=3)
-    - Fix any outstanding peer dependency problems
     - Continue following the official upgrade guide
+  - npm audit fix
   - Upgrade remaining dependencies
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
