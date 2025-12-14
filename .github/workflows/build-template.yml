@@ -36,7 +36,7 @@ jobs:
       - name: Write Configuration
         uses: microsoft/variable-substitution@v1
         with:
-          files: 'dist/ng-radio/assets/config/app.config.json'
+          files: 'dist/ng-radio/browser/assets/config/app.config.json'
         env:
           appInsightsInstrumentationKey: ${{ secrets.appinsights_instrumentation_key }}
           authConfig.userManager.client_id: OUO72IMzQPFkpXz5IkVMAnaDM0iKtK3t
