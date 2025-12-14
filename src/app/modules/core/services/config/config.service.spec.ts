@@ -16,9 +16,14 @@ describe('ConfigService', () => {
     environmentService = CoreSpyFactories.createEnvironmentServiceSpy();
 
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [ConfigService, { provide: EnvironmentService, useValue: environmentService }, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [
+        ConfigService,
+        { provide: EnvironmentService, useValue: environmentService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
+    });
 
     configService = TestBed.inject(ConfigService);
     httpTestingController = TestBed.inject(HttpTestingController);

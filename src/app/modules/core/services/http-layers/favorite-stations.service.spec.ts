@@ -10,13 +10,13 @@ describe('FavoriteStationsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         { provide: ConfigProviderService, useValue: CoreSpyFactories.createConfigProviderSpy() },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-});
+      ],
+    });
     service = TestBed.inject(FavoriteStationsService);
   });
 

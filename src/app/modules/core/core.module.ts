@@ -17,23 +17,28 @@ import { ConfigEffects } from './store/config/config.effects';
 import { SocketIOMessageListenerEffects } from './store/socket-io/effects/socket-io-message-listener.effects';
 import { SocketIOConnectionManagementEffects } from './store/socket-io/effects/socket-io-connection-management.effects';
 
-@NgModule({ imports: [CommonModule,
-        StoreModule.forRoot(reducers, {
-            runtimeChecks: {
-                strictStateImmutability: true,
-                strictActionImmutability: true,
-                strictActionWithinNgZone: true,
-            },
-        }),
-        EffectsModule.forRoot([
-            FavoriteStationsEffects,
-            PlayerEffects,
-            AuthenticationEffects,
-            StreamMetadataEffects,
-            ConfigEffects,
-            SocketIOMessageListenerEffects,
-            SocketIOConnectionManagementEffects,
-        ]),
-        StoreRouterConnectingModule.forRoot(),
-        !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : []], providers: [MessageService, NotificationsService, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  imports: [
+    CommonModule,
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionWithinNgZone: true,
+      },
+    }),
+    EffectsModule.forRoot([
+      FavoriteStationsEffects,
+      PlayerEffects,
+      AuthenticationEffects,
+      StreamMetadataEffects,
+      ConfigEffects,
+      SocketIOMessageListenerEffects,
+      SocketIOConnectionManagementEffects,
+    ]),
+    StoreRouterConnectingModule.forRoot(),
+    !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
+  ],
+  providers: [MessageService, NotificationsService, provideHttpClient(withInterceptorsFromDi())],
+})
 export class CoreModule {}

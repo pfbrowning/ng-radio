@@ -13,14 +13,14 @@ describe('RadioBrowserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         RadioBrowserService,
         { provide: ConfigProviderService, useValue: CoreSpyFactories.createConfigProviderSpy() },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-});
+      ],
+    });
 
     radioBrowserService = TestBed.inject(RadioBrowserService);
     httpTestingController = TestBed.inject(HttpTestingController);
