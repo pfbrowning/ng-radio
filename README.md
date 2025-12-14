@@ -72,7 +72,12 @@ Support for legacy browsers is not a concern at all in developing this applicati
 
 ## Backlog
 - Chores
-  - Upgrade to Angular 18
+  - Upgrade Angular versions
+    - 17 to 18
+    - 18 to 19
+    - 19 to 20
+    - 20 to 21
+  - npm audit fix
   - Upgrade remaining dependencies
   - Set `strict` to `true` in `tsconfig.json` and fix the resulting errors.
     - Fix non-configurable errors
@@ -85,6 +90,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
   - Re-implement now-playing polling logic for radio-browser & favorite stations pages
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
+  - OWASP 10
   - Separate the models for current station, favorite station, and radio browser result
   - Refactor LoggingService as desired
     - Genericize logging providers with a contract interface
@@ -95,6 +101,8 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Action hygiene
   - Finish [radio-proxy-2](https://github.com/pfbrowning/radio-proxy-2)
   - Finish [image-proxy](https://github.com/pfbrowning/image-proxy)
+  - Finish [radio-metadata-api](https://github.com/pfbrowning/radio-metadata-api)
+  - Finish [favorite-stations-api](https://github.com/pfbrowning/favorite-stations-api.git)
 - Bugs
   - 500 on refresh
   - The main page fails to load when the radio browser API is down.

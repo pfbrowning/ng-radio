@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { ConfigService } from './config.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AppConfig } from '../../models/config/app-config';
 import { CoreSpyFactories } from '@core/testing';
 import { EnvironmentService } from './environment.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ConfigService', () => {
   let configService: ConfigService;
@@ -15,8 +16,13 @@ describe('ConfigService', () => {
     environmentService = CoreSpyFactories.createEnvironmentServiceSpy();
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ConfigService, { provide: EnvironmentService, useValue: environmentService }],
+      imports: [],
+      providers: [
+        ConfigService,
+        { provide: EnvironmentService, useValue: environmentService },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     });
 
     configService = TestBed.inject(ConfigService);

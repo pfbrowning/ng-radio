@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '@environment';
@@ -20,7 +20,6 @@ import { SocketIOConnectionManagementEffects } from './store/socket-io/effects/s
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictStateImmutability: true,
@@ -40,6 +39,6 @@ import { SocketIOConnectionManagementEffects } from './store/socket-io/effects/s
     StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
   ],
-  providers: [MessageService, NotificationsService],
+  providers: [MessageService, NotificationsService, provideHttpClient(withInterceptorsFromDi())],
 })
 export class CoreModule {}

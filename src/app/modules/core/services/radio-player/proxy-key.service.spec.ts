@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { ProxyKeyService } from './proxy-key.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ConfigProviderService } from '../config/config-provider.service';
 import { CoreSpyFactories } from '@core/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ProxyKeyService', () => {
   let service: ProxyKeyService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [],
       providers: [
         { provide: ConfigProviderService, useValue: CoreSpyFactories.createConfigProviderSpy() },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     });
     service = TestBed.inject(ProxyKeyService);
