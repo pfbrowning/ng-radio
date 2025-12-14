@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "lint:fix": "ng lint --fix ng-radio",
-    "test:ci": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox",
+    "test:ci": "ng test --code-coverage --watch=false --browsers=ChromeHeadlessNoSandbox",
     "test:chrome": "ng test --browsers=Chrome",
     "test:firefox": "ng test --browsers=Firefox",
     "test:coveralls": "node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info",
