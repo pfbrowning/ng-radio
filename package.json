@@ -83,7 +83,7 @@
     "karma-junit-reporter": "^2.0.1",
     "prettier": "^2.5.1",
     "protractor": "~7.0.0",
-    "puppeteer": "^21.11.0",
+    "puppeteer": "^24.33.0",
     "ts-node": "~10.7.0",
     "typescript": "5.5.4",
     "webpack-bundle-analyzer": "^4.5.0"
