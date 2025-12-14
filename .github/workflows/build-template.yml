@@ -24,7 +24,7 @@ jobs:
       - run: npm ci
         name: Install
 
-      - run: npm run test-single-headless
+      - run: npm run test:ci
         name: Test
 
       - run: npm run lint

@@ -13,7 +13,7 @@
     "test:chrome": "ng test --browsers=Chrome",
     "test:firefox": "ng test --browsers=Firefox",
     "test:coveralls": "node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info",
-    "test:generate-publish-coverage": "npm run test-single-headless && npm run test:coveralls",
+    "test:generate-publish-coverage": "npm run test:ci && npm run test:coveralls",
     "analyze-bundle": "ng build --configuration production --stats-json && webpack-bundle-analyzer dist/ng-radio/stats.json",
     "format:check": "prettier --list-different \"src/**/*{.ts,.json,.scss}\"",
     "format:fix": "prettier --write \"src/**/*{.ts,.json,.scss}\""
