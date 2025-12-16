@@ -73,7 +73,6 @@ Support for legacy browsers is not a concern at all in developing this applicati
 ## Backlog
 - Chores
   - Upgrade Angular versions
-    - 17 to 18
     - 18 to 19
     - 19 to 20
     - 20 to 21
@@ -87,6 +86,7 @@ Support for legacy browsers is not a concern at all in developing this applicati
     - Angular Signals
     - Control flow syntax
     - Standalone components
+    - Other big new features?
   - Re-implement now-playing polling logic for radio-browser & favorite stations pages
   - Replace silent refresh with (hardened) refresh tokens
   - Write a strict CSP
