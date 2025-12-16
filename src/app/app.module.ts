@@ -16,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppInitializerService } from './modules/core/services/app-initializer.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenService } from '@core/services';
+import { providePrimeNG } from 'primeng/config';
+
+import Aura from '@primeng/themes/aura';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +50,11 @@ import { BearerTokenService } from '@core/services';
       multi: true,
     },
     { provide: ErrorHandler, useClass: UnhandledErrorService },
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
+    }),
   ],
   bootstrap: [AppComponent],
 })

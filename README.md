@@ -74,6 +74,9 @@ Support for legacy browsers is not a concern at all in developing this applicati
 - Chores
   - Upgrade Angular versions
     - 18 to 19
+      - Upgrade PrimeNG to 18 [guide](https://v18.primeng.org/installation)
+        - Fix the dialog footer on the custom URL modal
+      - Follow [the guide](https://angular.dev/update-guide?v=18.0-19.0&l=3)
     - 19 to 20
     - 20 to 21
   - npm audit fix
