@@ -14,6 +14,7 @@ import { SuggestedStationsRootState } from '../../models/suggested-stations-root
   templateUrl: './suggested-stations.component.html',
   styleUrls: ['./suggested-stations.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SuggestedStationsComponent {
   constructor(private store: Store<SuggestedStationsRootState>) {}

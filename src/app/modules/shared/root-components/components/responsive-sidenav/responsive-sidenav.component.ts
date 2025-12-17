@@ -21,6 +21,7 @@ import { SubSink } from 'subsink';
   templateUrl: './responsive-sidenav.component.html',
   styleUrls: ['./responsive-sidenav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ResponsiveSidenavComponent implements OnInit, OnDestroy {
   /** The minimum screen width that we consider to be a large screen.

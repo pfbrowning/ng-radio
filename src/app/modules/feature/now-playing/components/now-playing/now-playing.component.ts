@@ -10,6 +10,7 @@ import { SleepTimerService } from '@core/services';
   templateUrl: './now-playing.component.html',
   styleUrls: ['./now-playing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NowPlayingComponent {
   constructor(

@@ -20,9 +20,9 @@
       </mat-form-field>
     </fieldset>
   </form>
-  <p-footer>
+  <ng-template #footer>
     <button mat-button *ngIf="!existingStation" (click)="onOpenClicked()" [disabled]="saveInProgress">Open</button>
     <button mat-button (click)="onSaveClicked()" [disabled]="saveInProgress || fetchingFavorites">Save</button>
     <button mat-button (click)="closeEditor()" [disabled]="saveInProgress">Cancel</button>
-  </p-footer>
+  </ng-template>
 </p-dialog>

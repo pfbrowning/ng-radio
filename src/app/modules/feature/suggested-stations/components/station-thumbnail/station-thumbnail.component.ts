@@ -6,6 +6,7 @@ import { Station } from '@core/models/player';
   templateUrl: './station-thumbnail.component.html',
   styleUrls: ['./station-thumbnail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class StationThumbnailComponent {
   @Input() station: Station;

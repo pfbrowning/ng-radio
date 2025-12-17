@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppInitializerService } from './modules/core/services/app-initializer.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BearerTokenService } from '@core/services';
+import { providePrimeNG } from 'primeng/config';
+
+import Aura from '@primeng/themes/aura';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,18 +38,23 @@ import { BearerTokenService } from '@core/services';
   ],
   providers: [
     ConfirmationService,
-    {
-      provide: APP_INITIALIZER,
-      deps: [AppInitializerService],
-      useFactory: (service: AppInitializerService) => service.initialize,
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = ((service: AppInitializerService) => service.initialize)(
+        inject(AppInitializerService)
+      );
+      return initializerFn();
+    }),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BearerTokenService,
       multi: true,
     },
     { provide: ErrorHandler, useClass: UnhandledErrorService },
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
+    }),
   ],
   bootstrap: [AppComponent],
 })

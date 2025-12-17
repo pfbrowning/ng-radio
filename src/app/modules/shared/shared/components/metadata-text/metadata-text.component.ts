@@ -5,6 +5,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   templateUrl: './metadata-text.component.html',
   styleUrls: ['./metadata-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MetadataTextComponent {
   /* There's not much reason for this to be its own component in its current form since all it does is show a string of text,

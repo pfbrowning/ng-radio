@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { MessageService, ToastMessageOptions } from 'primeng/api';
 import { Severities } from '../../models/notifications/severities';
 import { ToasterReadyService } from './toaster-ready.service';
 
@@ -16,12 +16,13 @@ export class NotificationsService {
     life = life || 3000;
     // If we pass a notification before the toaster component initializes, it won't be displayed at all
     this.toasterReadyService.toasterReady$.subscribe(() => {
-      this.messageService.add({
+      const message: ToastMessageOptions = {
         severity: severity.toString(),
         summary,
         detail,
         life,
-      });
+      };
+      this.messageService.add(message);
     });
   }
 

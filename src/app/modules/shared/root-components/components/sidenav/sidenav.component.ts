@@ -9,6 +9,7 @@ import { AuthenticationFacadeService } from '@core/store';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SidenavComponent {
   public authenticated$ = this.authenticationFacade.authenticated$;

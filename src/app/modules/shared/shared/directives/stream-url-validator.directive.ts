@@ -13,10 +13,11 @@ import { tap, map, switchMap } from 'rxjs/operators';
       multi: true,
     },
     /* This directive needs its own instance of the validator & audio element so that we
-    can validate a stream independent of the currently playing stream. */
+        can validate a stream independent of the currently playing stream. */
     AudioElementService,
     AudioProxyService,
   ],
+  standalone: false,
 })
 export class StreamUrlValidatorDirective implements AsyncValidator {
   constructor(

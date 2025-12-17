@@ -18,6 +18,7 @@ import { WindowService } from '@core/services';
   templateUrl: './player-bar-station-info.component.html',
   styleUrls: ['./player-bar-station-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class PlayerBarStationInfoComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(private changeDetectorRef: ChangeDetectorRef, private windowService: WindowService) {}

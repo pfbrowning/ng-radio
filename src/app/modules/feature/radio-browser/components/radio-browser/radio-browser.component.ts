@@ -14,6 +14,7 @@ import { ConfigProviderService } from '@core/services';
   templateUrl: './radio-browser.component.html',
   styleUrls: ['./radio-browser.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(

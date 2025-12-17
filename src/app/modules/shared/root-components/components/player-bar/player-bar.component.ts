@@ -10,6 +10,7 @@ import { SleepTimerService } from '@core/services';
   templateUrl: './player-bar.component.html',
   styleUrls: ['./player-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class PlayerBarComponent {
   constructor(

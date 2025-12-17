@@ -6,6 +6,7 @@ import { Station } from '@core/models/player';
   templateUrl: './suggested-stations-section.component.html',
   styleUrls: ['./suggested-stations-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SuggestedStationsSectionComponent {
   @Input() stations: Station[];

@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   selector: 'blr-global-spinner',
   templateUrl: './global-spinner.component.html',
   styleUrls: ['./global-spinner.component.scss'],
+  standalone: false,
 })
 export class GlobalSpinnerComponent {}

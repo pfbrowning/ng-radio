@@ -14,6 +14,7 @@ import { cloneDeep } from 'lodash-es';
   templateUrl: './station-edit.component.html',
   styleUrls: ['./station-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class StationEditComponent implements OnInit {
   constructor(private store: Store<RootState>, private router: Router) {}

@@ -16,6 +16,7 @@ import { FavoriteStationsFeatureFacadeService } from '../../store/favorite-stati
   templateUrl: './favorite-stations.component.html',
   styleUrls: ['./favorite-stations.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class FavoriteStationsComponent {
   constructor(
