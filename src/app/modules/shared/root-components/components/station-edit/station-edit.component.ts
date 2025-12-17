@@ -10,11 +10,11 @@ import { MatInput } from '@angular/material/input';
 import { cloneDeep } from 'lodash-es';
 
 @Component({
-    selector: 'blr-station-edit',
-    templateUrl: './station-edit.component.html',
-    styleUrls: ['./station-edit.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'blr-station-edit',
+  templateUrl: './station-edit.component.html',
+  styleUrls: ['./station-edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class StationEditComponent implements OnInit {
   constructor(private store: Store<RootState>, private router: Router) {}

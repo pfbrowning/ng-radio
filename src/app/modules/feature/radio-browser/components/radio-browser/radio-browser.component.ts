@@ -11,10 +11,10 @@ import { RadioBrowserSearchRootState } from '../../models/radio-browser-search-r
 import { ConfigProviderService } from '@core/services';
 
 @Component({
-    templateUrl: './radio-browser.component.html',
-    styleUrls: ['./radio-browser.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  templateUrl: './radio-browser.component.html',
+  styleUrls: ['./radio-browser.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class RadioBrowserComponent implements OnInit, OnDestroy {
   constructor(

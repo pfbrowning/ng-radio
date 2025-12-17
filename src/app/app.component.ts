@@ -3,11 +3,11 @@ import { RouterStateService } from '@core/services';
 import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
-    selector: 'blr-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'blr-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppComponent {
   constructor(

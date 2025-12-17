@@ -7,10 +7,10 @@ import { StreamMetadataFacadeService, PlayerFacadeService } from '@core/store';
 import { SleepTimerService } from '@core/services';
 
 @Component({
-    templateUrl: './now-playing.component.html',
-    styleUrls: ['./now-playing.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  templateUrl: './now-playing.component.html',
+  styleUrls: ['./now-playing.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NowPlayingComponent {
   constructor(

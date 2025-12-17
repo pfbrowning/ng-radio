@@ -39,9 +39,11 @@ import Aura from '@primeng/themes/aura';
   providers: [
     ConfirmationService,
     provideAppInitializer(() => {
-        const initializerFn = ((service: AppInitializerService) => service.initialize)(inject(AppInitializerService));
-        return initializerFn();
-      }),
+      const initializerFn = ((service: AppInitializerService) => service.initialize)(
+        inject(AppInitializerService)
+      );
+      return initializerFn();
+    }),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BearerTokenService,

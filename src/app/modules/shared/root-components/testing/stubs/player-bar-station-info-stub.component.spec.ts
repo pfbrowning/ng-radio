@@ -2,9 +2,9 @@ import { PlayerStatus, Station } from '@core/models/player';
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'blr-player-bar-station-info',
-    template: '',
-    standalone: false
+  selector: 'blr-player-bar-station-info',
+  template: '',
+  standalone: false,
 })
 export class PlayerBarStationInfoStubComponent {
   @Input() currentPlayerStatus: PlayerStatus;

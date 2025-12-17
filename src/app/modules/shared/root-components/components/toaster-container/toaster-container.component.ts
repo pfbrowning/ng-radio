@@ -11,11 +11,11 @@ import { SubSink } from 'subsink';
 import { ToasterReadyService } from '@core/services';
 
 @Component({
-    selector: 'blr-toaster-container',
-    templateUrl: './toaster-container.component.html',
-    styleUrls: ['./toaster-container.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'blr-toaster-container',
+  templateUrl: './toaster-container.component.html',
+  styleUrls: ['./toaster-container.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ToasterContainerComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(

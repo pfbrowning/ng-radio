@@ -6,11 +6,11 @@ import {
 } from '@core/store';
 
 @Component({
-    selector: 'blr-app-shell',
-    templateUrl: './app-shell.component.html',
-    styleUrls: ['./app-shell.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'blr-app-shell',
+  templateUrl: './app-shell.component.html',
+  styleUrls: ['./app-shell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppShellComponent {
   constructor(

@@ -15,8 +15,8 @@ import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 import { ConfigProviderService } from '@core/services';
 
 @Directive({
-    selector: '[blrStationIcon]',
-    standalone: false
+  selector: '[blrStationIcon]',
+  standalone: false,
 })
 export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
   @Input() iconUrl: string;

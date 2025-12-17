@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 import { Station } from '@core/models/player';
 
 @Component({
-    selector: 'blr-suggested-stations-section',
-    templateUrl: './suggested-stations-section.component.html',
-    styleUrls: ['./suggested-stations-section.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: 'blr-suggested-stations-section',
+  templateUrl: './suggested-stations-section.component.html',
+  styleUrls: ['./suggested-stations-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SuggestedStationsSectionComponent {
   @Input() stations: Station[];
