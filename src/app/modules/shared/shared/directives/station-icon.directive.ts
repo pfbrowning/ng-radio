@@ -14,7 +14,10 @@ import { SubSink } from 'subsink';
 import isFalsyOrWhitespace from 'is-falsy-or-whitespace';
 import { ConfigProviderService } from '@core/services';
 
-@Directive({ selector: '[blrStationIcon]' })
+@Directive({
+    selector: '[blrStationIcon]',
+    standalone: false
+})
 export class StationIconDirective implements OnChanges, OnInit, OnDestroy {
   @Input() iconUrl: string;
   @Input() minWidth = 35;

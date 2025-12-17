@@ -1,7 +1,8 @@
 import { Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: '[blrStationIcon]',
+    selector: '[blrStationIcon]',
+    standalone: false
 })
 export class StationIconStubDirective {
   @Input() iconUrl: string;

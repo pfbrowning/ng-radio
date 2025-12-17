@@ -6,10 +6,11 @@ import { PlayerBarFacadeService } from '@core/store';
 import { SleepTimerService } from '@core/services';
 
 @Component({
-  selector: 'blr-player-bar',
-  templateUrl: './player-bar.component.html',
-  styleUrls: ['./player-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blr-player-bar',
+    templateUrl: './player-bar.component.html',
+    styleUrls: ['./player-bar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class PlayerBarComponent {
   constructor(

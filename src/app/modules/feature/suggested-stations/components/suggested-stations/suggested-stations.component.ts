@@ -10,10 +10,11 @@ import {
 import { SuggestedStationsRootState } from '../../models/suggested-stations-root-state';
 
 @Component({
-  selector: 'blr-suggested-stations',
-  templateUrl: './suggested-stations.component.html',
-  styleUrls: ['./suggested-stations.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blr-suggested-stations',
+    templateUrl: './suggested-stations.component.html',
+    styleUrls: ['./suggested-stations.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SuggestedStationsComponent {
   constructor(private store: Store<SuggestedStationsRootState>) {}

@@ -5,10 +5,11 @@ import { FavoriteStationsActions } from '@core/store';
 import { AuthenticationFacadeService } from '@core/store';
 
 @Component({
-  selector: 'blr-side-nav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'blr-side-nav',
+    templateUrl: './sidenav.component.html',
+    styleUrls: ['./sidenav.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SidenavComponent {
   public authenticated$ = this.authenticationFacade.authenticated$;
