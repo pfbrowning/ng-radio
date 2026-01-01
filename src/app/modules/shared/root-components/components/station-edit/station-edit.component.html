@@ -3,25 +3,39 @@
     <fieldset class="flex-grid">
       <mat-form-field class="flex-column-half">
         <input matInput [(ngModel)]="stationPending.title" [disabled]="saveInProgress" #titleInput="matInput" #title="ngModel" required name="title" placeholder="Station Title">
-        <mat-error *ngIf="title.hasError('required')">Title is required.</mat-error>
+        @if (title.hasError('required')) {
+          <mat-error>Title is required.</mat-error>
+        }
       </mat-form-field>
       <div class="flex-column-half form-field-spinner-container">
         <mat-form-field>
           <input matInput [(ngModel)]="stationPending.url" [disabled]="saveInProgress" #url="ngModel" required blrStreamUrlValidator name="url" placeholder="Stream URL" pattern="https?://.+">
-          <mat-error *ngIf="url.hasError('required')">Stream URL is required.</mat-error>
-          <mat-error *ngIf="url.hasError('pattern')">Stream URL must be a valid URL.</mat-error>
-          <mat-error *ngIf="url.hasError('invalidStream')">Failed to load the stream.  Please double-check the URL.</mat-error>
+          @if (url.hasError('required')) {
+            <mat-error>Stream URL is required.</mat-error>
+          }
+          @if (url.hasError('pattern')) {
+            <mat-error>Stream URL must be a valid URL.</mat-error>
+          }
+          @if (url.hasError('invalidStream')) {
+            <mat-error>Failed to load the stream.  Please double-check the URL.</mat-error>
+          }
         </mat-form-field>
-        <mat-spinner *ngIf="url.pending" diameter="25"></mat-spinner>
+        @if (url.pending) {
+          <mat-spinner diameter="25"></mat-spinner>
+        }
       </div>
       <mat-form-field class="flex-column-half">
         <input matInput [(ngModel)]="stationPending.iconUrl" [disabled]="saveInProgress" #iconUrl="ngModel" name="icon-url" placeholder="Icon URL" pattern="https?://.+">
-        <mat-error *ngIf="iconUrl.hasError('pattern')">Icon URL must be a valid URL.</mat-error>
+        @if (iconUrl.hasError('pattern')) {
+          <mat-error>Icon URL must be a valid URL.</mat-error>
+        }
       </mat-form-field>
     </fieldset>
   </form>
   <ng-template #footer>
-    <button mat-button *ngIf="!existingStation" (click)="onOpenClicked()" [disabled]="saveInProgress">Open</button>
+    @if (!existingStation) {
+      <button mat-button (click)="onOpenClicked()" [disabled]="saveInProgress">Open</button>
+    }
     <button mat-button (click)="onSaveClicked()" [disabled]="saveInProgress || fetchingFavorites">Save</button>
     <button mat-button (click)="closeEditor()" [disabled]="saveInProgress">Cancel</button>
   </ng-template>

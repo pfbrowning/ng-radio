@@ -5,24 +5,23 @@
       <a routerLink="suggested-stations" routerLinkActive="active-route">Suggested</a>
     </li>
     <li>
-        <a routerLink="now-playing" routerLinkActive="active-route">Now Playing</a>
+      <a routerLink="now-playing" routerLinkActive="active-route">Now Playing</a>
     </li>
     <li>
-        <a routerLink="radio-browser" routerLinkActive="active-route">Radio Browser</a>
+      <a routerLink="radio-browser" routerLinkActive="active-route">Radio Browser</a>
     </li>
     <li>
-        <a (click)="onCustomStationClicked()" href="javascript:void(0);">Custom Station</a>
+      <a (click)="onCustomStationClicked()" href="javascript:void(0);">Custom Station</a>
     </li>
     <li>
-        <a routerLink="favorites" routerLinkActive="active-route">Favorites</a>
+      <a routerLink="favorites" routerLinkActive="active-route">Favorites</a>
     </li>
     <li>
-      <ng-container *ngIf="authenticated$ | async; else logInButton">
+      @if (authenticated$ | async) {
         <a (click)="onLogoutClicked()" href="javascript:void(0);">Log Out</a>
-      </ng-container>
-      <ng-template #logInButton>
+      } @else {
         <a (click)="onLoginClicked()" href="javascript:void(0);">Log In</a>
-      </ng-template>
+      }
     </li>
   </ul>
 </nav>
