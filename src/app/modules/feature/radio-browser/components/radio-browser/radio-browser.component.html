@@ -7,9 +7,11 @@
       <mat-option>
         <ngx-mat-select-search [ngModel]="countryFilter$ | async" (ngModelChange)="onCountryFilterChanged($event)" placeholderLabel="Find country..." noEntriesFoundLabel="No matches found"></ngx-mat-select-search>
       </mat-option>
-      <mat-option *ngFor="let country of (countries$ | async)" [value]="country.code">
-        {{country.name}}
-      </mat-option>
+      @for (country of (countries$ | async); track country) {
+        <mat-option [value]="country.code">
+          {{country.name}}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
   <mat-form-field class="flex-column-third">
@@ -21,14 +23,17 @@
 </div>
 
 <mat-autocomplete #tagAutocomplete="matAutocomplete" (optionSelected)="onTagTermSelected($event.option.value)">
-  <mat-option *ngIf="fetchingTagSuggestions$ | async; else notFetchingTagSuggestions" disabled class="loading">
-    <mat-spinner diameter="50"></mat-spinner>
-  </mat-option>
-  <ng-template #notFetchingTagSuggestions>
-    <mat-option *ngFor="let tag of (tagSuggestions$ | async)" [value]="tag">{{tag}}</mat-option>
-  </ng-template>
+  @if (fetchingTagSuggestions$ | async) {
+    <mat-option disabled class="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </mat-option>
+  } @else {
+    @for (tag of (tagSuggestions$ | async); track tag) {
+      <mat-option [value]="tag">{{tag}}</mat-option>
+    }
+  }
 </mat-autocomplete>
-  
+
 <table mat-table [dataSource]="searchResults$ | async" class="selectable-rows mat-elevation-z2">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -44,7 +49,9 @@
     <th mat-header-cell *matHeaderCellDef >Tags</th>
     <td mat-cell *matCellDef="let station">
       <ul class="tag-list">
-        <li *ngFor="let tag of station.tags">{{tag}}</li>
+        @for (tag of station.tags; track tag) {
+          <li>{{tag}}</li>
+        }
       </ul>
     </td>
   </ng-container>
@@ -55,9 +62,13 @@
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
   <tr mat-row *matRowDef="let station; columns: columns" (click)="onRowClicked(station)"></tr>
 </table>
-<mat-card appearance="outlined" *ngIf="isSearchInProgress$ | async" class="mat-table-spinner mat-elevation-z2">
-  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
-</mat-card>
-<mat-card appearance="outlined" *ngIf="(searchResults$ | async) !== null && (searchResults$ | async).length >= (resultsLimit$ | async)" class="mat-elevation-z2">
-  <p>Search limited to the first {{resultsLimit$ | async}} results.</p>
-</mat-card>
+@if (isSearchInProgress$ | async) {
+  <mat-card appearance="outlined" class="mat-table-spinner mat-elevation-z2">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  </mat-card>
+}
+@if ((searchResults$ | async) !== null && (searchResults$ | async).length >= (resultsLimit$ | async)) {
+  <mat-card appearance="outlined" class="mat-elevation-z2">
+    <p>Search limited to the first {{resultsLimit$ | async}} results.</p>
+  </mat-card>
+}

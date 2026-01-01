@@ -1,40 +1,46 @@
 <h1 class="mat-headline-5">Now Playing</h1>
 
-<div *ngIf="currentStation$ | async; then selected else notSelected"></div>
-
-<ng-template #selected>
+@if (currentStation$ | async) {
   <div class="flex-grid">
     <div class="flex-column-third">
       <img [iconUrl]="(currentStation$ | async)?.iconUrl" blrStationIcon class="station-icon">
     </div>
     <div class="flex-column-third">
       <div class="now-playing">
-        <div [ngSwitch]="playerStatus$ | async" class="title">
-          <ng-container *ngSwitchCase="playerStatus.LoadingAudio">Loading Audio...</ng-container>
-          <ng-container *ngSwitchCase="playerStatus.Playing">
-            <blr-metadata-text [metadata]="currentStreamInfo$ | async"></blr-metadata-text>
-          </ng-container>
+        <div class="title">
+          @switch (playerStatus$ | async) {
+            @case (playerStatus.LoadingAudio) {
+              Loading Audio...
+            }
+            @case (playerStatus.Playing) {
+              <blr-metadata-text [metadata]="currentStreamInfo$ | async"></blr-metadata-text>
+            }
+          }
         </div>
         <div class="station-title">{{ (currentStation$ | async).title }}</div>
-        <div *ngIf="(minutesUntilSleep$ | async) !== null" class="minutes-until-sleep">
-          Sleeping in {{minutesUntilSleep$ | async}} minutes
-        </div>
+        @if ((minutesUntilSleep$ | async) !== null) {
+          <div class="minutes-until-sleep">
+            Sleeping in {{minutesUntilSleep$ | async}} minutes
+          </div>
+        }
       </div>
     </div>
     <div class="flex-column-third">
       <ul class="bulletless-list action-items">
         <li>
-          <button *ngIf="(currentStation$ | async).stationId" (click)="onEditFavoriteClicked()" mat-raised-button color="primary">Edit Favorite</button>
+          @if ((currentStation$ | async).stationId) {
+            <button (click)="onEditFavoriteClicked()" mat-raised-button color="primary">Edit Favorite</button>
+          }
         </li>
       </ul>
     </div>
   </div>
-</ng-template>
-
-<ng-template #notSelected>
+} @else {
   <p>
-    There's no media selected.  Please go to the <a [routerLink]="['../radio-browser']">Radio Browser Search</a> or 
-    <a [routerLink]="['../suggested-stations']">Suggested Stations</a> to find a station to play or 
+    There's no media selected.  Please go to the <a [routerLink]="['../radio-browser']">Radio Browser Search</a> or
+    <a [routerLink]="['../suggested-stations']">Suggested Stations</a> to find a station to play or
     <a [routerLink]="['../custom-station']">enter a custom URL</a>.
   </p>
-</ng-template>
+}
+
+

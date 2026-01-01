@@ -1,5 +1,9 @@
-<blr-app-shell *ngIf="authInitialized$ | async"></blr-app-shell>
+@if (authInitialized$ | async) {
+  <blr-app-shell></blr-app-shell>
+}
 
-<blr-global-spinner *ngIf="(authInitialized$ | async) === false || (routeResolving$ | async) === true"></blr-global-spinner>
+@if ((authInitialized$ | async) === false || (routeResolving$ | async) === true) {
+  <blr-global-spinner></blr-global-spinner>
+}
 <blr-toaster-container></blr-toaster-container>
 <p-confirmDialog header="Are You Sure?" [closeOnEscape]="false" [closable]="false"></p-confirmDialog>
