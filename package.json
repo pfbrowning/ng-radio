@@ -42,7 +42,7 @@
     "is-falsy-or-whitespace": "0.0.17",
     "lodash-es": "^4.17.21",
     "material-design-icons": "^3.0.1",
-    "ngx-mat-select-search": "^7.0.8",
+    "ngx-mat-select-search": "^8.0.4",
     "oidc-client": "^1.11.5",
     "primeicons": "^5.0.0",
     "primeng": "^20.4.0",
