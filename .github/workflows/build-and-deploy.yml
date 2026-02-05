@@ -10,8 +10,6 @@ env:
 jobs:
   build:
     uses: ./.github/workflows/build-template.yml
-    with:
-      node-version: '22.11.0'
     concurrency:
       group: build-and-deploy
       cancel-in-progress: true
