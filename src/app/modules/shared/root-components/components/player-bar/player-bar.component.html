@@ -5,38 +5,39 @@
       [currentStation]="currentStation" [metadataForCurrentStation]="metadataForCurrentStation">
     </blr-player-bar-station-info>
   </div>
-  <div [class.off-white]="(minutesToSleep$ | async) === null" [matMenuTriggerFor]="sleepTimerMenu" 
+  <div [class.off-white]="(minutesToSleep$ | async) === null" [matMenuTriggerFor]="sleepTimerMenu"
     [matTooltip]="(minutesToSleep$ | async) === null ? 'Sleep timer is disabled' : 'Sleep timer is set'"
     class="indicator-icon selectable large-screen-only" >
     <mat-icon>timer</mat-icon> <span class="minutes-until-sleep">{{ minutesToSleep$ | async }}</span>
   </div>
-  <ng-container *ngIf="favoritesProcessingState; else favoritesProcessedIcon">
+  @if (favoritesProcessingState) {
     <div class="indicator-icon large-screen-only" [matTooltip]="favoritesProcessingTooltip()">
       <mat-spinner diameter="25"></mat-spinner>
     </div>
-  </ng-container>
-  <ng-template #favoritesProcessedIcon>
-    <div *ngIf="favoriteMatchingCurrentStation; else notInFavoritesIcon" (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
-      <mat-icon>favorite</mat-icon>
-    </div>
-    <ng-template #notInFavoritesIcon>
+  } @else {
+    @if (favoriteMatchingCurrentStation) {
+      <div (click)="onRemoveFromFavoritesClicked()" class="indicator-icon selectable large-screen-only" matTooltip="Remove From Favorites">
+        <mat-icon>favorite</mat-icon>
+      </div>
+    } @else {
       <div (click)="onAddToFavoritesClicked()" class="indicator-icon selectable large-screen-only off-white" matTooltip="Add To Favorites">
         <mat-icon>favorite</mat-icon>
       </div>
-    </ng-template>
-  </ng-template>
+    }
+  }
   <button mat-icon-button [matMenuTriggerFor]="menu" class="small-screen-only">
     <mat-icon>more_vert</mat-icon>
   </button>
   <div class="play-pause-button">
-    <button mat-fab color="accent" *ngIf="playerStatus === playerStatusEnum.Playing; else pauseBtn" (click)="onPauseClicked()">
-      <mat-icon>pause</mat-icon>
-    </button>
-    <ng-template #pauseBtn>
+    @if (playerStatus === playerStatusEnum.Playing) {
+      <button mat-fab color="accent" (click)="onPauseClicked()">
+        <mat-icon>pause</mat-icon>
+      </button>
+    } @else {
       <button mat-fab color="accent" [disabled]="playerStatus === playerStatusEnum.LoadingAudio" (click)="onPlayClicked()">
         <mat-icon>play_arrow</mat-icon>
       </button>
-    </ng-template>
+    }
   </div>
 </mat-toolbar>
 
@@ -45,24 +46,26 @@
     <mat-icon>timer</mat-icon>
     <span>Sleep Timer</span>
   </button>
-  <button *ngIf="favoritesProcessingState; else favoritesProcessedMenuItem" mat-menu-item>
-    <span class="spinner-container">
-      <mat-spinner diameter="25"></mat-spinner>
-    </span>
-    <span>{{ favoritesProcessingState }}</span>
-  </button>
-  <ng-template #favoritesProcessedMenuItem>
-    <button *ngIf="favoriteMatchingCurrentStation; else notInFavoritesMenuItem" (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
-      <mat-icon>favorite</mat-icon>
-      <span>Remove From Favorites</span>
+  @if (favoritesProcessingState) {
+    <button mat-menu-item>
+      <span class="spinner-container">
+        <mat-spinner diameter="25"></mat-spinner>
+      </span>
+      <span>{{ favoritesProcessingState }}</span>
     </button>
-    <ng-template #notInFavoritesMenuItem>
+  } @else {
+    @if (favoriteMatchingCurrentStation) {
+      <button (click)="onRemoveFromFavoritesClicked()" mat-menu-item>
+        <mat-icon>favorite</mat-icon>
+        <span>Remove From Favorites</span>
+      </button>
+    } @else {
       <button mat-menu-item (click)="onAddToFavoritesClicked()">
         <mat-icon>favorite</mat-icon>
         <span>Add To Favorites</span>
       </button>
-    </ng-template>
-  </ng-template>
+    }
+  }
 </mat-menu>
 
 <mat-menu #sleepTimerMenu="matMenu">

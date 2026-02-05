@@ -1,5 +1,11 @@
 <h1 class="mat-headline-5">Suggested Stations</h1>
 
-<blr-suggested-stations-section *ngIf="developerSuggested$ | async" [stations]="developerSuggested$ | async" (stationSelected)="onStationSelected($event)" header="Developer Suggested Stations"></blr-suggested-stations-section>
-<blr-suggested-stations-section *ngIf="topClicked$ | async" [stations]="topClicked$ | async" (stationSelected)="onStationSelected($event)" header="Top Clicked Stations From Radio Browser API"></blr-suggested-stations-section>
-<blr-suggested-stations-section *ngIf="topVoted$ | async" [stations]="topVoted$ | async" (stationSelected)="onStationSelected($event)" header="Top Voted Stations From Radio Browser API"></blr-suggested-stations-section>
+@if (developerSuggested$ | async) {
+  <blr-suggested-stations-section [stations]="developerSuggested$ | async" (stationSelected)="onStationSelected($event)" header="Developer Suggested Stations"></blr-suggested-stations-section>
+}
+@if (topClicked$ | async) {
+  <blr-suggested-stations-section [stations]="topClicked$ | async" (stationSelected)="onStationSelected($event)" header="Top Clicked Stations From Radio Browser API"></blr-suggested-stations-section>
+}
+@if (topVoted$ | async) {
+  <blr-suggested-stations-section [stations]="topVoted$ | async" (stationSelected)="onStationSelected($event)" header="Top Voted Stations From Radio Browser API"></blr-suggested-stations-section>
+}
